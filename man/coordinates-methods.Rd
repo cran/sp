@@ -1,0 +1,39 @@
+\name{coordinates-methods}
+\docType{methods}
+\alias{coordinates-methods}
+% \alias{coordinates}
+\alias{coordinates,list-method}
+\alias{coordinates,data.frame-method}
+\alias{coordinates,matrix-method}
+\alias{coordinates,SpatialPoints-method}
+\alias{coordinates,SpatialPointsDataFrame-method}
+\alias{coordinates,Sline-method}
+\alias{coordinates,Slines-method}
+\alias{coordinates,SpatialLines-method}
+\alias{coordinates,GridTopology-method}
+\alias{coordinates,SpatialPixels-method}
+\alias{coordinates,SpatialPixelsDataFrame-method}
+\alias{coordinates,SpatialGrid-method}
+\alias{coordinates,SpatialGridDataFrame-method}
+\title{ retrieves spatial coordinates }
+\description{ retrieves spatial coordinates from spatial data }
+\section{Methods}{
+\describe{
+\item{obj = "list"}{ list with (at least) two numeric components of equal length }
+\item{obj = "data.frame"}{ data.frame with at least two numeric components }
+\item{obj = "matrix"}{ numeric matrix with at least two columns }
+\item{obj = "SpatialPoints"}{ object of, or deriving from, SpatialPoints }
+\item{obj = "SpatialPointsDataFrame"}{ object of, or deriving from, 
+	SpatialPointsDataFrame }
+\item{obj = "Sline"}{ object of class Sline; returned value is matrix }
+\item{obj = "Slines"}{ object of class Slines; returned value is list of matrices }
+\item{obj = "SpatialLines"}{ object of, or deriving from, SpatialLines; returned
+value is list of lists of matrices }
+\item{obj = "GridTopology"}{ object of, or deriving from, GridTopology }
+\item{obj = "GridTopology"}{ object of, or deriving from, GridTopology }
+\item{obj = "SpatialPixels"}{ object of, or deriving from, SpatialPixels }
+\item{obj = "SpatialPixelsDataFrame"}{ object of, or deriving from, SpatialPixelsDataFrame }
+\item{obj = "SpatialGrid"}{ object of, or deriving from, SpatialGrid }
+\item{obj = "SpatialGridDataFrame"}{ object of, or deriving from, SpatialGridDataFrame }
+}}
+\keyword{methods}

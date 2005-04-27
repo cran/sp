@@ -1,0 +1,73 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.0 beta (2005-04-10), ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(sp)
+> data(meuse)
+> x = meuse
+> 
+> coordinates(x) <- c("x", "y")
+> try(proj4string(x) <- 1.5)
+Error in "proj4string<-"(`*tmp*`, value = 1.5) : 
+	assigned value must be CRS object
+> try(coordinates(a) <- cbind(1:10, 10:1))
+Error in try(coordinates(a) <- cbind(1:10, 10:1)) : 
+	Object "a" not found
+> # fails because a is not found; passes if a assigned NULL, see pass1.R
+> 
+> x = meuse
+> # invalid coordinate formulae:
+> try(coordinates(x) <- ~log(x)+sqrt(y)) # no expressions allowed
+Error in "[.data.frame"(object, , -coord.numbers, drop = FALSE) : 
+	undefined columns selected
+> try(coordinates(x) <- ~x+y+z) # z is not present
+Error in eval(expr, envir, enclos) : Object "z" not found
+> x$x2 = x$x^2
+> x$y2 = x$y^2
+> try(coordinates(x) <- ~x+y+x2+y2) # 4D now passes check...
+> x = meuse
+> try(coordinates(x) <- ~x) # 1D not allowed
+Error in validObject(.Object) : invalid class "SpatialPoints" object: spatial.dimension should be 2 or more
+> 
+> # is.na.sp.coords
+> a = data.frame(cbind(xx=c(1,NA,2,10),yy=c(2,NA,NA,20)))
+> try(coordinates(a) <- c("xx", "yy")) # should fail!
+Error in validObject(.Object) : invalid class "SpatialPoints" object: bbox should never contain NA values
+> 
+> x = meuse[1:4,]
+> coordinates(x) = c(1,2)
+> # this should fail -- zinc is not a row:
+> #(and will break automatic testing, so outcommented!)
+> #try(q <- x["zinc",])
+> # this will issue warning under S-Plus, or a silent rename under R
+> try(x[c("zinc", "copper", "zinc")])
+       coordinates zinc copper zinc.1
+1 (181072, 333611) 1022     85   1022
+2 (181025, 333558) 1141     81   1141
+3 (181165, 333537)  640     68    640
+4 (181298, 333484)  257     81    257
+> 
+> # this will fail, as "x" is not in the data part:
+> try(x[c("zinc", "x", "copper", "zinc")])
+Error in "[.data.frame"(x@data, i, j, drop = FALSE) : 
+	undefined columns selected
+> 
+> xx = data.frame(x=1:10, y=1:10)
+> 
+> # fails; use SpatialPoints() to create points without attribute 
+> try(coordinates(xx) <- c("x", "y")) 
+Error in validityMethod(object) : data.frame is empty (possibly after stripping coordinate columns): use SpatialPoints() to create points-only object
+> 
+> 

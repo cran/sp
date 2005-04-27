@@ -1,0 +1,53 @@
+"map.to.lev" <- function (data, zcol = 1:n, n = 2, names.attr)
+{
+	if (!extends(class(data), "SpatialPointsDataFrame"))
+		stop("data is not of a class that extends SpatialPointsDataFrame")
+
+	if (dimensions(data) > 2) {
+		warning("map.to.lev ignores spatial dimensions beyond the first 2")
+		cc = coordinates(data)[,1:2]
+		data = as(data, "data.frame")
+		coordinates(data) = cc
+	}
+	coord.names = dimnames(data@coords)[[2]]
+
+	data = stack(as(data, "SpatialPointsDataFrame"), zcol) # replace with data.frame
+	if (!missing(names.attr)) {
+		if (length(names.attr) != length(zcol))
+			stop("length names.attr should match length of zcol")
+		data$ind = factor(as.integer(data$ind), labels = names.attr)
+	}
+	names(data) = c(coord.names, "z", "name")
+	data
+}
+
+stack.SpatialPointsDataFrame = function (x, select, ...)
+{
+	xd = x@data
+   	cc = coordinates(x)
+	cc.names = dimnames(cc)[[2]]
+
+	if (!missing(select)) {
+		if (!is.numeric(select)) {
+			nl = as.list(1:ncol(xd))
+			names(nl) = names(xd)
+			vars = eval(substitute(select), nl, parent.frame())
+		} else
+			vars = select
+		xd = xd[, vars, drop = FALSE]
+	}
+	xd = xd[, unlist(lapply(xd, is.vector)), drop = FALSE]
+	ccr = data.frame(rep(cc[,1], ncol(xd)))
+	for (i in 2:ncol(cc))
+		ccr = data.frame(ccr, rep(cc[,i], ncol(xd)))
+	names(ccr) = cc.names
+	data.frame(ccr, values = unlist(unname(xd)),
+		ind = factor(rep(names(xd), lapply(xd, length)), 
+			levels = names(xd)))
+}
+
+stack.SpatialGridDataFrame = function (x, select, ...)
+	stack(as(x, "SpatialPointsDataFrame"), select, ...)
+
+stack.SpatialPixelsDataFrame = function (x, select, ...)
+	stack(as(x, "SpatialPointsDataFrame"), select, ...)
