@@ -1,6 +1,7 @@
 \name{Slines-class}
 \docType{class}
 \alias{Slines-class}
+\alias{getSlinesSlinesSlot}
 % \alias{coordinates,Slines-method}
 
 \title{Class "Sline" }
@@ -26,6 +27,14 @@ Class \code{"Spatial"}, directly.
     \item{lines}{\code{signature(x = "Sline")}: add lines to a plot}
   }
 }
+\usage{
+getSlinesSlinesSlot(SL)
+}
+\arguments{
+\item{SL}{an Slines object}
+}
+
+
 % \references{  }
 \author{ Roger Bivand, Edzer Pebesma }
 % \note{ }

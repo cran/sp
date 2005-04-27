@@ -66,14 +66,12 @@ to any of these types. Also, coercion (type casting) from one class to
 the other is provided, where relevant.
 
 Package {\tt sp} is loaded by 
-<<echo=TRUE,print=FALSE>>= 
-library(sp)
-@
+\begin{Schunk}
+\begin{Sinput}
+> library(sp)
+\end{Sinput}
+\end{Schunk}
 
-<<echo=FALSE,print=FALSE>>= 
-set.seed(13331)
-# library(lattice)
-@
 
 \section{Spatial data classes}
 
@@ -170,71 +168,257 @@ and {\tt sample} can be used to subsample full spatial entities.
 
 We can generate a set of 10 points on the unit square $[0,1] \times
 [0,1]$ by
-<<echo=TRUE,print=FALSE>>= 
-xc = round(runif(10), 2)
-yc = round(runif(10), 2)
-xy = cbind(xc, yc)
-xy
-@
+\begin{Schunk}
+\begin{Sinput}
+> xc = round(runif(10), 2)
+> yc = round(runif(10), 2)
+> xy = cbind(xc, yc)
+> xy
+\end{Sinput}
+\begin{Soutput}
+        xc   yc
+ [1,] 0.67 0.30
+ [2,] 0.96 0.62
+ [3,] 0.92 0.91
+ [4,] 0.77 0.85
+ [5,] 0.72 0.46
+ [6,] 0.74 0.39
+ [7,] 0.63 0.64
+ [8,] 0.19 0.72
+ [9,] 0.70 0.20
+[10,] 0.37 0.28
+\end{Soutput}
+\end{Schunk}
 this $10 \times 2$ matrix can be converted into a {\tt SpatialPoints}
 object by
 
-<<echo=TRUE,print=FALSE,fig=FALSE>>= 
-xy.sp = SpatialPoints(xy)
-xy.sp
-plot(xy.sp, pch = 2)
-@
+\begin{Schunk}
+\begin{Sinput}
+> xy.sp = SpatialPoints(xy)
+> xy.sp
+\end{Sinput}
+\begin{Soutput}
+SpatialPoints:
+        xc   yc
+ [1,] 0.67 0.30
+ [2,] 0.96 0.62
+ [3,] 0.92 0.91
+ [4,] 0.77 0.85
+ [5,] 0.72 0.46
+ [6,] 0.74 0.39
+ [7,] 0.63 0.64
+ [8,] 0.19 0.72
+ [9,] 0.70 0.20
+[10,] 0.37 0.28
+Coordinate Reference System (CRS) arguments: NA 
+\end{Soutput}
+\begin{Sinput}
+> plot(xy.sp, pch = 2)
+\end{Sinput}
+\end{Schunk}
 The plot is shown in figure \ref{fig:points}.
 
 \begin{figure}
 \begin{center}
-<<echo=FALSE,print=FALSE,fig=TRUE>>= 
-plot(xy.sp, pch = 2)
-@
+\includegraphics{sp-005}
 \end{center}
 \caption{plot of {\tt SpatialPoints} object; aspect ratio of x and y axis units is 1}
 \label{fig:points}
 \end{figure}
 
 We can retrieve the coordinates from {\tt xy.sp} by
-<<echo=TRUE>>=
-xy.cc = coordinates(xy.sp)
-class(xy.cc)
-dim(xy.cc)
-@
+\begin{Schunk}
+\begin{Sinput}
+> xy.cc = coordinates(xy.sp)
+> class(xy.cc)
+\end{Sinput}
+\begin{Soutput}
+[1] "matrix"
+\end{Soutput}
+\begin{Sinput}
+> dim(xy.cc)
+\end{Sinput}
+\begin{Soutput}
+[1] 10  2
+\end{Soutput}
+\end{Schunk}
 and other methods retrieve the bounding box, the dimensions, select points
 (not dimensions or columns), coerce to a data.frame, or print a summary:
-<<echo=TRUE>>=
-bbox(xy.sp)
-dimensions(xy.sp)
-xy.sp[1:2]
-xy.df = as.data.frame(xy.sp)
-class(xy.df)
-dim(xy.df)
-summary(xy.sp)
-@
+\begin{Schunk}
+\begin{Sinput}
+> bbox(xy.sp)
+\end{Sinput}
+\begin{Soutput}
+    min  max
+xc 0.19 0.96
+yc 0.20 0.91
+\end{Soutput}
+\begin{Sinput}
+> dimensions(xy.sp)
+\end{Sinput}
+\begin{Soutput}
+[1] 2
+\end{Soutput}
+\begin{Sinput}
+> xy.sp[1:2]
+\end{Sinput}
+\begin{Soutput}
+SpatialPoints:
+       xc   yc
+[1,] 0.67 0.30
+[2,] 0.96 0.62
+Coordinate Reference System (CRS) arguments: NA 
+\end{Soutput}
+\begin{Sinput}
+> xy.df = as.data.frame(xy.sp)
+> class(xy.df)
+\end{Sinput}
+\begin{Soutput}
+[1] "data.frame"
+\end{Soutput}
+\begin{Sinput}
+> dim(xy.df)
+\end{Sinput}
+\begin{Soutput}
+[1] 10  2
+\end{Soutput}
+\begin{Sinput}
+> summary(xy.sp)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialPoints
+Coordinates:
+    min  max
+xc 0.19 0.96
+yc 0.20 0.91
+Is projected: NA 
+proj4string : [NA]
+Number of points: 10
+\end{Soutput}
+\end{Schunk}
 
 \subsection{Points with attributes}
 
 One way of creating a {\tt SpatialPointsDataFrame} object is by building
 it from a a {\tt SpatialPoints} object and a data.frame containing
 the attributes:
-<<echo=TRUE>>=
-df = data.frame(z1 = round(5 + rnorm(10), 2), z2 = 20:29)
-df
-xy.spdf = SpatialPointsDataFrame(xy.sp, df)
-xy.spdf
-summary(xy.spdf)
-dimensions(xy.spdf)
-xy.spdf[1:2, ] # selects row 1 and 2
-xy.spdf[1] # selects attribute column 1, along with the coordinates
-xy.spdf[1:2, "z2"] # select row 1,2 and attribute "z2"
-xy.df = as.data.frame(xy.spdf)
-xy.df[1:2,]
-xy.cc = coordinates(xy.spdf)
-class(xy.cc)
-dim(xy.cc)
-@
+\begin{Schunk}
+\begin{Sinput}
+> df = data.frame(z1 = round(5 + rnorm(10), 2), z2 = 20:29)
+> df
+\end{Sinput}
+\begin{Soutput}
+     z1 z2
+1  3.10 20
+2  4.15 21
+3  3.68 22
+4  4.45 23
+5  6.62 24
+6  5.57 25
+7  3.66 26
+8  3.75 27
+9  5.19 28
+10 5.02 29
+\end{Soutput}
+\begin{Sinput}
+> xy.spdf = SpatialPointsDataFrame(xy.sp, df)
+> xy.spdf
+\end{Sinput}
+\begin{Soutput}
+    coordinates   z1 z2
+1   (0.67, 0.3) 3.10 20
+2  (0.96, 0.62) 4.15 21
+3  (0.92, 0.91) 3.68 22
+4  (0.77, 0.85) 4.45 23
+5  (0.72, 0.46) 6.62 24
+6  (0.74, 0.39) 5.57 25
+7  (0.63, 0.64) 3.66 26
+8  (0.19, 0.72) 3.75 27
+9    (0.7, 0.2) 5.19 28
+10 (0.37, 0.28) 5.02 29
+\end{Soutput}
+\begin{Sinput}
+> summary(xy.spdf)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialPointsDataFrame
+Coordinates:
+    min  max
+xc 0.19 0.96
+yc 0.20 0.91
+Is projected: NA 
+proj4string : [NA]
+Number of points: 10
+Data attributes:
+       z1              z2       
+ Min.   :3.100   Min.   :20.00  
+ 1st Qu.:3.697   1st Qu.:22.25  
+ Median :4.300   Median :24.50  
+ Mean   :4.519   Mean   :24.50  
+ 3rd Qu.:5.147   3rd Qu.:26.75  
+ Max.   :6.620   Max.   :29.00  
+\end{Soutput}
+\begin{Sinput}
+> dimensions(xy.spdf)
+\end{Sinput}
+\begin{Soutput}
+[1] 2
+\end{Soutput}
+\begin{Sinput}
+> xy.spdf[1:2, ]
+\end{Sinput}
+\begin{Soutput}
+   coordinates   z1 z2
+1  (0.67, 0.3) 3.10 20
+2 (0.96, 0.62) 4.15 21
+\end{Soutput}
+\begin{Sinput}
+> xy.spdf[1]
+\end{Sinput}
+\begin{Soutput}
+    coordinates   z1
+1   (0.67, 0.3) 3.10
+2  (0.96, 0.62) 4.15
+3  (0.92, 0.91) 3.68
+4  (0.77, 0.85) 4.45
+5  (0.72, 0.46) 6.62
+6  (0.74, 0.39) 5.57
+7  (0.63, 0.64) 3.66
+8  (0.19, 0.72) 3.75
+9    (0.7, 0.2) 5.19
+10 (0.37, 0.28) 5.02
+\end{Soutput}
+\begin{Sinput}
+> xy.spdf[1:2, "z2"]
+\end{Sinput}
+\begin{Soutput}
+   coordinates z2
+1  (0.67, 0.3) 20
+2 (0.96, 0.62) 21
+\end{Soutput}
+\begin{Sinput}
+> xy.df = as.data.frame(xy.spdf)
+> xy.df[1:2, ]
+\end{Sinput}
+\begin{Soutput}
+    z1 z2   xc   yc
+1 3.10 20 0.67 0.30
+2 4.15 21 0.96 0.62
+\end{Soutput}
+\begin{Sinput}
+> xy.cc = coordinates(xy.spdf)
+> class(xy.cc)
+\end{Sinput}
+\begin{Soutput}
+[1] "matrix"
+\end{Soutput}
+\begin{Sinput}
+> dim(xy.cc)
+\end{Sinput}
+\begin{Soutput}
+[1] 10  2
+\end{Soutput}
+\end{Schunk}
 A note on selection with \verb|[|: the behaviour is as much as possible
 copied from that of {\tt data.frame}s, but coordinates are always
 sticky and allways a {\tt SpatialPointsDataFrame} is returned; {\tt
@@ -244,49 +428,112 @@ drop=FALSE} is not allowed. If coordinates should be dropped, use the
 
 {\tt SpatialPointsDataFrame} objects can be created directly from 
 data.frames by specifying which columns contain the coordinates:
-<<echo=TRUE>>=
-df1 = data.frame(xy, df)
-coordinates(df1) = c("xc", "yc")
-df1
-@
+\begin{Schunk}
+\begin{Sinput}
+> df1 = data.frame(xy, df)
+> coordinates(df1) = c("xc", "yc")
+> df1
+\end{Sinput}
+\begin{Soutput}
+    coordinates   z1 z2
+1   (0.67, 0.3) 3.10 20
+2  (0.96, 0.62) 4.15 21
+3  (0.92, 0.91) 3.68 22
+4  (0.77, 0.85) 4.45 23
+5  (0.72, 0.46) 6.62 24
+6  (0.74, 0.39) 5.57 25
+7  (0.63, 0.64) 3.66 26
+8  (0.19, 0.72) 3.75 27
+9    (0.7, 0.2) 5.19 28
+10 (0.37, 0.28) 5.02 29
+\end{Soutput}
+\end{Schunk}
 or
-<<echo=TRUE>>=
-df2 = data.frame(xy, df)
-coordinates(df2) = ~xc+yc
-df2[1:2,]
-as.data.frame(df2)[1:2,]
-@
+\begin{Schunk}
+\begin{Sinput}
+> df2 = data.frame(xy, df)
+> coordinates(df2) = ~xc + yc
+> df2[1:2, ]
+\end{Sinput}
+\begin{Soutput}
+   coordinates   z1 z2
+1  (0.67, 0.3) 3.10 20
+2 (0.96, 0.62) 4.15 21
+\end{Soutput}
+\begin{Sinput}
+> as.data.frame(df2)[1:2, ]
+\end{Sinput}
+\begin{Soutput}
+    xc   yc   z1 z2
+1 0.67 0.30 3.10 20
+2 0.96 0.62 4.15 21
+\end{Soutput}
+\end{Schunk}
 Note that in this form, {\tt coordinates} by setting (specifying) the
 coordinates promotes it argument, an object of class {\tt data.frame}
 to an object of class {\tt SpatialPointsDataFrame}. The method {\tt
 as.data.frame} coerces back to the original {\tt data.frame}. When used
 on a right-hand side of an equation, {\tt coorinates} {\em retrieves}
 the matrix with coordinates:
-<<>>=
-coordinates(df2)[1:2,]
-@
+\begin{Schunk}
+\begin{Sinput}
+> coordinates(df2)[1:2, ]
+\end{Sinput}
+\begin{Soutput}
+    xc   yc
+1 0.67 0.30
+2 0.96 0.62
+
+\end{Soutput}
+\end{Schunk}
 Elements (columns) in the data.frame part of an object can be manipulated
 (retrieved, assigned) directly:
-<<>>=
-df2[["z2"]]
-df2[["z2"]][10] = 20
-df2[["z3"]] = 1:10
-summary(df2)
-@
+\begin{Schunk}
+\begin{Sinput}
+> df2[["z2"]]
+\end{Sinput}
+\begin{Soutput}
+ [1] 20 21 22 23 24 25 26 27 28 29
+
+\end{Soutput}
+\begin{Sinput}
+> df2[["z2"]][10] = 20
+> df2[["z3"]] = 1:10
+> summary(df2)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialPointsDataFrame
+Coordinates:
+    min  max
+xc 0.19 0.96
+yc 0.20 0.91
+Is projected: NA 
+proj4string : [NA]
+Number of points: 10
+Data attributes:
+       z1              z2              z3       
+ Min.   :3.100   Min.   :20.00   Min.   : 1.00  
+ 1st Qu.:3.697   1st Qu.:21.25   1st Qu.: 3.25  
+ Median :4.300   Median :23.50   Median : 5.50  
+ Mean   :4.519   Mean   :23.60   Mean   : 5.50  
+ 3rd Qu.:5.147   3rd Qu.:25.75   3rd Qu.: 7.75  
+ Max.   :6.620   Max.   :28.00   Max.   :10.00  
+
+\end{Soutput}
+\end{Schunk}
 Plotting attribute data can be done by using either {\tt spplot} to
 colour symbols, or {\tt bubble} which uses symbol size:
-<<eval=FALSE,echo=TRUE,print=FALSE>>=
-bubble(df2, "z1", key.space = "bottom")
-spplot(df2, "z1", key.space = "bottom")
-@
+\begin{Schunk}
+\begin{Sinput}
+> bubble(df2, "z1", key.space = "bottom")
+> spplot(df2, "z1", key.space = "bottom")
+\end{Sinput}
+\end{Schunk}
 the resulting plots are shown in figure \ref{fig:spdf}.
 
 \begin{figure}
 \begin{center}
-<<echo=FALSE,print=FALSE,fig=TRUE>>= 
-print(bubble(df2, "z1", key.space = "bottom"), split = c(1,1,2,1), more=TRUE)
-print(spplot(df2, "z1", key.space = "bottom"), split =  c(2,1,2,1), more=FALSE)
-@
+\includegraphics{sp-014}
 \end{center}
 \caption{plot of {\tt SpatialPointsDataFrame} object, using symbol 
 size ({\tt bubble}, top) or colour ({\tt spplot}, bottom) }
@@ -304,27 +551,89 @@ one representation to the other.
 \subsection{Creating grids from topology}
 When we know the offset, the cell sizes and the dimensions of a grid, we
 can specify this by using the function {\tt GridTopology}:
-<<>>=
-gt = GridTopology(cellcentre.offset = c(1,1,2), cellsize=c(1,1,1), cells.dim = c(3,4,6))
-grd = SpatialGrid(gt)
-summary(grd)
-@
+\begin{Schunk}
+\begin{Sinput}
+> gt = GridTopology(cellcentre.offset = c(1, 1, 2), cellsize = c(1, 
++     1, 1), cells.dim = c(3, 4, 6))
+> grd = SpatialGrid(gt)
+> summary(grd)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialGrid
+Coordinates:
+          min max
+coords.x1   1   3
+coords.x2   1   4
+coords.x3   2   7
+Is projected: NA 
+proj4string : [NA]
+Number of points: 2
+Grid attributes:
+  cellcentre.offset cellsize cells.dim
+1                 1        1         3
+2                 1        1         4
+3                 2        1         6
+
+\end{Soutput}
+\end{Schunk}
 
 The grid parameters can be retrieved by the function
-<<>>=
-gridparameters(grd)
-@
+\begin{Schunk}
+\begin{Sinput}
+> gridparameters(grd)
+\end{Sinput}
+\begin{Soutput}
+  cellcentre.offset cellsize cells.dim
+1                 1        1         3
+2                 1        1         4
+3                 2        1         6
+
+\end{Soutput}
+\end{Schunk}
 
 \subsection{Creating grids from points}
 In the following example a three-dimensional grid is constructed from
 a set of point coordinates:
-<<>>=
-pts = expand.grid(x = 1:3, y = 1:4, z=2:7)
-grd.pts = SpatialPixels(SpatialPoints(pts))
-summary(grd.pts)
-grd = as(grd.pts, "SpatialGrid")
-summary(grd)
-@
+\begin{Schunk}
+\begin{Sinput}
+> pts = expand.grid(x = 1:3, y = 1:4, z = 2:7)
+> grd.pts = SpatialPixels(SpatialPoints(pts))
+> summary(grd.pts)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialPixels
+Coordinates:
+  min max
+x   1   3
+y   1   4
+z   2   7
+Is projected: NA 
+proj4string : [NA]
+Number of points: 72
+
+\end{Soutput}
+\begin{Sinput}
+> grd = as(grd.pts, "SpatialGrid")
+> summary(grd)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialGrid
+Coordinates:
+  min max
+x   1   3
+y   1   4
+z   2   7
+Is projected: NA 
+proj4string : [NA]
+Number of points: 2
+Grid attributes:
+  cellcentre.offset cellsize cells.dim
+x                 1        1         3
+y                 1        1         4
+z                 2        1         6
+
+\end{Soutput}
+\end{Schunk}
 Note that when passed a points argument, SpatialPixels accepts a tolerance
 (default 10 * .Machine\$double.eps) to specify how close the points have
 to be to being exactly on a grid. For very large coordinates, this value
@@ -335,15 +644,48 @@ are missing.
 
 Spatial, gridded data are data with coordinates on a regular lattice.
 To form such a grid we can go from coordinates:
-<<>>=
-attr = expand.grid(xc = 1:3, yc = 1:3)
-grd.attr = data.frame(attr, z1 = 1:9, z2 = 9:1)
-coordinates(grd.attr) = ~xc + yc
-gridded(grd.attr)
-gridded(grd.attr) = TRUE
-gridded(grd.attr)
-summary(grd.attr)
-@
+\begin{Schunk}
+\begin{Sinput}
+> attr = expand.grid(xc = 1:3, yc = 1:3)
+> grd.attr = data.frame(attr, z1 = 1:9, z2 = 9:1)
+> coordinates(grd.attr) = ~xc + yc
+> gridded(grd.attr)
+\end{Sinput}
+\begin{Soutput}
+[1] FALSE
+
+\end{Soutput}
+\begin{Sinput}
+> gridded(grd.attr) = TRUE
+> gridded(grd.attr)
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+
+\end{Soutput}
+\begin{Sinput}
+> summary(grd.attr)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialPixelsDataFrame
+Coordinates:
+   min max
+xc   1   3
+yc   1   3
+Is projected: NA 
+proj4string : [NA]
+Number of points: 9
+Data attributes:
+       z1          z2   
+ Min.   :1   Min.   :1  
+ 1st Qu.:3   1st Qu.:3  
+ Median :5   Median :5  
+ Mean   :5   Mean   :5  
+ 3rd Qu.:7   3rd Qu.:7  
+ Max.   :9   Max.   :9  
+
+\end{Soutput}
+\end{Schunk}
 
 \subsection{Are grids stored as points or as matrix/array?}
 
@@ -351,15 +693,45 @@ The form in which gridded data comes depends on whether the grid was
 created from a set of points or from a matrix or external grid format
 (e.g. read through rgdal). Retrieving the form, or conversion to another
 can be done by {\tt as(x, "Class")}, or by using the function {\tt fullgrid}:
-<<>>=
-fullgrid(grd)
-fullgrid(grd.pts)
-fullgrid(grd.attr)
-fullgrid(grd.pts) = TRUE
-fullgrid(grd.attr) = TRUE
-fullgrid(grd.pts)
-fullgrid(grd.attr)
-@
+\begin{Schunk}
+\begin{Sinput}
+> fullgrid(grd)
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+
+\end{Soutput}
+\begin{Sinput}
+> fullgrid(grd.pts)
+\end{Sinput}
+\begin{Soutput}
+[1] FALSE
+
+\end{Soutput}
+\begin{Sinput}
+> fullgrid(grd.attr)
+\end{Sinput}
+\begin{Soutput}
+[1] FALSE
+
+\end{Soutput}
+\begin{Sinput}
+> fullgrid(grd.pts) = TRUE
+> fullgrid(grd.attr) = TRUE
+> fullgrid(grd.pts)
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+
+\end{Soutput}
+\begin{Sinput}
+> fullgrid(grd.attr)
+\end{Sinput}
+\begin{Soutput}
+[1] TRUE
+
+\end{Soutput}
+\end{Schunk}
 
 The advantage of having grids in cell form is that when a large part
 of the grid contains missing values, these cells do not have to be
@@ -392,12 +764,50 @@ plotting of a single grid plot or a lattice of grid plots.
 Rows/columns selection can be done when gridded data is in the full grid
 form (as {\tt SpatialGridDataFrame}). In this form also rows and/or columns
 can be de-selected (in which case a warning is issued):
-<<>>=
-fullgrid(grd.attr) = FALSE
-grd.attr[1:5, "z1"]
-fullgrid(grd.attr) = TRUE
-grd.attr[1:2,-2, c("z2","z1")]
-@
+\begin{Schunk}
+\begin{Sinput}
+> fullgrid(grd.attr) = FALSE
+> grd.attr[1:5, "z1"]
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialPixelsDataFrame
+Object of class SpatialPixels
+Grid topology:
+   cellcentre.offset cellsize cells.dim
+xc                 1        1         3
+yc                 2        1         2
+SpatialPoints:
+     xc yc
+[1,]  1  3
+[2,]  2  3
+[3,]  3  3
+[4,]  1  2
+[5,]  2  2
+Coordinate Reference System (CRS) arguments: NA 
+
+Data:
+       z1     
+ Min.   :4.0  
+ 1st Qu.:5.0  
+ Median :7.0  
+ Mean   :6.6  
+ 3rd Qu.:8.0  
+ Max.   :9.0  
+
+\end{Soutput}
+\begin{Sinput}
+> fullgrid(grd.attr) = TRUE
+> grd.attr[1:2, -2, c("z2", "z1")]
+\end{Sinput}
+\begin{Soutput}
+SpatialPoints:
+     xc yc
+[1,]  1  2
+[2,]  3  3
+Coordinate Reference System (CRS) arguments: NA 
+
+\end{Soutput}
+\end{Schunk}
 
 \section{Lines}
 
@@ -407,30 +817,64 @@ sources.  The following example shows how to build an object of class
 {\tt SpatialLines} from scratch.
 
 % build line objects
-<<fig=TRUE>>=
-l1 = cbind(c(1,2,3),c(3,2,2))
-l1a = cbind(l1[,1]+.05,l1[,2]+.05)
-l2 = cbind(c(1,2,3),c(1,1.5,1))
-Sl1 = Sline(l1)
-Sl1a = Sline(l1a)
-Sl2 = Sline(l2)
-S1 = Slines(list(Sl1, Sl1a))
-S2 = Slines(list(Sl2))
-Sl = SpatialLines(list(S1,S2))
-summary(Sl)
-plot(Sl, col = c("red", "blue"))
-@
+\begin{Schunk}
+\begin{Sinput}
+> l1 = cbind(c(1, 2, 3), c(3, 2, 2))
+> l1a = cbind(l1[, 1] + 0.05, l1[, 2] + 0.05)
+> l2 = cbind(c(1, 2, 3), c(1, 1.5, 1))
+> Sl1 = Sline(l1)
+> Sl1a = Sline(l1a)
+> Sl2 = Sline(l2)
+> S1 = Slines(list(Sl1, Sl1a))
+> S2 = Slines(list(Sl2))
+> Sl = SpatialLines(list(S1, S2))
+> summary(Sl)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialLines
+Coordinates:
+   min  max
+r1   1 3.05
+r2   1 3.05
+Is projected: NA 
+proj4string : [NA]
+\end{Soutput}
+\begin{Sinput}
+> plot(Sl, col = c("red", "blue"))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{sp-021}
 
 \subsection{Building line objects with attributes}
 
 The class {\tt SpatialLinesDataFrame} is designed for holding
 lines data that have an attribute table (data.frame) attached
 to it:
-<<>>=
-df = data.frame(z = c(1,2))
-Sldf = SpatialLinesDataFrame(Sl, data = df)
-summary(Sldf)
-@
+\begin{Schunk}
+\begin{Sinput}
+> df = data.frame(z = c(1, 2))
+> Sldf = SpatialLinesDataFrame(Sl, data = df)
+> summary(Sldf)
+\end{Sinput}
+\begin{Soutput}
+Object of class SpatialLinesDataFrame
+Coordinates:
+   min  max
+r1   1 3.05
+r2   1 3.05
+Is projected: NA 
+proj4string : [NA]
+Data attributes:
+       z       
+ Min.   :1.00  
+ 1st Qu.:1.25  
+ Median :1.50  
+ Mean   :1.50  
+ 3rd Qu.:1.75  
+ Max.   :2.00  
+
+\end{Soutput}
+\end{Schunk}
 Not many useful methods for it are available yet.  The {\tt plot} method
 only plots the lines, ignoring attribute table values. Suggestions for
 useful methods are welcome.
@@ -441,39 +885,46 @@ useful methods are welcome.
 The following example shows how a set of polygons are built from scratch.
 Note that {\tt Sr4} has the opposite direction (anti-clockwise) as the other three (clockwise);
 it is meant to represent a hole in the {\tt Sr3} polygon. The default value for the hole colour {\tt pbg} is {\tt "transparent}, which will not show, but which often does not matter, because another polygon fills the hole --- here it is set to {\tt "white"}.
-<<fig=TRUE>>=
-Sr1 = Sring(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
-Sr2 = Sring(cbind(c(5,4,2,5),c(2,3,2,2)))
-Sr3 = Sring(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))
-Sr4 = Sring(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE)
-
-Srs1 = Srings(list(Sr1), "s1")
-Srs2 = Srings(list(Sr2), "s2")
-Srs3 = Srings(list(Sr3, Sr4), "s3/4")
-SR = SpatialRings(list(Srs1,Srs2,Srs3), 1:3)
-plot.SpatialRings(SR, col = 1:3, pbg="white")
-# plot(SR)
-@
+\begin{Schunk}
+\begin{Sinput}
+> Sr1 = Sring(cbind(c(2, 4, 4, 1, 2), c(2, 3, 5, 4, 2)))
+> Sr2 = Sring(cbind(c(5, 4, 2, 5), c(2, 3, 2, 2)))
+> Sr3 = Sring(cbind(c(4, 4, 5, 10, 4), c(5, 3, 2, 5, 5)))
+> Sr4 = Sring(cbind(c(5, 6, 6, 5, 5), c(4, 4, 3, 3, 4)), hole = TRUE)
+> Srs1 = Srings(list(Sr1), "s1")
+> Srs2 = Srings(list(Sr2), "s2")
+> Srs3 = Srings(list(Sr3, Sr4), "s3/4")
+> SR = SpatialRings(list(Srs1, Srs2, Srs3), 1:3)
+> plot.SpatialRings(SR, col = 1:3, pbg = "white")
+\end{Sinput}
+\end{Schunk}
+\includegraphics{sp-023}
 
 \subsection{Polygons with attributes}
 Polygons with attributes, objects of class {\tt SpatialRingsDataFrame},
 are built from the {\tt SpatialRings} object (topology) and the attributes
 (data.frame):
-<<>>=
-attr = data.frame(a=1:3, b=3:1)
-SrDf = SpatialRingsDataFrame(SR, attr)
-spplot(SrDf)
-@
+\begin{Schunk}
+\begin{Sinput}
+> attr = data.frame(a = 1:3, b = 3:1)
+> SrDf = SpatialRingsDataFrame(SR, attr)
+> spplot(SrDf)
+\end{Sinput}
+\begin{Soutput}
+Loading required package: grid
 
-<<fig=TRUE,echo=FALSE>>=
-print(spplot(SrDf))
-@
+\end{Soutput}
+\end{Schunk}
+
+\includegraphics{sp-025}
 
 or, as another way to create the {\tt SpatialRingsDataFrame} object:
-<<>>=
-SrDf = attr
-rings(SrDf) = SR
-@
+\begin{Schunk}
+\begin{Sinput}
+> SrDf = attr
+> rings(SrDf) = SR
+\end{Sinput}
+\end{Schunk}
 
 \section{Interfaces to GIS and external formats}
 
