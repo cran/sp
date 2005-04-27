@@ -1,0 +1,142 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.0 beta (2005-04-10), ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> set.seed(131)
+> x = list(a = 1:10, b = 10:1, c = letters[1:10], d = rep("xx", 10), 
++ 	e = factor(1:10), f = rnorm(10), sample(10))
+> library(sp)
+> x = AttributeList(x)
+> x
+An object of class "AttributeList"
+Slot "att":
+$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$b
+ [1] 10  9  8  7  6  5  4  3  2  1
+
+$c
+ [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
+
+$d
+ [1] "xx" "xx" "xx" "xx" "xx" "xx" "xx" "xx" "xx" "xx"
+
+$e
+ [1] 1  2  3  4  5  6  7  8  9  10
+Levels: 1 2 3 4 5 6 7 8 9 10
+
+$f
+ [1] -0.81884660 -0.54384762  1.02089049  0.04670388 -0.45010286 -0.21150073
+ [7]  1.10377374  0.05798225 -1.76945020  0.75282646
+
+[[7]]
+ [1]  3  6  9 10  4  2  8  5  7  1
+
+
+> dim(x)
+[1] 10  7
+> nrow(x)
+[1] 10
+> as.data.frame(x)
+    a  b c  d  e           f c.3..6..9..10..4..2..8..5..7..1.
+1   1 10 a xx  1 -0.81884660                                3
+2   2  9 b xx  2 -0.54384762                                6
+3   3  8 c xx  3  1.02089049                                9
+4   4  7 d xx  4  0.04670388                               10
+5   5  6 e xx  5 -0.45010286                                4
+6   6  5 f xx  6 -0.21150073                                2
+7   7  4 g xx  7  1.10377374                                8
+8   8  3 h xx  8  0.05798225                                5
+9   9  2 i xx  9 -1.76945020                                7
+10 10  1 j xx 10  0.75282646                                1
+> x[1]
+An object of class "AttributeList"
+Slot "att":
+$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+
+> x[1:3]
+An object of class "AttributeList"
+Slot "att":
+$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$b
+ [1] 10  9  8  7  6  5  4  3  2  1
+
+$c
+ [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
+
+
+> x[1:3,]
+An object of class "AttributeList"
+Slot "att":
+$a
+[1] 1 2 3
+
+$b
+[1] 10  9  8
+
+$c
+[1] "a" "b" "c"
+
+$d
+[1] "xx" "xx" "xx"
+
+$e
+[1] 1 2 3
+Levels: 1 2 3 4 5 6 7 8 9 10
+
+$f
+[1] -0.8188466 -0.5438476  1.0208905
+
+[[7]]
+[1] 3 6 9
+
+
+> x[1:3, c("a", "d")]
+An object of class "AttributeList"
+Slot "att":
+$a
+[1] 1 2 3
+
+$d
+[1] "xx" "xx" "xx"
+
+
+> x[, c("a", "d")]
+An object of class "AttributeList"
+Slot "att":
+$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$d
+ [1] "xx" "xx" "xx" "xx" "xx" "xx" "xx" "xx" "xx" "xx"
+
+
+> x$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+> x$a = 10:1
+> x[["a"]]
+ [1] 10  9  8  7  6  5  4  3  2  1
+> x[["a"]] = 1:10
+> names(x)
+[1] "a" "b" "c" "d" "e" "f" "" 
+> names(x) = letters[1:7]
+> names(x)
+[1] "a" "b" "c" "d" "e" "f" "g"
+> 

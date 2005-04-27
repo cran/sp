@@ -125,7 +125,7 @@ coordinates(x)} to retrieve the coordinates.
 \subsection{Standard methods}
 
 Selecting, retrieving or replacing certain attributes in spatial objects
-with attributes is done using methods standard
+with attributes is done using standard methods
 \begin{itemize}
 \item \verb|[| select "rows" (items) and/or columns in the data attribute
 table; e.g. {\tt meuse[1:2, "zinc"]} returns a {\tt SpatialPointsDataFrame}
@@ -257,10 +257,10 @@ df2[1:2,]
 as.data.frame(df2)[1:2,]
 @
 Note that in this form, {\tt coordinates} by setting (specifying) the
-coordinates promotes it argument, an object of class {\tt data.frame}
+coordinates promotes its argument, an object of class {\tt data.frame}
 to an object of class {\tt SpatialPointsDataFrame}. The method {\tt
 as.data.frame} coerces back to the original {\tt data.frame}. When used
-on a right-hand side of an equation, {\tt coorinates} {\em retrieves}
+on a right-hand side of an equation, {\tt coordinates} {\em retrieves}
 the matrix with coordinates:
 <<>>=
 coordinates(df2)[1:2,]
@@ -338,7 +338,7 @@ To form such a grid we can go from coordinates:
 <<>>=
 attr = expand.grid(xc = 1:3, yc = 1:3)
 grd.attr = data.frame(attr, z1 = 1:9, z2 = 9:1)
-coordinates(grd.attr) = ~xc + yc
+coordinates(grd.attr) = ~xc+yc
 gridded(grd.attr)
 gridded(grd.attr) = TRUE
 gridded(grd.attr)
@@ -440,7 +440,7 @@ useful methods are welcome.
 \subsection{Building from scratch}
 The following example shows how a set of polygons are built from scratch.
 Note that {\tt Sr4} has the opposite direction (anti-clockwise) as the other three (clockwise);
-it is meant to represent a hole in the {\tt Sr3} polygon. The default value for the hole colour {\tt pbg} is {\tt "transparent}, which will not show, but which often does not matter, because another polygon fills the hole --- here it is set to {\tt "white"}.
+it is meant to represent a hole in the {\tt Sr3} polygon. The default value for the hole colour {\tt pbg} is {\tt "transparent}, which will not show, but which often does not matter, because another polygon fills the hole --- here it is set to {\tt "white"}. Note that the {\tt Srings} objects have to be given character ID values, and that these values must be unique for {\tt Srings} objects combined in a {\tt SpatialRings} object.
 <<fig=TRUE>>=
 Sr1 = Sring(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
 Sr2 = Sring(cbind(c(5,4,2,5),c(2,3,2,2)))
@@ -458,10 +458,11 @@ plot.SpatialRings(SR, col = 1:3, pbg="white")
 \subsection{Polygons with attributes}
 Polygons with attributes, objects of class {\tt SpatialRingsDataFrame},
 are built from the {\tt SpatialRings} object (topology) and the attributes
-(data.frame):
+(data.frame). The {\tt row.names} of the attributes data frame are matched with the ID slots of the {\tt SpatialRings} object, and the rows of the data frame will be re-ordered if necessary.
 <<>>=
-attr = data.frame(a=1:3, b=3:1)
+attr = data.frame(a=1:3, b=3:1, row.names=c("s3/4", "s2", "s1"))
 SrDf = SpatialRingsDataFrame(SR, attr)
+as(SrDf, "data.frame")
 spplot(SrDf)
 @
 

@@ -256,8 +256,10 @@ panel.pointsplot = function(x, y, subscripts, col, sp.layout, ..., panel.counter
 	panel.superpose(x, y, subscripts, col = col, ...)
 }
 
-fill.call.groups = function(lst, z, ..., cuts, col.regions = trellis.par.get("regions")$col, 
-		legendEntries = "", pch, cex = 1, fill = TRUE, do.log = FALSE, key.space = "bottom") {
+fill.call.groups = function(lst, z, ..., cuts, 
+	col.regions = trellis.par.get("regions")$col, legendEntries = "", pch, 
+	cex = 1, fill = TRUE, do.log = FALSE, key.space = "bottom") 
+{
     if (missing(pch)) 
         lst$pch = ifelse(fill, 16, 1)
 	if (missing(cuts))

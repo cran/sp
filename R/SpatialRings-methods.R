@@ -225,3 +225,36 @@ setMethod("[", "SpatialRings", function(x, i, j, ..., drop = T) {
 		stop("SpatialRings selection: can't find plot order if rings are replicated")
 	SpatialRings(x@polygons[i], pO = order(match(i, x@plotOrder)))
 })
+
+setMethod("coordnames", signature(x = "SpatialRings"), 
+	function(x) coordnames(x@polygons[[1]])
+)
+setMethod("coordnames", signature(x = "Srings"), 
+	function(x) coordnames(x@Srings[[1]])
+)
+setMethod("coordnames", signature(x = "Sring"), 
+	function(x) dimnames(x@coords)[[2]]
+)
+setReplaceMethod("coordnames", 
+	signature(x = "SpatialRings", value = "character"),
+	function(x, value) {
+		for (i in seq(along = x@polygons))
+			coordnames(x@polygons[[i]]) = value
+		x
+	}
+)
+setReplaceMethod("coordnames", 
+	signature(x = "Srings", value = "character"),
+	function(x, value) {
+		for (i in seq(along = x@Srings))
+			coordnames(x@Srings[[i]]) = value
+		x
+	}
+)
+setReplaceMethod("coordnames", 
+	signature(x = "Sring", value = "character"),
+	function(x, value) {
+		dimnames(x@coords)[[2]] = value
+		x
+	}
+)

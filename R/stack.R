@@ -21,29 +21,38 @@
 	data
 }
 
+stack.AttributeList = function(x, ...) stack(x@att, ...)
+
 stack.SpatialPointsDataFrame = function (x, select, ...)
 {
 	xd = x@data
    	cc = coordinates(x)
 	cc.names = dimnames(cc)[[2]]
 
-	if (!missing(select)) {
-		if (!is.numeric(select)) {
-			nl = as.list(1:ncol(xd))
-			names(nl) = names(xd)
-			vars = eval(substitute(select), nl, parent.frame())
-		} else
-			vars = select
-		xd = xd[, vars, drop = FALSE]
-	}
-	xd = xd[, unlist(lapply(xd, is.vector)), drop = FALSE]
-	ccr = data.frame(rep(cc[,1], ncol(xd)))
+	#if (!missing(select)) {
+	#	if (!is.numeric(select)) {
+	#		nl = as.list(1:ncol(xd))
+	#		names(nl) = names(xd)
+	#		vars = eval(substitute(select), nl, parent.frame())
+	#	} else
+	#		vars = select
+	#	xd = xd[, vars, drop = FALSE]
+	#}
+	#xd = xd[, unlist(lapply(xd, is.vector)), drop = FALSE]
+
+	if (!missing(select))
+		xd = xd[select]
+	nc = ncol(xd)
+	xd = stack(xd)
+
+	ccr = data.frame(rep(cc[,1], nc))
 	for (i in 2:ncol(cc))
-		ccr = data.frame(ccr, rep(cc[,i], ncol(xd)))
+		ccr = data.frame(ccr, rep(cc[,i], nc))
 	names(ccr) = cc.names
-	data.frame(ccr, values = unlist(unname(xd)),
-		ind = factor(rep(names(xd), lapply(xd, length)), 
-			levels = names(xd)))
+	#data.frame(ccr, values = unlist(unname(xd)),
+	#	ind = factor(rep(names(xd), lapply(xd, length)), 
+	#		levels = names(xd)))
+	data.frame(ccr, xd)
 }
 
 stack.SpatialGridDataFrame = function (x, select, ...)

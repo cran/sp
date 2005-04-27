@@ -1,7 +1,9 @@
 "SpatialPoints" = function(coords, proj4string = CRS(as.character(NA))) {
 	coords = coordinates(coords) # checks numeric mode
-	if (is.null(dimnames(coords)[[2]]))
-		dimnames(coords)[[2]] = paste("coords.x", 1:(dim(coords)[2]), sep = "")
+	colnames = dimnames(coords)[[2]]
+	if (is.null(colnames))
+		colnames = paste("coords.x", 1:(dim(coords)[2]), sep = "")
+	dimnames(coords) = list(NULL, colnames) # strip row names
 	bbox = t(apply(coords, 2, range))
 	dimnames(bbox)[[2]] = c("min", "max")
 	new("SpatialPoints", coords = coords, bbox = as.matrix(bbox),
@@ -88,3 +90,13 @@ setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = T) {
 summary.SpatialPoints = summary.Spatial
 
 print.summary.SpatialPoints = print.summary.Spatial
+
+setMethod("coordnames", signature(x = "SpatialPoints"),
+	function(x) dimnames(x@coords)[[2]])
+setReplaceMethod("coordnames", 
+	signature(x = "SpatialPoints", value = "character"),
+	function(x, value) {
+		dimnames(x@coords)[[2]] = value
+		x
+	}
+)

@@ -7,7 +7,7 @@
 \alias{show,SpatialPointsDataFrame-method}
 % \alias{coordinates,SpatialPointsDataFrame-method}
 % \alias{coordinates}
-\alias{SpatialPointsDataFrame}
+% \alias{SpatialPointsDataFrame}
 \alias{"[[.SpatialPointsDataFrame"}
 \alias{"[[<-.SpatialPointsDataFrame"}
 \alias{"$.SpatialPointsDataFrame"}
@@ -29,8 +29,8 @@ or of the form \code{coordinates(x) = xy}; see \link{coordinates}.
 }
 \section{Slots}{
   \describe{
-    \item{\code{data}:}{Object of class \code{"data.frame"}; the attribute data,
-	which may or may not contain the coordinates in the columns }
+    \item{\code{data}:}{Object of class \link{AttributeList-class} containing
+		the attribute data (may or may not contain the coordinates in its columns) }
     \item{\code{coords}:}{Object of class \code{"matrix"}; the coordinates matrix
 	(points are rows in the matrix) }
 	\item{\code{coords.stripped}}{Object of class logical; if TRUE, when

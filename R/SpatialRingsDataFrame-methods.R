@@ -1,5 +1,16 @@
-SpatialRingsDataFrame <- function(Sr, data)
-	new("SpatialRingsDataFrame", Sr, data = data)
+SpatialRingsDataFrame <- function(Sr, data, match.ID = TRUE) {
+	if (match.ID) {
+		Sr_IDs <- getSRSringsIDSlots(Sr)
+		data_IDs <- row.names(data)
+		mtch <- match(Sr_IDs, data_IDs)
+		if (any(is.na(mtch)))
+			stop("row.names of data and Srings IDs do not match")
+		if (length(unique(mtch)) != length(Sr_IDs))
+			stop("row.names of data and Srings IDs do not match")
+		data <- data[mtch, ]
+	}
+	new("SpatialRingsDataFrame", Sr, data=data)
+}
 
 "rings<-" = function(object, value) {
 	if (!is(value, "SpatialRings"))
@@ -12,6 +23,7 @@ SpatialRingsDataFrame <- function(Sr, data)
 #setMethod("rings", "SpatialRingsDataFrame", function(obj) as(obj, "SpatialRings"))
 
 names.SpatialRingsDataFrame = function(x) names(x@data)
+"names<-.SpatialRingsDataFrame" = function(x,value) { names(x@data) = value; x }
 
 as.data.frame.SpatialRingsDataFrame = function(x, row.names, optional) x@data
 

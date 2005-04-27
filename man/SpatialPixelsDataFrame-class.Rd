@@ -34,7 +34,8 @@ Ordered full grids are stored instead or unordered non-NA cells;
     \item{\code{grid.index}:}{integer; index of points in the list to points
 	in the full (ordered) grid. x cycles fastest; all coordinates increase
 	from low to hight except y, which decreases from high to low }
-    \item{\code{data}:}{Object of class \code{"data.frame"}; attribute data }
+    \item{\code{data}:}{Object of class \link{AttributeList-class}
+		containing the attribute data }
   }
 }
 \section{Extends}{

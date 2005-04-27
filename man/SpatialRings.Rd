@@ -10,7 +10,7 @@ lists of \code{Srings} objects and \code{data.frame}s}
 Sring(coords, proj4string=CRS(as.character(NA)), hole=as.logical(NA))
 Srings(srl, ID)
 SpatialRings(Srl, pO = 1:length(Srl))
-SpatialRingsDataFrame(Sr, data)
+SpatialRingsDataFrame(Sr, data, match.ID = TRUE)
 
 }
 \arguments{
@@ -23,9 +23,9 @@ equal last coordinates (row) }
 \item{Srl}{ list with objects of class \link{Srings-class}}
 \item{pO}{ integer vector; plotting order }
 \item{Sr}{ object of class \link{SpatialRings-class}}
-\item{data}{ object of class \code{data.frame}; the number of rows in \code{data} 
-should equal the number of \link{Srings-class} objects in \code{Sr}}
-}
+\item{data}{ object of class \code{data.frame}; the number of rows in \code{data} should equal the number of \link{Srings-class} objects in \code{Sr}}
+\item{match.ID}{logical: (default TRUE): match SpatialRings member Srings ID slot values with data frame row names, and re-order the data frame rows if necessary}
+} 
 \value{
 \code{Sring} returns an object of class \code{Sring};
 \code{Srings} returns an object of class \code{Srings};

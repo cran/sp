@@ -163,3 +163,36 @@ setMethod("[", "SpatialLines", function(x, i, j, ..., drop = T) {
 	if (!missing(j)) stop("only a single index is allowed for [.SpatialLines")
 	SpatialLines(x@lines[i])
 })
+
+setMethod("coordnames", signature(x = "SpatialLines"), 
+	function(x) coordnames(x@lines[[1]])
+)
+setMethod("coordnames", signature(x = "Slines"), 
+	function(x) coordnames(x@Slines[[1]])
+)
+setMethod("coordnames", signature(x = "Sline"), 
+	function(x) dimnames(coordinates(x))[[2]]
+)
+setReplaceMethod("coordnames", 
+	signature(x = "SpatialLines", value = "character"),
+	function(x, value) {
+		for (i in seq(along = x@lines))
+			coordnames(x@lines[[i]]) = value
+		x
+	}
+)
+setReplaceMethod("coordnames", 
+	signature(x = "Slines", value = "character"),
+	function(x, value) {
+		for (i in seq(along = x@Slines))
+			coordnames(x@Slines[[i]]) = value
+		x
+	}
+)
+setReplaceMethod("coordnames", 
+	signature(x = "Sline", value = "character"),
+	function(x, value) {
+		dimnames(x@coords)[[2]] = value
+		x
+	}
+)

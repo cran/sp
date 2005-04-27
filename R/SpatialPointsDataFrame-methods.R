@@ -1,16 +1,41 @@
 "SpatialPointsDataFrame" = function(coords, data, coords.nrs = numeric(0), 
-		proj4string = CRS(as.character(NA))) {
-	new("SpatialPointsDataFrame", SpatialPoints(coords, 
-		proj4string = proj4string), data = data,
+		proj4string = CRS(as.character(NA)), match.ID = TRUE) {
+	if (!is(coords, "SpatialPoints"))
+		coords = coordinates(coords)
+	if (match.ID && is.matrix(coords)) {
+		cc.ID = dimnames(coords)[[1]]
+		if (!is.null(cc.ID) && is(data, "data.frame")) {
+			n = nrow(data)
+			if (length(unique(cc.ID)) != n)
+				stop(
+				"nr of unique coords ID's (rownames) not equal to nr of data records")
+			data.ID = row.names(data)
+			mtch = match(cc.ID, data.ID)
+			if (any(is.na(mtch)))
+				stop("row.names of data and coords do not match")
+			if (length(unique(mtch)) != n)
+				stop("row.names of data and dimnames of coords do not match")
+			data = data[mtch, ]
+		}
+	}
+	if (!is(coords, "SpatialPoints"))
+		coords = SpatialPoints(coords, proj4string = proj4string)
+	new("SpatialPointsDataFrame", coords, data = as(data, "AttributeList"),
 		coords.nrs = coords.nrs)
 }
 
 setMethod("coordinates", "SpatialPointsDataFrame", function(obj) obj@coords)
 
-"coordinates<-" = function(object, value) {
+#setReplaceMethod("coordinates", signature(object = "data.frame", value = "numeric"),
+#	coordinates.num)
+#coordinates.repl = function(object, value) {
+
+setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
+  function(object, value) {
+#"coordinates<-" = function(object, value) {
 	coord.numbers = NULL
-	if (!inherits(object, "data.frame"))
-		stop("coordinates can only be set on objects of class data.frame")
+	#if (!is.list(object))
+	#	stop("coordinates can only be set on objects of class data.frame or list")
 	if (inherits(value, "formula")) {
 		cc = model.frame(value, object) # retrieve coords
 		if (dim(cc)[2] == 2) {
@@ -31,19 +56,26 @@ setMethod("coordinates", "SpatialPointsDataFrame", function(obj) obj@coords)
 		coord.numbers = value
 	} else  # raw coordinates given; try transform them to matrix:
 		cc = coordinates(value)
+	if (any(is.na(cc)))
+		stop("coordinates are not allowed to contain missing values")
 	if (!is.null(coord.numbers)) {
 		object = object[ , -coord.numbers, drop = FALSE]
 		stripped = coord.numbers
 		# ... but as.data.frame(x) will merge them back in, so nothing gets lost.
+		if (ncol(object) == 0) stop(
+			"only coords columns present: use SpatialPoints to create a points object")
 	} else
 		stripped = numeric(0)
-	SpatialPointsDataFrame(data = object, coords = cc, coords.nrs = stripped)
-}
+	SpatialPointsDataFrame(data = object, coords = cc, coords.nrs = stripped,
+		match.ID = FALSE)
+#}
+  }
+)
 
 print.SpatialPointsDataFrame = function(x, ...) {
-  cc = substring(paste(as.data.frame(t(signif(coordinates(x))))),2,999)
-  # could be done in S-Plus by unpaste(x, "c")[[2]]
-  print(data.frame("coordinates" = cc, x@data), ...)
+	cc = substring(paste(as.data.frame(t(signif(coordinates(x))))),2,999)
+	# could be done in S-Plus by unpaste(x, "c")[[2]]
+	print(data.frame("coordinates" = cc, x@data), ...)
 }
 
 dim.SpatialPointsDataFrame = function(x) dim(x@data)
@@ -83,10 +115,10 @@ as.data.frame.SpatialPointsDataFrame = function(x, row.names, optional)  {
 setAs("SpatialPointsDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialPointsDataFrame(from))
 
-names.SpatialPointsDataFrame <- function(x) {
-	# names(as(x, "data.frame"))
-	names(x@data)
-}
+names.SpatialPointsDataFrame <- function(x) names(x@data)
+"names<-.SpatialPointsDataFrame" <- function(x, value) { names(x@data) = value; x }
+
+#"coordnames<-.SpatialPointsDataFrame" <- function(x, value)
 
 ShowSpatialPointsDataFrame = function(object) print.SpatialPointsDataFrame(object)
 

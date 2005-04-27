@@ -50,6 +50,9 @@ representation("Spatial",
 		if (any(unlist(lapply(object@polygons, function(x) 
 				!is(x, "Srings"))))) 
 			return("polygons not Srings objects")
+		if (length(object@polygons) != 
+			length(unique(getSRSringsIDSlots(object)))) 
+				return("non-unique Srings ID slot values")
 		return(TRUE)
 	}
 )
