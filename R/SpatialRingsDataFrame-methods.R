@@ -43,7 +43,7 @@ setMethod("[", "SpatialRingsDataFrame", function(x, i, j, ... , drop = FALSE) {
         data = x@data[i, j, drop = FALSE])
 ###
 ### RSB: do something with labelpoints here? How can I check they are present?
-###
+### (label points belong to the Srings objects, not the SpatialRings object)
 })
 
 "[[.SpatialRingsDataFrame" =  function(x, ...)

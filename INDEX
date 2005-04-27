@@ -59,6 +59,7 @@ meuse.grid              Prediction Grid for Meuse Data Set
 meuse.riv               River Meuse outline
 nc.shp                  North Carolina county boundaries (shapefile)
 ncmap                   North Carolina county boundaries (maps)
+nowrapSpatialLines      Split SpatialLines components at offset
 overlay                 spatial overlay for points, grids and rings
 overlay-methods         Methods for spatially overlay-ing points
                         (grids) and rings layers

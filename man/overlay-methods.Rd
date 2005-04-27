@@ -6,6 +6,8 @@
 \alias{overlay,SpatialRings,SpatialPoints-method}
 \alias{overlay,SpatialGridDataFrame,SpatialPoints-method}
 \alias{overlay,SpatialGrid,SpatialPoints-method}
+\alias{overlay,SpatialPixelsDataFrame,SpatialPoints-method}
+\alias{overlay,SpatialPixels,SpatialPoints-method}
 \title{ Methods for spatially overlay-ing points (grids) and rings layers }
 \description{
 overlay combines points (or grids) and rings by performing point-in-polygon
@@ -30,6 +32,10 @@ SpatialPointsDataFrame with grid attribute values x at spatial
 point locations y; NA for NA grid cells or points outside grid, and NA values
 on NA grid cells. }
 \item{x = "SpatialGrid", y = "SpatialPoints"}{ returns grid values x at spatial
+point locations y; NA for NA grid cells or points outside the grid }
+\item{x = "SpatialPixelsDataFrame", y = "SpatialPoints"}{ returns grid values x at 
+spatial point locations y; NA for NA grid cells or points outside the grid }
+\item{x = "SpatialPixels", y = "SpatialPoints"}{ returns grid values x at spatial
 point locations y; NA for NA grid cells or points outside the grid }
 }
 }}
