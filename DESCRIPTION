@@ -1,0 +1,32 @@
+Package: sp
+Version: 0.7-3
+Date: 2005-04-27
+Title: classes and methods for spatial data
+Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
+Maintainer: Edzer J. Pebesma <e.pebesma@geo.uu.nl>
+Depends: R (>= 2.0.0)
+Suggests: pixmap (>= 0.4-2), RColorBrewer
+Imports: lattice, grid
+Description: A package that provides classes and methods for spatial
+  data. The classes document where the spatial location information
+  resides, for 2D or 3D data. Utility functions are provided, e.g. for
+  plotting data as maps, spatial selection, as well as methods for
+  retrieving coordinates, for subsetting, print, summary, etc.
+License: GPL version 2 or later
+URL: http://www.sourceforge.net/r-spatial/
+SaveImage: yes
+Collate: AAA.R Class-CRS.R Class-Spatial.R Spatial-methods.R
+	projected.R Class-SpatialPoints.R SpatialPoints-methods.R
+	Class-SpatialPointsDataFrame.R SpatialPointsDataFrame-methods.R
+	Class-GridTopology.R Class-SpatialGrid.R
+	Class-SpatialGridDataFrame.R Class-SpatialLines.R
+	SpatialLines-methods.R Class-SpatialLinesDataFrame.R
+	SpatialLinesDataFrame-methods.R Class-SpatialRings.R
+	Class-SpatialRingsDataFrame.R SpatialRings-methods.R
+	SpatialRingsDataFrame-methods.R GridTopology-methods.R
+	SpatialGrid-methods.R SpatialGridDataFrame-methods.R
+	SpatialRings-internals.R point.in.polygon.R
+	SpatialRings-displayMethods.R zerodist.R image.R stack.R
+	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
+	asciigrid.R spplot.R overlay.R spsample.R
+Packaged: Wed Apr 27 20:56:06 2005; edzer

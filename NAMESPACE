@@ -1,0 +1,199 @@
+useDynLib(sp)
+
+importFrom(lattice, levelplot, xyplot)
+importFrom(grid, grid.polygon)
+
+export(CRS, print.CRS, proj4string, "proj4string<-", is.projected)
+
+export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
+	mapasp, point.in.polygon, map.to.lev, zerodist, remove.duplicates)
+
+export("coordinates<-", coordinatevalues)
+
+export(dimensions)
+ 
+export(SpatialPoints, SpatialPointsDataFrame)
+
+export(Sline, Slines, SpatialLines, SpatialLinesDataFrame, as.SpatialLines.SLDF)
+
+export(
+#contourLines2SlineList, contourLines2df, contourLines2SpatialLines, 
+contourLines2SLDF)
+
+export(
+#arcobj2SlineList, arcobj2df, arcobj2SpatialLines, 
+arcobj2SLDF)
+
+export(
+#shapes2SlineList, shapes2SpatialLines, 
+shp2SLDF)
+
+export(plotSpatialLines, plot.SpatialRings)
+
+export(spplot, layout.scale.bar, layout.north.arrow, sp.theme,
+	mapLegendGrob, sp.pagefn, spplot.key, panel.gridplot,
+	panel.ringsplot, panel.pointsplot, sp.polygon, sp.text, sp.points,
+	sp.lines, SpatialRingsRescale)
+
+export(as.image.SpatialGridDataFrame)
+
+export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
+	SpatialPixels, SpatialPixelsDataFrame, SpatialGrid,
+	SpatialGridDataFrame, GridTopology, getGridTopology,
+	areaSpatialGrid)
+
+#export(as.SpatialRings.Shapelist, as.SpatialRings.matrixList, 
+#	as.Ring4.matrix)
+
+export(getSringCoordsSlot, getSringLabptSlot, getSringAreaSlot,
+	getSringHoleSlot, getSringsSringsSlot, getSringsplotOrderSlot,
+	getSringsLabptSlot, getSringsIDSlot, getSRpolygonsSlot,
+	getSRplotOrderSlot, getSRSringsLabptSlots, getSRSringsIDSlots,
+	getSRnParts, "rings<-")
+
+export(as.SpatialRings.SringsList, Srings, Sring, SpatialRings,
+	SpatialRingsDataFrame, as.SpatialRings.Shapes, as.SpatialRings.map,
+	as.SpatialRings.pal, plotSpatialRings)
+
+export(ShowSpatialPointsDataFrame)
+
+export(select.spatial)
+
+export(read.asciigrid, write.asciigrid)
+
+export(transform.Spatial)
+
+export(makegrid, sample.Spatial, sample.Sline, sample.Sring, sample.Srings,
+	sample.Sgrid)
+
+exportClasses(CRS, 
+	Spatial, 
+	SpatialPoints, 
+	GridTopology,
+	SpatialPixels, 
+	SpatialGrid, 
+	Sline, 
+	Slines,
+	SpatialLines, 
+ 	SpatialPointsDataFrame, 
+	SpatialPixelsDataFrame,
+	SpatialGridDataFrame,
+	SpatialLinesDataFrame)
+
+exportClasses(Sring, Srings, SpatialRings, SpatialRingsDataFrame)
+
+exportMethods(show, bbox, coordinates, gridded, rings, dimensions, coerce, "[",
+	transform, overlay, spplot, spsample) # not arcs
+
+S3method("[[", SpatialPointsDataFrame)
+S3method("[[<-", SpatialPointsDataFrame)
+
+S3method("[[", SpatialPixelsDataFrame)
+S3method("[[<-", SpatialPixelsDataFrame)
+
+S3method("[[", SpatialGridDataFrame)
+S3method("[[<-", SpatialGridDataFrame)
+
+S3method("[[", SpatialRingsDataFrame)
+S3method("[[<-", SpatialRingsDataFrame)
+
+S3method("[[", SpatialLinesDataFrame)
+S3method("[[<-", SpatialLinesDataFrame)
+
+S3method("$", SpatialPointsDataFrame)
+S3method("$", SpatialPixelsDataFrame)
+S3method("$", SpatialGridDataFrame)
+S3method("$", SpatialLinesDataFrame)
+S3method("$", SpatialRingsDataFrame)
+
+S3method("$<-", SpatialPointsDataFrame)
+S3method("$<-", SpatialPixelsDataFrame)
+S3method("$<-", SpatialGridDataFrame)
+S3method("$<-", SpatialLinesDataFrame)
+S3method("$<-", SpatialRingsDataFrame)
+
+S3method(as.matrix, SpatialGridDataFrame)
+S3method(as.matrix, SpatialPixelsDataFrame)
+
+S3method(as.data.frame, SpatialPoints)
+S3method(as.data.frame, SpatialPointsDataFrame)
+S3method(as.data.frame, SpatialPixelsDataFrame)
+S3method(as.data.frame, SpatialGridDataFrame)
+S3method(as.data.frame, SpatialLinesDataFrame)
+S3method(as.data.frame, SpatialRingsDataFrame)
+
+S3method(cbind, SpatialGridDataFrame)
+
+S3method(dim, SpatialPointsDataFrame)
+
+S3method(image, SpatialPixelsDataFrame)
+S3method(image, SpatialGridDataFrame)
+
+S3method(lines, Sline)
+S3method(lines, Slines)
+S3method(lines, SpatialLines)
+
+S3method(names, SpatialPointsDataFrame)
+S3method(names, SpatialPixelsDataFrame)
+S3method(names, SpatialLinesDataFrame)
+S3method(names, SpatialRingsDataFrame)
+
+S3method(plot, Spatial)
+S3method(plot, SpatialPoints)
+S3method(plot, SpatialPixels)
+S3method(plot, SpatialGrid)
+S3method(plot, SpatialPointsDataFrame)
+S3method(plot, SpatialPixelsDataFrame)
+S3method(plot, SpatialGridDataFrame)
+S3method(plot, SpatialRings)
+S3method(plot, SpatialLines)
+S3method(plot, SpatialLinesDataFrame)
+
+S3method(points, SpatialPoints)
+S3method(points, SpatialPointsDataFrame)
+
+S3method(print, CRS)
+S3method(print, GridTopology)
+S3method(print, SpatialPoints)
+S3method(print, SpatialPixels)
+S3method(print, SpatialPointsDataFrame)
+S3method(print, SpatialPixelsDataFrame)
+S3method(print, summary.Spatial)
+S3method(print, summary.GridTopology)
+S3method(print, summary.SpatialPoints)
+S3method(print, summary.SpatialPixels)
+S3method(print, summary.SpatialGrid)
+S3method(print, summary.SpatialPointsDataFrame)
+S3method(print, summary.SpatialPixelsDataFrame)
+S3method(print, summary.SpatialGridDataFrame)
+
+S3method(stack, SpatialPointsDataFrame)
+S3method(stack, SpatialPixelsDataFrame)
+S3method(stack, SpatialGridDataFrame)
+
+S3method(subset, SpatialPoints)
+S3method(subset, SpatialPointsDataFrame)
+
+S3method(summary, Spatial)
+S3method(summary, GridTopology)
+S3method(summary, SpatialPoints)
+S3method(summary, SpatialPointsDataFrame)
+S3method(summary, SpatialPixels)
+S3method(summary, SpatialPixelsDataFrame)
+S3method(summary, SpatialGrid)
+S3method(summary, SpatialGridDataFrame)
+S3method(summary, SpatialLines)
+S3method(summary, SpatialLinesDataFrame)
+S3method(summary, SpatialRingsDataFrame)
+
+export(".__C__CRS")
+export(".__C__SpatialPoints")
+#export(".__C__SpatialPointsDataFrame")
+export(".__C__SpatialPixelsDataFrame")
+export(".__C__Sline")
+export(".__C__Slines")
+export(".__C__SpatialLines")
+export(".__C__Sring")
+export(".__C__Srings")
+export(".__C__SpatialRings")
+
