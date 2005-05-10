@@ -34,13 +34,28 @@ overlayRingsWithPoints = function(x, y, ...) {
 setMethod("overlay", signature("SpatialRings", "SpatialPoints"), 
 	overlayRingsWithPoints)
 
+#overlayGridWithPoints = function(x, y, fn = NULL) {
+#   cc = coordinates(y)
+#   idx = getGridIndex(cc, x@grid, all.inside = FALSE)
+#   if (!fullgrid(x))
+#       idx = match(idx, x@grid.index)
+#   if (is(x, "SpatialGridDataFrame")) {
+#       data = as.data.frame(x@data[idx, ])  ## make sure we return a data frame
+#       names(data) = names(x@data)
+#       SpatialPointsDataFrame(cc, data, proj4string = CRS(proj4string(x)))
+#       }
+#   else
+#       return(idx)
+#}
+
 overlayGridWithPoints = function(x, y, fn = NULL) {
 	cc = coordinates(y)
 	idx = getGridIndex(cc, x@grid, all.inside = FALSE)
 	if (!fullgrid(x))
 		idx = match(idx, x@grid.index)
 	if (is(x, "SpatialGridDataFrame"))
-		SpatialPointsDataFrame(cc, x@data[idx, ], proj4string = CRS(proj4string(x)))
+		SpatialPointsDataFrame(cc, x@data[idx, , drop=FALSE], 
+			proj4string = CRS(proj4string(x)))
 	else
 		return(idx)
 }

@@ -1,56 +1,10 @@
-as.SpatialRings.SringsList
-                        Making SpatialRings objects
-bbox,Spatial-method     retrieve bbox from spatial data
-bpy.colors              blue-pink-yellow color scheme that prints well
-                        on black/white printers
-bubble                  Create a bubble plot of spatial data
-coordinates             sets spatial coordinates to create spatial
-                        data, or retrieves spatial coordinates
-coordinates-methods     retrieves spatial coordinates
 CRS-class               Class "CRS" of coordinate reference system
                         arguments
-dimensions,Spatial-method
-                        retrieve spatial dimensions from spatial data
-gridded-methods         specify spatial data as being gridded, or find
-                        out whether they are
 GridTopology-class      Class "GridTopology" ~~~
-image.SpatialGridDataFrame
-                        image gridded spatial data, or convert to
-                        format for image
-is.projected            Sets or retrieves projection attributes on
-                        classes extending SpatialData
-lns                     Norwegian river center line data
-mapasp                  Calculate aspect ratio for plotting geographic
-                        maps
-map.to.lev              rearrange data in SpatialPointsDataFrame or
-                        SpatialGridDataFrame for plotting with spplot
-                        (levelplot/xyplot wrapper)
-meuse                   Meuse river data set
-meuse.grid              Prediction Grid for Meuse Data Set
-meuse.riv               River Meuse outline
-ncmap                   North Carolina county boundaries (maps)
-nc.shp                  North Carolina county boundaries (shapefile)
-overlay                 spatial overlay for points, grids and rings
-overlay-methods         Methods for spatially overlay-ing points
-                        (grids) and rings layers
-pal                     North Carolina county boundaries (e00)
-panel.spplot            panel and panel utility functions for spplot
-point.in.polygon        do point(s) fall in a given polygon?
-read.asciigrid          read/write to/from (ESRI) asciigrid format
-rings                   sets spatial coordinates to create spatial
-                        data, or retrieves spatial coordinates
-rings-methods           Retrieve rings from SpatialRingsDataFrame
-                        object
 Rlogo                   Rlogo jpeg image
-select.spatial          select points spatially
-shp2SLDF                Converter functions to build
-                        SpatialLinesDataFrame objects
 Sline                   create objects of class Sline or Slines
 Sline-class             Class "Sline"
 Slines-class            Class "Sline"
-sp                      A package providing classes and methods for
-                        spatial data: points, lines, polygons and
-                        grids
 Spatial-class           Class "Spatial" ~~~
 SpatialGrid-class       Class "SpatialGrid" ~~~
 SpatialGridDataFrame-class
@@ -74,13 +28,60 @@ SpatialRings            create objects of class SpatialRings or
 SpatialRings-class      Class "SpatialRings"
 SpatialRingsDataFrame-class
                         Class "SpatialRingsDataFrame"
+Sring-class             Class "Sring"
+Srings-class            Class "Srings"
+as.SpatialRings.SringsList
+                        Making SpatialRings objects
+bbox,Spatial-method     retrieve bbox from spatial data
+bpy.colors              blue-pink-yellow color scheme that prints well
+                        on black/white printers
+bubble                  Create a bubble plot of spatial data
+coordinates             sets spatial coordinates to create spatial
+                        data, or retrieves spatial coordinates
+coordinates-methods     retrieves spatial coordinates
+dimensions,Spatial-method
+                        retrieve spatial dimensions from spatial data
+gridded-methods         specify spatial data as being gridded, or find
+                        out whether they are
+image.SpatialGridDataFrame
+                        image gridded spatial data, or convert to
+                        format for image
+is.projected            Sets or retrieves projection attributes on
+                        classes extending SpatialData
+lns                     Norwegian river center line data
+map.to.lev              rearrange data in SpatialPointsDataFrame or
+                        SpatialGridDataFrame for plotting with spplot
+                        (levelplot/xyplot wrapper)
+mapasp                  Calculate aspect ratio for plotting geographic
+                        maps
+meuse                   Meuse river data set
+meuse.grid              Prediction Grid for Meuse Data Set
+meuse.riv               River Meuse outline
+nc.shp                  North Carolina county boundaries (shapefile)
+ncmap                   North Carolina county boundaries (maps)
+overlay                 spatial overlay for points, grids and rings
+overlay-methods         Methods for spatially overlay-ing points
+                        (grids) and rings layers
+pal                     North Carolina county boundaries (e00)
+panel.spplot            panel and panel utility functions for spplot
+point.in.polygon        do point(s) fall in a given polygon?
+read.asciigrid          read/write to/from (ESRI) asciigrid format
+recenter-methods        Methods for Function recenter in Package 'sp'
+rings                   sets spatial coordinates to create spatial
+                        data, or retrieves spatial coordinates
+rings-methods           Retrieve rings from SpatialRingsDataFrame
+                        object
+select.spatial          select points spatially
+shp2SLDF                Converter functions to build
+                        SpatialLinesDataFrame objects
+sp                      A package providing classes and methods for
+                        spatial data: points, lines, polygons and
+                        grids
 spplot                  Lattice (trellis) plots for spatial data
 spplot-methods          Methods for Function spplot in Package 'sp'
 spsample                sample point locations within a spatial region
 spsample-methods        sampling point locations in (or on) a spatial
                         object
-Sring-class             Class "Sring"
-Srings-class            Class "Srings"
 transform-methods       place holder for transform methods in library
                         spproj
 zerodist                find point pairs with equal spatial

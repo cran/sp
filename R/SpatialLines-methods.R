@@ -125,11 +125,12 @@ shp2SLDF <- function(shp, proj4string=CRS(as.character(NA))) {
 	Slines
 }
 
-plotSpatialLines <- function(SL, xlim = bbox(SL)[1,], ylim = bbox(SL)[2,], asp = 1, 
-	col = 1, ...) 
+plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL, asp = 1, 
+	col = 1, add=FALSE, ...) 
 {
-	frame()
-	plot.window(xlim = xlim, ylim = ylim, asp = asp)
+#	frame()
+#	plot.window(xlim = xlim, ylim = ylim, asp = asp)
+	if (!add) plot.Spatial(SL, xlim=xlim, ylim=ylim, asp=asp, ...)
 	lst <- SL@lines
 	for (i in seq(along=lst)) {
 		sllst = lst[[i]]@Slines

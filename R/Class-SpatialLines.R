@@ -40,3 +40,10 @@ setClass("SpatialLines",
 		return(TRUE)
 	}
 )
+
+getSLlinesSlot <- function(SL) SL@lines
+
+getSlinesSlinesSlot <- function(SL) SL@Slines
+#getSlinesIDSlot function(SL) SL@ID
+
+

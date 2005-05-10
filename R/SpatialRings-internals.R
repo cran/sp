@@ -56,6 +56,7 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 		b <- b[-nvx]
 		nvx <- nvx - 1
 	}
+	if (nvx < 3) return(1)
 
 	tX <- 0.0
 	dfYMax <- max(b)

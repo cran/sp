@@ -45,6 +45,8 @@ export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
 #export(as.SpatialRings.Shapelist, as.SpatialRings.matrixList, 
 #	as.Ring4.matrix)
 
+export(getSLlinesSlot, getSlinesSlinesSlot)
+
 export(getSringCoordsSlot, getSringLabptSlot, getSringAreaSlot,
 	getSringHoleSlot, getSringsSringsSlot, getSringsplotOrderSlot,
 	getSringsLabptSlot, getSringsIDSlot, getSRpolygonsSlot,
@@ -84,6 +86,8 @@ exportClasses(Sring, Srings, SpatialRings, SpatialRingsDataFrame)
 
 exportMethods(show, bbox, coordinates, gridded, rings, dimensions, coerce, "[",
 	transform, overlay, spplot, spsample) # not arcs
+
+exportMethods(recenter)
 
 S3method("[[", SpatialPointsDataFrame)
 S3method("[[<-", SpatialPointsDataFrame)
