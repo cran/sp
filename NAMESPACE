@@ -45,7 +45,7 @@ export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
 #export(as.SpatialRings.Shapelist, as.SpatialRings.matrixList, 
 #	as.Ring4.matrix)
 
-export(getSLlinesSlot, getSlinesSlinesSlot)
+export(getSLlinesSlot, getSlinesSlinesSlot, nowrapSpatialLines)
 
 export(getSringCoordsSlot, getSringLabptSlot, getSringAreaSlot,
 	getSringHoleSlot, getSringsSringsSlot, getSringsplotOrderSlot,

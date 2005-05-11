@@ -65,6 +65,12 @@ setMethod("overlay", signature("SpatialGridDataFrame", "SpatialPoints"),
 setMethod("overlay", signature("SpatialGrid", "SpatialPoints"), 
 	overlayGridWithPoints)
 
+setMethod("overlay", signature("SpatialPixelsDataFrame", "SpatialPoints"), 
+	overlayGridWithPoints)
+
+setMethod("overlay", signature("SpatialPixels", "SpatialPoints"), 
+	overlayGridWithPoints)
+
 #overlayPointsWithGrid = function(x, y, fn = NULL) {
 #	cc = coordinates(x)
 #	idx = getGridIndex(cc, y@grid, all.inside = FALSE)
