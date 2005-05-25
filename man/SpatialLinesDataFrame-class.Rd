@@ -14,7 +14,7 @@ can be created by the function \link{SpatialLinesDataFrame}
 }
 \section{Slots}{
   \describe{
-    \item{\code{data}:}{Object of class \code{"data.frame"}, containing attribute table }
+    \item{\code{data}:}{Object of class \link{data.frame} containing the attribute table }
     \item{\code{lines}:}{Object of class \code{"list"}; see \link{SpatialLines-class}}
     \item{\code{bbox}:}{Object of class \code{"matrix"}; see \link{Spatial-class} }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}; see \link{CRS-class}}

@@ -37,18 +37,18 @@ fullgrid = function(obj) return(is(obj, "SpatialGrid"))
 "fullgrid<-" = function(obj, value) {
 	if (!is(obj, "SpatialPixels"))
 		stop("fullgrid<- only works on objects of class or extending SpatialPixels")
-	if (fullgrid(obj) == value)
-		return(obj)
-	if (value) { # convert to full grid
-		if (is(obj, "SpatialPixelsDataFrame"))
-			obj = as(obj, "SpatialGridDataFrame")
-		else
-			obj = as(obj, "SpatialGrid")
-	} else { # convert to Pixels
-		if (is(obj, "SpatialGridDataFrame"))
-			obj = as(obj, "SpatialPixelsDataFrame")
-		else
-			obj = as(obj, "SpatialPixels")
+	if (fullgrid(obj) != value) { # convert:
+		if (value) { # convert to full grid
+			if (is(obj, "SpatialPixelsDataFrame"))
+				obj = as(obj, "SpatialGridDataFrame")
+			else
+				obj = as(obj, "SpatialGrid")
+		} else { # convert to Pixels
+			if (is(obj, "SpatialGridDataFrame"))
+				obj = as(obj, "SpatialPixelsDataFrame")
+			else
+				obj = as(obj, "SpatialPixels")
+		}
 	}
 	obj
 }

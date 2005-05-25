@@ -35,7 +35,7 @@ sr1=Srings(list(Sring(r1)),"r1")
 sr2=Srings(list(Sring(r2)),"r2")
 sr3=Srings(list(Sring(r3)),"r3")
 sr=SpatialRings(list(sr1,sr2,sr3))
-srdf=SpatialRingsDataFrame(sr, data.frame(cbind(1:3,5:3)))
+srdf=SpatialRingsDataFrame(sr, data.frame(cbind(1:3,5:3), row.names=c("r1","r2","r3")))
 
 data(meuse)
 coordinates(meuse) = ~x+y

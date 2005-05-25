@@ -1,10 +1,10 @@
 setClass("SpatialPointsDataFrame",
-	representation("SpatialPoints", data = "data.frame", coords.nrs = "numeric"),
-	prototype = list(new("SpatialPoints"), data = data.frame(), 
+	representation("SpatialPoints", data = "AttributeList", coords.nrs = "numeric"),
+	prototype = list(new("SpatialPoints"), data = new("AttributeList", att=list()), 
 		coords.nrs = numeric(0)),
 	validity = function(object) {
-		if (!inherits(object@data, "data.frame"))
-			stop("data should be of class data.frame")
+		#if (!inherits(object@data, "data.frame"))
+		#	stop("data should be of class data.frame")
 		if (nrow(object@coords) < 1)
 			stop("no points set: too few rows")
 		if (ncol(object@coords) <= 1)

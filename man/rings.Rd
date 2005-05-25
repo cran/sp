@@ -21,6 +21,7 @@ data.frame to a SpatialRingsDataFrame object }
 data(ncshp)
 nc1 <- as.SpatialRings.Shapes(nc.shp$Shapes, as.character(nc.shp$att.data$FIPS))
 df <- nc.shp$att.data
+rownames(df) <- df$FIPS
 rings(df) <- nc1
 class(df)
 }

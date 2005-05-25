@@ -15,6 +15,7 @@
 \alias{coordinates,SpatialPixelsDataFrame-method}
 \alias{coordinates,SpatialGrid-method}
 \alias{coordinates,SpatialGridDataFrame-method}
+\alias{"coordinates<-",data.frame-method}
 \title{ retrieves spatial coordinates }
 \description{ retrieves spatial coordinates from spatial data }
 \section{Methods}{
@@ -36,4 +37,8 @@ value is list of lists of matrices }
 \item{obj = "SpatialGrid"}{ object of, or deriving from, SpatialGrid }
 \item{obj = "SpatialGridDataFrame"}{ object of, or deriving from, SpatialGridDataFrame }
 }}
+\section{Methods for "coordinates<-"}{
+\item{object = "data.frame", value="ANY"}{ promote data.frame to object of class
+\link{SpatialPointsDataFrame-class}, by specifying coordinates; see \link{coordinates}}
+}
 \keyword{methods}

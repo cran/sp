@@ -36,7 +36,8 @@ Ordered full grids are stored instead or unordered non-NA cells;
 	is of zero length for this class, as the grid is full }
     \item{\code{bbox}:}{Object of class \code{"matrix"}; bounding box }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}; projection }
-    \item{\code{data}:}{Object of class \code{"data.frame"}; attribute data }
+    \item{\code{data}:}{Object of class \link{AttributeList-class},
+		containing attribute data }
   }
 }
 \section{Extends}{
@@ -88,6 +89,11 @@ z=df[["z"]]
 zc=as.character(z)
 zc[is.na(zc)]="NA"
 text(cc[,1],cc[,2],zc)
+
+# the following is weird, but illustrates the concept of row/col selection:
+fullgrid(meuse.grid) = TRUE
+image(meuse.grid)
+image(meuse.grid[20:70, 10:70, "dist"], add = TRUE, col = bpy.colors())
 
 }
 \keyword{classes}

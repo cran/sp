@@ -5,33 +5,36 @@ SpatialPixelsDataFrame = function(points, data, tolerance = 10 * .Machine$double
 	if (!is(points, "SpatialPoints"))
 		points = SpatialPoints(points, proj4string = proj4string)
 	points = SpatialPixels(points, tolerance)
-	new("SpatialPixelsDataFrame", points, data = data)
+	new("SpatialPixelsDataFrame", points, data = as(data, "AttributeList"))
 }
 
 SpatialGridDataFrame = function(grid, data, proj4string = CRS(as.character(NA)))
-	new("SpatialGridDataFrame", SpatialGrid(grid, proj4string), data = data)
+	new("SpatialGridDataFrame", SpatialGrid(grid, proj4string), 
+		data = as(data, "AttributeList"))
 
-as.SPDF.SGDF = function(from) {
-   	fd = from@data
-   	data = list()
+as.SPixDF.SGDF = function(from) {
+   	#fd = from@data
+   	#data = list()
    	n = .NumberOfCells(from@grid)
-   	for (i in seq(along=fd)) {
-		data[[i]] = vector(mode(fd[[i]]), n)
-      		if (is.factor(fd[[i]]))
-			data[[i]] = factor(data[[i]], levels = levels(fd[[i]]))
+   	for (i in seq(along=from@data@att)) {
+		# data[[i]] = vector(mode(from@data[[i]]), n)
+		v = vector(mode(from@data[[i]]), n)
+      	if (is.factor(from@data[[i]]))
+			v = factor(from@data[[i]], levels = levels(from@data[[i]]))
+		v[from@grid.index] = from@data[[i]]
+		v[-from@grid.index] = NA
+		from@data@att[[i]] = v
    	}
-   	data = data.frame(data)
-   	names(data) = names(fd)
-   	for (i in seq(along=fd)) {
-		data[from@grid.index, i] = fd[[i]]
-		data[-from@grid.index, i] = NA
-	}
-	SpatialGridDataFrame(from@grid, data, CRS(proj4string(from)))
+   	#data = data.frame(data)
+	#data = AttributeList(data)
+   	#names(data) = names(from@data)
+	SpatialGridDataFrame(from@grid, from@data, CRS(proj4string(from)))
 }
-setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPDF.SGDF)
+setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPixDF.SGDF)
 
-as.SGDF.SPDF = function(from) { 
-	sel = apply(from@data, 1, function(x) !all(is.na(x)))
+as.SGDF.SPixDF = function(from) { 
+	#sel = apply(from@data, 1, function(x) !all(is.na(x)))
+	sel = apply(sapply(from@data@att, is.na), 1, function(x) !all(x))
 	if (!any(sel)) {
 		warning("complete map seems to be NA's -- no selection was made")
 		sel = rep(TRUE, length(sel))
@@ -39,7 +42,7 @@ as.SGDF.SPDF = function(from) {
    	SpatialPixelsDataFrame(points = coordinates(from)[sel,], 
 		data = from@data[sel,,drop=FALSE], proj4string = CRS(proj4string(from)))
 }
-setAs("SpatialGridDataFrame", "SpatialPixelsDataFrame", as.SGDF.SPDF)
+setAs("SpatialGridDataFrame", "SpatialPixelsDataFrame", as.SGDF.SPixDF)
 setAs("SpatialGridDataFrame", "SpatialPointsDataFrame", 
 	function(from) as(as(from, "SpatialPixelsDataFrame"), "SpatialPointsDataFrame"))
 
@@ -74,8 +77,6 @@ as.matrix.SpatialGridDataFrame = function(x) {
 
 setAs("SpatialPixelsDataFrame", "matrix", function(from) as.matrix.SpatialPixelsDataFrame(from))
 setAs("SpatialGridDataFrame", "matrix", function(from) as.matrix.SpatialGridDataFrame(from))
-
-names.SpatialPixelsDataFrame = function(x) names(as.data.frame(x))
 
 as.data.frame.SpatialPixelsDataFrame = function(x, row.names, optional)
 	as.data.frame(as(x, "SpatialPointsDataFrame"))
@@ -232,9 +233,6 @@ cbind.SpatialGridDataFrame = function(...) {
 	gr
 }
 
-names.SpatialPixelsDataFrame = function(x) names(as(x, "SpatialPointsDataFrame"))
-names.SpatialGridDataFrame = function(x) names(as(x, "SpatialPointsDataFrame"))
-
 print.SpatialPixelsDataFrame = function(x, ...) {
 	cat("Object of class SpatialPixelsDataFrame\n")
 	print(as(x, "SpatialPixels"))
@@ -267,3 +265,6 @@ print.summary.SpatialGridDataFrame = print.summary.Spatial
 
 names.SpatialPixelsDataFrame = function(x) names(x@data)
 names.SpatialGridDataFrame = function(x) names(x@data)
+
+"names<-.SpatialPixelsDataFrame" = function(x,value) { names(x@data) = value; x }
+"names<-.SpatialGridDataFrame" = function(x,value) { names(x@data) = value; x }

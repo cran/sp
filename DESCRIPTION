@@ -1,5 +1,5 @@
 Package: sp
-Version: 0.7-6
+Version: 0.7-7
 Date: 2005-04-27
 Title: classes and methods for spatial data
 Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
@@ -17,6 +17,7 @@ URL: http://r-spatial.sourceforge.net/
 SaveImage: yes
 Collate: AAA.R Class-CRS.R Class-Spatial.R Spatial-methods.R
 	projected.R Class-SpatialPoints.R SpatialPoints-methods.R
+	Class-AttributeList.R AttributeList-methods.R
 	Class-SpatialPointsDataFrame.R SpatialPointsDataFrame-methods.R
 	Class-GridTopology.R Class-SpatialGrid.R
 	Class-SpatialGridDataFrame.R Class-SpatialLines.R
@@ -29,4 +30,4 @@ Collate: AAA.R Class-CRS.R Class-Spatial.R Spatial-methods.R
 	SpatialRings-displayMethods.R zerodist.R image.R stack.R
 	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
 	asciigrid.R spplot.R overlay.R spsample.R recenter.R
-Packaged: Wed May 11 10:37:38 2005; edzer
+Packaged: Wed May 25 17:10:02 2005; edzer

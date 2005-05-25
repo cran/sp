@@ -9,7 +9,7 @@
 %\alias{coerce,matrix,SpatialPoints-method}
 % \alias{coordinates,SpatialPoints-method}
 \alias{show,SpatialPoints-method}
-\alias{SpatialPoints}
+%\alias{SpatialPoints}
 \alias{as.data.frame.SpatialPoints}
 \alias{plot.SpatialPoints}
 \alias{print.SpatialPoints} 

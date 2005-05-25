@@ -7,6 +7,7 @@ plot.SpatialLinesDataFrame = function(x, ...) plotSpatialLines(x, ...)
 summary.SpatialLinesDataFrame = summary.Spatial
 
 names.SpatialLinesDataFrame = function(x) names(x@data)
+"names<-.SpatialLinesDataFrame" = function(x,value) { names(x@data)<-value; x }
 
 as.data.frame.SpatialLinesDataFrame = function(x, row.names, optional) x@data
 
