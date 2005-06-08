@@ -2,6 +2,7 @@
 \docType{class}
 \alias{Slines-class}
 \alias{getSlinesSlinesSlot}
+\alias{getSlinesIDSlot}
 % \alias{coordinates,Slines-method}
 
 \title{Class "Sline" }
@@ -12,7 +13,8 @@ Objects can be created by calls to the function \link{Sline}
 \section{Slots}{
   \describe{
     \item{\code{Slines}:}{Object of class \code{"list"}, containing elements
-	of class \link{Slines-class}}
+	of class \link{Sline-class}}
+    \item{\code{ID}:}{Object of class \code{"character"}, unique identifier string}
     \item{\code{bbox}:}{Object of class \code{"matrix"}, see \link{Spatial-class} }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}, see \link{CRS-class} }
   }
@@ -29,9 +31,10 @@ Class \code{"Spatial"}, directly.
 }
 \usage{
 getSlinesSlinesSlot(SL)
+getSlinesIDSlot(Slines)
 }
 \arguments{
-\item{SL}{an Slines object}
+\item{SL, Slines}{an Slines object}
 }
 
 

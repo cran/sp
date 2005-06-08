@@ -2,17 +2,19 @@
 \alias{shp2SLDF}
 \alias{arcobj2SLDF}
 \alias{contourLines2SLDF}
+\alias{Mapgen2SL}
 \alias{plotSpatialLines}
 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Converter functions to build SpatialLinesDataFrame objects}
 \description{
-  These functions show how to build converters from external formats to build SpatialLinesDataFrame objects: \code{shp2SLDF} from \code{"arc"} type ESRI shapefiles read into \code{"Map"} objects using the \code{read.shape()} function in the maptools package; \code{arcobj2SLDF} from the list returned by the \code{get.arcdata} function in the RArcInfo package; and \code{contourLines2SLDF} from the list returned by the \code{contourLines} function in the graphics package (here the data frame is just the contour levels, with one Slines object made up of at least one Sline object per level). 
+  These functions show how to build converters from external formats to build SpatialLinesDataFrame objects: \code{shp2SLDF} from \code{"arc"} type ESRI shapefiles read into \code{"Map"} objects using the \code{read.shape()} function in the maptools package; \code{arcobj2SLDF} from the list returned by the \code{get.arcdata} function in the RArcInfo package; and \code{contourLines2SLDF} from the list returned by the \code{contourLines} function in the graphics package (here the data frame is just the contour levels, with one Slines object made up of at least one Sline object per level). In addition, \code{Mapgen2SL} reads a file in "Mapgen" format into a \code{SpatialLines} object.
 }
 \usage{
-shp2SLDF(shp, proj4string = CRS(as.character(NA)))
-arcobj2SLDF(arc, proj4string=CRS(as.character(NA)))
+shp2SLDF(shp, proj4string = CRS(as.character(NA)), IDs)
+arcobj2SLDF(arc, proj4string=CRS(as.character(NA)), IDs)
 contourLines2SLDF(cL, proj4string=CRS(as.character(NA)))
+Mapgen2SL(file, proj4string=CRS(as.character(NA)))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,6 +22,8 @@ contourLines2SLDF(cL, proj4string=CRS(as.character(NA)))
   \item{arc}{a list returned by the \code{get.arcdata} function in the RArcInfo package}
   \item{cL}{a list returned by the \code{contourLines} function in the graphics package}
   \item{proj4string}{Object of class \code{"CRS"}; see \link{CRS-class}}
+  \item{IDs}{vector of unique character identifiers; if not given, suitable defaults will be used, and the same values inserted as data slot row names}
+  \item{file}{filename of }
 }
 
 \value{
@@ -27,6 +31,8 @@ contourLines2SLDF(cL, proj4string=CRS(as.character(NA)))
 }
 
 \author{ Roger Bivand; Edzer Pebesma }
+
+\note{Coastlines of varying resolution may be chosen online and downloaded in "Mapgen" text format from \url{http://www.ngdc.noaa.gov/mgg/shorelines/shorelines.html}, but please note the 500,000 point limit on downloads, which is easy to exceed.}
 
 
 \seealso{ \link{SpatialLines-class} }

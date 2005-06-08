@@ -1,4 +1,14 @@
-SpatialLinesDataFrame = function(sl, data) {
+SpatialLinesDataFrame = function(sl, data, match.ID = TRUE) {
+	if (match.ID) {
+		Sl_IDs <- getSLSlinesIDSlots(sl)
+		data_IDs <- row.names(data)
+		mtch <- match(Sl_IDs, data_IDs)
+		if (any(is.na(mtch)))
+			stop("row.names of data and Slines IDs do not match")
+		if (length(unique(mtch)) != length(Sl_IDs))
+			stop("row.names of data and Slines IDs do not match")
+		data <- data[mtch, , drop=FALSE]
+	}
 	new("SpatialLinesDataFrame", sl, data = data)
 }
 

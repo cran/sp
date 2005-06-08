@@ -166,4 +166,15 @@ bbox.R4 <- function(x) {
 	list(xc=xc, yc=yc, area=abs(Area))	
 }
 
+.spFindCG <- function(xy) {
+	a <- xy[,1]
+	b <- xy[,2]
+	n <- nrow(xy)
+	res <- .C("spRFindCG", as.integer(n), as.double(a), as.double(b), 
+		as.double(0), as.double(0), as.double(0), PACKAGE="sp")
 
+	cents <- c(res[[4]], res[[5]])
+	area <- abs(res[[6]])
+	rD <- ifelse(res[[6]] > 0, as.integer(-1), as.integer(1))
+	list(area=area, cents=cents, rD=rD)	
+}

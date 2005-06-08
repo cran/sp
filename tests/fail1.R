@@ -61,3 +61,20 @@ SrDf = SpatialRingsDataFrame(SR, attr, match.ID = FALSE) # won't complain
 attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3/4"))
 SrDf = SpatialRingsDataFrame(SR, attr) # won't complain
 
+l1 = cbind(c(1,2,3),c(3,2,2))
+l1a = cbind(l1[,1]+.05,l1[,2]+.05)
+l2 = cbind(c(1,2,3),c(1,1.5,1))
+Sl1 = Sline(l1)
+Sl1a = Sline(l1a)
+Sl2 = Sline(l2)
+S1 = Slines(list(Sl1, Sl1a), ID="a")
+S2 = Slines(list(Sl2), ID="b")
+S3 = Slines(list(Sl2), ID="a")
+Sl = SpatialLines(list(S1,S2)) # won't complain
+try(Sl1 <- SpatialLines(list(S1,S3))) # will complain
+
+df = data.frame(z = c(1,2), row.names=getSLSlinesIDSlots(Sl))
+Sldf = SpatialLinesDataFrame(Sl, data = df) # won't complain
+df1 = data.frame(z = c(1,2))
+try(Sldf1 <- SpatialLinesDataFrame(Sl, data = df1)) # will complain
+Sldf1 = SpatialLinesDataFrame(Sl, data = df1, match.ID = FALSE) # won't complain

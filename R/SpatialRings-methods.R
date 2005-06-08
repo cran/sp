@@ -136,16 +136,23 @@ SpatialRings <- function(Srl, pO=1:length(Srl)) {
 }
 
 Sring <- function(coords, proj4string=CRS(as.character(NA)), hole=as.logical(NA)) {
-	sl <- Sline(coords, proj4string=proj4string)
-	rD <- .ringDirxy(coordinates(sl))
-	cents <- .RingCentrd_2d(coordinates(sl))
-	.saneRD(rD)
+	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
+	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
+	cG <- .spFindCG(coords)
+	rD <- cG$rD
 	if (is.na(hole)) {
 		hole <- FALSE
 		if (rD < 0) hole <- TRUE
+	} else {
+		if (hole && rD > 0) coords <- coords[nrow(coords):1,]
+		if (!hole && rD < 0) coords <- coords[nrow(coords):1,]
 	}
-	res <- new("Sring", sl, labpt=as.numeric(c(cents$xc, cents$yc)), 
-		area=as.numeric(cents$area), hole=as.logical(hole), 
+	sl <- Sline(coords, proj4string=proj4string)
+#	rD <- .ringDirxy(coordinates(sl))
+#	cents <- .RingCentrd_2d(coordinates(sl))
+#	.saneRD(rD)
+	res <- new("Sring", sl, labpt=cG$cents, 
+		area=cG$area, hole=as.logical(hole), 
 		ringDir=as.integer(rD))
 	res
 }
@@ -161,11 +168,9 @@ Srings <- function(srl, ID) {
 
 	nParts <- length(srl)
 # check their plot order
-	after <- as.integer(rep(NA, nParts))
-	area <- sapply(srl, function(x) x@area)
-	pO <- order(area, decreasing=TRUE)
-	holes <- sapply(srl, function(x) x@hole)
 	areas <- sapply(srl, getSringAreaSlot)
+	pO <- order(areas, decreasing=TRUE)
+	holes <- sapply(srl, function(x) x@hole)
 	marea <- which.max(areas)
 	which_list <- ifelse(length(srl) == 1, 1, marea)
 	if (holes[which_list]) {
@@ -173,8 +178,7 @@ Srings <- function(srl, ID) {
 		srl[[which_list]] <- Sring(coords=crds[nrow(crds):1,],
 			proj4string=CRS(projargs))
 	}
-	holes <- sapply(srl, function(x) x@hole)
-	Sarea <- sum(abs(area))
+	Sarea <- sum(abs(areas))
 # assign label point to the largest member ring
 	lpt <- t(sapply(srl, getSringLabptSlot))
 	labpt <- lpt[which_list,]

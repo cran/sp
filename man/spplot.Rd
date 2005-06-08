@@ -14,13 +14,13 @@
 spplot(obj, ...)
 spplot.grid(obj, zcol = names(obj), ..., names.attr, 
 	scales = list(draw = FALSE), xlab = "", ylab = "", aspect = mapasp(obj), 
-	panel = panel.gridplot, sp.layout = NULL)
+	panel = panel.gridplot, sp.layout = NULL, formula)
 spplot.rings(obj, zcol = names(obj), ..., names.attr, 
 	scales = list(draw = FALSE), xlab = "", ylab = "", aspect = mapasp(obj), 
-	panel = panel.ringsplot, sp.layout = NULL)
+	panel = panel.ringsplot, sp.layout = NULL, formula)
 spplot.points(obj, zcol = names(obj), ..., names.attr, 
 	scales = list(draw = FALSE), xlab = "", ylab = "", aspect = mapasp(obj), 
-	panel = panel.pointsplot, sp.layout = NULL, identify = FALSE)
+	panel = panel.pointsplot, sp.layout = NULL, identify = FALSE, formula)
 mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 	fill = "black", just = "right")
 sp.theme()
@@ -51,6 +51,9 @@ for points plots). Labels for identification are the row.names of the
 attribute table \code{row.names(as.data.frame(obj))}. If TRUE, identify
 on panel \code{(1,1)}; for identifying on panel \code{i,j}, pass the
 value \code{c(i,j)}}
+\item{formula}{optional; may be useful to plot a transformed value. Defaults
+to \code{z~x+y} for single and \code{z~x+y|name} for multiple attributes; use
+e.g. \code{exp(x)~x+y|name} to plot the exponent of the z-variable}
 \item{widths}{width of grob}
 \item{heights}{heights of grob}
 \item{fill}{fill color of grob}

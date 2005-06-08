@@ -9,6 +9,7 @@ static const R_CMethodDef CEntries[]  = {
     {"between", (DL_FUNC) &between, 3}, */
     {"setup_poly_minmax", (DL_FUNC) &setup_poly_minmax, 1},
     {"InPoly", (DL_FUNC) &InPoly, 2},
+    {"spRFindCG", (DL_FUNC) &spRFindCG, 6},
     {NULL, NULL, 0}
 };
 

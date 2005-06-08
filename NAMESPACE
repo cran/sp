@@ -30,6 +30,8 @@ export(
 #shapes2SlineList, shapes2SpatialLines, 
 shp2SLDF)
 
+export(Mapgen2SL)
+
 export(plotSpatialLines, plot.SpatialRings)
 
 export(spplot, layout.scale.bar, layout.north.arrow, sp.theme,
@@ -47,7 +49,8 @@ export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
 #export(as.SpatialRings.Shapelist, as.SpatialRings.matrixList, 
 #	as.Ring4.matrix)
 
-export(getSLlinesSlot, getSlinesSlinesSlot, nowrapSpatialLines)
+export(getSLlinesSlot, getSlinesSlinesSlot, nowrapSpatialLines, 
+	getSlinesIDSlot, getSLSlinesIDSlots)
 
 export(getSringCoordsSlot, getSringLabptSlot, getSringAreaSlot,
 	getSringHoleSlot, getSringsSringsSlot, getSringsplotOrderSlot,
