@@ -47,7 +47,7 @@ library(maps)
 ncmap <- map("county", "north carolina", fill=TRUE, col="transparent", plot=FALSE)
 }
 data(ncmap)
-IDs <- sapply(strsplit(ncmap$names, ","), function(x) x[2])
+IDs <- sapply(strsplit(ncmap$names, "[,:]"), function(x) x[2])
 nc2 <- as.SpatialRings.map(ncmap, IDs)
 plotSpatialRings(nc2)
 invisible(text(getSRSringsLabptSlots(nc2), labels=getSRSringsIDSlots(nc2), cex=0.6))

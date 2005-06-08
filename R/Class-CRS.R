@@ -8,6 +8,12 @@ setClass("CRS", representation(projargs = "character"),
     if (is.na(projargs)) uprojargs <- projargs
     else uprojargs <- paste(unique(unlist(strsplit(projargs, " "))), 
 	collapse=" ")
+    if (length(grep("= ", uprojargs)) != 0)
+	stop(paste("No spaces permitted in PROJ4 argument-value pairs:", 
+	    uprojargs))
+    if (length(grep(" [:alnum:]", uprojargs)) != 0)
+	stop(paste("PROJ4 argument-value pairs must begin with +:", 
+	    uprojargs))
     res <- new("CRS", projargs=uprojargs)
     res
 }

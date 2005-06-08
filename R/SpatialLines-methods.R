@@ -7,7 +7,7 @@ Sline <- function(coords, proj4string=CRS(as.character(NA))) {
 		proj4string = proj4string)
 }
 
-Slines <- function(slinelist) {
+Slines <- function(slinelist, ID=as.character(NA)) {
 	if (is(slinelist, "Sline"))
 		slinelist = list(slinelist)
 	if (any(sapply(slinelist, function(x) !is(x, "Sline"))))
@@ -16,7 +16,7 @@ Slines <- function(slinelist) {
 	if (length(projargs) > 1) 
 		stop("differing projections among Sline objects")
 	Sp <- new("Spatial", bbox= .bboxSls(slinelist), proj4string=CRS(projargs))
-	new("Slines", Sp, Slines = slinelist)
+	new("Slines", Sp, Slines = slinelist, ID=ID)
 }
 
 SpatialLines <- function(SlineList) {
@@ -63,46 +63,55 @@ contourLines2SLDF <- function(cL, proj4string=CRS(as.character(NA))) {
 	df <- data.frame(level=names(cLstack))
 	m <- length(cLstack)
 	res <- vector(mode="list", length=m)
+	IDs <- paste("C", 1:m, sep="_")
+	row.names(df) <- IDs
 	for (i in 1:m) {
 		res[[i]] <- Slines(.contourLines2SlineList(cL[cLstack[[i]]], 
-			proj4string=proj4string))
+			proj4string=proj4string), ID=IDs[i])
 	}
 	SL <- SpatialLines(res)
 	res <- SpatialLinesDataFrame(SL, data=df)
 	res
 }
 
-arcobj2SLDF <- function(arc, proj4string=CRS(as.character(NA))) {
+arcobj2SLDF <- function(arc, proj4string=CRS(as.character(NA)), IDs) {
 	df <- data.frame(arc[[1]])
 	n <- length(arc[[2]])
 	SlinesList <- vector(mode="list", length=n)
+	if (missing(IDs)) IDs <- paste("L", 1:n, sep="_")
+	if (length(IDs) != n) stop("IDs length differs from number of arcs")
+	row.names(df) <- IDs
 	for (i in 1:n) {
 		crds <- cbind(arc[[2]][[i]][[1]], arc[[2]][[i]][[2]])
 		SlinesList[[i]] <- Slines(list(Sline(coords=crds, 
-			proj4string=proj4string)))
+			proj4string=proj4string)), ID=IDs[i])
 	}
 	SL <- SpatialLines(SlinesList)
 	res <- SpatialLinesDataFrame(SL, data=df)
 	res
 }
 
-shp2SLDF <- function(shp, proj4string=CRS(as.character(NA))) {
+shp2SLDF <- function(shp, proj4string=CRS(as.character(NA)), IDs) {
 	if (class(shp) != "Map") stop("shp not a Map object")
 	if (attr(shp$Shapes, "shp.type") != "arc") stop("not an arc Map object")
 	df <- shp$att.data
 	shapes <- shp$Shapes
 	n <- length(shapes)
 	SlinesList <- vector(mode="list", length=n)
+	if (missing(IDs)) IDs <- as.character(sapply(shapes, 
+		function(x) x$shpID))
+	if (length(IDs) != n) stop("IDs length differs from number of lines")
+	row.names(df) <- IDs
 	for (i in 1:n) {
 		SlinesList[[i]] <- .shapes2SlinesList(shapes[[i]], 
-			proj4string=proj4string)
+			proj4string=proj4string, ID=IDs[i])
 	}
 	SL <- SpatialLines(SlinesList)
 	res <- SpatialLinesDataFrame(SL, data=df)
 	res
 }
 
-.shapes2SlinesList <- function(shape, proj4string=CRS(as.character(NA))) {
+.shapes2SlinesList <- function(shape, proj4string=CRS(as.character(NA)), ID) {
 	nParts <- attr(shape, "nParts")
 	Pstart <- shape$Pstart
 	nVerts <- nrow(shape$verts)
@@ -121,9 +130,35 @@ shp2SLDF <- function(shp, proj4string=CRS(as.character(NA))) {
 		res[[i]] <- Sline(coords=shape$verts[from[j]:to[j],], 
 			proj4string=proj4string)
 	}
-	Slines <- Slines(res)
+	Slines <- Slines(res, ID=ID)
 	Slines
 }
+
+Mapgen2SL <- function(file, proj4string=CRS(as.character(NA))) {
+	con <- file(file, "r")
+	hold <- readLines(con)
+	close(con)
+	if (length(hold) == 500000) warning("500,000 point limit reached")
+	starts <- which(hold == "# -b")
+	n <- length(starts)
+	if (n < 1) stop("Not a Mapgen format file")
+	res <- vector(mode="list", length=n)
+	IDs <- paste("L", 1:n, sep="_")
+	for (i in 1:n) {
+		if (i < n) {
+			x <- t(sapply(strsplit(hold[(starts[i]+1):
+				(starts[i+1]-1)], "\t"), as.numeric))
+		} else {
+			x <- t(sapply(strsplit(hold[(starts[i]+1):
+				length(hold)], "\t"), as.numeric))
+		}
+		res[[i]] <- Slines(list(Sline(x, proj4string=proj4string)),
+			ID=IDs[i])
+	}
+	SL <- SpatialLines(res)
+	SL
+}
+
 
 plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL, asp = 1, 
 	col = 1, add=FALSE, ...) 

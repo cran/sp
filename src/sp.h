@@ -2,6 +2,8 @@
 #define R_SP_H
 
 #include <R.h>
+#include <Rinternals.h>
+#include <Rmath.h>
 
 /* from insiders.c 
 
@@ -37,6 +39,8 @@ typedef struct polygon {
 void setup_poly_minmax(POLYGON *pl);
 char InPoly(PLOT_POINT q, POLYGON *Poly);
 SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly);
+void spRFindCG( int *n, double *x, double *y, double *xc, double *yc, 
+		double *area );
 
 #endif
 

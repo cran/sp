@@ -14,7 +14,7 @@ Objects can be created by calls to the function \code{Srings}
     \item{\code{plotOrder}:}{Object of class \code{"integer"}; order in which
 	the Sring objects should be plotted, currently by order of decreasing size }
     \item{\code{labpt}:}{Object of class \code{"numeric"}; pair of x, y coordinates giving a label point, the label point of the largest ring component  }
-    \item{\code{ID}:}{Object of class \code{"character"}; identifier string  }
+    \item{\code{ID}:}{Object of class \code{"character"}; unique identifier string  }
     \item{\code{area}:}{Object of class \code{"numeric"}; the total area of the Sring list including the areas of holes; these values are used to make sure that rings of a smaller area are plotted after rings of a larger area }
     \item{\code{bbox}:}{Object of class \code{"matrix"}; see \link{Spatial-class} }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}; see \link{CRS-class} }

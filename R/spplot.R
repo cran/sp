@@ -94,10 +94,11 @@ getFormulaLevelplot = function(sdf, zcol) {
 
 spplot.grid = function(obj, zcol = names(obj), ..., names.attr, 
 		scales = list(draw = FALSE), xlab = "", ylab = "", aspect = mapasp(obj), 
-		panel = panel.gridplot, sp.layout = NULL) {
+		panel = panel.gridplot, sp.layout = NULL, formula) {
 	require(lattice)
 	sdf = as(obj, "SpatialPointsDataFrame")
-	formula = getFormulaLevelplot(sdf, zcol)
+	if (missing(formula))
+		formula = getFormulaLevelplot(sdf, zcol)
 	if (length(zcol) > 1)
 		sdf = map.to.lev(sdf, zcol = zcol, names.attr = names.attr)
 	levelplot(formula, as(sdf, "data.frame"), aspect = aspect,
@@ -111,7 +112,7 @@ setMethod("spplot", signature("SpatialGridDataFrame"),
 
 spplot.rings = function(obj, zcol = names(obj), ..., names.attr, 
 		scales = list(draw = FALSE), xlab = "", ylab = "", aspect = mapasp(obj), 
-		panel = panel.ringsplot, sp.layout = NULL) {
+		panel = panel.ringsplot, sp.layout = NULL, formula) {
 
 	require(lattice)
 	require(grid)
@@ -129,7 +130,8 @@ spplot.rings = function(obj, zcol = names(obj), ..., names.attr,
 	dimnames(labpts)[[2]] = c("xlabelpoint", "ylabelpoint")
 	sdf = data.frame(cbind(labpts, sdf))
 	coordinates(sdf) = c("xlabelpoint", "ylabelpoint")
-	formula = getFormulaLevelplot(sdf, zcol)
+	if (missing(formula))
+		formula = getFormulaLevelplot(sdf, zcol)
 	if (length(zcol) > 1)
 		sdf = map.to.lev(sdf, zcol = zcol, names.attr = names.attr)
 	if (is(obj, "SpatialRingsDataFrame"))
@@ -147,21 +149,23 @@ setMethod("spplot", signature("SpatialLinesDataFrame"), spplot.rings)
 spplot.points = function(obj, zcol = names(obj), ..., names.attr, 
 		scales = list(draw = FALSE), xlab = "", ylab = "", 
 		aspect = mapasp(obj), panel = panel.pointsplot,
-		sp.layout = NULL, identify = FALSE) {
+		sp.layout = NULL, identify = FALSE, formula) {
 
 	dots = list(...)
 	require(lattice)
 	sdf = obj
 	# create formula:
-	if (length(zcol) > 1) {
-		formula = as.formula(paste(paste(dimnames(coordinates(sdf))[[2]][2:1], 
-			collapse = "~"), "|name"))
-		sdf = map.to.lev(sdf, zcol = zcol, names.attr = names.attr)
-	} else {
-		if (!is.character(zcol)) 
-			zcol = names(sdf)[zcol]
-		ccn = dimnames(coordinates(sdf))[[2]]
-		formula = as.formula(paste(ccn[2], "~", ccn[1]))
+	if (missing(formula)) {
+		if (length(zcol) > 1) {
+			formula = as.formula(paste(paste(dimnames(coordinates(sdf))[[2]][2:1], 
+				collapse = "~"), "|name"))
+			sdf = map.to.lev(sdf, zcol = zcol, names.attr = names.attr)
+		} else {
+			if (!is.character(zcol)) 
+				zcol = names(sdf)[zcol]
+			ccn = dimnames(coordinates(sdf))[[2]]
+			formula = as.formula(paste(ccn[2], "~", ccn[1]))
+		}
 	}
 	args.xyplot = append(list(formula = formula, data = as(sdf, "data.frame"), 
 		panel = panel, aspect = aspect, scales = scales, 

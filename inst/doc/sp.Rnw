@@ -404,7 +404,7 @@ grd.attr[1:2,-2, c("z2","z1")]
 \subsection{Building line objects from scratch}
 In many instances, line coordinates will be retrieved from external
 sources.  The following example shows how to build an object of class
-{\tt SpatialLines} from scratch.
+{\tt SpatialLines} from scratch. Note that the {\tt Slines} objects have to be given character ID values, and that these values must be unique for {\tt Slines} objects combined in a {\tt SpatialLines} object.
 
 % build line objects
 <<fig=TRUE>>=
@@ -414,8 +414,8 @@ l2 = cbind(c(1,2,3),c(1,1.5,1))
 Sl1 = Sline(l1)
 Sl1a = Sline(l1a)
 Sl2 = Sline(l2)
-S1 = Slines(list(Sl1, Sl1a))
-S2 = Slines(list(Sl2))
+S1 = Slines(list(Sl1, Sl1a), ID="a")
+S2 = Slines(list(Sl2), ID="b")
 Sl = SpatialLines(list(S1,S2))
 summary(Sl)
 plot(Sl, col = c("red", "blue"))
@@ -427,7 +427,7 @@ The class {\tt SpatialLinesDataFrame} is designed for holding
 lines data that have an attribute table (data.frame) attached
 to it:
 <<>>=
-df = data.frame(z = c(1,2))
+df = data.frame(z = c(1,2), row.names=getSLSlinesIDSlots(Sl))
 Sldf = SpatialLinesDataFrame(Sl, data = df)
 summary(Sldf)
 @

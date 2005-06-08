@@ -44,7 +44,7 @@ No methods defined with class "SpatialRingsDataFrame" in the signature.
 }
 \references{ }
 \author{ }
-\note{ }
+\note{\code{SpatialRingsDataFrame} with default ID matching checks the data frame row names against the Srings ID slots. They must then agree with each other, and be unique (no Srings objects can share IDs); the data frame rows will be re-ordered if needed to match the Srings IDs.}
 
 \seealso{
 	\link{SpatialRings-class}
@@ -57,6 +57,7 @@ rownames(df) <- as.character(nc.shp$att.data$FIPS)
 identical(rownames(df), getSRSringsIDSlots(nc1))
 ncSRDF <- SpatialRingsDataFrame(nc1, df)
 names(as(ncSRDF, "data.frame"))
+identical(rownames(as(ncSRDF, "data.frame")), getSRSringsIDSlots(ncSRDF))
 rrt <- as(ncSRDF, "data.frame")$SID74/as(ncSRDF, "data.frame")$BIR74
 brks <- quantile(rrt, seq(0,1,1/7))
 cols <- grey((length(brks):2)/length(brks))
