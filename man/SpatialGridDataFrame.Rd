@@ -37,7 +37,7 @@ find out or change this, see \link{fullgrid} and \link{SpatialGrid-class}.
 
 \seealso{ 
 \link{gridded},
-\link{"gridded<-"},
+\link{gridded<-},
 \link{SpatialGrid},
 \link{SpatialGrid-class}
 }

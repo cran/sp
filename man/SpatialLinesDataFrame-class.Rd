@@ -3,8 +3,8 @@
 \alias{SpatialLinesDataFrame-class}
 \alias{coerce,SpatialLinesDataFrame,data.frame-method}
 \alias{[,SpatialLinesDataFrame-method}
-\alias{"$.SpatialLinesDataFrame"}
-\alias{"$<-.SpatialLinesDataFrame"}
+\alias{$.SpatialLinesDataFrame}
+\alias{$<-.SpatialLinesDataFrame}
 
 \title{a class for spatial lines with attributes }
 \description{ this class holds data consisting of (sets of lines), where each

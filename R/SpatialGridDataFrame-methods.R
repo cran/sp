@@ -20,9 +20,10 @@ as.SPixDF.SGDF = function(from) {
 		# data[[i]] = vector(mode(from@data[[i]]), n)
 		v = vector(mode(from@data[[i]]), n)
       	if (is.factor(from@data[[i]]))
-			v = factor(from@data[[i]], levels = levels(from@data[[i]]))
+			v = factor(rep(NA, n), levels = levels(from@data[[i]]))
+		else
+			v[-from@grid.index] = NA
 		v[from@grid.index] = from@data[[i]]
-		v[-from@grid.index] = NA
 		from@data@att[[i]] = v
    	}
    	#data = data.frame(data)

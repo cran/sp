@@ -9,15 +9,14 @@
 \alias{coordnames,SpatialRings-method}
 \alias{coordnames,Srings-method}
 \alias{coordnames,Sring-method}
-\alias{"coordnames<-"}
-\alias{"coordnames<-"-methods}
-\alias{"coordnames<-",SpatialPoints,character-method}
-\alias{"coordnames<-",SpatialLines,character-method}
-\alias{"coordnames<-",Slines,character-method}
-\alias{"coordnames<-",Sline,character-method}
-\alias{"coordnames<-",SpatialRings,character-method}
-\alias{"coordnames<-",Srings,character-method}
-\alias{"coordnames<-",Sring,character-method}
+\alias{coordnames<-}
+\alias{coordnames<-,SpatialPoints,character-method}
+\alias{coordnames<-,SpatialLines,character-method}
+\alias{coordnames<-,Slines,character-method}
+\alias{coordnames<-,Sline,character-method}
+\alias{coordnames<-,SpatialRings,character-method}
+\alias{coordnames<-,Srings,character-method}
+\alias{coordnames<-,Sring,character-method}
 \title{ retrieve or assign coordinate names for classes in sp}
 \description{
 retrieve or assign coordinate names for classes in \pkg{sp}

@@ -1,6 +1,6 @@
 useDynLib(sp)
 
-importFrom(lattice, levelplot, xyplot)
+importFrom(lattice, levelplot, xyplot, trellis.par.set)
 importFrom(grid, grid.polygon)
 
 export(CRS, print.CRS, proj4string, "proj4string<-", is.projected)

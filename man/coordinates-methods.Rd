@@ -15,7 +15,7 @@
 \alias{coordinates,SpatialPixelsDataFrame-method}
 \alias{coordinates,SpatialGrid-method}
 \alias{coordinates,SpatialGridDataFrame-method}
-\alias{"coordinates<-",data.frame-method}
+\alias{coordinates<-,data.frame-method}
 \title{ retrieves spatial coordinates }
 \description{ retrieves spatial coordinates from spatial data }
 \section{Methods}{

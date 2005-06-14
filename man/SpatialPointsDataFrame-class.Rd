@@ -8,10 +8,10 @@
 % \alias{coordinates,SpatialPointsDataFrame-method}
 % \alias{coordinates}
 % \alias{SpatialPointsDataFrame}
-\alias{"[[.SpatialPointsDataFrame"}
-\alias{"[[<-.SpatialPointsDataFrame"}
-\alias{"$.SpatialPointsDataFrame"}
-\alias{"$<-.SpatialPointsDataFrame"}
+\alias{[[.SpatialPointsDataFrame}
+\alias{[[<-.SpatialPointsDataFrame}
+\alias{$.SpatialPointsDataFrame}
+\alias{$<-.SpatialPointsDataFrame}
 \alias{as.data.frame.SpatialPointsDataFrame}
 \alias{dim.SpatialPointsDataFrame}
 \alias{plot.SpatialPointsDataFrame}
@@ -21,7 +21,7 @@
 \alias{ShowSpatialPointsDataFrame}
 \alias{as.SpatialPoints.SpatialPointsDataFrame}
 
-\title{Class "SpatialPointsDataFrame" ~~~ }
+\title{Class "SpatialPointsDataFrame" }
 \description{ Class for spatial attributes that have spatial point locations }
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{coordinates(x) = c("x", "y") }.

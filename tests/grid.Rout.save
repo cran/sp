@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 beta (2005-04-10), ISBN 3-900051-07-0
+Version 2.1.0  (2005-04-18), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -48,14 +48,14 @@ Data attributes:
  3rd Qu.:   1.0000   3rd Qu.:   1.0000   3rd Qu.:   0.4402   3rd Qu.:   2.000  
  Max.   :   1.0000   Max.   :   1.0000   Max.   :   0.9926   Max.   :   3.000  
  NA's   :5009.0000   NA's   :5009.0000   NA's   :5009.0000   NA's   :5009.000  
-     ffreq         
- Min.   :   1.000  
- 1st Qu.:   1.000  
- Median :   2.000  
- Mean   :   2.068  
- 3rd Qu.:   3.000  
- Max.   :   3.000  
- NA's   :5009.000  
+  ffreq     
+ 1   : 779  
+ 2   :1335  
+ 3   : 989  
+ NA's:5009  
+            
+            
+            
 > gridparameters(x)
   cellcentre.offset cellsize cells.dim
 x            178460       40        78
@@ -79,20 +79,13 @@ Is projected: NA
 proj4string : [NA]
 Number of points: 3103
 Data attributes:
-     part.a           part.b            dist             soil      
- Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :1.000  
- 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.1193   1st Qu.:1.000  
- Median :0.0000   Median :1.0000   Median :0.2715   Median :1.000  
- Mean   :0.3986   Mean   :0.6014   Mean   :0.2971   Mean   :1.578  
- 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.4402   3rd Qu.:2.000  
- Max.   :1.0000   Max.   :1.0000   Max.   :0.9926   Max.   :3.000  
-     ffreq      
- Min.   :1.000  
- 1st Qu.:1.000  
- Median :2.000  
- Mean   :2.068  
- 3rd Qu.:3.000  
- Max.   :3.000  
+     part.a           part.b            dist             soil       ffreq   
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :1.000   1: 779  
+ 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.1193   1st Qu.:1.000   2:1335  
+ Median :0.0000   Median :1.0000   Median :0.2715   Median :1.000   3: 989  
+ Mean   :0.3986   Mean   :0.6014   Mean   :0.2971   Mean   :1.578           
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.4402   3rd Qu.:2.000           
+ Max.   :1.0000   Max.   :1.0000   Max.   :0.9926   Max.   :3.000           
 > class(as(x, "matrix"))
 [1] "matrix"
 Warning message:

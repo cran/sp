@@ -21,7 +21,12 @@
 	data
 }
 
-stack.AttributeList = function(x, ...) stack(x@att, ...)
+stack.AttributeList = function(x, ...) {
+	ns = names(x)
+	x = stack(lapply(x@att, as.numeric), ...)
+	x$ind = factor(x$ind, levels = ns) # don't sort alphabetically
+	x
+}
 
 stack.SpatialPointsDataFrame = function (x, select, ...)
 {

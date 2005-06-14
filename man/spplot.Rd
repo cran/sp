@@ -68,6 +68,8 @@ the selected points.
 
 }
 \note{
+Missing values in the attributes are (currently) not allowed.
+
 \code{spplot.grid}, \code{spplot.rings} and \code{spplot.points} are S4
 methods for \code{spplot}; see \link{spplot-methods}.
 

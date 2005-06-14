@@ -59,7 +59,7 @@ sp                      A package providing classes and methods for
 Spatial-class           Class "Spatial" ~~~
 SpatialGrid-class       Class "SpatialGrid" ~~~
 SpatialGridDataFrame-class
-                        Class "SpatialGridDataFrame" ~~~
+                        Class "SpatialGridDataFrame"
 SpatialLines            create objects of class SpatialLines or
                         SpatialLinesDataFrame
 SpatialLines-class      a class for spatial lines
@@ -75,7 +75,7 @@ SpatialPoints           create objects of class SpatialPoints or
                         SpatialPointsDataFrame
 SpatialPoints-class     Class "SpatialPoints" ~~~
 SpatialPointsDataFrame-class
-                        Class "SpatialPointsDataFrame" ~~~
+                        Class "SpatialPointsDataFrame"
 SpatialRings            create objects of class SpatialRings or
                         SpatialRingsDataFrame
 SpatialRings-class      Class "SpatialRings"

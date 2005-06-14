@@ -50,14 +50,18 @@ sp.points = function(obj, pch = 3, ...) {
 }
 
 sp.panel.layout = function(lst, panel.counter, ...) {
-	sp.panel0 = function(x, ...) {
+	sp.panel0 = function(x, first = FALSE, ...) {
 		if (is.character(x))
 			obj = get(x)
 		if (!is.null(x$which) && is.na(match(panel.counter, x$which)))
 			return()
 		if (inherits(x, "list")) {
-			n = length(x)
-			do.call(x[[1]], x[2:n])
+			# print(paste(class(x), "first val", first, "first obj", x$first))
+			if (!is.null(x$first)) {
+				if (x$first == first)
+					do.call(x[[1]], x[2:length(x)])
+			} else if (!first)
+				do.call(x[[1]], x[2:length(x)])
 		} else if (is(x, "SpatialLines") || is(x, "Slines") || is(x, "Sline"))
 			sp.lines(x, ...)
 		else if (is(x, "SpatialPoints"))
@@ -176,7 +180,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 	if (!(is.logical(identify) && identify==FALSE) && interactive()) {
 		print(plt)
 		if (!(is.numeric(identify) && length(identify) == 2))
-			idenfity = c(1,1)
+			identify = c(1,1)
 		trellis.focus("panel", identify[1], identify[2])
 		labels = row.names(as(sdf, "data.frame"))
 		cat("left-mouse to identify points; right-mouse to end\n")
@@ -192,6 +196,21 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
 
 panel.gridplot = function(x, y, z, subscripts, ..., panel.counter, sp.layout) {
+	# set first = TRUE defaults for polygons objects in sp.layout:
+	if (!missing(sp.layout) && inherits(sp.layout, "list")) {
+		if (inherits(sp.layout[[1]], "list")) {
+			for (i in seq(along = sp.layout)) {
+				if (inherits(sp.layout[[i]], "list")) {
+					sp.i = sp.layout[[i]]
+					if (is.null(sp.i$first) && sp.i[[1]] == "sp.polygon")
+						sp.layout[[i]]$first = TRUE
+				}
+			}
+		} else if (is.null(sp.layout$first) && sp.layout[[1]] == "sp.polygon")
+			sp.layout$first = TRUE
+	}
+	# print(sp.layout)
+	sp.panel.layout(sp.layout, panel.counter, first = TRUE)
 	panel.levelplot(x, y, z, subscripts, ...)
 	sp.panel.layout(sp.layout, panel.counter)
 }
@@ -390,9 +409,13 @@ layout.scale.bar = function(height = 0.05) {
 }
 # scale.bar = .scale.bar()
 
-sp.theme = function() list(
-	regions = list(col = bpy.colors(100))
-)
+sp.theme = function(set = FALSE, regions = list(col = bpy.colors(100)), ...) {
+	lst = list(regions = regions, ...)
+	if (set)
+		trellis.par.set(lst)
+	else
+		lst
+}
 
 spplot.key = function(sp.layout, rows = 1, cols = 1) {
 	for (i in seq(along=rows)) {

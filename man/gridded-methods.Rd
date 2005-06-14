@@ -3,9 +3,9 @@
 \alias{gridded-methods}
 \alias{gridded,Spatial-method}
 \alias{gridparameters}
-\alias{"gridded<-"}
+\alias{gridded<-}
 \alias{gridded}
-\alias{"fullgrid<-"}
+\alias{fullgrid<-}
 \alias{fullgrid}
 \title{ specify spatial data as being gridded, or find out whether they are }
 \description{
