@@ -7,7 +7,7 @@ SpatialRingsDataFrame <- function(Sr, data, match.ID = TRUE) {
 			stop("row.names of data and Srings IDs do not match")
 		if (length(unique(mtch)) != length(Sr_IDs))
 			stop("row.names of data and Srings IDs do not match")
-		data <- data[mtch, , drop=FALSE]
+		data <- data[mtch, , drop = FALSE]
 	}
 	new("SpatialRingsDataFrame", Sr, data=data)
 }

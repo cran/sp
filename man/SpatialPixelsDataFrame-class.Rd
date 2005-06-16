@@ -4,8 +4,8 @@
 \alias{[,SpatialPixelsDataFrame-method}
 \alias{[[,SpatialPixelsDataFrame-method}
 \alias{[[<-,SpatialPixelsDataFrame-method}
-\alias{"$.SpatialPixelsDataFrame"}
-\alias{"$<-.SpatialPixelsDataFrame"}
+\alias{$.SpatialPixelsDataFrame}
+\alias{$<-.SpatialPixelsDataFrame}
 % \alias{SpatialPixelsDataFrame}
 \alias{plot.SpatialPixelsDataFrame}
 \alias{print.summary.SpatialPixelsDataFrame}
@@ -45,8 +45,10 @@ Class \code{"Spatial"}, by class \code{"SpatialPixels"}.
 \section{Methods}{
   \describe{
     \item{coordinates}{\code{signature(x = "SpatialPixelsDataFrame")}: retrieves (and calculates!) coordinates }
-    \item{[}{\code{signature(x = "SpatialPixelsDataFrame")}: selects row(s) or attribute(s), and returns an
-	object of class \code{SpatialPixelsDataFrame}}
+    \item{[}{\code{signature(x = "SpatialPixelsDataFrame")}: selects row(s) and/or attribute(s), and returns an
+	object of class \code{SpatialPixelsDataFrame}; rows refer here to the pixel
+	numbers, not grid lines. For selecting a square block in a grid, coerce to
+	a \link{SpatialGridDataFrame-class} first, and use \code{[} on that object}
     \item{[[}{\code{signature(x = "SpatialPixelsDataFrame")}: retrieves an attribute, dropping everything 
 	else (topology) }
     \item{[[<-}{\code{signature(x = "SpatialPixelsDataFrame")}: assigns or replaces an attribute }

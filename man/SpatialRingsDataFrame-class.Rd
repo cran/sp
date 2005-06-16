@@ -2,8 +2,8 @@
 \docType{class}
 \alias{SpatialRingsDataFrame-class}
 \alias{[,SpatialRingsDataFrame-method}
-\alias{"$.SpatialRingsDataFrame"}
-\alias{"$<-.SpatialRingsDataFrame"}
+\alias{$.SpatialRingsDataFrame}
+\alias{$<-.SpatialRingsDataFrame}
 \alias{as.data.frame.SpatialRingsDataFrame}
 \alias{coerce,SpatialRingsDataFrame,data.frame-method}
 

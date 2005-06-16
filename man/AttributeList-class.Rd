@@ -9,12 +9,12 @@
 \alias{as.list.AttributeList}
 \alias{as.data.frame.AttributeList}
 \alias{dim.AttributeList}
-\alias{"[[.AttributeList"}
-\alias{"[[<-.AttributeList"}
-\alias{"$.AttributeList"}
-\alias{"$<-.AttributeList"}
-\alias{"names.AttributeList"}
-\alias{"names<-.AttributeList"}
+\alias{[[.AttributeList}
+\alias{[[<-.AttributeList}
+\alias{$.AttributeList}
+\alias{$<-.AttributeList}
+\alias{names.AttributeList}
+\alias{names<-.AttributeList}
 
 \title{Class "AttributeList" }
 \description{ Attribute list; a kind of data.frame but without row.names }

@@ -45,13 +45,24 @@ setMethod("[", "AttributeList", function(x, i, j, ... , drop = FALSE) {
 "[[<-.AttributeList" =  function(x, i, j, value) { 
 	if (!missing(j))
 		stop("only valid calls are x[[i]] <- value")
-	x@att[[i]] <- value
+	if (!is.null(value)) {
+		stopifnot(is.vector(value))
+		stopifnot(length(value) == length(x@att[[1]]))
+	}
+	x@att[[i]] = value
 	x 
 }
 
 "$.AttributeList" = function(x,name) x@att[[name]]
 
-"$<-.AttributeList" = function(x, i, value) { x@att[[i]] = value; x }
+"$<-.AttributeList" = function(x, i, value) { 
+	if (!is.null(value)) {
+		stopifnot(is.vector(value))
+		stopifnot(length(value) == length(x@att[[1]]))
+	}
+	x@att[[i]] = value
+	x 
+}
 
 summary.AttributeList = function(object, ...) summary.data.frame(object@att)
 

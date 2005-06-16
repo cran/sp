@@ -4,8 +4,8 @@
 \alias{[,SpatialGridDataFrame-method}
 \alias{[[,SpatialGridDataFrame-method}
 \alias{[[<-,SpatialGridDataFrame-method}
-\alias{"$.SpatialGridDataFrame"}
-\alias{"$<-.SpatialGridDataFrame"}
+\alias{$.SpatialGridDataFrame}
+\alias{$<-.SpatialGridDataFrame}
 \alias{cbind.SpatialGridDataFrame}
 % \alias{SpatialGridDataFrame}
 \alias{plot.SpatialGridDataFrame}
@@ -17,7 +17,7 @@
 \alias{coerce,SpatialGridDataFrame,matrix-method}
 \alias{as.data.frame.SpatialGridDataFrame}
 
-\title{Class "SpatialGridDataFrame" ~~~ }
+\title{Class "SpatialGridDataFrame" }
 \description{  Class for spatial attributes that have spatial locations
 on a (full) regular grid. }
 \section{Objects from the Class}{
