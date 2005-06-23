@@ -10,6 +10,8 @@ static const R_CMethodDef CEntries[]  = {
     {"setup_poly_minmax", (DL_FUNC) &setup_poly_minmax, 1},
     {"InPoly", (DL_FUNC) &InPoly, 2},
     {"spRFindCG", (DL_FUNC) &spRFindCG, 6},
+    {"sp_gcdist", (DL_FUNC) &sp_gcdist, 5},
+    {"sp_dists", (DL_FUNC) &sp_dists, 7},
     {NULL, NULL, 0}
 };
 

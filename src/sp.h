@@ -41,6 +41,11 @@ char InPoly(PLOT_POINT q, POLYGON *Poly);
 SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly);
 void spRFindCG( int *n, double *x, double *y, double *xc, double *yc, 
 		double *area );
+void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2, 
+		double *dist);
+void sp_dists(double *u, double *v, double *uout, double *vout, 
+		int *n, double *dists, int *lonlat);
+
 
 #endif
 

@@ -46,7 +46,8 @@ setMethod("[", "AttributeList", function(x, i, j, ... , drop = FALSE) {
 	if (!missing(j))
 		stop("only valid calls are x[[i]] <- value")
 	if (!is.null(value)) {
-		stopifnot(is.vector(value))
+		stopifnot(is.vector(value) || is.factor(value))
+		stopifnot(is.na(match(mode(value), c("raw", "list"))))
 		stopifnot(length(value) == length(x@att[[1]]))
 	}
 	x@att[[i]] = value
@@ -57,7 +58,8 @@ setMethod("[", "AttributeList", function(x, i, j, ... , drop = FALSE) {
 
 "$<-.AttributeList" = function(x, i, value) { 
 	if (!is.null(value)) {
-		stopifnot(is.vector(value))
+		stopifnot(is.vector(value) || is.factor(value))
+		stopifnot(is.na(match(mode(value), c("raw", "list"))))
 		stopifnot(length(value) == length(x@att[[1]]))
 	}
 	x@att[[i]] = value
