@@ -1,0 +1,32 @@
+\name{Polygons-class}
+\docType{class}
+\alias{Polygons-class}
+
+\title{Class "Polygons"}
+\description{ Collection of objects of class \code{"Polygon"} }
+\section{Objects from the Class}{
+Objects can be created by calls to the function \code{Polygons}
+}
+\section{Slots}{
+  \describe{
+    \item{\code{Polygons}:}{Object of class \code{"list"}; list with objects
+	of class \link{Polygon-class} }
+    \item{\code{plotOrder}:}{Object of class \code{"integer"}; order in which
+	the Polygon objects should be plotted, currently by order of decreasing size }
+    \item{\code{labpt}:}{Object of class \code{"numeric"}; pair of x, y coordinates giving a label point, the label point of the largest polygon component  }
+    \item{\code{ID}:}{Object of class \code{"character"}; unique identifier string  }
+    \item{\code{area}:}{Object of class \code{"numeric"}; the total area of the Polygon list including the areas of holes; these values are used to make sure that polygons of a smaller area are plotted after polygons of a larger area }
+  }
+}
+\section{Methods}{
+No methods defined with class "Polygons" in the signature.
+}
+\references{ }
+\author{ Roger Bivand }
+\note{ By default, single polygons (where Polygons is a list of length one) are not expected to be holes, but in multiple polygons, hole definitions for member polygons can be set. Polygon objects belonging to an Polygons object should either not overlap one-other, or should be fully included (as lakes or islands in lakes). They should not be self-intersecting. Checking of hole FALSE/TRUE status for Polygons objects is included in the spgpc wrapper package for gpclib functions, function checkPolygonsHoles() (currently on sourceforge). }
+
+\seealso{
+}
+\examples{
+}
+\keyword{classes}

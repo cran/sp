@@ -2,12 +2,12 @@
 \docType{methods}
 \alias{spsample-methods}
 \alias{spsample,Spatial-method}
-\alias{spsample,Sline-method}
-\alias{spsample,Sring-method}
-\alias{spsample,Srings-method}
+\alias{spsample,Line-method}
+\alias{spsample,Polygon-method}
+\alias{spsample,Polygons-method}
 \alias{spsample,SpatialGrid-method}
 \alias{spsample,SpatialPixels-method}
-\alias{spsample,SpatialRings-method}
+\alias{spsample,SpatialPolygons-method}
 \title{ sampling point locations in (or on) a spatial object }
 \description{
 sampling point locations in (or on) a spatial object
@@ -17,15 +17,15 @@ sampling point locations in (or on) a spatial object
 
 \item{x = "Spatial"}{ sample in the bbox of \code{x} }
 
-\item{x = "Sline"}{ sample on a line }
+\item{x = "Line"}{ sample on a line }
 
-\item{x = "Sring"}{ sample in an Sring }
+\item{x = "Polygon"}{ sample in an Polygon }
 
-\item{x = "Srings"}{ sample in an Srings object, consisting of possibly
-multiple Sring objects (and holes!) }
+\item{x = "Polygons"}{ sample in an Polygons object, consisting of possibly
+multiple Polygon objects (and holes!) }
 
-\item{x = "SpatialRings"}{ sample in an SpatialRings object; sampling
-takes place over all Srings objects present, use subsetting to vary
+\item{x = "SpatialPolygons"}{ sample in an SpatialPolygons object; sampling
+takes place over all Polygons objects present, use subsetting to vary
 sampling intensity (density) }
 
 \item{x = "SpatialGrid"}{ sample in an SpatialGrid object }

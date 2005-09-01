@@ -2,20 +2,20 @@
 \alias{spsample}
 \alias{makegrid}
 \alias{sample.Spatial}
-\alias{sample.Sline}
-\alias{sample.Sring}
-\alias{sample.Srings}
+\alias{sample.Line}
+\alias{sample.Polygon}
+\alias{sample.Polygons}
 \alias{sample.Sgrid}
 \title{ sample point locations within a spatial region }
-\description{ sample point locations within a square area,
-a ring, or on a spatial line, using regular or random sampling
+\description{ sample point locations within a square area, a grid,
+a polygon, or on a spatial line, using regular or random sampling
 }
 \usage{
 spsample(x, n, type, ...)
 sample.Spatial(x, n, type, bb = bbox(x), offset = runif(2), cellsize, ...)
-sample.Sline(x, n, type, offset = runif(1), ...)
-sample.Sring(x, n, type = "random", bb = bbox(x), offset = runif(2), ...)
-sample.Srings(x, n, type = "random", bb = bbox(x), offset = runif(2), ...)
+sample.Line(x, n, type, offset = runif(1), proj4string=CRS(as.character(NA)), ...)
+sample.Polygon(x, n, type = "random", bb = bbox(x), offset = runif(2), proj4string=CRS(as.character(NA)), ...)
+sample.Polygons(x, n, type = "random", bb = bbox(x), offset = runif(2), proj4string=CRS(as.character(NA)), ...)
 sample.Sgrid(x, n, type = "random", bb = bbox(x), offset = runif(2), ...)
 makegrid(x, n = 10000, nsig = 2, cellsize, offset = c(0.5,0.5), 
 	type = "regular", ...)
@@ -41,6 +41,8 @@ not random (but, in Ripley's wording, "centric systematic") }
 \item{cellsize}{ if missing, a cell size is derived from the sample size
 \code{n}; otherwise, this cell size is used for all sampling methods
 except \code{"random"} }
+  \item{proj4string}{Object of class \code{"CRS"};
+	holding a valid proj4 string}
 \item{nsig}{ for "pretty" coordinates; \code{spsample} do not result in
 pretty grids }
 }
@@ -56,7 +58,7 @@ necessary to select afterwards.
 
 Sampling type \code{"nonaligned"} is not implemented for line objects. }
 
-\note{If an \link{Sring-class} object has zero area (i.e. is a line),
+\note{If an \link{Polygon-class} object has zero area (i.e. is a line),
 samples on this line element are returned. If the area is very close
 to zero, the algorithm taken here (generating points in a square area,
 selecting those inside the polygon) may be very resource intensive }
@@ -68,7 +70,7 @@ selecting those inside the polygon) may be very resource intensive }
 \examples{
 
 data(meuse.riv)
-meuse.sr = SpatialRings(list(Srings(list(Sring(meuse.riv)), "x")))
+meuse.sr = SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)), "x")))
 
 plot(meuse.sr)
 points(spsample(meuse.sr, n = 1000, "regular"), pch = 3)

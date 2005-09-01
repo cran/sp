@@ -1,11 +1,11 @@
 Package: sp
-Version: 0.7-10
-Date: 2005-06-16
+Version: 0.8-1
+Date: 2005-09-01
 Title: classes and methods for spatial data
 Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
 Maintainer: Edzer J. Pebesma <e.pebesma@geo.uu.nl>
 Depends: R (>= 2.0.0)
-Suggests: pixmap (>= 0.4-2), RColorBrewer
+Suggests: RColorBrewer
 Imports: lattice, grid
 Description: A package that provides classes and methods for spatial
   data. The classes document where the spatial location information
@@ -15,19 +15,19 @@ Description: A package that provides classes and methods for spatial
 License: GPL version 2 or later
 URL: http://r-spatial.sourceforge.net/
 SaveImage: yes
-Collate: AAA.R Class-CRS.R Class-Spatial.R Spatial-methods.R
+Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
 	projected.R Class-SpatialPoints.R SpatialPoints-methods.R
 	Class-AttributeList.R AttributeList-methods.R
 	Class-SpatialPointsDataFrame.R SpatialPointsDataFrame-methods.R
 	Class-GridTopology.R Class-SpatialGrid.R
 	Class-SpatialGridDataFrame.R Class-SpatialLines.R
 	SpatialLines-methods.R Class-SpatialLinesDataFrame.R
-	SpatialLinesDataFrame-methods.R Class-SpatialRings.R
-	Class-SpatialRingsDataFrame.R SpatialRings-methods.R
-	SpatialRingsDataFrame-methods.R GridTopology-methods.R
+	SpatialLinesDataFrame-methods.R Class-SpatialPolygons.R
+	Class-SpatialPolygonsDataFrame.R SpatialPolygons-methods.R
+	SpatialPolygonsDataFrame-methods.R GridTopology-methods.R
 	SpatialGrid-methods.R SpatialGridDataFrame-methods.R
-	SpatialRings-internals.R point.in.polygon.R
-	SpatialRings-displayMethods.R zerodist.R image.R stack.R
+	SpatialPolygons-internals.R point.in.polygon.R
+	SpatialPolygons-displayMethods.R zerodist.R image.R stack.R
 	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
-	asciigrid.R spplot.R overlay.R spsample.R recenter.R
-Packaged: Wed Jun 22 22:02:04 2005; edzer
+	asciigrid.R spplot.R overlay.R spsample.R recenter.R dms.R
+Packaged: Tue Sep  6 13:14:01 2005; edzer

@@ -27,16 +27,16 @@ gridded(meuse.grid) = TRUE
 image(meuse.grid, "dist", add = TRUE)
 data(meuse)
 coordinates(meuse) = c("x", "y")
-meuse.sr = SpatialRings(list(Srings(list(Sring(meuse.riv)),"meuse.riv")))
+meuse.sr = SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)),"meuse.riv")))
 spplot(meuse.grid, col.regions=bpy.colors(), main = "meuse.grid",
   sp.layout=list(
-	list("sp.polygon", meuse.sr),
+	list("sp.polygons", meuse.sr),
 	list("sp.points", meuse, pch="+", col="black")
   )
 )
 spplot(meuse, "zinc", col.regions=bpy.colors(),  main = "zinc, ppm",
   cuts = c(100,200,400,700,1200,2000), key.space = "right",
-  sp.layout= list("sp.polygon", meuse.sr, fill = "lightblue")
+  sp.layout= list("sp.polygons", meuse.sr, fill = "lightblue")
 )
 }
 \keyword{datasets}

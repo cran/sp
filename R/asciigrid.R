@@ -70,7 +70,7 @@ write.asciigrid <- function(x, fname, attr = 1, na.value = -9999, ...) {
 #NODATA_VALUE 1e31
 
 	if (!gridded(x))
-		stop("can only write SpatialDataFrameGrids to asciigrid")
+		stop("can only write SpatialGridDataFrame objects to asciigrid")
 	x = as(x, "SpatialGridDataFrame")
 	gp = gridparameters(x)
 	if (length(gp$cells.dim) != 2)

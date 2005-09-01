@@ -1,6 +1,6 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.1  (2004-11-15), ISBN 3-900051-07-0
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.1  (2005-06-20), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -49,9 +49,8 @@ Type 'q()' to quit R.
 > # coordinates defined as variable names:
 > coordinates(x) = c("x", "y") # no matter their position
 > #plot(x, cex=.05 * sqrt(x@data[,"zinc"]),
-> plot(x, cex=.05 * sqrt(as.data.frame(x)["zinc"]),
-+  	xlab="x-coordinate (RDM)", ylab="y-coordinate (RDM)", 
-+ 	main = "Meuse: zinc bubble plot")
+> plot(x, cex=.05 * sqrt(as.data.frame(x)["zinc"]))
+> title("Meuse: zinc bubble plot")
 > print(summary(x))
 Object of class SpatialPointsDataFrame
 Coordinates:

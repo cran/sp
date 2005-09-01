@@ -1,6 +1,7 @@
 makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = c(0.5,0.5),
 		type = "regular", ...) {
-	bb = bbox(x)
+#	bb = bbox(x)
+	bb = x
 	rx = bb[1,]
 	ry = bb[2,]
 	if (missing(cellsize))
@@ -33,16 +34,22 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(2), cellsize,
 		yc = runif(n) * diff(bb[2,]) + bb[2,1]
 		xy = cbind(xc, yc)
 	} else
-		xy = makegrid(x, n = n, nsig = 20, cellsize = cellsize, 
+		xy = makegrid(#x
+bbox(x), n = n, nsig = 20, cellsize = cellsize, 
 			offset = offset, type = type)
 	SpatialPoints(xy, CRS(proj4string(x)))
 }
 setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
 
-sample.Sline = function(x, n, type, offset = runif(1), ...) {
+sample.Line = function(x, n, type, offset = runif(1),
+proj4string=CRS(as.character(NA)), ...) {
+#...) {
 	cc = coordinates(x)
 	dxy = apply(cc, 2, diff)
-	lengths = apply(dxy, 1, function(x) sqrt(sum(x ** 2)))
+	if (inherits(dxy, "matrix"))
+		lengths = apply(dxy, 1, function(x) sqrt(sum(x ** 2)))
+	else # cc has 2 rows:
+		lengths = sqrt(sum(dxy ** 2))
 	csl = c(0, cumsum(lengths))
 	maxl = csl[length(csl)]
 	if (type == "random")
@@ -52,55 +59,73 @@ sample.Sline = function(x, n, type, offset = runif(1), ...) {
 	else if (type == "regular")
 		pts = ((1:n) - offset)/n * maxl
 	else
-		stop(paste("type", type, "not available for Sline"))
+		stop(paste("type", type, "not available for Line"))
 	# find coordinates:
 	int = findInterval(pts, csl, all.inside = TRUE)
 	where = (pts - csl[int])/diff(csl)[int]
 	xy = cc[int,] + where * (cc[int+1,] - cc[int,])
-	SpatialPoints(xy, CRS(proj4string(x)))
+#	SpatialPoints(xy, CRS(proj4string(x)))
+	SpatialPoints(xy, proj4string=proj4string)
 }
-setMethod("spsample", signature(x = "Sline"), sample.Sline)
+setMethod("spsample", signature(x = "Line"), sample.Line)
 
-sample.Sring = function(x, n, type = "random", bb = bbox(x),
-		offset = runif(2), ...) {
-	area = getSringAreaSlot(x)
+sample.Polygon = function(x, n, type = "random", bb = bbox(x),
+		offset = runif(2), proj4string=CRS(as.character(NA)), ...) {
+#...) {
+	area = getPolygonAreaSlot(x)
 	if (area == 0.0)
-		spsample(Sline(getSringCoordsSlot(x), CRS(proj4string(x))), n, type, offset = offset[1])
+		spsample(Line(getPolygonCoordsSlot(x)), 
+			n, type, offset = offset[1], proj4string=proj4string)
+#CRS(proj4string(x))), n, type, offset = offset[1])
 	else {
 		bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-		pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
-		id = overlay(pts, SpatialRings(list(Srings(list(x),"xx"))))
+		xSP <- new("Spatial", bbox=bbox(x), proj4string=proj4string)
+		pts = sample.Spatial(
+#spsample(
+#as(x, "Spatial")
+xSP, round(n * bb.area/area), type, offset = offset, ...)
+# FIXME!!
+		id = overlay(pts, SpatialPolygons(list(Polygons(list(x),"xx")), 
+			proj4string=proj4string))
 		pts[which(!is.na(id))]
 	}
 }
-setMethod("spsample", signature(x = "Sring"), sample.Sring)
+setMethod("spsample", signature(x = "Polygon"), sample.Polygon)
 
-sample.Srings = function(x, n, type = "random", bb = bbox(x),
-		offset = runif(2), ...) {
+sample.Polygons = function(x, n, type = "random", bb = bbox(x),
+		offset = runif(2), 
+#...) {
+proj4string=CRS(as.character(NA)), ...) {
 	#stop("not functioning yet...")
-	area = getSringAreaSlot(x) # also available for Srings!
+	area = getPolygonAreaSlot(x) # also available for Polygons!
 	if (area == 0.0)
 		# distribute n over the lines, according to their length?
 		stop("sampling over multiple lines not functioning yet...")
 	bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-	pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
-	id = overlay(pts, SpatialRings(list(x)))
+	xSP <- new("Spatial", bbox=bbox(x), proj4string=proj4string)
+	pts = sample.Spatial(
+#spsample(
+#as(x, "Spatial")
+xSP, round(n * bb.area/area), type, offset = offset, ...)
+# FIXME!!
+	id = overlay(pts, SpatialPolygons(list(x), proj4string=proj4string))
 	pts[which(!is.na(id))]
 }
-setMethod("spsample", signature(x = "Srings"), sample.Srings)
+setMethod("spsample", signature(x = "Polygons"), sample.Polygons)
 
-sample.SpatialRings = function(x, n, type = "random", bb = bbox(x),
+sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(2), ...) {
 	#stop("not functioning yet...")
-	area = sum(unlist(lapply(getSRpolygonsSlot(x),getSringAreaSlot)))
+	area = sum(unlist(lapply(getSpPpolygonsSlot(x),getPolygonAreaSlot)))
 	if (area == 0.0)
 		stop("sampling over multiple lines not functioning yet...")
 		# distribute n over the lines, according to their length?
 	bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-	pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
+	pts = #spsample(as(x, "Spatial")
+sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
 	pts[which(!is.na(overlay(pts, x)))]
 }
-setMethod("spsample", signature(x = "SpatialRings"), sample.SpatialRings)
+setMethod("spsample", signature(x = "SpatialPolygons"), sample.SpatialPolygons)
 
 sample.Sgrid = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(2), ...) {

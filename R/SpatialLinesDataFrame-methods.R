@@ -1,20 +1,18 @@
 SpatialLinesDataFrame = function(sl, data, match.ID = TRUE) {
 	if (match.ID) {
-		Sl_IDs <- getSLSlinesIDSlots(sl)
+		Sl_IDs <- getSLLinesIDSlots(sl)
 		data_IDs <- row.names(data)
 		mtch <- match(Sl_IDs, data_IDs)
 		if (any(is.na(mtch)))
-			stop("row.names of data and Slines IDs do not match")
+			stop("row.names of data and Lines IDs do not match")
 		if (length(unique(mtch)) != length(Sl_IDs))
-			stop("row.names of data and Slines IDs do not match")
+			stop("row.names of data and Lines IDs do not match")
 		data <- data[mtch, , drop=FALSE]
 	}
 	new("SpatialLinesDataFrame", sl, data = data)
 }
 
-plot.SpatialLinesDataFrame = function(x, ...) plotSpatialLines(x, ...)
-
-summary.SpatialLinesDataFrame = summary.Spatial
+setMethod("summary", "SpatialLinesDataFrame", summary.Spatial)
 
 names.SpatialLinesDataFrame = function(x) names(x@data)
 "names<-.SpatialLinesDataFrame" = function(x,value) { names(x@data)<-value; x }
@@ -25,11 +23,12 @@ setAs("SpatialLinesDataFrame", "data.frame", function(from)
     as.data.frame.SpatialLinesDataFrame(from))
 
 #"[.SpatialLinesDataFrame" <- function(x, i, j, ... , drop = FALSE) {
-setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = FALSE) {
+setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = TRUE) {
     missing.i = missing(i)
     missing.j = missing(j)
-    if (drop)
-        stop("coerce to data.frame first for drop = TRUE")
+    drop <- FALSE
+#    if (drop)
+#        stop("coerce to data.frame first for drop = TRUE")
     nargs = nargs() # e.g., a[3,] gives 2 for nargs, a[3] gives 1.
     if (missing.i && missing.j) {
         i = TRUE
@@ -44,13 +43,13 @@ setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = FALSE) {
     } else if (missing.i && !missing.j)
         i = TRUE
     if (is.matrix(i))
-        stop("matrix argument not supported in SpatialRingsDataFrame selection")
+        stop("matrix argument not supported in SpatialLinesDataFrame selection")
     SpatialLinesDataFrame(as(x, "SpatialLines")[i, , drop = FALSE],
         data = x@data[i, j, drop = FALSE])
 })
 
 "[[.SpatialLinesDataFrame" =  function(x, ...)
-#setMethod("[[", "SpatialRingsDataFrame", function(x, ...)
+#setMethod("[[", "SpatialLinesDataFrame", function(x, ...)
     x@data[[...]]
 #)
 

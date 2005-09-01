@@ -3,24 +3,26 @@
 \alias{SpatialLinesDataFrame}
 \alias{as.SpatialLines.SLDF}
 \alias{getSLlinesSlot}
-\alias{getSLSlinesIDSlots}
+\alias{getSLLinesIDSlots}
 \title{ create objects of class SpatialLines or SpatialLinesDataFrame}
 \description{ create objects of class \code{SpatialLines} or 
 \code{SpatialLinesDataFrame} from
-lists of \code{Slines} objects and data.frames; extract list od Slines from a SpatialLines object}
+lists of \code{Lines} objects and data.frames; extract list od Lines from a SpatialLines object}
 \usage{ 
-SpatialLines(SlineList)
+SpatialLines(LinesList, proj4string = CRS(as.character(NA)))
 SpatialLinesDataFrame(sl, data, match.ID = TRUE)
 as.SpatialLines.SLDF(SLDF)
 getSLlinesSlot(SL)
-getSLSlinesIDSlots(SL)
+getSLLinesIDSlots(SL)
 }
 \arguments{
-\item{SlineList}{ list with objects of class \link{Slines-class}}
+\item{LinesList}{ list with objects of class \link{Lines-class}}
+\item{proj4string}{Object of class \code{"CRS"}; holding a valid proj4 string}
+
 \item{sl, SL}{ object of class \link{SpatialLines-class}}
 \item{data}{ object of class \code{data.frame}; the number of rows in \code{data}
-should equal the number of \code{Slines} elements in \code{sl}}
-\item{match.ID}{logical: (default TRUE): match SpatialRings member Srings ID slot values with data frame row names, and re-order the data frame rows if necessary}
+should equal the number of \code{Lines} elements in \code{sl}}
+\item{match.ID}{logical: (default TRUE): match SpatialLines member Lines ID slot values with data frame row names, and re-order the data frame rows if necessary}
 \item{SLDF}{SpatialLinesDataFrame object}
 }
 \value{

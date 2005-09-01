@@ -8,15 +8,15 @@
 	)
 }
 
-pointsInSring = function(pts, Sring) {
+pointsInPolygon = function(pts, Polygon) {
 	pts = coordinates(pts)
-	cc = getSringCoordsSlot(Sring)
+	cc = getPolygonCoordsSlot(Polygon)
 	point.in.polygon(pts[,1], pts[,2], cc[,1], cc[,2])
 }
 
-pointsInSrings = function(pts, Srings, which = FALSE) {
-	rings = getSringsSringsSlot(Srings)
-	res = lapply(rings, function(x, pts) pointsInSring(pts, x), pts = pts)
+pointsInPolygons = function(pts, Polygons, which = FALSE) {
+	rings = getPolygonsPolygonsSlot(Polygons)
+	res = lapply(rings, function(x, pts) pointsInPolygon(pts, x), pts = pts)
 	if (which) {
 		ret = rep(as.numeric(NA), nrow(coordinates(pts)))
 		for (i in seq(along = res))
@@ -30,9 +30,9 @@ pointsInSrings = function(pts, Srings, which = FALSE) {
 	ret
 }
 
-pointsInSpatialRings = function(pts, SpRings) {
-	sr = getSRpolygonsSlot(SpRings)
-	res = lapply(sr, function(x, pts) pointsInSrings(pts, x), pts = pts)
+pointsInSpatialPolygons = function(pts, SpRings) {
+	sr = getSpPpolygonsSlot(SpRings)
+	res = lapply(sr, function(x, pts) pointsInPolygons(pts, x), pts = pts)
 	ret = rep(as.numeric(NA), nrow(coordinates(pts)))
 	for (i in seq(along = res))
 		ret[res[[i]] > 0] = i

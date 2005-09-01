@@ -10,3 +10,7 @@
 
 .onUnload <- function(libpath)
     library.dynam.unload("sp", libpath)
+
+if (!exists("is.R"))
+  is.R = function()
+ 	exists("version") && !is.null(vl <- version$language) && vl == "R"

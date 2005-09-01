@@ -15,7 +15,7 @@
 				stop("row.names of data and coords do not match")
 			if (length(unique(mtch)) != n)
 				stop("row.names of data and dimnames of coords do not match")
-			data = data[mtch, ]
+			data = data[mtch, , drop = FALSE]
 		}
 	}
 	if (!is(coords, "SpatialPoints"))
@@ -115,18 +115,15 @@ as.data.frame.SpatialPointsDataFrame = function(x, row.names, optional)  {
 setAs("SpatialPointsDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialPointsDataFrame(from))
 
+setAs("SpatialPointsDataFrame", "AttributeList", function(from) from@data)
+
 names.SpatialPointsDataFrame <- function(x) names(x@data)
 "names<-.SpatialPointsDataFrame" <- function(x, value) { names(x@data) = value; x }
 
 #"coordnames<-.SpatialPointsDataFrame" <- function(x, value)
 
 ShowSpatialPointsDataFrame = function(object) print.SpatialPointsDataFrame(object)
-
 setMethod("show", "SpatialPointsDataFrame", ShowSpatialPointsDataFrame)
-
-plot.SpatialPointsDataFrame = function(x, ...) {
-	plot(as(x, "SpatialPoints"), ...)
-}
 
 points.SpatialPointsDataFrame = function(x, y = NULL, ...) 
 	points(as(x, "SpatialPoints"), ...)
@@ -139,6 +136,7 @@ summary.SpatialPointsDataFrame = function(object, ...) {
     class(obj) = "summary.SpatialPointsDataFrame"
     obj
 }
+#setMethod("summary", "SpatialPointsDataFrame", summary.SpatialPointsDataFrame)
 
 print.summary.SpatialPointsDataFrame = function(x, ...) {
 	cat("attribute table data:\n")
@@ -177,11 +175,12 @@ subset.SpatialPointsDataFrame <- function(x, subset, select,
 }
 
 #"[.SpatialPointsDataFrame" <- function(x, i, j, ... , drop = FALSE) {
-setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ... , drop = FALSE) {
+setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 	missing.i = missing(i)
 	missing.j = missing(j)
-	if (drop)
-		stop("coerce to data.frame first for drop = TRUE")
+	drop <- FALSE
+#	if (drop)
+#		stop("coerce to data.frame first for drop = TRUE")
 	nargs = nargs() # e.g., a[3,] gives 2 for nargs, a[3] gives 1.
 	if (missing.i && missing.j) {
 		i = TRUE
@@ -221,4 +220,4 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ... , drop = FALSE) {
 
 "$<-.SpatialPointsDataFrame" = function(x, i, value) { x@data[[i]] = value; x }
 
-summary.SpatialPointsDataFrame = summary.Spatial
+setMethod("summary", "SpatialPointsDataFrame", summary.Spatial)

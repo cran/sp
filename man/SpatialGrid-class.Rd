@@ -3,7 +3,7 @@
 \alias{SpatialGrid-class}
 \alias{[,SpatialGrid-method}
 \alias{print.summary.SpatialGrid}
-\alias{summary.SpatialGrid}
+\alias{summary,SpatialGrid-method}
 
 \title{Class "SpatialGrid" ~~~ }
 \description{ class for defining a full, rectangular grid of
@@ -33,7 +33,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
  \describe{
    \item{coordinates}{\code{signature(x = "SpatialGrid")}: calculates coordinates for
    each point on the grid; coordinates are not stored in objects of class SpatialGrid}
-   \item{summary}{\code{signature(x = "SpatialGrid")}: gives summary}
+   \item{summary}{\code{signature(object = "SpatialGrid")}: summarize object}
    \item{plot}{\code{signature(x = "SpatialGrid")}: plots cell centers }
    \item{"["}{\code{signature(x = "SpatialGrid")}: select rows and columns }
  }

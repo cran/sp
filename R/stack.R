@@ -1,10 +1,10 @@
-"map.to.lev" <- function (data, zcol = 1:n, n = 2, names.attr)
+"spmap.to.lev" <- function (data, zcol = 1:n, n = 2, names.attr)
 {
 	if (!extends(class(data), "SpatialPointsDataFrame"))
 		stop("data is not of a class that extends SpatialPointsDataFrame")
 
 	if (dimensions(data) > 2) {
-		warning("map.to.lev ignores spatial dimensions beyond the first 2")
+		warning("spmap.to.lev ignores spatial dimensions beyond the first 2")
 		cc = coordinates(data)[,1:2]
 		data = as(data, "data.frame")
 		coordinates(data) = cc
@@ -23,7 +23,12 @@
 
 stack.AttributeList = function(x, ...) {
 	ns = names(x)
-	x = stack(lapply(x@att, as.numeric), ...)
+	if (all(unlist(lapply(x@att, is.factor)))) {
+		# the expensive but robust way:
+		x = stack(lapply(x@att, as.character), ...)
+		x$values = factor(x$values)
+	} else
+		x = stack(lapply(x@att, as.numeric), ...)
 	x$ind = factor(x$ind, levels = ns) # don't sort alphabetically
 	x
 }

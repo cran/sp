@@ -1,7 +1,7 @@
 overlayPointsWithRings = function(x, y, fn = NULL) {
 	# x = pts, y = rings, return ring with f(grid) items
-	y = as(y, "SpatialRings")
-	id = pointsInSpatialRings(x, y)
+	y = as(y, "SpatialPolygons")
+	id = pointsInSpatialPolygons(x, y)
 	if (!is.null(fn)) {
 		df = as(x, "data.frame")
 		data.frame(t(data.frame(lapply(split(df, id), fn))))
@@ -10,19 +10,19 @@ overlayPointsWithRings = function(x, y, fn = NULL) {
 }
 
 setMethod("overlay", 
-	signature(x = "SpatialPointsDataFrame", y = "SpatialRings"), 
+	signature(x = "SpatialPointsDataFrame", y = "SpatialPolygons"), 
 		 overlayPointsWithRings)
 
 setMethod("overlay", 
-	signature(x = "SpatialPoints", y = "SpatialRings"), 
+	signature(x = "SpatialPoints", y = "SpatialPolygons"), 
 	function(x, y, ...) overlayPointsWithRings(x, y))  # no fn argument!
 
 overlayRingsWithPoints = function(x, y, ...) {
 	# x = rings, y = pts; return pts with ring values (or id) at grid point
 	ypts = as(y, "SpatialPoints")
-	sr = as(x, "SpatialRings")
-	id = pointsInSpatialRings(ypts, sr)
-	if (is(x, "SpatialRingsDataFrame")) {
+	sr = as(x, "SpatialPolygons")
+	id = pointsInSpatialPolygons(ypts, sr)
+	if (is(x, "SpatialPolygonsDataFrame")) {
 		ret = x@data[id, , drop = FALSE]
 		if (is(y, "SpatialPointsDataFrame"))
 			row.names(ret) = row.names(as(y, "data.frame"))
@@ -31,7 +31,7 @@ overlayRingsWithPoints = function(x, y, ...) {
 		return(id) # 
 }
 
-setMethod("overlay", signature("SpatialRings", "SpatialPoints"), 
+setMethod("overlay", signature("SpatialPolygons", "SpatialPoints"), 
 	overlayRingsWithPoints)
 
 #overlayGridWithPoints = function(x, y, fn = NULL) {

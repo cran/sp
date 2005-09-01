@@ -1,6 +1,8 @@
 setClass("SpatialPoints",
 	representation("Spatial", coords = "matrix"),
-	prototype = list(coords = matrix(0)),
+	prototype = list(bbox=matrix(NA), 
+		proj4string = CRS(as.character(NA)),
+		coords = matrix(0)),
 	validity = function(object) {
 		if (!is.matrix(object@coords))
 			stop("coords slot is not a matrix")

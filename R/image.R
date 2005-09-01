@@ -3,14 +3,24 @@ image.SpatialPixelsDataFrame = function(x, ...)
 	image(as(x, "SpatialGridDataFrame"), ...)
 
 image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2, 
-		asp = 1, xlab, ylab, ...) {
-	cnames = dimnames(coordinates(x))[[2]]
-	if (missing(xlab))
-		xlab = cnames[xcol]
-	if (missing(ylab))
-		ylab = cnames[ycol]
-	image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), 
-		asp = asp, xlab = xlab, ylab = ylab, ...)
+		red=NULL, green=NULL, blue=NULL, asp = 1, axes = FALSE, xlim = NULL, 
+		ylim = NULL, add = TRUE, ...) {
+
+	plot(as(x, "Spatial"), asp = asp, xlim = xlim, ylim = ylim, axes = axes)
+	if (is.null(red)) 
+		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = add, ...)
+	else {
+		if (is.null(green) || is.null(blue)) 
+			stop("all colour bands must be given")
+		fcols <- factor(rgb(red=x@data[red][[1]], 
+			green=x@data[green][[1]], 
+			blue=x@data[blue][[1]], max=255))
+		cv <- coordinatevalues(getGridTopology(x))
+		m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
+			x@grid@cells.dim[2], byrow=FALSE)
+		res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), z=m[,ncol(m):1])
+		image(res, col=levels(fcols), add = add, ...)
+	}
 }
 
 as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2) {

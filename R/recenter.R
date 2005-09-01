@@ -2,38 +2,31 @@ if (!isGeneric("recenter"))
 	setGeneric("recenter", function(obj)
 		standardGeneric("recenter"))
 
-recenter.SpatialRings <- function(obj) {
-	proj <- is.projected(obj)
-	if (is.na(proj)) stop("unknown coordinate reference system")
-	if (proj) stop("cannot recenter projected coordinate reference system")
-	pls <- getSRpolygonsSlot(obj)
-	Srl <- lapply(pls, recenter)
-	res <- as.SpatialRings.SringsList(Srl)
-	res
-}
-
-setMethod("recenter", "SpatialRings", recenter.SpatialRings)
-
-recenter.Srings <- function(obj) {
-	proj <- is.projected(obj)
-	if (is.na(proj)) stop("unknown coordinate reference system")
-	if (proj) stop("cannot recenter projected coordinate reference system")
-	ID <- getSringsIDSlot(obj)
-	rings <- getSringsSringsSlot(obj)
-	srl <- lapply(rings, recenter)
-	res <- Srings(srl, ID=ID)
-	res
-}
-
-setMethod("recenter", "Srings", recenter.Srings)
-
-recenter.Sring <- function(obj) {
+recenter.SpatialPolygons <- function(obj) {
 	proj <- is.projected(obj)
 	if (is.na(proj)) stop("unknown coordinate reference system")
 	if (proj) stop("cannot recenter projected coordinate reference system")
 	projargs <- CRS(proj4string(obj))
-	crds <- getSringCoordsSlot(obj)
-	hole <- getSringHoleSlot(obj)
+	pls <- getSpPpolygonsSlot(obj)
+	Srl <- lapply(pls, recenter.Polygons)
+	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=projargs)
+	res
+}
+
+setMethod("recenter", "SpatialPolygons", recenter.SpatialPolygons)
+
+recenter.Polygons <- function(obj) {
+	ID <- getPolygonsIDSlot(obj)
+	rings <- getPolygonsPolygonsSlot(obj)
+	srl <- lapply(rings, recenter.Polygon)
+	res <- Polygons(srl, ID=ID)
+	res
+}
+
+
+recenter.Polygon <- function(obj) {
+	crds <- getPolygonCoordsSlot(obj)
+	hole <- getPolygonHoleSlot(obj)
 	inout <- (crds[,1] < 0)
 	if (all(inout)) {
 		crds[,1] <- crds[,1]+360
@@ -42,45 +35,36 @@ recenter.Sring <- function(obj) {
 			crds[,1] <- ifelse(inout, crds[,1]+360, crds[,1])
 		}
 	}
-	res <- Sring(crds, projargs, hole)
+	res <- Polygon(crds, hole)
 	res
 }
 
-setMethod("recenter", "Sring", recenter.Sring)
 
 
 recenter.SpatialLines <- function(obj) {
 	proj <- is.projected(obj)
 	if (is.na(proj)) stop("unknown coordinate reference system")
 	if (proj) stop("cannot recenter projected coordinate reference system")
+	projargs <- CRS(proj4string(obj))
 	lns <- getSLlinesSlot(obj)
-	Sll <- lapply(lns, recenter)
-	res <- SpatialLines(Sll)
+	Sll <- lapply(lns, recenter.Lines)
+	res <- SpatialLines(Sll, projargs)
 	res
 }
 
 setMethod("recenter", "SpatialLines", recenter.SpatialLines)
 
 
-recenter.Slines <- function(obj) {
-	proj <- is.projected(obj)
-	if (is.na(proj)) stop("unknown coordinate reference system")
-	if (proj) stop("cannot recenter projected coordinate reference system")
-#	ID <- getSlinesIDSlot(obj)
-	lines <- getSlinesSlinesSlot(obj)
-	sll <- lapply(lines, recenter)
-#	res <- Slines(sll, ID=ID)
-	res <- Slines(sll)
+recenter.Lines <- function(obj) {
+	ID <- getLinesIDSlot(obj)
+	lines <- getLinesLinesSlot(obj)
+	sll <- lapply(lines, recenter.Line)
+	res <- Lines(sll, ID=ID)
 	res
 }
 
-setMethod("recenter", "Slines", recenter.Slines)
 
-recenter.Sline <- function(obj) {
-	proj <- is.projected(obj)
-	if (is.na(proj)) stop("unknown coordinate reference system")
-	if (proj) stop("cannot recenter projected coordinate reference system")
-	projargs <- CRS(proj4string(obj))
+recenter.Line <- function(obj) {
 	crds <- coordinates(obj)
 	inout <- (crds[,1] < 0)
 	if (all(inout)) {
@@ -90,49 +74,46 @@ recenter.Sline <- function(obj) {
 			crds[,1] <- ifelse(inout, crds[,1]+360, crds[,1])
 		}
 	}
-	res <- Sline(crds, projargs)
+	res <- Line(crds)
 	res
 }
 
-setMethod("recenter", "Sline", recenter.Sline)
 
 nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 	if (!is(obj, "SpatialLines")) stop("obj not a SpatialLines object")
 	proj <- is.projected(obj)
 	if (is.na(proj)) stop("unknown coordinate reference system")
 	if (proj) stop("cannot recenter projected coordinate reference system")
+	proj4CRS <- CRS(proj4string(obj))
 	bblong <- bbox(obj)[1,]
 	inout <- bblong[1] < offset && bblong[2] >= offset
 	if (inout) {
 		pls <- getSLlinesSlot(obj)
-		Srl <- lapply(pls, .nowrapSlines, offset=offset, eps=eps)
-		res <- SpatialLines(Srl)
+		Srl <- lapply(pls, .nowrapLines, offset=offset, eps=eps)
+		res <- SpatialLines(Srl, proj4CRS)
 	} else res <- obj
 	res
 }
 
-.nowrapSlines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
-	bbo <- bbox(obj)
-	inout <- bbo[1,1] < offset && bbo[1,2] >= offset
+.nowrapLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
+	bbo <- range(sapply(obj@Lines, function(x) range(x@coords[,1])))
+	inout <- bbo[1] < offset && bbo[2] >= offset
 	if (inout) {
-#		ID <- getSlinesIDSlot(obj)
-		lines <- getSlinesSlinesSlot(obj)
+		lines <- getLinesLinesSlot(obj)
 		sll <- list()
 		for (i in 1:length(lines)) {
-			sll <- c(sll, .nowrapSline(lines[[i]], 
+			sll <- c(sll, .nowrapLine(lines[[i]], 
 				offset=offset, eps=eps))
 		}
-#		res <- Slines(sll, ID=ID)
-		res <- Slines(sll)
+		res <- Lines(sll)
 	} else res <- obj
 	res
 }
 
-.nowrapSline <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
-	bbo <- bbox(obj)
-	inout <- bbo[1,1] < offset && bbo[1,2] >= offset
+.nowrapLine <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
+	bbo <- range(obj@coords[,1])
+	inout <- bbo[1] < offset && bbo[2] >= offset
 	if (inout) {
-		proj4CRS <- CRS(proj4string(obj))
 		crds <- coordinates(obj)
 		zoffset <- as.logical(sapply(crds[,1], function(x) 
 			all.equal(x, offset, tolerance = .Machine$double.eps)))
@@ -155,7 +136,7 @@ nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 			if (all(crds[,1] < offset)) 
 				crds[,1] <- crds[,1] - eps[1]
 			else crds[,1] <- crds[,1] + eps[2]
-			res <- c(res, list(Sline(crds, proj4CRS)))
+			res <- c(res, list(Line(crds)))
 		} else {
 			for (i in 1:n) {
 				if (i == n) outcrds <- crds
@@ -187,7 +168,8 @@ nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 					brks <- brks - nrow(outcrds) + 2
 					crds <- rbind(c(x2, y2), crds[-(1:ib),])
 				}
-				res <- c(res, list(Sline(outcrds, proj4CRS)))
+				res <- c(res, list(Line(outcrds#, proj4CRS
+)))
 			}
 		}
 	} else res <- list(obj)

@@ -25,9 +25,9 @@ is.projected = function(sd) {
 		return(as.logical(NA))
 	else {
 #ifdef R
-		res <- grep("latlong", p4str, fixed=TRUE)
+		res <- grep("longlat", p4str, fixed=TRUE)
 #else
-#%		res <- grep("latlong", p4str)
+#%		res <- grep("longlat", p4str)
 #endif
 		if (length(res) == 0)
 			return(TRUE)

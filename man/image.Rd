@@ -7,7 +7,9 @@ Convert gridded data in SpatialGridDataFrame to image format; call
 image on data in SpatialGridDataFrame format
 }
 \usage{
-image.SpatialGridDataFrame(x, attr = 1, xcol = 1, ycol = 2, asp = 1, xlab, ylab, ...)
+image.SpatialGridDataFrame(x, attr = 1, xcol = 1, ycol = 2, 
+	red=NULL, green=NULL, blue=NULL, asp = 1, axes = FALSE, xlim = NULL,
+	ylim = NULL, add = TRUE, ...)
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
 }
 \arguments{
@@ -17,9 +19,14 @@ the column name in the data.frame of \code{data} (as.data.frame(data)), or
 a column number }
 \item{xcol}{ column number of x-coordinate, in the coordinate matrix }
 \item{ycol}{ column number of y-coordinate, in the coordinate matrix }
+\item{red,green,blue}{columns names or numbers given instead of the \code{attr} argument when the data represent an image encoded in three colour bands on the 0-255 integer scale; all three columns must be given in this case, and the attribute values will be constructed using function \code{rgb} }
 \item{asp}{ aspect ratio of unit x and unit y axis }
-\item{xlab}{ label for x-axis }
-\item{ylab}{ label for y-axis }
+\item{axes}{ logical; should coordinate axes be drawn? }
+\item{xlim}{ x-axis limits }
+\item{ylim}{ y-axis limits }
+\item{add}{ logical; if TRUE, the image is added to the plot layout setup
+by \code{plot(as(x, "Spatial"),axes=axes,xlim=xlim,ylim=ylim,asp=asp)}
+which sets up axes and plotting region. }
 \item{...}{ arguments passed to \link{image}, see examples }
 }
 \value{ \code{as.image.SpatialGridDataFrame} returns the list with
@@ -49,6 +56,19 @@ image(meuse.grid["dist"], main = "Distance to river Meuse")
 data(meuse)
 coordinates(meuse) = c("x", "y")
 points(coordinates(meuse), pch = "+")
+data(Rlogo)
+d = dim(Rlogo)
+cellsize = abs(c(gt[2],gt[6]))
+cells.dim = c(d[1], d[2]) # c(d[2],d[1])
+cellcentre.offset = c(x = gt[1] + 0.5 * cellsize[1], y = gt[4] - (d[2] - 0.5) * abs(cellsize[2]))
+grid = GridTopology(cellcentre.offset, cellsize, cells.dim)
+df = as.vector(Rlogo[,,1])
+for (band in 2:d[3]) df = cbind(df, as.vector(Rlogo[,,band]))
+df = as.data.frame(df)
+names(df) = paste("band", 1:d[3], sep="")
+Rlogo <- SpatialGridDataFrame(grid = grid, data = df)
+summary(Rlogo)
+image(Rlogo, red="band1", green="band2", blue="band3")
 }
 
 \keyword{spatial}
