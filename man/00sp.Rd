@@ -81,9 +81,9 @@ SpatialPoints, SpatialCell and SpatialGridded can be of arbitray
 dimension, although most of the effort is in making them work for two
 dimensional data.
 
-SpatialLines provides lines, and SpatialRings provides polygons, i.e.,
+SpatialLines provides lines, and SpatialPolygons provides polygons, i.e.,
 lines that end where they start and do not intersect with itself.
-SpatialLines and SpatialRings only have two-dimensional data.
+SpatialLines and SpatialPolygons only have two-dimensional data.
 
 SpatialPointsDataFrame extends SpatialPoints with a data slot, having
 a data.frame with attribute data. Similarly, SpatialCellDataFrame,

@@ -3,6 +3,10 @@ SpatialPixels = function(points, tolerance = 10 * .Machine$double.eps) {
 		stop("points should be of class or extending SpatialPoints")
 	points = as(points, "SpatialPoints")
 	grid = points2grid(points, tolerance)
+	points@bbox[1,1] = points@bbox[1,1] - 0.5 * grid@cellsize[1]
+	points@bbox[1,2] = points@bbox[1,2] + 0.5 * grid@cellsize[1]
+	points@bbox[2,1] = points@bbox[2,1] - 0.5 * grid@cellsize[2]
+	points@bbox[2,2] = points@bbox[2,2] + 0.5 * grid@cellsize[2]
 	new("SpatialPixels", points, grid = grid, 
 		grid.index = getGridIndex(coordinates(points), grid))
 }
@@ -11,6 +15,10 @@ setMethod("coordinates", "SpatialPixels", function(obj) obj@coords)
 
 SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	pts = boguspoints(grid)
+	pts@bbox[1,1] = pts@bbox[1,1] - 0.5 * grid@cellsize[1]
+	pts@bbox[1,2] = pts@bbox[1,2] + 0.5 * grid@cellsize[1]
+	pts@bbox[2,1] = pts@bbox[2,1] - 0.5 * grid@cellsize[2]
+	pts@bbox[2,2] = pts@bbox[2,2] + 0.5 * grid@cellsize[2]
 	proj4string(pts) = proj4string
 	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
 }
@@ -75,12 +83,6 @@ getGridIndex = function(cc, grid, all.inside = TRUE) {
 	as.integer(round(idx))
 }
 
-plot.SpatialPixels = function(x, ...)
-	plot(as(x, "SpatialPoints"), ...)
-
-plot.SpatialGrid = function(x, ...)
-	plot(as(x, "SpatialPixels"), ...)
-
 subset.SpatialPixels <- function(x, subset, select, drop = FALSE, ...) {
 	xSP <- as(x, "SpatialPoints")
 	if (missing(select)) select <- colnames(coordinates(xSP))
@@ -90,9 +92,10 @@ subset.SpatialPixels <- function(x, subset, select, drop = FALSE, ...) {
 }
 
 setMethod("[", "SpatialPixels",
-	function(x, i, j, ..., drop = FALSE) {
-		if (!missing(drop))
-			stop("don't supply drop: it needs to be FALSE anyway")
+	function(x, i, j, ..., drop = TRUE) {
+		drop <- FALSE
+#		if (!missing(drop))
+#			stop("don't supply drop: it needs to be FALSE anyway")
 		if (!missing(j))
 			stop("can only select pixels with a single index")
 		if (missing(i))
@@ -104,9 +107,10 @@ setMethod("[", "SpatialPixels",
 )
 
 setMethod("[", "SpatialGrid",
-	function(x, i, j, ..., drop = FALSE) {
-		if (!missing(drop))
-			stop("don't supply drop: it needs to be FALSE anyway")
+	function(x, i, j, ..., drop = TRUE) {
+		drop <- FALSE
+#		if (!missing(drop))
+#			stop("don't supply drop: it needs to be FALSE anyway")
 		gr = x@grid
 		if (missing(i))
 			rows = 1:gr@cells.dim[2]
@@ -130,8 +134,8 @@ setAs("SpatialPixels", "SpatialGrid", function(from) SpatialGrid(from@grid, from
 #	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
 #)
 
-summary.SpatialPixels = summary.Spatial
-summary.SpatialGrid = summary.Spatial
+setMethod("summary", "SpatialPixels", summary.Spatial)
+setMethod("summary", "SpatialGrid", summary.Spatial)
 
 print.summary.SpatialPixels = print.summary.Spatial
 print.summary.SpatialGrid = print.summary.Spatial

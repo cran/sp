@@ -43,37 +43,37 @@ y = data.frame(a = 1:5, b = 5:1)
 try(SpatialPointsDataFrame(x, y)) # will complain:
 SpatialPointsDataFrame(x, y, match.ID = FALSE) # won't complain
 
-Sr1 = Sring(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
-Sr2 = Sring(cbind(c(5,4,2,5),c(2,3,2,2)))
-Sr3 = Sring(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))
-Sr4 = Sring(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE)
+Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
+Sr2 = Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))
+Sr3 = Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))
+Sr4 = Polygon(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE)
 
-Srs1 = Srings(list(Sr1), "s1")
-Srs2 = Srings(list(Sr2), "s2")
-Srs3 = Srings(list(Sr3, Sr4), "s2")
-try(SR <- SpatialRings(list(Srs1,Srs2,Srs3))) # will complain
-Srs3 = Srings(list(Sr3, Sr4), "s3/4")
-SR = SpatialRings(list(Srs1,Srs2,Srs3)) # won't complain
+Srs1 = Polygons(list(Sr1), "s1")
+Srs2 = Polygons(list(Sr2), "s2")
+Srs3 = Polygons(list(Sr3, Sr4), "s2")
+try(SR <- SpatialPolygons(list(Srs1,Srs2,Srs3))) # will complain
+Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
+SR = SpatialPolygons(list(Srs1,Srs2,Srs3)) # won't complain
 
 attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3"))
-try(SrDf <- SpatialRingsDataFrame(SR, attr)) # will complain
-SrDf = SpatialRingsDataFrame(SR, attr, match.ID = FALSE) # won't complain
+try(SrDf <- SpatialPolygonsDataFrame(SR, attr)) # will complain
+SrDf = SpatialPolygonsDataFrame(SR, attr, match.ID = FALSE) # won't complain
 attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3/4"))
-SrDf = SpatialRingsDataFrame(SR, attr) # won't complain
+SrDf = SpatialPolygonsDataFrame(SR, attr) # won't complain
 
 l1 = cbind(c(1,2,3),c(3,2,2))
 l1a = cbind(l1[,1]+.05,l1[,2]+.05)
 l2 = cbind(c(1,2,3),c(1,1.5,1))
-Sl1 = Sline(l1)
-Sl1a = Sline(l1a)
-Sl2 = Sline(l2)
-S1 = Slines(list(Sl1, Sl1a), ID="a")
-S2 = Slines(list(Sl2), ID="b")
-S3 = Slines(list(Sl2), ID="a")
+Sl1 = Line(l1)
+Sl1a = Line(l1a)
+Sl2 = Line(l2)
+S1 = Lines(list(Sl1, Sl1a), ID="a")
+S2 = Lines(list(Sl2), ID="b")
+S3 = Lines(list(Sl2), ID="a")
 Sl = SpatialLines(list(S1,S2)) # won't complain
 try(Sl1 <- SpatialLines(list(S1,S3))) # will complain
 
-df = data.frame(z = c(1,2), row.names=getSLSlinesIDSlots(Sl))
+df = data.frame(z = c(1,2), row.names=getSLLinesIDSlots(Sl))
 Sldf = SpatialLinesDataFrame(Sl, data = df) # won't complain
 df1 = data.frame(z = c(1,2))
 try(Sldf1 <- SpatialLinesDataFrame(Sl, data = df1)) # will complain

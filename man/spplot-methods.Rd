@@ -3,7 +3,7 @@
 \alias{spplot-methods}
 \alias{spplot,SpatialPixelsDataFrame-method}
 \alias{spplot,SpatialGridDataFrame-method}
-\alias{spplot,SpatialRingsDataFrame-method}
+\alias{spplot,SpatialPolygonsDataFrame-method}
 \alias{spplot,SpatialLinesDataFrame-method}
 \alias{spplot,SpatialPointsDataFrame-method}
 \title{ Methods for Function spplot in Package `sp'}
@@ -14,7 +14,7 @@
 \describe{
 \item{obj = "SpatialPixelsDataFrame"}{ see \link{spplot} }
 \item{obj = "SpatialGridDataFrame"}{ see \link{spplot} }
-\item{obj = "SpatialRingsDataFrame"}{ see \link{spplot} }
+\item{obj = "SpatialPolygonsDataFrame"}{ see \link{spplot} }
 \item{obj = "SpatialLinesDataFrame"}{ see \link{spplot} }
 \item{obj = "SpatialPointsDataFrame"}{ see \link{spplot} }
 }}

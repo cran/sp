@@ -4,7 +4,7 @@
 \alias{[,SpatialPixels-method}
 \alias{coerce,SpatialPixels,SpatialGrid-method}
 \alias{print.summary.SpatialPixels}
-\alias{summary.SpatialPixels}
+\alias{summary,SpatialPixels-method}
 
 \title{Class "SpatialPixels" ~~~ }
 \description{ class for defining a pixels, forming a
@@ -34,7 +34,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
  \describe{
    \item{coordinates}{\code{signature(x = "SpatialPixels")}: calculates coordinates for
    each point on the grid; coordinates are not stored in objects of class SpatialGrid}
-   \item{summary}{\code{signature(x = "SpatialPixels")}: gives summary}
+   \item{summary}{\code{signature(object = "SpatialPixels")}: summarize object}
    \item{plot}{\code{signature(x = "SpatialPixels")}: plots cell centers }
    \item{"["}{\code{signature(x = "SpatialPixels")}: select pixel cells}
  }

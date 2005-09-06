@@ -1,7 +1,8 @@
 "bubble" <- function (obj, zcol = 1, ..., fill = TRUE, maxsize = 3, do.sqrt = TRUE, 
 	pch, col = c(2, 3), key.entries = quantile(data[,zcol]),
 	main = ifelse(is.numeric(zcol), names(data)[zcol], zcol),
-    identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right") 
+    identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
+	scales = list(draw = FALSE), xlab = NULL, ylab = NULL) 
 {
 	obj = as(obj, "SpatialPointsDataFrame")
 	data = as.data.frame(obj)
@@ -36,10 +37,10 @@
 		plot(x, y, asp = 1, cex = cex, main = main, ...)
 		return(identify(x, y, labels))
 	} else {
-		library(lattice)
     	key = list(space = key.space, points = list(pch = q.pch, col = q.col, 
     		cex = q.cex), text = list(q.text))
 		xyplot(y ~ x, col = z.col, cex = cex, pch = pch, asp = mapasp(obj), 
-        	key = key, main = main, ...)
+        	key = key, main = main, scales = scales, xlab = xlab, ylab = ylab,
+			...)
 	}
 }

@@ -13,37 +13,43 @@ if (!isGeneric("coordnames"))
 if (!isGeneric("coordnames<-"))
 	setGeneric("coordnames<-", function(x,value)
 		standardGeneric("coordnames<-"))
-if (!isGeneric("rings"))
-	setGeneric("rings", function(obj)
-		standardGeneric("rings"))
-if (!isGeneric("gridded"))
-	setGeneric("gridded", function(obj)
-		standardGeneric("gridded"))
 if (!isGeneric("dimensions"))
 	setGeneric("dimensions", function(obj)
 		standardGeneric("dimensions"))
-if (!isGeneric("transform"))
-	setGeneric("transform", function(x, ...)
-		standardGeneric("transform"))
+if (!isGeneric("gridded"))
+	setGeneric("gridded", function(obj)
+		standardGeneric("gridded"))
 if (!isGeneric("overlay"))
 	setGeneric("overlay", function(x, y, ...)
 		standardGeneric("overlay"))
+if (!isGeneric("plot"))
+	setGeneric("plot", function(x, y, ...)
+		standardGeneric("plot"))
+if (!isGeneric("polygons"))
+	setGeneric("polygons", function(obj)
+		standardGeneric("polygons"))
 if (!isGeneric("spplot"))
 	setGeneric("spplot", function(obj, ...)
 		standardGeneric("spplot"))
 if (!isGeneric("spsample"))
 	setGeneric("spsample", function(x, n, type, ...)
 		standardGeneric("spsample"))
+if (!isGeneric("summary"))
+	setGeneric("summary", function(object, ...)
+		standardGeneric("summary"))
+if (!isGeneric("transform"))
+	setGeneric("transform", function(x, ...)
+		standardGeneric("transform"))
 
 setMethod("bbox", "Spatial", function(obj) obj@bbox)
 
 setMethod("dimensions", "Spatial", function(obj) nrow(bbox(obj)))
 
-setMethod("rings", "Spatial", function(obj) {
-		if (is(obj, "SpatialRings"))
-			as(obj, "SpatialRings")
+setMethod("polygons", "Spatial", function(obj) {
+		if (is(obj, "SpatialPolygons"))
+			as(obj, "SpatialPolygons")
 		else
-			stop("rings method only available for objects of class or deriving from SpatialRings")
+			stop("polygons method only available for objects of class or deriving from SpatialPolygons")
 	}
 )
 
@@ -67,11 +73,12 @@ summary.Spatial = function(object, ...) {
 	if (is(object, "SpatialGrid"))
 		obj[["grid"]] = gridparameters(as(object, "SpatialGrid"))
     if (is(object, "SpatialPointsDataFrame") || is(object, "SpatialLinesDataFrame") 
-			|| is(object, "SpatialGridDataFrame") || is(object, "SpatialRingsDataFrame"))
+			|| is(object, "SpatialGridDataFrame") || is(object, "SpatialPolygonsDataFrame"))
         obj[["data"]] = summary(object@data)
     class(obj) = "summary.Spatial"
     obj
 }
+setMethod("summary", "Spatial", summary.Spatial)
 
 print.summary.Spatial = function(x, ...) {
 	cat(paste("Object of class ", x[["class"]], "\n", sep = ""))
@@ -100,10 +107,52 @@ print.summary.Spatial = function(x, ...) {
     invisible(x)
 }
 
-plot.Spatial <- function(x, xlim=NULL, ylim=NULL, asp=1, ...) {
+# sp.axes = FALSE
+
+plot.Spatial <- function(x, xlim=NULL, ylim=NULL, asp=1, axes = FALSE, ...) {
 	bbox <- x@bbox
 	if (is.null(xlim)) xlim <- c(bbox[1,1], bbox[1,2])
 	if (is.null(ylim)) ylim <- c(bbox[2,1], bbox[2,2])
-	plot.new()
-	plot.window(xlim=xlim, ylim=ylim, asp=asp, ...)
+	frame() # S-Plus compatible version of plot.new()
+	if (is.R())
+		plot.window(xlim = xlim, ylim = ylim, asp = asp, ...)
+	else {
+		plot.default(x = bbox[1,], y = bbox[2,], type = "n", 
+			xlim = xlim, ylim = ylim, asp = asp, ...)
+	}
+	if (axes) { # set up default axes system & box:
+		box()
+		isp = is.projected(x)
+		if (!is.na(isp) && !isp) {
+			degAxis(1, ...)
+			degAxis(2, ...)
+		} else {
+			axis(1, ...)
+			axis(2, ...)
+		}
+#		axis(3, labels = FALSE, ...)
+#		axis(4, labels = FALSE, ...)
+	}
+}
+setMethod("plot", signature(x = "Spatial", y = "missing"), 
+	function(x,y,...) plot.Spatial(x,...))
+
+degAxis = function (side, at, labels, ...) {
+		if (missing(at))
+        	at = axTicks(side)
+        if (missing(labels)) {
+			labels = FALSE
+        	if (side == 1 || side == 3) {
+                	dir = c("*W", "", "*E")
+        			pos = sign(at) + 2
+                	labels = parse(text = paste(abs(at), "*degree", dir[pos]))
+        	} else if (side == 2 || side == 4) {
+                	dir = c("*S", "", "*N")
+        			pos = sign(at) + 2
+                	labels = parse(text = paste(abs(at), "*degree", dir[pos]))
+        	}
+		} 
+		print(at)
+		print(labels)
+        axis(side, at = at, labels = labels, ...)
 }

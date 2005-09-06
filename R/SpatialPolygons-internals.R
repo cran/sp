@@ -1,5 +1,6 @@
 
-.shp2srs <- function(shp, nParts, proj4string=CRS(as.character(NA))) {
+.shp2srs <- function(shp, nParts#, proj4string=CRS(as.character(NA))
+) {
 	Pstart <- shp$Pstart
 	nVerts <- nrow(shp$verts)
 	from <- integer(nParts)
@@ -14,8 +15,8 @@
 	}
 	srl <- vector(mode="list", length=nParts)
 	for (j in 1:nParts) {
-		srl[[j]] <- Sring(coords=shp$verts[from[j]:to[j],], 
-			proj4string=proj4string)
+		srl[[j]] <- Polygon(coords=shp$verts[from[j]:to[j],]#, proj4string=proj4string
+)
 	}
 	srl
 }
@@ -41,7 +42,7 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 			from[i] <- NAs[(i-1)]+1
 		}
 	}
-	for (i in 1:nParts) res[[i]] <- xy[from[i]:to[i],]
+	for (i in 1:nParts) res[[i]] <- xy[from[i]:to[i],, drop = FALSE]
 	res
 }
 
@@ -115,6 +116,23 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 	res
 
 }
+.bboxCalcR <- function(lst) {
+    rx=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,1])))
+    ry=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,2])))
+	
+	for(i in 1:length(lst))
+	{
+		x = lst[[i]]
+		rxx=range(lapply(x@Polygons, function(x) range(x@coords[,1])))
+		ryy=range(lapply(x@Polygons, function(x) range(x@coords[,2])))
+		rx=range(c(rx,rxx))
+		ry=range(c(ry,ryy))
+    }
+	res=rbind(r1=rx,r2=ry)
+    colnames(res) <- c("min", "max")
+	res
+}
+
 
 bbox.R4 <- function(x) {
 	x@bbox

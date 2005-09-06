@@ -78,28 +78,29 @@ Package {\tt sp} is loaded by
 The spatial data classes implemented are points, grids, lines, rings
 and polygons. Package {\tt sp} provides classes for the spatial-only
 information (the topology), e.g. {\tt SpatialPoints}, and extensions for
-the case where we attribute information stored in a {\tt data.frame}
+the case where we attribute information stored in a {\tt data.frame} or
+{\tt AttributeList} (a {\tt data.frame}-like object without row names)
 is available for each point, e.g. {\tt SpatialPointsDataFrame}. The
 available data classes are:
 
 \begin{center}
 \begin{tabular}{lllll}
-data type & class                        & attributes? & contains \\ \hline
-points    & {\tt SpatialPoints}          & No          &{\tt Spatial}* \\
-points    & {\tt SpatialPointsDataFrame} & Yes         &{\tt SpatialPoints}* \\
-pixels    & {\tt SpatialPixels}          & No          &{\tt SpatialPoints}* \\
-pixels    & {\tt SpatialPixelsDataFrame} & Yes         &{\tt SpatialPixels}* \\
-          &                              &             &{\tt SpatialPointsDataFrame}** \\
-full grid & {\tt SpatialGrid  }          & No          &{\tt SpatialPixels}* \\
-full grid & {\tt SpatialGridDataFrame}   & Yes         &{\tt SpatialGrid}* \\
-line      & {\tt SLine}                  & No          &{\tt Spatial}* \\
-lines     & {\tt SLines}                 & No          &{\tt Spatial}*, {\tt Sline} list \\
-lines     & {\tt SpatialLines}           & No          &{\tt Spatial}*, {\tt SLines} list \\
-lines     & {\tt SpatialLinesDataFrame}  & Yes         &{\tt SpatialLines}* \\
-rings     & {\tt Sring}                  & No          &{\tt SLine}* \\
-rings     & {\tt Srings}                 & No          &{\tt Spatial}*, {\tt Sring} list \\
-rings     & {\tt SpatialRings}           & No          &{\tt Spatial}*, {\tt Srings} list \\
-rings     & {\tt SpatialRingsDataFrame}  & Yes         &{\tt SpatialRings}* \\
+data type & class                        & attributes  & contains \\ \hline
+points    & {\tt SpatialPoints}          & No           &{\tt Spatial}* \\
+points    & {\tt SpatialPointsDataFrame} & {\tt AttributeList} &{\tt SpatialPoints}* \\
+pixels    & {\tt SpatialPixels}          & No           &{\tt SpatialPoints}* \\
+pixels    & {\tt SpatialPixelsDataFrame} & {\tt AttributeList} &{\tt SpatialPixels}* \\
+          &                              &              &{\tt SpatialPointsDataFrame}** \\
+full grid & {\tt SpatialGrid  }          & No           &{\tt SpatialPixels}* \\
+full grid & {\tt SpatialGridDataFrame}   & {\tt AttributeList}  &{\tt SpatialGrid}* \\
+line      & {\tt Line}                   & No           & \\
+lines     & {\tt Lines}                  & No           & {\tt Line} list \\
+lines     & {\tt SpatialLines}           & No           & {\tt Spatial}*, {\tt Lines} list \\
+lines     & {\tt SpatialLinesDataFrame}  & {\tt data.frame} &{\tt SpatialLines}* \\
+rings     & {\tt Polygon}                & No           &{\tt Line}* \\
+rings     & {\tt Polygons}               & No           &{\tt Polygon} list \\
+rings     & {\tt SpatialPolygons}        & No           &{\tt Spatial}*, {\tt Polygons} list \\
+rings     & {\tt SpatialPolygonsDataFrame} & {\tt data.frame} &{\tt SpatialPolygons}* \\
 \end{tabular}
 \end{center}
 * by direct extension; ** by setIs() relationship; 
@@ -109,11 +110,20 @@ the information common to all derived classes: the spatial coordinates
 bounding box and information about the coordinate reference system
 (geographic projection information).
 
+Row names, allways present in {\tt data.frame} objects, take up too much
+memory and computing time when the number of rows becomes very large. For
+this reason, Points, pixels and grid objects have attributes in an object
+of class {\tt AttributeList}, which tries to mimic {\tt data.frame}
+objects as close as possible, but does not have row names. If row names
+have to be stored in such an object, they should be converted to a column
+in the {\tt AttributeList}.
+
 In the following sections we will show how we can create objects of
 these classes from scratch or from other classes, and which methods and
 functions are available for them.
 
 \section{Manipulating spatial objects}
+
 Although entries in spatial objects are in principle accessible through
 their slot name, e.g. {\tt x@coords} contains the coordinates of an object
 of class or extending {\tt SpatialPoints}, we strongly encourage users
@@ -142,13 +152,14 @@ as.data.frame}, {\tt as.matrix} and {\tt image} (for gridded data),
 A number of spatial methods are available for the classes in {\tt sp}:
 \begin{itemize}
 \item {\tt dimensions(x)} returns number of spatial dimensions
-\item {\tt y = transform(x, "latlong")} transform from one coordinate
+\item {\tt y = transform(x, "longlat")} transform from one coordinate
 reference system (geographic projection) to another (requires package
 spproj)
-\item {\tt bbox(x)} returns the coordinate bounding box
+\item {\tt bbox(x)} returns a matrix with the coordinates bounding box;
+the dimensions form rows, min/max form the columns
 \item {\tt coordinates(x)} returns a matrix with the spatial coordinates 
-\item {\tt rings(x)} retrieve the spatial rings (polygons) of an
-object deriving from {\tt SpatialRings}
+%\item {\tt rings(x)} retrieve the spatial rings (polygons) of an
+%object deriving from {\tt SpatialPolygons}
 % \item {\tt method to retrieve lines? --> Lines()?
 \item {\tt gridded(x)} tells whether {\tt x} derives from SpatialPixels
 \item {\tt spplot(x)} plot attributes, possibly in combination with
@@ -562,9 +573,9 @@ can specify this by using the function {\tt GridTopology}:
 Object of class SpatialGrid
 Coordinates:
           min max
-coords.x1   1   3
-coords.x2   1   4
-coords.x3   2   7
+coords.x1 0.5 3.5
+coords.x2 0.5 4.5
+coords.x3 2.0 7.0
 Is projected: NA 
 proj4string : [NA]
 Number of points: 2
@@ -604,9 +615,9 @@ a set of point coordinates:
 Object of class SpatialPixels
 Coordinates:
   min max
-x   1   3
-y   1   4
-z   2   7
+x 0.5 3.5
+y 0.5 4.5
+z 2.0 7.0
 Is projected: NA 
 proj4string : [NA]
 Number of points: 72
@@ -620,9 +631,9 @@ Number of points: 72
 Object of class SpatialGrid
 Coordinates:
   min max
-x   1   3
-y   1   4
-z   2   7
+x 0.5 3.5
+y 0.5 4.5
+z 2.0 7.0
 Is projected: NA 
 proj4string : [NA]
 Number of points: 2
@@ -670,8 +681,8 @@ To form such a grid we can go from coordinates:
 Object of class SpatialPixelsDataFrame
 Coordinates:
    min max
-xc   1   3
-yc   1   3
+xc 0.5 3.5
+yc 0.5 3.5
 Is projected: NA 
 proj4string : [NA]
 Number of points: 9
@@ -785,7 +796,7 @@ SpatialPoints:
 [5,]  2  2
 Coordinate Reference System (CRS) arguments: NA 
 
-Data:
+Data summary:
        z1     
  Min.   :4.0  
  1st Qu.:5.0  
@@ -800,11 +811,26 @@ Data:
 > grd.attr[1:2, -2, c("z2", "z1")]
 \end{Sinput}
 \begin{Soutput}
+Object of class SpatialGridDataFrame
+Object of class SpatialGrid
+Grid topology:
+   cellcentre.offset cellsize cells.dim
+xc                 1        2         2
+yc                 2        1         2
 SpatialPoints:
      xc yc
 [1,]  1  2
 [2,]  3  3
 Coordinate Reference System (CRS) arguments: NA 
+
+Data summary:
+       z2            z1     
+ Min.   :1.0   Min.   :4.0  
+ 1st Qu.:2.5   1st Qu.:5.5  
+ Median :3.5   Median :6.5  
+ Mean   :3.5   Mean   :6.5  
+ 3rd Qu.:4.5   3rd Qu.:7.5  
+ Max.   :6.0   Max.   :9.0  
 
 \end{Soutput}
 \end{Schunk}
@@ -814,7 +840,7 @@ Coordinate Reference System (CRS) arguments: NA
 \subsection{Building line objects from scratch}
 In many instances, line coordinates will be retrieved from external
 sources.  The following example shows how to build an object of class
-{\tt SpatialLines} from scratch. Note that the {\tt Slines} objects have to be given character ID values, and that these values must be unique for {\tt Slines} objects combined in a {\tt SpatialLines} object.
+{\tt SpatialLines} from scratch. Note that the {\tt Lines} objects have to be given character ID values, and that these values must be unique for {\tt Lines} objects combined in a {\tt SpatialLines} object.
 
 % build line objects
 \begin{Schunk}
@@ -822,11 +848,11 @@ sources.  The following example shows how to build an object of class
 > l1 = cbind(c(1, 2, 3), c(3, 2, 2))
 > l1a = cbind(l1[, 1] + 0.05, l1[, 2] + 0.05)
 > l2 = cbind(c(1, 2, 3), c(1, 1.5, 1))
-> Sl1 = Sline(l1)
-> Sl1a = Sline(l1a)
-> Sl2 = Sline(l2)
-> S1 = Slines(list(Sl1, Sl1a), ID = "a")
-> S2 = Slines(list(Sl2), ID = "b")
+> Sl1 = Line(l1)
+> Sl1a = Line(l1a)
+> Sl2 = Line(l2)
+> S1 = Lines(list(Sl1, Sl1a), ID = "a")
+> S2 = Lines(list(Sl2), ID = "b")
 > Sl = SpatialLines(list(S1, S2))
 > summary(Sl)
 \end{Sinput}
@@ -852,7 +878,7 @@ lines data that have an attribute table (data.frame) attached
 to it:
 \begin{Schunk}
 \begin{Sinput}
-> df = data.frame(z = c(1, 2), row.names = getSLSlinesIDSlots(Sl))
+> df = data.frame(z = c(1, 2), row.names = getSLLinesIDSlots(Sl))
 > Sldf = SpatialLinesDataFrame(Sl, data = df)
 > summary(Sldf)
 \end{Sinput}
@@ -884,31 +910,31 @@ useful methods are welcome.
 \subsection{Building from scratch}
 The following example shows how a set of polygons are built from scratch.
 Note that {\tt Sr4} has the opposite direction (anti-clockwise) as the other three (clockwise);
-it is meant to represent a hole in the {\tt Sr3} polygon. The default value for the hole colour {\tt pbg} is {\tt "transparent}, which will not show, but which often does not matter, because another polygon fills the hole --- here it is set to {\tt "white"}. Note that the {\tt Srings} objects have to be given character ID values, and that these values must be unique for {\tt Srings} objects combined in a {\tt SpatialRings} object.
+it is meant to represent a hole in the {\tt Sr3} polygon. The default value for the hole colour {\tt pbg} is {\tt "transparent}, which will not show, but which often does not matter, because another polygon fills the hole --- here it is set to {\tt "white"}. Note that the {\tt Polygons} objects have to be given character ID values, and that these values must be unique for {\tt Polygons} objects combined in a {\tt SpatialPolygons} object.
 \begin{Schunk}
 \begin{Sinput}
-> Sr1 = Sring(cbind(c(2, 4, 4, 1, 2), c(2, 3, 5, 4, 2)))
-> Sr2 = Sring(cbind(c(5, 4, 2, 5), c(2, 3, 2, 2)))
-> Sr3 = Sring(cbind(c(4, 4, 5, 10, 4), c(5, 3, 2, 5, 5)))
-> Sr4 = Sring(cbind(c(5, 6, 6, 5, 5), c(4, 4, 3, 3, 4)), hole = TRUE)
-> Srs1 = Srings(list(Sr1), "s1")
-> Srs2 = Srings(list(Sr2), "s2")
-> Srs3 = Srings(list(Sr3, Sr4), "s3/4")
-> SR = SpatialRings(list(Srs1, Srs2, Srs3), 1:3)
-> plot.SpatialRings(SR, col = 1:3, pbg = "white")
+> Sr1 = Polygon(cbind(c(2, 4, 4, 1, 2), c(2, 3, 5, 4, 2)))
+> Sr2 = Polygon(cbind(c(5, 4, 2, 5), c(2, 3, 2, 2)))
+> Sr3 = Polygon(cbind(c(4, 4, 5, 10, 4), c(5, 3, 2, 5, 5)))
+> Sr4 = Polygon(cbind(c(5, 6, 6, 5, 5), c(4, 4, 3, 3, 4)), hole = TRUE)
+> Srs1 = Polygons(list(Sr1), "s1")
+> Srs2 = Polygons(list(Sr2), "s2")
+> Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
+> SpP = SpatialPolygons(list(Srs1, Srs2, Srs3), 1:3)
+> plot(SpP, col = 1:3, pbg = "white")
 \end{Sinput}
 \end{Schunk}
 \includegraphics{sp-023}
 
 \subsection{Polygons with attributes}
-Polygons with attributes, objects of class {\tt SpatialRingsDataFrame},
-are built from the {\tt SpatialRings} object (topology) and the attributes
-(data.frame). The {\tt row.names} of the attributes data frame are matched with the ID slots of the {\tt SpatialRings} object, and the rows of the data frame will be re-ordered if necessary.
+Polygons with attributes, objects of class {\tt SpatialPolygonsDataFrame},
+are built from the {\tt SpatialPolygons} object (topology) and the attributes
+(data.frame). The {\tt row.names} of the attributes data frame are matched with the ID slots of the {\tt SpatialPolygons} object, and the rows of the data frame will be re-ordered if necessary.
 \begin{Schunk}
 \begin{Sinput}
 > attr = data.frame(a = 1:3, b = 3:1, row.names = c("s3/4", "s2", 
 +     "s1"))
-> SrDf = SpatialRingsDataFrame(SR, attr)
+> SrDf = SpatialPolygonsDataFrame(SpP, attr)
 > as(SrDf, "data.frame")
 \end{Sinput}
 \begin{Soutput}
@@ -921,19 +947,15 @@ s3/4 1 3
 \begin{Sinput}
 > spplot(SrDf)
 \end{Sinput}
-\begin{Soutput}
-Loading required package: grid
-
-\end{Soutput}
 \end{Schunk}
 
 \includegraphics{sp-025}
 
-or, as another way to create the {\tt SpatialRingsDataFrame} object:
+or, as another way to create the {\tt SpatialPolygonsDataFrame} object:
 \begin{Schunk}
 \begin{Sinput}
 > SrDf = attr
-> rings(SrDf) = SR
+> polygons(SrDf) = SpP
 \end{Sinput}
 \end{Schunk}
 

@@ -20,9 +20,8 @@ x = meuse[, sample(ncol(meuse))] # 'randomly' shuffle columns
 # coordinates defined as variable names:
 coordinates(x) = c("x", "y") # no matter their position
 #plot(x, cex=.05 * sqrt(x@data[,"zinc"]),
-plot(x, cex=.05 * sqrt(as.data.frame(x)["zinc"]),
- 	xlab="x-coordinate (RDM)", ylab="y-coordinate (RDM)", 
-	main = "Meuse: zinc bubble plot")
+plot(x, cex=.05 * sqrt(as.data.frame(x)["zinc"]))
+title("Meuse: zinc bubble plot")
 print(summary(x))
 
 # coordinates defined as formula:

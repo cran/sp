@@ -7,8 +7,8 @@
 \alias{coordinates,matrix-method}
 \alias{coordinates,SpatialPoints-method}
 \alias{coordinates,SpatialPointsDataFrame-method}
-\alias{coordinates,Sline-method}
-\alias{coordinates,Slines-method}
+\alias{coordinates,Line-method}
+\alias{coordinates,Lines-method}
 \alias{coordinates,SpatialLines-method}
 \alias{coordinates,GridTopology-method}
 \alias{coordinates,SpatialPixels-method}
@@ -26,8 +26,8 @@
 \item{obj = "SpatialPoints"}{ object of, or deriving from, SpatialPoints }
 \item{obj = "SpatialPointsDataFrame"}{ object of, or deriving from, 
 	SpatialPointsDataFrame }
-\item{obj = "Sline"}{ object of class Sline; returned value is matrix }
-\item{obj = "Slines"}{ object of class Slines; returned value is list of matrices }
+\item{obj = "Line"}{ object of class Line; returned value is matrix }
+\item{obj = "Lines"}{ object of class Lines; returned value is list of matrices }
 \item{obj = "SpatialLines"}{ object of, or deriving from, SpatialLines; returned
 value is list of lists of matrices }
 \item{obj = "GridTopology"}{ object of, or deriving from, GridTopology }

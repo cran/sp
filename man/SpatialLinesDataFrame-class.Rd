@@ -3,6 +3,7 @@
 \alias{SpatialLinesDataFrame-class}
 \alias{coerce,SpatialLinesDataFrame,data.frame-method}
 \alias{[,SpatialLinesDataFrame-method}
+\alias{summary,SpatialLinesDataFrame-method}
 \alias{$.SpatialLinesDataFrame}
 \alias{$<-.SpatialLinesDataFrame}
 

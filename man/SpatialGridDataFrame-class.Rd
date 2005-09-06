@@ -2,6 +2,7 @@
 \docType{class}
 \alias{SpatialGridDataFrame-class}
 \alias{[,SpatialGridDataFrame-method}
+\alias{show,SpatialGridDataFrame-method}
 \alias{[[,SpatialGridDataFrame-method}
 \alias{[[<-,SpatialGridDataFrame-method}
 \alias{$.SpatialGridDataFrame}
@@ -14,6 +15,7 @@
 \alias{coerce,SpatialGridDataFrame,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,SpatialPixelsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,data.frame-method}
+\alias{coerce,SpatialGridDataFrame,AttributeList-method}
 \alias{coerce,SpatialGridDataFrame,matrix-method}
 \alias{as.data.frame.SpatialGridDataFrame}
 

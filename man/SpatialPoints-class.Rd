@@ -11,7 +11,8 @@
 \alias{show,SpatialPoints-method}
 %\alias{SpatialPoints}
 \alias{as.data.frame.SpatialPoints}
-\alias{plot.SpatialPoints}
+\alias{plot,SpatialPoints,missing-method}
+\alias{summary,SpatialPoints-method}
 \alias{print.SpatialPoints} 
 \alias{summary.SpatialPoints}
 
@@ -43,7 +44,8 @@ Class \code{"Spatial"}, directly.
 	coordinates, which may be in a matrix }
     \item{coordinates}{\code{signature(obj = "SpatialPoints")}: retrieves
 	the coordinates, as matrix }
-    \item{plot}{\code{signature(x = "SpatialPoints")}: plot point symbols}
+    \item{plot}{\code{signature(x = "SpatialPoints", y = "missing")}: plot points}
+    \item{summary}{\code{signature(object = "SpatialPoints")}: summarize object}
     \item{points}{\code{signature(x = "SpatialPoints")}: add point symbols to plot}
     \item{show}{\code{signature(object = "SpatialPoints")}: prints coordinates }
   }

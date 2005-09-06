@@ -1,6 +1,6 @@
 \name{overlay}
 \alias{overlay}
-\title{ spatial overlay for points, grids and rings }
+\title{ spatial overlay for points, grids and polygons }
 \description{
 }
 \usage{
@@ -16,8 +16,8 @@ a numerical array of indices of \code{x} on locations of \code{y}, or
 a data.frame with (possibly aggregate) properties of \code{x} in units
 of \code{y}.
 }
-\note{points on a ring boundary and points corresponding to a ring vertex are
-considered to be inside the ring}
+\note{points on a polygon boundary and points corresponding to a polygon vertex are
+considered to be inside the polygon}
 \seealso{\link{overlay-methods}, \link{point.in.polygon}}
 \examples{
 r1 = cbind(c(180114, 180553, 181127, 181477, 181294, 181007, 180409, 
@@ -31,11 +31,11 @@ r3 = cbind(c(179110, 179907, 180433, 180712, 180752, 180329, 179875,
 c(331086, 330620, 330494, 330265, 330075, 330233, 330336, 330004, 
 329783, 329665, 329720, 329933, 330478, 331062, 331086))
 
-sr1=Srings(list(Sring(r1)),"r1")
-sr2=Srings(list(Sring(r2)),"r2")
-sr3=Srings(list(Sring(r3)),"r3")
-sr=SpatialRings(list(sr1,sr2,sr3))
-srdf=SpatialRingsDataFrame(sr, data.frame(cbind(1:3,5:3), row.names=c("r1","r2","r3")))
+sr1=Polygons(list(Polygon(r1)),"r1")
+sr2=Polygons(list(Polygon(r2)),"r2")
+sr3=Polygons(list(Polygon(r3)),"r3")
+sr=SpatialPolygons(list(sr1,sr2,sr3))
+srdf=SpatialPolygonsDataFrame(sr, data.frame(cbind(1:3,5:3), row.names=c("r1","r2","r3")))
 
 data(meuse)
 coordinates(meuse) = ~x+y

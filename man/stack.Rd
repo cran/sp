@@ -1,5 +1,5 @@
 \name{stack}
-\alias{map.to.lev}
+\alias{spmap.to.lev}
 \alias{stack.SpatialPointsDataFrame}
 \alias{stack.SpatialGridDataFrame}
 \title{ rearrange data in SpatialPointsDataFrame or SpatialGridDataFrame 
@@ -7,7 +7,7 @@ for plotting with spplot (levelplot/xyplot wrapper) }
 \description{ 
 rearrange SpatialPointsDataFrame for plotting with spplot or levelplot }
 \usage{
-map.to.lev(data, zcol = 1:n, n = 2, names.attr)
+spmap.to.lev(data, zcol = 1:n, n = 2, names.attr)
 stack.SpatialPointsDataFrame(x, select, ...)
 }
 \arguments{
@@ -24,7 +24,7 @@ will appear in the plot); if omitted, column names of \code{zcol} }
 }
 
 \value{ 
-\code{map.to.lev} returns a data frame with the following elements:
+\code{spmap.to.lev} returns a data frame with the following elements:
 \item{x}{ x-coordinate for each row}
 \item{y}{ y-coordinate for each row} 
 \item{z}{ column vector with each of the elements in columns \code{zcol}
@@ -43,11 +43,11 @@ data(meuse.grid) # data frame
 coordinates(meuse.grid) = c("x", "y") # promotes to SpatialDataFrame
 meuse.grid[["idist"]] = 1 - meuse.grid[["dist"]] # add variable
 # the following is made much easier by spplot:
-levelplot(z~x+y|name, map.to.lev(meuse.grid, z=c("dist","idist"), names.attr =
+levelplot(z~x+y|name, spmap.to.lev(meuse.grid, z=c("dist","idist"), names.attr =
 	c("distance", "inverse of distance")), aspect = "iso")
 levelplot(values~x+y|ind, as.data.frame(stack(meuse.grid)),aspect = "iso")
 gridded(meuse.grid) = TRUE
-levelplot(z~x+y|name, map.to.lev(meuse.grid, z=c("dist","idist"), names.attr =
+levelplot(z~x+y|name, spmap.to.lev(meuse.grid, z=c("dist","idist"), names.attr =
 	c("distance", "inverse of distance")), aspect = "iso")
 levelplot(values~x+y|ind, as.data.frame(stack(meuse.grid)), asp = "iso")
 

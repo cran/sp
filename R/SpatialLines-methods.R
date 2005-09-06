@@ -1,39 +1,82 @@
-Sline <- function(coords, proj4string=CRS(as.character(NA))) {
+Line <- function(coords#, proj4string=CRS(as.character(NA))
+) {
 	if (!is.matrix(coords)) coords <- as.matrix(coords)
 	if (mode(coords) != "numeric")
 		stop("coordinates should have mode numeric")
-	bbox <- .bboxSlot(coords)
-	new("Sline", coords = coords, bbox = as.matrix(bbox),
-		proj4string = proj4string)
+#	bbox <- .bboxSlot(coords)
+	new("Line", coords = coords
+#, bbox = as.matrix(bbox), proj4string = proj4string
+	)
 }
 
-Slines <- function(slinelist, ID=as.character(NA)) {
-	if (is(slinelist, "Sline"))
+Lines <- function(slinelist, ID=as.character(NA)) {
+	if (is(slinelist, "Line"))
 		slinelist = list(slinelist)
-	if (any(sapply(slinelist, function(x) !is(x, "Sline"))))
-		stop("slinelist not a list of Sline objects")
-	projargs <- unique(sapply(slinelist, proj4string))
-	if (length(projargs) > 1) 
-		stop("differing projections among Sline objects")
-	Sp <- new("Spatial", bbox= .bboxSls(slinelist), proj4string=CRS(projargs))
-	new("Slines", Sp, Slines = slinelist, ID=ID)
+	if (any(sapply(slinelist, function(x) !is(x, "Line"))))
+		stop("slinelist not a list of Line objects")
+#	projargs <- unique(sapply(slinelist, proj4string))
+#	if (length(projargs) > 1) 
+#		stop("differing projections among Line objects")
+#	Sp <- new("Spatial", bbox= .bboxSls(slinelist), proj4string=CRS(projargs))
+	new("Lines", #Sp, 
+Lines = slinelist, ID=ID)
 }
 
-SpatialLines <- function(SlineList) {
-	if (any(sapply(SlineList, function(x) !is(x, "Slines")))) 
-		stop("lines not Slines objects")
-	if (length(unique(sapply(SlineList, function(x) proj4string(x)))) != 1) 
-		stop("Different projections in list of Sline objects")
-	Sp <- new("Spatial", bbox = .bboxSls(SlineList), 
-		proj4string=CRS(proj4string(SlineList[[1]])))
-	res <- new("SpatialLines", Sp, lines=SlineList)
+SpatialLines <- function(LinesList, proj4string=CRS(as.character(NA))) {
+	if (any(sapply(LinesList, function(x) !is(x, "Lines")))) 
+		stop("lines not Lines objects")
+#	if (length(unique(sapply(LineList, function(x) proj4string(x)))) != 1) 
+#		stop("Different projections in list of Line objects")
+	Sp <- new("Spatial", 
+#bbox = .bboxSls(LineList), 
+#		proj4string=CRS(proj4string(LineList[[1]]))
+bbox=.bboxCalc(LinesList), proj4string=proj4string)
+	res <- new("SpatialLines", Sp, lines=LinesList)
 	res
 }
 
-SlineLength = function(cc) {
+LineLength = function(cc) {
 	dxy = apply(cc, 2, diff)
 	sqrt(sum(apply(dxy, 1, function(x) sum(x ** 2))))
 }
+# NEW
+.bboxCalc <- function(lst) {
+    rx=range(lapply(lst[[1]]@Lines, function(x) range(x@coords[,1])))
+    ry=range(lapply(lst[[1]]@Lines, function(x) range(x@coords[,2])))
+	
+	for(i in 1:length(lst))
+	{
+		x = lst[[i]]
+		rxx=range(lapply(x@Lines, function(x) range(x@coords[,1])))
+		ryy=range(lapply(x@Lines, function(x) range(x@coords[,2])))
+		rx=range(c(rx,rxx))
+		ry=range(c(ry,ryy))
+    }
+	res=rbind(r1=rx,r2=ry)
+    colnames(res) <- c("min", "max")
+	res
+}
+
+bbox.Lines <- function(obj) {
+	rx=range(lapply(obj@Lines, function(x) range(x@coords[,1])))
+	ry=range(lapply(obj@Lines, function(x) range(x@coords[,2])))
+	res=rbind(r1=rx,r2=ry)
+    	colnames(res) <- c("min", "max")
+	res
+}
+
+setMethod("bbox", "Lines", bbox.Lines)
+
+bbox.Line <- function(obj) {
+    	rx <- range(obj@coords[,1])
+    	ry <- range(obj@coords[,2])
+	res=rbind(r1=rx,r2=ry)
+    	colnames(res) <- c("min", "max")
+	res
+}
+
+setMethod("bbox", "Line", bbox.Line)
+
 
 .bboxSls <- function(lst) {
 	x <- sapply(lst, function(x) bbox(x)[1,])
@@ -45,12 +88,14 @@ SlineLength = function(cc) {
 	res
 }
 
-.contourLines2SlineList <- function(cL, proj4string=CRS(as.character(NA))) {
+.contourLines2LineList <- function(cL#, proj4string=CRS(as.character(NA))
+) {
 	n <- length(cL)
 	res <- vector(mode="list", length=n)
 	for (i in 1:n) {
 		crds <- cbind(cL[[i]][[2]], cL[[i]][[3]])
-		res[[i]] <- Sline(coords=crds, proj4string=proj4string)
+		res[[i]] <- Line(coords=crds#, proj4string=proj4string
+)
 	}
 	res
 }
@@ -66,10 +111,11 @@ contourLines2SLDF <- function(cL, proj4string=CRS(as.character(NA))) {
 	IDs <- paste("C", 1:m, sep="_")
 	row.names(df) <- IDs
 	for (i in 1:m) {
-		res[[i]] <- Slines(.contourLines2SlineList(cL[cLstack[[i]]], 
-			proj4string=proj4string), ID=IDs[i])
+		res[[i]] <- Lines(.contourLines2LineList(cL[cLstack[[i]]]#, 
+#			proj4string=proj4string
+), ID=IDs[i])
 	}
-	SL <- SpatialLines(res)
+	SL <- SpatialLines(res, proj4string=proj4string)
 	res <- SpatialLinesDataFrame(SL, data=df)
 	res
 }
@@ -77,16 +123,17 @@ contourLines2SLDF <- function(cL, proj4string=CRS(as.character(NA))) {
 arcobj2SLDF <- function(arc, proj4string=CRS(as.character(NA)), IDs) {
 	df <- data.frame(arc[[1]])
 	n <- length(arc[[2]])
-	SlinesList <- vector(mode="list", length=n)
+	LinesList <- vector(mode="list", length=n)
 	if (missing(IDs)) IDs <- paste("L", 1:n, sep="_")
 	if (length(IDs) != n) stop("IDs length differs from number of arcs")
 	row.names(df) <- IDs
 	for (i in 1:n) {
 		crds <- cbind(arc[[2]][[i]][[1]], arc[[2]][[i]][[2]])
-		SlinesList[[i]] <- Slines(list(Sline(coords=crds, 
-			proj4string=proj4string)), ID=IDs[i])
+		LinesList[[i]] <- Lines(list(Line(coords=crds
+#, proj4string=proj4string
+)), ID=IDs[i])
 	}
-	SL <- SpatialLines(SlinesList)
+	SL <- SpatialLines(LinesList, proj4string=proj4string)
 	res <- SpatialLinesDataFrame(SL, data=df)
 	res
 }
@@ -97,21 +144,23 @@ shp2SLDF <- function(shp, proj4string=CRS(as.character(NA)), IDs) {
 	df <- shp$att.data
 	shapes <- shp$Shapes
 	n <- length(shapes)
-	SlinesList <- vector(mode="list", length=n)
+	LinesList <- vector(mode="list", length=n)
 	if (missing(IDs)) IDs <- as.character(sapply(shapes, 
 		function(x) x$shpID))
 	if (length(IDs) != n) stop("IDs length differs from number of lines")
 	row.names(df) <- IDs
 	for (i in 1:n) {
-		SlinesList[[i]] <- .shapes2SlinesList(shapes[[i]], 
-			proj4string=proj4string, ID=IDs[i])
+		LinesList[[i]] <- .shapes2LinesList(shapes[[i]], 
+#			proj4string=proj4string, 
+ID=IDs[i])
 	}
-	SL <- SpatialLines(SlinesList)
+	SL <- SpatialLines(LinesList, proj4string=proj4string)
 	res <- SpatialLinesDataFrame(SL, data=df)
 	res
 }
 
-.shapes2SlinesList <- function(shape, proj4string=CRS(as.character(NA)), ID) {
+.shapes2LinesList <- function(shape, #proj4string=CRS(as.character(NA)), 
+ID) {
 	nParts <- attr(shape, "nParts")
 	Pstart <- shape$Pstart
 	nVerts <- nrow(shape$verts)
@@ -127,11 +176,12 @@ shp2SLDF <- function(shp, proj4string=CRS(as.character(NA)), IDs) {
 	}
 	res <- vector(mode="list", length=nParts)
 	for (i in 1:nParts) {
-		res[[i]] <- Sline(coords=shape$verts[from[j]:to[j],], 
-			proj4string=proj4string)
+		res[[i]] <- Line(coords=shape$verts[from[j]:to[j],]
+#, proj4string=proj4string
+)
 	}
-	Slines <- Slines(res, ID=ID)
-	Slines
+	Lines <- Lines(res, ID=ID)
+	Lines
 }
 
 Mapgen2SL <- function(file, proj4string=CRS(as.character(NA))) {
@@ -152,23 +202,25 @@ Mapgen2SL <- function(file, proj4string=CRS(as.character(NA))) {
 			x <- t(sapply(strsplit(hold[(starts[i]+1):
 				length(hold)], "\t"), as.numeric))
 		}
-		res[[i]] <- Slines(list(Sline(x, proj4string=proj4string)),
-			ID=IDs[i])
+		res[[i]] <- Lines(list(Line(x
+#, proj4string=proj4string
+)), ID=IDs[i])
 	}
-	SL <- SpatialLines(res)
+	SL <- SpatialLines(res, proj4string=proj4string)
 	SL
 }
 
 
 plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL, asp = 1, 
-	col = 1, lwd = 1, lty=1, add=FALSE, ...) 
+	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE, ...) 
 {
 #	frame()
 #	plot.window(xlim = xlim, ylim = ylim, asp = asp)
-	if (!add) plot.Spatial(SL, xlim=xlim, ylim=ylim, asp=asp, ...)
+	if (! add) 
+		plot(as(SL, "Spatial"), xlim = xlim, ylim = ylim, asp = asp, axes = axes, ...)
 	lst <- SL@lines
 	for (i in seq(along=lst)) {
-		sllst = lst[[i]]@Slines
+		sllst = lst[[i]]@Lines
 		for (j in seq(along=sllst)) {
 			crds <- coordinates(sllst[[j]])
 			if (length(col) != length(lst)) 
@@ -183,22 +235,23 @@ plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL, asp = 1,
 	}
 }
 
-summary.SpatialLines = summary.Spatial
+setMethod("summary", "SpatialLines", summary.Spatial)
 
-plot.SpatialLines = function(x, ...) plotSpatialLines(x, ...)
+setMethod("plot", signature(x = "SpatialLines", y = "missing"),
+	function(x, y, ...) plotSpatialLines(x, ...))
 
-setMethod("coordinates", "Sline", function(obj) obj@coords)
-setMethod("coordinates", "Slines", function(obj) lapply(obj@Slines, coordinates))
+setMethod("coordinates", "Line", function(obj) obj@coords)
+setMethod("coordinates", "Lines", function(obj) lapply(obj@Lines, coordinates))
 setMethod("coordinates", "SpatialLines", function(obj) lapply(obj@lines, coordinates))
 
-lines.Sline = function(x, y = NULL, ...) invisible(lines(coordinates(x), ...))
-lines.Slines = function(x, y = NULL, ...) invisible(lapply(x@Slines, 
+lines.Line = function(x, y = NULL, ...) invisible(lines(coordinates(x), ...))
+lines.Lines = function(x, y = NULL, ...) invisible(lapply(x@Lines, 
 	function(x, ...) lines(x, ...), ...))
 lines.SpatialLines = function(x, y = NULL, ...) invisible(lapply(x@lines, 
 	function(x, ...) lines(x, ...), ...))
 
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
-setMethod("[", "SpatialLines", function(x, i, j, ..., drop = T) {
+setMethod("[", "SpatialLines", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j)) stop("only a single index is allowed for [.SpatialLines")
 	SpatialLines(x@lines[i])
 })
@@ -206,10 +259,10 @@ setMethod("[", "SpatialLines", function(x, i, j, ..., drop = T) {
 setMethod("coordnames", signature(x = "SpatialLines"), 
 	function(x) coordnames(x@lines[[1]])
 )
-setMethod("coordnames", signature(x = "Slines"), 
-	function(x) coordnames(x@Slines[[1]])
+setMethod("coordnames", signature(x = "Lines"), 
+	function(x) coordnames(x@Lines[[1]])
 )
-setMethod("coordnames", signature(x = "Sline"), 
+setMethod("coordnames", signature(x = "Line"), 
 	function(x) dimnames(coordinates(x))[[2]]
 )
 setReplaceMethod("coordnames", 
@@ -221,15 +274,15 @@ setReplaceMethod("coordnames",
 	}
 )
 setReplaceMethod("coordnames", 
-	signature(x = "Slines", value = "character"),
+	signature(x = "Lines", value = "character"),
 	function(x, value) {
-		for (i in seq(along = x@Slines))
-			coordnames(x@Slines[[i]]) = value
+		for (i in seq(along = x@Lines))
+			coordnames(x@Lines[[i]]) = value
 		x
 	}
 )
 setReplaceMethod("coordnames", 
-	signature(x = "Sline", value = "character"),
+	signature(x = "Line", value = "character"),
 	function(x, value) {
 		dimnames(x@coords)[[2]] = value
 		x

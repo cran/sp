@@ -67,13 +67,13 @@ as.matrix.SpatialPixelsDataFrame = function(x) {
 	as(x, "matrix")
 }
 
-as.matrix.SpatialGridDataFrame = function(x) {
+as.matrix.SpatialGridDataFrame = function(x, byrow = FALSE) {
 	if (ncol(x@data) > 1)
 		warning(
 		"as.matrix.SpatialPixelsDataFrame uses first column;\n pass subset or [] for other columns")
 	# try, at some stage also:
 	# matrix(x@data[[1]], x@grid@cells.dim[2], x@grid@cells.dim[1], byrow=TRUE)
-	matrix(x@data[[1]], x@grid@cells.dim[1], x@grid@cells.dim[2], byrow=FALSE)
+	matrix(x@data[[1]], x@grid@cells.dim[1], x@grid@cells.dim[2], byrow=byrow)
 }
 
 setAs("SpatialPixelsDataFrame", "matrix", function(from) as.matrix.SpatialPixelsDataFrame(from))
@@ -87,6 +87,9 @@ as.data.frame.SpatialGridDataFrame = function(x, row.names, optional)
 
 setAs("SpatialPixelsDataFrame", "data.frame", function(from) as.data.frame.SpatialPixelsDataFrame(from))
 setAs("SpatialGridDataFrame", "data.frame", function(from) as.data.frame.SpatialGridDataFrame(from))
+
+setAs("SpatialPixelsDataFrame", "AttributeList", function(from) from@data)
+setAs("SpatialGridDataFrame", "AttributeList", function(from) from@data)
 
 subset.SpatialPixelsDataFrame <- function(x, subset, select, drop = FALSE, ...) {
     if (version$major == 2 & version$minor < 1 ) {
@@ -238,28 +241,25 @@ print.SpatialPixelsDataFrame = function(x, ...) {
 	cat("Object of class SpatialPixelsDataFrame\n")
 	print(as(x, "SpatialPixels"))
 	cat("\n")
-	cat("Data:\n")
+	cat("Data summary:\n")
 	print(summary(x@data))
 	invisible(x)
 }
+setMethod("show", "SpatialPixelsDataFrame", 
+	function(object) print.SpatialPixelsDataFrame(object))
+
 print.SpatialGridDataFrame = function(x, ...) {
 	cat("Object of class SpatialGridDataFrame\n")
 	print(as(x, "SpatialGrid"))
 	cat("\n")
-	cat("Data:\n")
+	cat("Data summary:\n")
 	print(summary(x@data))
 	invisible(x)
 }
-#setMethod("show", "SpatialPixelsDataFrame", print.SpatialPixelsDataFrame)
+setMethod("show", "SpatialGridDataFrame", 
+	function(object) print.SpatialGridDataFrame(object))
 
-plot.SpatialPixelsDataFrame = function(x, ...)
-	plot(as(x, "SpatialPoints"), ...)
-
-plot.SpatialGridDataFrame = function(x, ...)
-	plot(as(x, "SpatialPixels"), ...)
-
-summary.SpatialPixelsDataFrame = summary.Spatial
-summary.SpatialGridDataFrame = summary.Spatial
+setMethod("summary", "SpatialPixelsDataFrame", summary.Spatial)
 
 print.summary.SpatialPixelsDataFrame = print.summary.Spatial
 print.summary.SpatialGridDataFrame = print.summary.Spatial

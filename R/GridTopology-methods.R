@@ -7,6 +7,13 @@ GridTopology = function(cellcentre.offset, cellsize, cells.dim) {
 
 setMethod("show", "GridTopology", function(object) summary(obj))
 
+as.data.frame.GridTopology = function(x, row.names, optional) data.frame(
+		cellcentre.offset = x@cellcentre.offset,
+		cellsize = x@cellsize,
+		cells.dim = x@cells.dim
+	)
+setAs("GridTopology", "data.frame", function(from) as.data.frame.GridTopology(from))
+
 setMethod("coordinates", "GridTopology", function(obj) {
 	cc = do.call("expand.grid", coordinatevalues(obj))
 	as.matrix(sapply(cc, as.numeric))
@@ -83,15 +90,65 @@ print.GridTopology = function(x, ...) {
 	invisible(res)
 }
 
-summary.GridTopology = function(object, ...) {
+summ.GridTopology = function(object, ...) {
 	ret = list()
 	ret[["values"]] = gridparameters(object)
 	class(ret) = "summary.GridTopology"
 	ret
 }
+setMethod("summary", "GridTopology", summ.GridTopology)
 
 print.summary.GridTopology = function(x, ...) {
 	cat("Grid topology:\n")
 	print(x$values)
 	invisible(x)
 }
+
+# make a SpatialPolygons from a GridTopology - NERSC query
+
+as.SpatialPolygons.GridTopology <- function(grd, proj4string=CRS(as.character(NA)))
+{
+	grd_crds <- coordinates(grd)
+	IDs <- IDvaluesGridTopology(grd)
+	nRings <- nrow(grd_crds)
+	cS <- grd@cellsize
+	cS2 <- cS/2
+	cS2x <- cS2[1]
+	cS2y <- cS2[2]
+	Srl <- vector(mode="list", length=nRings)
+	for (i in 1:nRings) {
+		xi <- grd_crds[i,1]
+		yi <- grd_crds[i,2]
+		x <- c(xi-cS2x, xi-cS2x, xi+cS2x, xi+cS2x, xi-cS2x)
+		y <- c(yi-cS2y, yi+cS2y, yi+cS2y, yi-cS2y, yi-cS2y)
+		Srl[[i]] <- Polygons(list(Polygon(coords=cbind(x, y)
+#, proj4string=proj4string
+)), ID=IDs[i])
+	}
+	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=proj4string)
+	res
+}
+
+# mostly copied from coordinates() for GridTopology, 
+# makes IDs "c(i)r(j)" matching the coordinates
+# used with SpatialRing-ed grids for the data frame rowname()
+
+IDvaluesGridTopology <- function(obj) {
+	if (!is(obj, "GridTopology"))
+		stop("function only works for objects of class or extending GridTopology")
+	ret = list()
+	for (i in seq(along=obj@cells.dim)) {
+		if (i == 2) # y-axis is the exception--starting at top of map, and decreasing:
+			ret[[i]] = 1 + ((obj@cells.dim[i] - 1):0)
+		else
+			ret[[i]] = 1 + (0:(obj@cells.dim[i] - 1))
+	}
+	ns = names(obj@cellcentre.offset)
+	if (is.null(ns))
+		ns = paste("s", 1:length(ret), sep = "") #dimnames(obj@bbox)[[1]]
+	names(ret) = ns
+	cc <- do.call("expand.grid", ret)
+	res <- as.matrix(sapply(cc, as.integer))
+	paste("c", cc[,1], "r", cc[,2], sep="")
+}
+

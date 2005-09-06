@@ -35,23 +35,20 @@ setMethod("coordinates", "matrix",
 	cat("Coordinate Reference System (CRS) arguments:", proj4string(x),
 		"\n")
 }
+setMethod("show", "SpatialPoints", function(object) print.SpatialPoints(object))
 
-plot.SpatialPoints = function(x, xlab = "x", ylab = "y", asp = 1, pch = 3, ...) 
+plot.SpatialPoints = function(x, asp = 1, pch = 3, axes = FALSE, add = FALSE, xlim = NULL, 
+	ylim = NULL, ...) 
 {
+	if (! add)
+		plot(as(x, "Spatial"), asp = asp, axes = axes, xlim = xlim, ylim = ylim)
 	cc = coordinates(x)
-	nm = dimnames(cc)[[2]]
-	if (!is.null(nm)) {
-		if (missing(xlab))
-			xlab = nm[1]
-		if (missing(ylab))
-			ylab = nm[2]
-	}
-	plot(cc[,1], cc[,2], xlab = xlab, ylab = ylab, asp = asp, pch = pch, ...)
+	points(cc[,1], cc[,2], pch = pch, ...)
 }
+setMethod("plot", signature(x = "SpatialPoints", y = "missing"),
+	function(x,y,...) plot.SpatialPoints(x,...))
 
 points.SpatialPoints = function(x, y = NULL, ...) points(coordinates(x), ...)
-
-setMethod("show", "SpatialPoints", function(object) print.SpatialPoints(object))
 
 setMethod("coordinates", "SpatialPoints", function(obj) obj@coords)
 
@@ -82,12 +79,14 @@ subset.SpatialPoints <- function(x, subset, select, drop = FALSE, ...) {
 }
 
 #"[.SpatialPoints" =  function(x, i, j, ..., drop = T) {
-setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = T) {
-	SpatialPoints(coords=x@coords[i, , drop = FALSE], 
-	proj4string = CRS(proj4string(x)))
+setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
+	if (!missing(j)) warning("j index ignored")
+	drop = FALSE
+	SpatialPoints(coords=x@coords[i, , drop=drop], 
+		proj4string = CRS(proj4string(x)))
 })
 
-summary.SpatialPoints = summary.Spatial
+setMethod("summary", "SpatialPoints", summary.Spatial)
 
 print.summary.SpatialPoints = print.summary.Spatial
 
