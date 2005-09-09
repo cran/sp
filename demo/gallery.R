@@ -230,7 +230,7 @@ trellis.par.set(sp.theme()) # sets color ramp to bpy.colors()
 
 # prepare nc sids data set:
 library(maptools)
-nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=latlong +datum=NAD27"))
+nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 arrow = list("SpatialPolygonsRescale", layout.north.arrow(),
     offset = c(-76,34), scale = 0.5, which = 2)
 scale = list("SpatialPolygonsRescale", layout.scale.bar(),
@@ -254,7 +254,7 @@ text1 = list("sp.text", c(-77.5,34.15), "0", which = 2)
 text2 = list("sp.text", c(-76.5,34.15), "1 degree", which = 2)
 # create a fake lines data set:
 library(maptools)
-ncl <- readShapeLines(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=latlong +datum=NAD27"))
+ncl <- readShapeLines(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 ## multi-panel plot with coloured lines: North Carolina SIDS
 spplot(ncl, c("SID74","SID79"), names.attr = c("1974","1979"),
     colorkey=list(space="bottom"),
@@ -294,14 +294,14 @@ library(sp)
 
 ## plot for SpatialPolygons, with county name at label point
 library(maptools)
-nc2 <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=latlong +datum=NAD27"))
+nc2 <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 plot(nc2)
 invisible(text(getSpPPolygonsLabptSlots(nc2), labels=as.character(nc2$NAME), cex=0.4))
 library(sp)
 
 ## plot of SpatialPolygonsDataFrame, using grey shades
 library(maptools)
-nc1 <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=latlong +datum=NAD27"))
+nc1 <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 names(nc1)
 rrt <- nc1$SID74/nc1$BIR74
 brks <- quantile(rrt, seq(0,1,1/7))
@@ -312,7 +312,7 @@ library(sp)
 
 ## plot of SpatialPolygonsDataFrame, using line densities
 library(maptools)
-nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=latlong +datum=NAD27"))
+nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 names(nc)
 rrt <- nc$SID74/nc$BIR74
 brks <- quantile(rrt, seq(0,1,1/7))
@@ -405,7 +405,7 @@ spplot(zn.uk, "se",
 library(sp)
 library(maptools)
 
-nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=latlong +datum=NAD27"))
+nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 names(nc)
 # create two dummy factor variables:
 nc$f = factor(sample(1:5,100,replace=T),labels=letters[1:5])

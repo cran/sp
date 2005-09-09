@@ -11,6 +11,16 @@
 .onUnload <- function(libpath)
     library.dynam.unload("sp", libpath)
 
-if (!exists("is.R"))
-  is.R = function()
+if (!exists("is.R")) {
+  is.R = function() {
  	exists("version") && !is.null(vl <- version$language) && vl == "R"
+  }
+  which.max = function(x) {
+  	ix = 1:length(x)
+	mx = ix[x == max(x)]
+	mx[1]
+  }
+  NCOL = function(x) {
+  	if (is.array(x) && length(dim(x)) > 1 || is.data.frame(x)) ncol(x) else as.integer(1)
+  }
+}

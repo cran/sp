@@ -1,9 +1,15 @@
+#define USING_R 1
 /*  Copyright by Roger Bivand (C) 2005  */
-
-
 
 #include "sp.h"
 
+#ifdef USING_R
+# define POWDI(x,i) R_pow_di(x,i)
+#else
+# include <math.h>
+# define POWDI(x,i) pow(x,i)
+# define pythag(a,b) sqrt(a*a+b*b)
+#endif
 
 void sp_dists(double *u, double *v, double *uout, double *vout, 
 		int *n, double *dists, int *lonlat)
@@ -45,12 +51,12 @@ void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2,
     G = ( lat1R - lat2R )/2.0;
     L = ( lon1R - lon2R )/2.0;
 
-    sinG2 = R_pow_di( sin( G ), 2 );
-    cosG2 = R_pow_di( cos( G ), 2 );
-    sinF2 = R_pow_di( sin( F ), 2 );
-    cosF2 = R_pow_di( cos( F ), 2 );
-    sinL2 = R_pow_di( sin( L ), 2 );
-    cosL2 = R_pow_di( cos( L ), 2 );
+    sinG2 = POWDI( sin( G ), 2 );
+    cosG2 = POWDI( cos( G ), 2 );
+    sinF2 = POWDI( sin( F ), 2 );
+    cosF2 = POWDI( cos( F ), 2 );
+    sinL2 = POWDI( sin( L ), 2 );
+    cosL2 = POWDI( cos( L ), 2 );
 
     S = sinG2*cosL2 + cosF2*sinL2;
     C = cosG2*cosL2 + sinF2*sinL2;

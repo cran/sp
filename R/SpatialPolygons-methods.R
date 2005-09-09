@@ -198,10 +198,10 @@ Polygons <- function(srl, ID) {
 }
 
 bbox.Polygons <- function(obj) {
-	rx=range(lapply(obj@Polygons, function(x) range(x@coords[,1])))
-	ry=range(lapply(obj@Polygons, function(x) range(x@coords[,2])))
+	rx=range(lapply(obj@Polygons, function(x) range(x@coords[,1]))[[1]])
+	ry=range(lapply(obj@Polygons, function(x) range(x@coords[,2]))[[1]])
 	res=rbind(r1=rx,r2=ry)
-    	colnames(res) <- c("min", "max")
+   	colnames(res) <- c("min", "max")
 	res
 }
 

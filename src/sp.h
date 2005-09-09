@@ -1,9 +1,25 @@
 #ifndef R_SP_H
 #define R_SP_H
 
+#include <S.h>
+
+#ifdef USING_R
 #include <R.h>
 #include <Rinternals.h>
 #include <Rmath.h>
+#else
+# if (!defined(SPLUS_VERSION) || SPLUS_VERSION < 6000)
+#  error("no SPLUS_VERSION >= 6.0")
+# endif
+# define SEXP s_object *
+# define PROTECT(x) x
+# define UNPROTECT(x)
+# define R_UNIFORM unif_rand(S_evaluator)
+# define R_NORMAL  norm_rand(S_evaluator)
+# define RANDIN seed_in((long *) NULL, S_evaluator)
+# define RANDOUT seed_out((long *) NULL, S_evaluator)
+# define Rprintf printf
+#endif
 
 /* from insiders.c 
 

@@ -91,7 +91,7 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 	r1 <- range(x[,1], na.rm=TRUE)
 	r2 <- range(x[,2], na.rm=TRUE)
 	res <- rbind(r1, r2)
-	colnames(res) <- c("min", "max")
+	dimnames(res)[[2]] <- c("min", "max")
 	res
 }
 
@@ -101,7 +101,7 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 	r1 <- range(x, na.rm=TRUE)
 	r2 <- range(y, na.rm=TRUE)
 	res <- rbind(r1, r2)
-	colnames(res) <- c("min", "max")
+	dimnames(res)[[2]] <- c("min", "max")
 	res
 
 }
@@ -112,24 +112,24 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 	r1 <- range(x, na.rm=TRUE)
 	r2 <- range(y, na.rm=TRUE)
 	res <- rbind(r1, r2)
-	colnames(res) <- c("min", "max")
+	dimnames(res)[[2]] <- c("min", "max")
 	res
 
 }
 .bboxCalcR <- function(lst) {
-    rx=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,1])))
-    ry=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,2])))
+    rx=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,1]))[[1]])
+    ry=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,2]))[[1]])
 	
 	for(i in 1:length(lst))
 	{
 		x = lst[[i]]
-		rxx=range(lapply(x@Polygons, function(x) range(x@coords[,1])))
-		ryy=range(lapply(x@Polygons, function(x) range(x@coords[,2])))
+		rxx=range(lapply(x@Polygons, function(x) range(x@coords[,1]))[[1]])
+		ryy=range(lapply(x@Polygons, function(x) range(x@coords[,2]))[[1]])
 		rx=range(c(rx,rxx))
 		ry=range(c(ry,ryy))
     }
 	res=rbind(r1=rx,r2=ry)
-    colnames(res) <- c("min", "max")
+    dimnames(res)[[2]] <- c("min", "max")
 	res
 }
 

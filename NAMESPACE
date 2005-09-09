@@ -51,7 +51,7 @@ export(as.image.SpatialGridDataFrame)
 export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
 	SpatialPixels, SpatialPixelsDataFrame, SpatialGrid,
 	SpatialGridDataFrame, GridTopology, getGridTopology,
-	areaSpatialGrid)
+	areaSpatialGrid, gridlines)
 
 #export(as.SpatialPolygons.Shapelist, as.SpatialPolygons.matrixList, 
 #	as.Ring4.matrix)
@@ -153,6 +153,9 @@ S3method(as.data.frame, AttributeList)
 S3method(as.data.frame, GridTopology)
 
 S3method(cbind, SpatialGridDataFrame)
+
+S3method(contour, SpatialPixelsDataFrame)
+S3method(contour, SpatialGridDataFrame)
 
 S3method(dim, SpatialPointsDataFrame)
 S3method(dim, AttributeList)

@@ -61,11 +61,11 @@ sp.text = function(loc, txt, ...) {
 	panel.text(loc[1], loc[2], txt, ...)
 }
 
-sp.panel.layout = function(lst, panel.counter, ...) {
+sp.panel.layout = function(lst, panel.number, ...) {
 	sp.panel0 = function(x, first = FALSE, ...) {
 		if (is.character(x))
 			obj = get(x)
-		if (!is.null(x$which) && is.na(match(panel.counter, x$which)))
+		if (!is.null(x$which) && is.na(match(panel.number, x$which)))
 			return()
 		if (inherits(x, "list")) {
 			# print(paste(class(x), "first val", first, "first obj", x$first))
@@ -84,7 +84,7 @@ sp.panel.layout = function(lst, panel.counter, ...) {
 			sp.grid(x, ...)
 		else stop(paste("cannot plot object of class", class(x)))
 	}
-	if (!is.null(lst$which) && is.na(match(panel.counter, lst$which)))
+	if (!is.null(lst$which) && is.na(match(panel.number, lst$which)))
 		return()
 	else
 		lst$which = NULL
@@ -248,7 +248,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 }
 setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
 
-panel.gridplot = function(x, y, z, subscripts, ..., panel.counter, sp.layout) {
+panel.gridplot = function(x, y, z, subscripts, ..., panel.number, sp.layout) {
 	# set first = TRUE defaults for polygons objects in sp.layout:
 	if (!missing(sp.layout) && inherits(sp.layout, "list")) {
 		if (inherits(sp.layout[[1]], "list")) {
@@ -263,9 +263,9 @@ panel.gridplot = function(x, y, z, subscripts, ..., panel.counter, sp.layout) {
 			sp.layout$first = TRUE
 	}
 	# print(sp.layout)
-	sp.panel.layout(sp.layout, panel.counter, first = TRUE)
+	sp.panel.layout(sp.layout, panel.number, first = TRUE)
 	panel.levelplot(x, y, z, subscripts, ...)
-	sp.panel.layout(sp.layout, panel.counter)
+	sp.panel.layout(sp.layout, panel.number)
 }
 
 panel.polygonsplot =
@@ -275,7 +275,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
    		cex = add.text$cex, font = add.text$font, fontfamily = add.text$fontfamily, 
    		fontface = add.text$fontface, col.text = add.text$col, ..., 
    		col.regions = regions$col, alpha.regions = regions$alpha, 
-		grid.polygons, sp.layout, panel.counter) 
+		grid.polygons, sp.layout, panel.number) 
 {
 	regions <- trellis.par.get("regions")
 	add.line <- trellis.par.get("add.line")
@@ -325,11 +325,11 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
    			}
 		}
 	}
-	sp.panel.layout(sp.layout, panel.counter)
+	sp.panel.layout(sp.layout, panel.number)
 }
 
-panel.pointsplot = function(x, y, subscripts, col, sp.layout, ..., panel.counter) {
-	sp.panel.layout(sp.layout, panel.counter)
+panel.pointsplot = function(x, y, subscripts, col, sp.layout, ..., panel.number) {
+	sp.panel.layout(sp.layout, panel.number)
 	panel.superpose(x, y, subscripts, col = col, ...)
 }
 
