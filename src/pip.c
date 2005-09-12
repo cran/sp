@@ -10,24 +10,12 @@
 # define RANDIN seed_in((long *) NULL)
 # define RANDOUT seed_out((long *) NULL)
 # define S_EVALUATOR
-#else /* some S-Plus version; assuming >= 6 for now: */
-# if (!defined(SPLUS_VERSION) || SPLUS_VERSION < 6000)
-#  error("no SPLUS_VERSION >= 6.0")
-# endif
-# define SEXP s_object *
-# define PROTECT(x) x
-# define UNPROTECT(x)
-# define R_UNIFORM unif_rand(S_evaluator)
-# define R_NORMAL  norm_rand(S_evaluator)
-# define RANDIN seed_in((long *) NULL, S_evaluator)
-# define RANDOUT seed_out((long *) NULL, S_evaluator)
-# define Rprintf printf
 #endif
 
 #include "sp.h"
 
 SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly) {
-	int i, n;
+	int i;
 	PLOT_POINT p;
 	POLYGON pol;
 	SEXP ret;

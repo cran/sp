@@ -20,14 +20,14 @@ is.projected = function(sd) {
 #ifdef R
 	if (is.na(p4str)) 
 #else
-#%	if (p4str == "NA")  # bloody S-Plus!
+#S	if (p4str == "NA")  # bloody S-Plus!
 #endif
 		return(as.logical(NA))
 	else {
 #ifdef R
 		res <- grep("longlat", p4str, fixed=TRUE)
 #else
-#%		res <- grep("longlat", p4str)
+#S		res <- grep("longlat", p4str)
 #endif
 		if (length(res) == 0)
 			return(TRUE)

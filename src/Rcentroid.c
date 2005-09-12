@@ -1,3 +1,4 @@
+#define USING_R 1
 /*	Modified 24 May 2005 Roger S. Bivand for maptools
 	Written by Joseph O'Rourke
 	orourke@cs.smith.edu
@@ -19,6 +20,10 @@
 		http://cs.smith.edu/~orourke/
 
 */
+
+#ifndef USING_R
+# define R_alloc(n,size) S_alloc(n,size,S_evaluator)
+#endif
 
 #include "sp.h"
 

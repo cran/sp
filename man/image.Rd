@@ -1,5 +1,8 @@
 \name{image.SpatialGridDataFrame}
 \alias{image.SpatialGridDataFrame}
+\alias{image.SpatialPixelsDataFrame}
+\alias{contour.SpatialGridDataFrame}
+\alias{contour.SpatialPixelsDataFrame}
 \alias{as.image.SpatialGridDataFrame}
 \title{ image gridded spatial data, or convert to format for image }
 \description{
@@ -9,7 +12,7 @@ image on data in SpatialGridDataFrame format
 \usage{
 image.SpatialGridDataFrame(x, attr = 1, xcol = 1, ycol = 2, 
 	red=NULL, green=NULL, blue=NULL, asp = 1, axes = FALSE, xlim = NULL,
-	ylim = NULL, add = TRUE, ...)
+	ylim = NULL, add = FALSE, ...)
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
 }
 \arguments{
@@ -24,9 +27,10 @@ a column number }
 \item{axes}{ logical; should coordinate axes be drawn? }
 \item{xlim}{ x-axis limits }
 \item{ylim}{ y-axis limits }
-\item{add}{ logical; if TRUE, the image is added to the plot layout setup
+\item{add}{ logical; if FALSE, the image is added to the plot layout setup
 by \code{plot(as(x, "Spatial"),axes=axes,xlim=xlim,ylim=ylim,asp=asp)}
-which sets up axes and plotting region. }
+which sets up axes and plotting region; if TRUE, the image is added
+to the existing plot. }
 \item{...}{ arguments passed to \link{image}, see examples }
 }
 \value{ \code{as.image.SpatialGridDataFrame} returns the list with

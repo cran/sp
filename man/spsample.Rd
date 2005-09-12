@@ -14,8 +14,8 @@ a polygon, or on a spatial line, using regular or random sampling
 spsample(x, n, type, ...)
 sample.Spatial(x, n, type, bb = bbox(x), offset = runif(2), cellsize, ...)
 sample.Line(x, n, type, offset = runif(1), proj4string=CRS(as.character(NA)), ...)
-sample.Polygon(x, n, type = "random", bb = bbox(x), offset = runif(2), proj4string=CRS(as.character(NA)), ...)
-sample.Polygons(x, n, type = "random", bb = bbox(x), offset = runif(2), proj4string=CRS(as.character(NA)), ...)
+sample.Polygon(x, n, type = "random", bb = bbox(x), offset = runif(2), proj4string=CRS(as.character(NA)), iter = 4, ...)
+sample.Polygons(x, n, type = "random", bb = bbox(x), offset = runif(2), proj4string=CRS(as.character(NA)), iter = 4, ...)
 sample.Sgrid(x, n, type = "random", bb = bbox(x), offset = runif(2), ...)
 makegrid(x, n = 10000, nsig = 2, cellsize, offset = c(0.5,0.5), 
 	type = "regular", ...)
@@ -45,6 +45,7 @@ except \code{"random"} }
 	holding a valid proj4 string}
 \item{nsig}{ for "pretty" coordinates; \code{spsample} do not result in
 pretty grids }
+  \item{iter}{default = 4: number of times to try to place sample points in a polygon before giving up and returning NULL - this occurs when trying to hit a small and awkwardly shaped polygon in a large bounding box with a small number of points}
 }
 \value{ an object of class \link{SpatialPoints-class}. The number of
 points is only guaranteed to equal \code{n} when sampling is done in a
@@ -56,7 +57,9 @@ no \link{spsample-methods} exists, sampling is done in the bounding box
 of the object, using \code{spsample.Spatial}. An \link{overlay} may be
 necessary to select afterwards. 
 
-Sampling type \code{"nonaligned"} is not implemented for line objects. }
+Sampling type \code{"nonaligned"} is not implemented for line objects. 
+
+Some methods may return NULL if no points could be successfully placed. }
 
 \note{If an \link{Polygon-class} object has zero area (i.e. is a line),
 samples on this line element are returned. If the area is very close

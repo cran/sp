@@ -110,13 +110,13 @@ as.SpatialPolygons.GridTopology <- function(grd, proj4string=CRS(as.character(NA
 {
 	grd_crds <- coordinates(grd)
 	IDs <- IDvaluesGridTopology(grd)
-	nRings <- nrow(grd_crds)
+	nPolygons <- nrow(grd_crds)
 	cS <- grd@cellsize
 	cS2 <- cS/2
 	cS2x <- cS2[1]
 	cS2y <- cS2[2]
-	Srl <- vector(mode="list", length=nRings)
-	for (i in 1:nRings) {
+	Srl <- vector(mode="list", length=nPolygons)
+	for (i in 1:nPolygons) {
 		xi <- grd_crds[i,1]
 		yi <- grd_crds[i,2]
 		x <- c(xi-cS2x, xi-cS2x, xi+cS2x, xi+cS2x, xi-cS2x)

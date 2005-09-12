@@ -152,7 +152,5 @@ degAxis = function (side, at, labels, ...) {
                 	labels = parse(text = paste(abs(at), "*degree", dir[pos]))
         	}
 		} 
-		print(at)
-		print(labels)
         axis(side, at = at, labels = labels, ...)
 }
