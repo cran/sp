@@ -84,14 +84,12 @@ sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 	else {
 		res <- NULL
 		its <- 0
-		while (is.null(res) && its < iter) {
-		    bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-		    xSP <- new("Spatial", bbox=bbox(x), proj4string=proj4string)
-		    pts = sample.Spatial(
-#spsample(
-#as(x, "Spatial")
-xSP, round(n * bb.area/area), type=type, offset = offset, ...)
-# FIXME!!
+		bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
+		xSP <- new("Spatial", bbox=bbox(x), proj4string=proj4string)
+		n_is <- round(n * bb.area/area)
+		while (is.null(res) && its < iter && n_is > 0) {
+		    pts = sample.Spatial(xSP, n_is, type=type, 
+			offset = offset, ...)
 		    id = overlay(pts, SpatialPolygons(list(Polygons(list(x),
 			"xx")), proj4string=proj4string))
 		    Not_NAs <- !is.na(id)
@@ -109,24 +107,43 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 #...) {
 proj4string=CRS(as.character(NA)), iter=4, ...) {
 	#stop("not functioning yet...")
-	area = getPolygonAreaSlot(x) # also available for Polygons!
-	if (area == 0.0)
+	area = sapply(getPolygonsPolygonsSlot(x), getPolygonAreaSlot) # also available for Polygons!
+	if (sum(area) == 0.0)
 		# distribute n over the lines, according to their length?
 		stop("sampling over multiple lines not functioning yet...")
 	res <- NULL
 	its <- 0
+	holes <- sapply(getPolygonsPolygonsSlot(x), getPolygonHoleSlot)
+	pls <- getPolygonsPolygonsSlot(x)
+	smple <- rep(TRUE, length(pls))
+	if (length(pls) > 1) {
+	    for (i in seq(along=pls)) {
+		bbi <- .bbox2SPts(bbox(pls[[i]]), proj4string=proj4string)
+		bb_in <- lapply(pls[-i], function(x, pts) 
+			pointsInPolygon(pts, x), pts = bbi)
+		if (holes[i] || any(unlist(bb_in) > 0)) smple[i] <- FALSE
+	    }
+	}
+	sum_area <- sum(area[smple])
 	while (is.null(res) && its < iter) {
-	    bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-	    xSP <- new("Spatial", bbox=bbox(x), proj4string=proj4string)
-	    pts = sample.Spatial(
-#spsample(
-#as(x, "Spatial")
-xSP, round(n * bb.area/area), type=type, offset = offset, ...)
-# FIXME!!
-	    id = overlay(pts, SpatialPolygons(list(x), proj4string=proj4string))
-	    Not_NAs <- !is.na(id)
-	    if (!any(Not_NAs)) res <- NULL
-	    else res <- pts[which(Not_NAs)]
+	    ptsres <- vector(mode="list", length=length(area))
+	    for (i in seq(along=ptsres)) {
+		if (smple[i]) ptsres[[i]] <- sample.Polygon(
+		    x=pls[[i]], n=round(n*(area[i]/sum_area)), 
+		    type = type, offset = offset, proj4string=proj4string, 
+		    iter=iter)
+	    }
+	    crds <- do.call("rbind", lapply(ptsres, function(x) 
+	        if (!is.null(x)) coordinates(x)))
+	    if (is.null(crds)) res <- NULL
+	    else {
+	        pts <- SpatialPoints(crds, proj4string=proj4string)
+	        id = overlay(pts, SpatialPolygons(list(x), 
+		    proj4string=proj4string))
+	        Not_NAs <- !is.na(id)
+	        if (!any(Not_NAs)) res <- NULL
+	        else res <- pts[which(Not_NAs)]
+	    }
 	    its <- its+1
 	}
 	res
@@ -137,9 +154,8 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(2), iter=4, ...) {
 	#stop("not functioning yet...")
 	area = sum(unlist(lapply(getSpPpolygonsSlot(x),getPolygonAreaSlot)))
-	if (area == 0.0)
-		stop("sampling over multiple lines not functioning yet...")
-		# distribute n over the lines, according to their length?
+	if (area <= 0.0)
+		stop("cannot sample in zero-area polygons")
 	res <- NULL
 	its <- 0
 	while (is.null(res) && its < iter) {

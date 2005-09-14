@@ -20,15 +20,26 @@ pointsInPolygons = function(pts, Polygons, which = FALSE) {
 		pointsInPolygon(pts, x), pts = pts)), ncol=length(rings))
 	res <- res > 0
 	holes <- sapply(rings, getPolygonHoleSlot)
-	if (any(holes)) {
-		holerows <- which(res[,holes], arr.ind=TRUE)[,1]
-		res[holerows,] <- FALSE
+	areas <- sapply(rings, getPolygonAreaSlot)
+	if (any(holes) && any(res[,holes])) {
+		holerows <- which(res[,holes,drop=FALSE], arr.ind=TRUE)[,1]
+		odd <- rowSums(res[holerows,,drop=FALSE])%%2 != 0
+		for (i in seq(along = holerows)) {
+			in_p <- which.min(areas[res[holerows[i],,drop=FALSE]])
+			res[holerows[i],] <- FALSE
+			if (odd[i]) res[holerows[i], in_p] <- TRUE
+		}
 		res[,holes] <- FALSE
 	}
 	ret <- apply(res, 1, any)
 	if (which) {
-		ret <- ifelse(ret, which(apply(res, 2, any)), as.integer(NA))
-	} 	
+		reta <- integer(length(ret))
+		for (i in seq(along = ret)) {
+			if (ret[i]) reta[i] <- which(res[i,])
+			else reta[i] <- as.integer(NA)
+		}
+		ret <- reta
+	}
 	ret
 }
 

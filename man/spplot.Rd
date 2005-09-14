@@ -1,4 +1,5 @@
 \name{spplot}
+\docType{methods}
 \alias{spplot}
 \alias{spplot.grid}
 \alias{spplot.polygons}
@@ -7,9 +8,15 @@
 \alias{layout.scale.bar}
 \alias{mapLegendGrob}
 \alias{sp.theme}
+\alias{spplot-methods}
+\alias{spplot,SpatialPixelsDataFrame-method}
+\alias{spplot,SpatialGridDataFrame-method}
+\alias{spplot,SpatialPolygonsDataFrame-method}
+\alias{spplot,SpatialLinesDataFrame-method}
+\alias{spplot,SpatialPointsDataFrame-method}
 
-\title{Lattice (trellis) plots for spatial data}
-\description{plots for points, grids, polygons }
+\title{Plot methods for spatial data with attributes}
+\description{Lattice (trellis) plot methods for spatial data with attributes}
 \usage{
 spplot(obj, ...)
 spplot.grid(obj, zcol = names(obj), ..., names.attr, 
@@ -72,6 +79,16 @@ the plot is plotted and the return value is a vector with row names of
 the selected points.
 
 }
+
+\section{Methods}{
+\describe{
+\item{obj = "SpatialPixelsDataFrame"}{ see \link{spplot} }
+\item{obj = "SpatialGridDataFrame"}{ see \link{spplot} }
+\item{obj = "SpatialPolygonsDataFrame"}{ see \link{spplot} }
+\item{obj = "SpatialLinesDataFrame"}{ see \link{spplot} }
+\item{obj = "SpatialPointsDataFrame"}{ see \link{spplot} }
+}}
+
 \note{
 Missing values in the attributes are (currently) not allowed.
 

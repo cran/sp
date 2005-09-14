@@ -9,7 +9,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 	if (!add)
 		plot(as(x, "Spatial"), asp = asp, xlim = xlim, ylim = ylim, axes = axes)
 	if (is.null(red)) 
-		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = add, ...)
+		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = TRUE, asp = asp, ...)
 	else {
 		if (is.null(green) || is.null(blue)) 
 			stop("all colour bands must be given")
@@ -20,7 +20,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
 			x@grid@cells.dim[2], byrow=FALSE)
 		res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), z=m[,ncol(m):1])
-		image(res, col=levels(fcols), add = add, ...)
+		image(res, col=levels(fcols), add = TRUE, asp = asp, ...)
 	}
 }
 

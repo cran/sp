@@ -117,20 +117,28 @@ nParts.shp <- function(shp) attr(shp, "nParts")
 
 }
 .bboxCalcR <- function(lst) {
-    rx=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,1]))[[1]])
-    ry=range(lapply(lst[[1]]@Polygons, function(x) range(x@coords[,2]))[[1]])
+        rx=NULL
+        ry=NULL
 	
 	for(i in 1:length(lst))
 	{
 		x = lst[[i]]
-		rxx=range(lapply(x@Polygons, function(x) range(x@coords[,1]))[[1]])
-		ryy=range(lapply(x@Polygons, function(x) range(x@coords[,2]))[[1]])
+		rxx=range(c(sapply(x@Polygons, 
+			function(x) range(x@coords[,1]))))
+		ryy=range(c(sapply(x@Polygons, 
+			function(x) range(x@coords[,2]))))
 		rx=range(c(rx,rxx))
 		ry=range(c(ry,ryy))
-    }
+        }
 	res=rbind(r1=rx,r2=ry)
-    dimnames(res)[[2]] <- c("min", "max")
+        dimnames(res)[[2]] <- c("min", "max")
 	res
+}
+
+.bbox2SPts <- function(bb, proj4string=CRS(as.character(NA))) {
+	x <- c(bb[1,1], bb[1,1], bb[1,2], bb[1,2])
+	y <- c(bb[2,1], bb[2,2], bb[2,2], bb[2,1])
+	SpatialPoints(cbind(x,y), proj4string=proj4string)
 }
 
 
