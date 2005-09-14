@@ -9,7 +9,7 @@ lists of \code{Polygons} objects and \code{data.frame}s}
 \usage{ 
 Polygon(coords, hole=as.logical(NA))
 Polygons(srl, ID)
-SpatialPolygons(Srl, pO = 1:length(Srl), proj4string=CRS(as.character(NA)))
+SpatialPolygons(Srl, pO, proj4string=CRS(as.character(NA)))
 SpatialPolygonsDataFrame(Sr, data, match.ID = TRUE)
 
 }
@@ -21,7 +21,7 @@ equal last coordinates (row) }
 \item{srl}{list with \link{Polygon-class} objects}
 \item{ID}{character vector of length one with identifier}
 \item{Srl}{ list with objects of class \link{Polygons-class}}
-\item{pO}{ integer vector; plotting order }
+\item{pO}{ integer vector; plotting order; if missing in reverse order of Polygons area }
 \item{Sr}{ object of class \link{SpatialPolygons-class}}
 \item{data}{ object of class \code{data.frame}; the number of rows in \code{data} should equal the number of \link{Polygons-class} objects in \code{Sr}}
 \item{match.ID}{logical: (default TRUE): match SpatialPolygons member Polygons ID slot values with data frame row names, and re-order the data frame rows if necessary}

@@ -18,8 +18,7 @@ Lines <- function(slinelist, ID=as.character(NA)) {
 #	if (length(projargs) > 1) 
 #		stop("differing projections among Line objects")
 #	Sp <- new("Spatial", bbox= .bboxSls(slinelist), proj4string=CRS(projargs))
-	new("Lines", #Sp, 
-Lines = slinelist, ID=ID)
+	new("Lines", Lines = slinelist, ID=ID)
 }
 
 SpatialLines <- function(LinesList, proj4string=CRS(as.character(NA))) {

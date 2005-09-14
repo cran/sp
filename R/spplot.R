@@ -1,5 +1,5 @@
 sp.polygons = function(obj, col = 1, ...) {
-	sp.polygon3 = function(x, ...) { 
+	sp.polygon3 = function(x, col, ...) { 
 		cc = getPolygonCoordsSlot(x)
 		grid.polygon(cc[,1], cc[,2], default.units = "native", 
 			gp = gpar(col = col, ...))
@@ -17,15 +17,15 @@ sp.polygons = function(obj, col = 1, ...) {
    		Srs <- getPolygonsPolygonsSlot(pls[[i]])
    		pOi <- getPolygonsplotOrderSlot(pls[[i]])
    		for (j in pOi)
-			sp.polygon3(Srs[[j]], ...)
+			sp.polygon3(Srs[[j]], col = col, ...)
 	}
 }
 
 sp.lines = function(obj, col = 1, ...) {
 	if (is.character(obj))
 		obj = get(obj)
-	sp.lines3 = function(x, ...) panel.lines(coordinates(x), col = col, ...)
-	sp.lines2 = function(x, ...) lapply(x@Lines, sp.lines3, col = col, ...)
+	sp.lines3 = function(x, col, ...) panel.lines(coordinates(x), col = col, ...)
+	sp.lines2 = function(x, col, ...) lapply(x@Lines, sp.lines3, col = col, ...)
 	if (is(obj, "SpatialLines"))
 		lapply(obj@lines, sp.lines2, col = col, ...)
 	else if (is(obj, "Lines"))

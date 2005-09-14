@@ -11,13 +11,7 @@ setClass("Line",
 )
 
 setClass("Lines",
-	representation(#"Spatial", 
-Lines = "list", ID = "character"),
-#	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, 
-#			dimnames = list(NULL, c("min","max"))),
-#		proj4string = CRS(as.character(NA)),
-#		Lines = list(),
-#		ID = as.character(NA)),
+	representation(Lines = "list", ID = "character"),
 	validity = function(object) {
 		if (any(sapply(object@Lines, function(x) !is(x, "Line"))))
 			stop("not a list of Line objects")
@@ -33,9 +27,6 @@ setClass("SpatialLines",
 	validity = function(object) {
 		if (any(unlist(lapply(object@lines, function(x) 
 			!is(x, "Lines"))))) stop("lines not Lines objects")
-#		if (any(sapply(object@lines, function(x) 
-#			!identical(proj4string(object), proj4string(x))))) 
-#			stop("Different projections")
 		if (length(object@lines) != 
 			length(unique(getSLLinesIDSlots(object)))) 
 				return("non-unique Lines ID slot values")

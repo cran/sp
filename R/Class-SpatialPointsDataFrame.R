@@ -1,6 +1,6 @@
 setClass("SpatialPointsDataFrame",
 	representation("SpatialPoints", data = "AttributeList", coords.nrs = "numeric"),
-	prototype = list(bbox = matrix(NA), proj4string = CRS(as.character("NA")),
+	prototype = list(bbox = matrix(NA), proj4string = CRS(as.character(NA)),
 		coords = matrix(NA), data = new("AttributeList", att=list()), 
 		coords.nrs = numeric(0)),
 	validity = function(object) {

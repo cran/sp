@@ -1,15 +1,6 @@
-
 setClass("Polygon",
 	representation("Line", labpt = "numeric", 
 	area = "numeric", hole = "logical", ringDir = "integer"),
-#	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, 
-#			dimnames = list(NULL, c("min","max"))),
-#		proj4string = CRS(as.character(NA)),
-#		coords = matrix(0),
-#		labpt = as.numeric(NA),
-#		area = as.numeric(NA),
-#		hole = as.logical(NA),
-#		ringDir = as.integer(NA)),
 	validity = function(object) {
 		coords <- coordinates(object)
 		start <- coords[1,]
@@ -19,18 +10,11 @@ setClass("Polygon",
 })
 
 setClass("Polygons",
-	representation(#"Spatial", 
-Polygons = "list", plotOrder = "integer", 
+	representation(Polygons = "list", plotOrder = "integer", 
 	labpt = "numeric", ID = "character", area = "numeric"),
-#	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, 
-#			dimnames = list(NULL, c("min","max"))),
-#		proj4string = CRS(as.character(NA)),
-#		Polygons = list(), plotOrder = as.integer(NA),
-#		labpt = as.numeric(NA),
-#		ID = as.character(NA),
-#		area = as.numeric(NA)),
 	validity = function(object) {
-		if (any(sapply(object@Polygons, function(x) !is(x, "Polygon"))))				stop("not a list of Polygon objects")
+		if (any(sapply(object@Polygons, function(x) !is(x, "Polygon"))))
+			stop("not a list of Polygon objects")
 		if (length(object@Polygons) != length(object@plotOrder))
 			stop("plotOrder and Polygons differ in length")
 		return(TRUE)

@@ -19,9 +19,7 @@ as.SpatialPolygons.Shapes <- function(shapes, IDs,
 		srl <- NULL
 		for (j in 1:nParts) {
 			jres <- .shp2srs(shapes[[belongs[[i]][j]]], 
-				nParts.shp(shapes[[belongs[[i]][j]]])
-#, proj4string=proj4string
-)
+				nParts.shp(shapes[[belongs[[i]][j]]]))
 			srl <- c(srl, jres)
 		}
 		Srl[[i]] <- Polygons(srl, ID=IDss[i])
@@ -47,9 +45,7 @@ as.SpatialPolygons.map <- function(map, IDs, proj4string=CRS(as.character(NA))) 
 		nParts <- length(belongs[[i]])
 		srl <- vector(mode="list", length=nParts)
 		for (j in 1:nParts) {
-			srl[[j]] <- Polygon(coords=xyList[[belongs[[i]][j]]]
-#, proj4string=proj4string
-)
+			srl[[j]] <- Polygon(coords=xyList[[belongs[[i]][j]]])
 		}
 		Srl[[i]] <- Polygons(srl, ID=IDss[i])
 	}
@@ -119,9 +115,7 @@ as.SpatialPolygons.pal <- function(arc, pal, IDs, dropPoly1=TRUE,
 				x <- c(x, x[1])
 				y <- c(y, y[1])
 			}
-			srl[[j]] <- Polygon(coords=cbind(x, y)
-#, proj4string=proj4string
-)	
+			srl[[j]] <- Polygon(coords=cbind(x, y))	
 		}
 		Srl[[i]] <- Polygons(srl, ID=IDss[i])
 	}
@@ -130,16 +124,19 @@ as.SpatialPolygons.pal <- function(arc, pal, IDs, dropPoly1=TRUE,
 }
 
 
-SpatialPolygons <- function(Srl, pO=1:length(Srl), proj4string=CRS(as.character(NA))) {
+SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
 	bb <- .bboxCalcR(Srl)
-#	projargs <- proj4string(Srl[[1]])
+	if (missing(pO)) {
+		area <- sapply(Srl, function(x) x@area)
+		pO <- as.integer(order(area, decreasing=TRUE))
+	}
+
 	Sp <- new("Spatial", bbox=bb, proj4string=proj4string)
 	res <- new("SpatialPolygons", Sp, polygons=Srl, plotOrder=as.integer(pO))
 	res
 }
 
-Polygon <- function(coords, #proj4string=CRS(as.character(NA)), 
-hole=as.logical(NA)) {
+Polygon <- function(coords, hole=as.logical(NA)) {
 	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
 	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
 	cG <- .spFindCG(coords)
@@ -151,8 +148,7 @@ hole=as.logical(NA)) {
 		if (hole && rD > 0) coords <- coords[nrow(coords):1,]
 		if (!hole && rD < 0) coords <- coords[nrow(coords):1,]
 	}
-	sl <- Line(coords#, proj4string=proj4string
-)
+	sl <- Line(coords)
 #	rD <- .ringDirxy(coordinates(sl))
 #	cents <- .RingCentrd_2d(coordinates(sl))
 #	.saneRD(rD)
@@ -180,9 +176,7 @@ Polygons <- function(srl, ID) {
 	which_list <- ifelse(length(srl) == 1, 1, marea)
 	if (holes[which_list]) {
 		crds <- srl[[which_list]]@coords
-		srl[[which_list]] <- Polygon(coords=crds[nrow(crds):1,]
-#, proj4string=CRS(projargs)
-)
+		srl[[which_list]] <- Polygon(coords=crds[nrow(crds):1,])
 	}
 	Sarea <- sum(abs(areas))
 # assign label point to the largest member ring
@@ -190,7 +184,7 @@ Polygons <- function(srl, ID) {
 	labpt <- lpt[which_list,]
 		
 #	Sp <- new("Spatial", bbox=.bboxSrs(srl), proj4string=CRS(projargs))
-	res <- new("Polygons", #Sp, 
+	res <- new("Polygons",
 		Polygons=srl, plotOrder=as.integer(pO),
 		labpt=as.numeric(labpt), ID=as.character(ID), area=Sarea)
 	res
@@ -198,8 +192,8 @@ Polygons <- function(srl, ID) {
 }
 
 bbox.Polygons <- function(obj) {
-	rx=range(lapply(obj@Polygons, function(x) range(x@coords[,1]))[[1]])
-	ry=range(lapply(obj@Polygons, function(x) range(x@coords[,2]))[[1]])
+	rx=range(c(sapply(obj@Polygons, function(x) range(x@coords[,1]))))
+	ry=range(c(sapply(obj@Polygons, function(x) range(x@coords[,2]))))
 	res=rbind(r1=rx,r2=ry)
    	colnames(res) <- c("min", "max")
 	res
@@ -225,12 +219,10 @@ as.SpatialPolygons.PolygonsList <- function(Srl, proj4string=CRS(as.character(NA
 #	if (length(projargs) > 1) 
 #		stop("differing projections among Polygons objects")
 
-	n <- length(Srl)
+#	n <- length(Srl)
 
-	area <- sapply(Srl, function(x) x@area)
-	pO <- as.integer(order(area, decreasing=TRUE))
 
-	res <- SpatialPolygons(Srl, pO, proj4string=proj4string)
+	res <- SpatialPolygons(Srl, proj4string=proj4string)
 	res
 }
 

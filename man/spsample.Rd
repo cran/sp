@@ -1,4 +1,13 @@
 \name{spsample}
+\docType{methods}
+\alias{spsample-methods}
+\alias{spsample,Spatial-method}
+\alias{spsample,Line-method}
+\alias{spsample,Polygon-method}
+\alias{spsample,Polygons-method}
+\alias{spsample,SpatialGrid-method}
+\alias{spsample,SpatialPixels-method}
+\alias{spsample,SpatialPolygons-method}
 \alias{spsample}
 \alias{makegrid}
 \alias{sample.Spatial}
@@ -6,10 +15,12 @@
 \alias{sample.Polygon}
 \alias{sample.Polygons}
 \alias{sample.Sgrid}
-\title{ sample point locations within a spatial region }
+
+\title{ sample point locations in (or on) a spatial object }
+
 \description{ sample point locations within a square area, a grid,
 a polygon, or on a spatial line, using regular or random sampling
-}
+methods }
 \usage{
 spsample(x, n, type, ...)
 sample.Spatial(x, n, type, bb = bbox(x), offset = runif(2), cellsize, ...)
@@ -61,6 +72,20 @@ Sampling type \code{"nonaligned"} is not implemented for line objects.
 
 Some methods may return NULL if no points could be successfully placed. }
 
+\section{Methods}{
+\describe{
+\item{x = "Spatial"}{ sample in the bbox of \code{x} }
+\item{x = "Line"}{ sample on a line }
+\item{x = "Polygon"}{ sample in an Polygon }
+\item{x = "Polygons"}{ sample in an Polygons object, consisting of possibly
+multiple Polygon objects (and holes!) }
+\item{x = "SpatialPolygons"}{ sample in an SpatialPolygons object; sampling
+takes place over all Polygons objects present, use subsetting to vary
+sampling intensity (density) }
+\item{x = "SpatialGrid"}{ sample in an SpatialGrid object }
+\item{x = "SpatialPixels"}{ sample in an SpatialPixels object }
+}}
+
 \note{If an \link{Polygon-class} object has zero area (i.e. is a line),
 samples on this line element are returned. If the area is very close
 to zero, the algorithm taken here (generating points in a square area,
@@ -107,3 +132,4 @@ points(spsample(meuse.grid,n=1000,type="stratified"), pch=3,cex=.5)
 
 }
 \keyword{manip}
+\keyword{methods}
