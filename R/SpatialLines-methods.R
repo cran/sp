@@ -210,13 +210,13 @@ Mapgen2SL <- function(file, proj4string=CRS(as.character(NA))) {
 }
 
 
-plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL, asp = 1, 
+plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
 	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE, ...) 
 {
 #	frame()
 #	plot.window(xlim = xlim, ylim = ylim, asp = asp)
 	if (! add) 
-		plot(as(SL, "Spatial"), xlim = xlim, ylim = ylim, asp = asp, axes = axes, ...)
+		plot(as(SL, "Spatial"), xlim = xlim, ylim = ylim, axes = axes, ...)
 	lst <- SL@lines
 	for (i in seq(along=lst)) {
 		sllst = lst[[i]]@Lines
@@ -252,7 +252,7 @@ lines.SpatialLines = function(x, y = NULL, ...) invisible(lapply(x@lines,
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
 setMethod("[", "SpatialLines", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j)) stop("only a single index is allowed for [.SpatialLines")
-	SpatialLines(x@lines[i])
+	SpatialLines(x@lines[i], CRS(proj4string(x)))
 })
 
 setMethod("coordnames", signature(x = "SpatialLines"), 

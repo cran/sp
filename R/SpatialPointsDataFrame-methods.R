@@ -128,6 +128,17 @@ setMethod("show", "SpatialPointsDataFrame", ShowSpatialPointsDataFrame)
 points.SpatialPointsDataFrame = function(x, y = NULL, ...) 
 	points(as(x, "SpatialPoints"), ...)
 
+text.SpatialPointsDataFrame = function(x, ...) {
+    lst = list(x = coordinates(x), ...)
+    if (!is.null(x$pos) && is.null(lst$pos))
+        lst$pos = x$pos
+    if (!is.null(x$offset) && is.null(lst$offset))
+        lst$offset = x$offset
+    if (!is.null(x$labels) && is.null(lst$labels))
+        lst$labels = parse(text = x$lab)
+    do.call(text, lst)
+}
+
 summary.SpatialPointsDataFrame = function(object, ...) {
     obj = list()
 	obj[["data"]] = summary(object@data)

@@ -16,8 +16,8 @@
 \alias{coordinates,SpatialGrid-method}
 \alias{coordinates,SpatialGridDataFrame-method}
 \alias{coordinates<-,data.frame-method}
-\title{ retrieves spatial coordinates }
-\description{ retrieves spatial coordinates from spatial data }
+\title{ retrieve (or set) spatial coordinates }
+\description{ retrieve (or set) spatial coordinates from (for) spatial data }
 \section{Methods}{
 \describe{
 \item{obj = "list"}{ list with (at least) two numeric components of equal length }

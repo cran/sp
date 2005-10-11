@@ -28,6 +28,9 @@ if (!isGeneric("plot"))
 if (!isGeneric("polygons"))
 	setGeneric("polygons", function(obj)
 		standardGeneric("polygons"))
+if (!isGeneric("polygons<-"))
+	setGeneric("polygons<-", function(object, value)
+		standardGeneric("polygons<-"))
 if (!isGeneric("spplot"))
 	setGeneric("spplot", function(obj, ...)
 		standardGeneric("spplot"))
@@ -109,10 +112,19 @@ print.summary.Spatial = function(x, ...) {
 
 # sp.axes = FALSE
 
-plot.Spatial <- function(x, xlim=NULL, ylim=NULL, asp=1, axes = FALSE, ...) {
-	bbox <- x@bbox
-	if (is.null(xlim)) xlim <- c(bbox[1,1], bbox[1,2])
-	if (is.null(ylim)) ylim <- c(bbox[2,1], bbox[2,2])
+#asp <- function(x, ylim) {
+#	if (is.na(proj4string(x)) || is.projected(x))
+#		return(1.0)
+#	else
+#		return(1/cos((mean(ylim) * pi)/180))
+#}
+
+plot.Spatial <- function(x, xlim=NULL, ylim=NULL, 
+		asp = ifelse(is.na(proj4string(x)) || is.projected(x), 1.0, 1/cos((mean(ylim) * pi)/180)), 
+		axes = FALSE, ...) {
+	bbox <- bbox(x)
+	if (is.null(xlim)) xlim <- bbox[1,]
+	if (is.null(ylim)) ylim <- bbox[2,]
 	frame() # S-Plus compatible version of plot.new()
 	if (is.R())
 		plot.window(xlim = xlim, ylim = ylim, asp = asp, ...)
@@ -142,15 +154,10 @@ degAxis = function (side, at, labels, ...) {
         	at = axTicks(side)
         if (missing(labels)) {
 			labels = FALSE
-        	if (side == 1 || side == 3) {
-                	dir = c("*W", "", "*E")
-        			pos = sign(at) + 2
-                	labels = parse(text = paste(abs(at), "*degree", dir[pos]))
-        	} else if (side == 2 || side == 4) {
-                	dir = c("*S", "", "*N")
-        			pos = sign(at) + 2
-                	labels = parse(text = paste(abs(at), "*degree", dir[pos]))
-        	}
+        	if (side == 1 || side == 3)
+               	labels = parse(text = degreeLabelsEW(at))
+        	else if (side == 2 || side == 4)
+               	labels = parse(text = degreeLabelsNS(at))
 		} 
         axis(side, at = at, labels = labels, ...)
 }

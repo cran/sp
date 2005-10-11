@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.1  (2005-06-20), ISBN 3-900051-07-0
+Version 2.2.0 beta (2005-09-28 r35702)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -24,7 +25,7 @@ Error in "proj4string<-"(`*tmp*`, value = 1.5) :
 	assigned value must be CRS object
 > try(coordinates(a) <- cbind(1:10, 10:1))
 Error in try(coordinates(a) <- cbind(1:10, 10:1)) : 
-	Object "a" not found
+	object "a" not found
 > # fails because a is not found; passes if a assigned NULL, see pass1.R
 > 
 > x = meuse
@@ -33,7 +34,7 @@ Error in try(coordinates(a) <- cbind(1:10, 10:1)) :
 Error in "[.data.frame"(object, , -coord.numbers, drop = FALSE) : 
 	undefined columns selected
 > try(coordinates(x) <- ~x+y+z) # z is not present
-Error in eval(expr, envir, enclos) : Object "z" not found
+Error in eval(expr, envir, enclos) : object "z" not found
 > x$x2 = x$x^2
 > x$y2 = x$y^2
 > try(coordinates(x) <- ~x+y+x2+y2) # 4D now passes check...

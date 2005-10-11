@@ -14,14 +14,14 @@ proj4string(sd) <- value
 }
 \arguments{
   \item{sd}{An object of class or extending \link{Spatial-class}}
-  \item{value}{ character string, indicating a valid proj4 string }
+  \item{value}{ CRS object, containing a valid proj4 string; attempts to assign an object containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped }
 }
 
 \value{ \code{is.projected} returns a logical; \code{proj4string}
 returns a character vector of length 1; \code{spatial.dimension}
 returns the number of spatial dimensions (2 or 3).  }
 
-\details{ proj4 strings are not operative yet }
+\details{ proj4 strings are operative through non-CRAN package spproj, see \url{http://r-spatial.sourceforge.net}}
 
 \author{
   Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}
