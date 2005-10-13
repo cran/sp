@@ -1,13 +1,12 @@
-mapasp <- function(data) {
+mapasp <- function(data, xlim = bbox(data)[1,], ylim = bbox(data)[2,]) {
 	# calculates aspect ratio for levelplot of geographic data,
 	# using proportial units (compare eqscplot)
-# in R >= 2.0.0, lattice accepts "iso":
-#ifdef R
-	if (version$major >= 2)
-		return("iso")
-#endif
 	if (!is(data, "Spatial"))
 		stop("cannot extract coordinates bounding box from data")
-	bb = bbox(data)
-	diff(bb[2,])/diff(bb[1,])
+	if (!(is.na(proj4string(data)) || is.projected(data)))
+		return( (diff(ylim)/diff(xlim)) / cos((mean(ylim) * pi)/180))
+	if (is.R() && version$major >= 2)
+		return("iso")
+	else
+		return(diff(ylim)/diff(xlim))
 }

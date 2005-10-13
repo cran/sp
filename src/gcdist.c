@@ -51,6 +51,10 @@ void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2,
     G = ( lat1R - lat2R )/2.0;
     L = ( lon1R - lon2R )/2.0;
 
+	/*
+    printf("%g %g %g %g; %g %g %g\n",  *lon1, *lon2, *lat1, *lat2, F, G, L);
+	*/
+
     sinG2 = POWDI( sin( G ), 2 );
     cosG2 = POWDI( cos( G ), 2 );
     sinF2 = POWDI( sin( F ), 2 );

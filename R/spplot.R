@@ -112,7 +112,7 @@ getFormulaLevelplot = function(sdf, zcol) {
 
 spplot.grid = function(obj, zcol = names(obj), ..., names.attr, 
 		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
-		aspect = mapasp(obj), panel = panel.gridplot, sp.layout = NULL, formula, 
+		aspect = mapasp(obj,xlim,ylim), panel = panel.gridplot, sp.layout = NULL, formula, 
 		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,]) {
 	sdf = as(obj, "SpatialPointsDataFrame")
 	if (missing(formula))
@@ -123,7 +123,7 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 	} else
 		zcol2 = zcol
 	scales = longlat.scales(obj, scales, xlim, ylim)
-	args = append(list(formula = formula, data = as(sdf, "data.frame"), 
+	args = append(list(formula, data = as(sdf, "data.frame"), 
 		aspect = aspect, panel = panel, xlab = xlab, ylab = ylab, scales = scales,
 		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
 	# deal with factor variables:
@@ -147,7 +147,7 @@ setMethod("spplot", signature("SpatialGridDataFrame"),
 	function(obj, ...) spplot.grid(as(obj, "SpatialPixelsDataFrame"), ...))
 
 spplot.polygons = function(obj, zcol = names(obj), ..., names.attr, 
-		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj), 
+		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 		panel = panel.polygonsplot, sp.layout = NULL, formula, 
 		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,]) {
 
@@ -176,7 +176,7 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 		grid.polygons = as(obj, "SpatialLines")
 	scales = longlat.scales(obj, scales, xlim, ylim)
 
-	args = append(list(formula = formula, data = as(sdf, "data.frame"),
+	args = append(list(formula, data = as(sdf, "data.frame"),
 		aspect = aspect, grid.polygons = grid.polygons, panel =
 		panel, xlab = xlab, ylab = ylab, scales = scales,
 		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
@@ -205,7 +205,7 @@ setMethod("spplot", signature("SpatialLinesDataFrame"), spplot.polygons)
 
 spplot.points = function(obj, zcol = names(obj), ..., names.attr, 
 		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
-		aspect = mapasp(obj), panel = panel.pointsplot,
+		aspect = mapasp(obj,xlim,ylim), panel = panel.pointsplot,
 		sp.layout = NULL, identify = FALSE, formula,
 		xlim = bbexpand(bbox(obj)[1,], 0.04), ylim = bbexpand(bbox(obj)[2,], 0.04)) {
 
@@ -224,7 +224,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 			formula = as.formula(paste(ccn[2], "~", ccn[1]))
 		}
 	}
-	args.xyplot = append(list(formula = formula, data = as(sdf, "data.frame"), 
+	args.xyplot = append(list(formula, data = as(sdf, "data.frame"), 
 		panel = panel, aspect = aspect, scales = scales, 
 		xlab = xlab, ylab = ylab, sp.layout = sp.layout,
 		xlim = xlim, ylim = ylim), dots)
@@ -293,6 +293,8 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 	y <- as.numeric(y[subscripts])
 	z <- as.numeric(z[subscripts])
 	zcol <- as.numeric(zcol[subscripts])
+	if (is(grid.polygons, "SpatialLines"))
+		sp.panel.layout(sp.layout, panel.number)
 	if (any(subscripts)) {
 		if (is(grid.polygons, "SpatialLines")) {
 			sp.lines3 = function(x, col, ...) panel.lines(coordinates(x), col = col, ...)
@@ -325,7 +327,8 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
    			}
 		}
 	}
-	sp.panel.layout(sp.layout, panel.number)
+	if (!is(grid.polygons, "SpatialLines"))
+		sp.panel.layout(sp.layout, panel.number)
 }
 
 panel.pointsplot = function(x, y, subscripts, col, sp.layout, ..., panel.number) {
@@ -453,14 +456,21 @@ mapLegendGrob <- function(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 	key.gf
 }
 
-layout.north.arrow = function() {
-	x1 = c(0.1653, 0.2241, 0.2241, 0.2830, 0.1947, 0.1065, 0.1653, 0.1653)
-	x2 = c(0, 0.0967, 0.0967, 0.2928, 0.3908, 0.3908, 0.2928, 0.2928, 0.1032, 0, 0)
-	y1 = c(0, 0, 0.8823, 0.8235, 1, 0.8235, 0.8823, 0)
-	y2 = c(0.2352, 0.2352, 0.5686, 0.2352, 0.2352, 0.7189, 0.7189, 0.3986, 0.7189, 0.7189, 0.2352 )
-	SpatialPolygons(list(Polygons(list(Polygon(cbind(x1,y1)), Polygon(cbind(rev(x2),rev(y2)))), ID="north")))
+layout.north.arrow = function(type = 1) {
+	if (type == 1) {
+		x1 = c(0.1653, 0.2241, 0.2241, 0.2830, 0.1947, 0.1065, 0.1653, 0.1653)
+		x2 = c(0, 0.0967, 0.0967, 0.2928, 0.3908, 0.3908, 0.2928, 0.2928, 0.1032, 0, 0)
+		y1 = c(0, 0, 0.8823, 0.8235, 1, 0.8235, 0.8823, 0)
+		y2 = c(0.2352, 0.2352, 0.5686, 0.2352, 0.2352, 0.7189, 0.7189, 0.3986, 0.7189, 0.7189, 0.2352 )
+		return(SpatialPolygons(list(Polygons(list(Polygon(cbind(x1,y1)), Polygon(cbind(rev(x2),rev(y2)))), ID="north"))))
+	}
+	if (type == 2) {
+		x = c(0.143,0.143,0.0143,0.207,0.400,0.271,0.271,0.143)
+		y = c(0,0.707,0.707,0.964,0.707,0.707,0.00,0.0)
+		return(SpatialPolygons(list(Polygons(list(Polygon(cbind(x,y))), ID="north"))))
+	}
+	stop("unknown value for type")
 }
-# north.arrow = .north.arrow()
 
 layout.scale.bar = function(height = 0.05) {
 	x1 = c(0, 0.5, 0.5, 0, 0)
@@ -498,26 +508,20 @@ spplot.key = function(sp.layout, rows = 1, cols = 1) {
 longlat.scales = function(obj, scales, xlim, ylim) {
 	isp = is.projected(obj)
 	if (scales$draw && !is.na(isp) && !isp) {
-		# lat long -- x:
+		# long lat -- x:
 		if (is.null(scales$x))
 			scales$x = list()
 		if (is.null(scales$x$at))
 			scales$x$at = pretty(xlim)
-		if (is.null(scales$x$labels)) {
-        	pos = sign(scales$x$at) + 2
-        	dir = c("W", "", "E")
-        	scales$x$labels = parse(text = paste(abs(scales$x$at), "*degree*", dir[pos]))
-		}
-		# lat long -- y:
+		if (is.null(scales$x$labels))
+        	scales$x$labels = parse(text = degreeLabelsEW(scales$x$at))
+		# long lat -- y:
 		if (is.null(scales$y))
 			scales$y = list()
 		if (is.null(scales$y$at))
 			scales$y$at = pretty(ylim)
-		if (is.null(scales$y$labels)) {
-        	pos = sign(scales$y$at) + 2
-        	dir = c("S", "", "N")
-        	scales$y$labels = parse(text = paste(abs(scales$y$at), "*degree*", dir[pos]))
-		}
+		if (is.null(scales$y$labels))
+        	scales$y$labels = parse(text = degreeLabelsNS(scales$y$at))
 	}
 	scales
 }
@@ -536,4 +540,24 @@ colorkey.factor = function(f, colorkey = list()) {
 	colorkey=append(colorkey, list(labels=list(at=at.labels,labels=lf), 
 		height=min(1, .05 * length(lf))))
 	list(at = at, colorkey = colorkey)
+}
+
+"spplot.locator" <- function(n = 512, type = "n", ...) { 
+	stopifnot(n > 0)
+	res = as.numeric(grid.locator(unit = "native"))
+	if (type == "o" || type == "p")
+		panel.points(res[1], res[2], ...)
+	if (n > 1) for (i in 2:n) {
+		xy = grid.locator(unit = "native")
+		if (is.null(xy))
+			return(res)
+		else
+			xy = as.numeric(xy)
+		res = rbind(res, xy)
+		if (type == "o" || type == "p")
+			panel.points(xy[1], xy[2], ...)
+		if (type == "o" || type == "l")
+			panel.lines(res[(i-1):i,])
+	}
+	res
 }

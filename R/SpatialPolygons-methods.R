@@ -236,7 +236,8 @@ setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 	}
 	if (length(unique(i)) != length(i))
 		stop("SpatialPolygons selection: can't find plot order if polygons are replicated")
-	SpatialPolygons(x@polygons[i], pO = order(match(i, x@plotOrder)))
+	SpatialPolygons(x@polygons[i], pO = order(match(i, x@plotOrder)),
+		CRS(proj4string(x)))
 })
 
 setMethod("coordnames", signature(x = "SpatialPolygons"), 

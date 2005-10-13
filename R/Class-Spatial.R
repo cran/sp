@@ -16,6 +16,14 @@ setClass("Spatial",
 			return("invalid bbox: max < min")
 		if (!is(object@proj4string, "CRS"))
 			return("proj4string slot should be of class CRS")
+		p4str <- object@proj4string@projargs
+		if (!is.na(p4str)) {
+			res <- grep("longlat", p4str, fixed=TRUE)
+			if (length(res) != 0 # unprojected,
+		    		&& any(bb[1,1] < -180 || bb[1,2] > 360 || 
+					bb[2,1] < -90 || bb[2,2] > 90))
+				return("Geographical CRS given to non-conformant data")
+		}
 		# validate proj4string here? -- no, that's spproj business
 		return(TRUE)
 	}

@@ -2,6 +2,7 @@
 \docType{methods}
 \alias{spplot}
 \alias{spplot.grid}
+\alias{spplot.locator}
 \alias{spplot.polygons}
 \alias{spplot.points}
 \alias{layout.north.arrow}
@@ -20,15 +21,15 @@
 \usage{
 spplot(obj, ...)
 spplot.grid(obj, zcol = names(obj), ..., names.attr, 
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj), 
+	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 	panel = panel.gridplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ], 
 	ylim = bbox(obj)[2, ])
 spplot.polygons(obj, zcol = names(obj), ..., names.attr, 
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj), 
+	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 	panel = panel.polygonsplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ], 
 	ylim = bbox(obj)[2, ])
 spplot.points(obj, zcol = names(obj), ..., names.attr, 
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj), 
+	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 	panel = panel.pointsplot, sp.layout = NULL, identify = FALSE, formula, 
 	xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04))
 mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
@@ -36,6 +37,7 @@ mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 sp.theme()
 layout.north.arrow()
 layout.scale.bar(height = 0.05)
+spplot.locator(n = 512, type = "n", ...)
 }
 \arguments{
 \item{obj}{ object of class extending \link{Spatial-class}} 
@@ -71,6 +73,8 @@ e.g. \code{exp(x)~x+y|name} to plot the exponent of the z-variable}
 \item{fill}{fill color of grob}
 \item{just}{grob placement justification}
 \item{height}{height of scale bar; width is 1.0}
+\item{n}{see locator}
+\item{type}{see locator}
 }
 \value{
 spplot returns a lattice plot of class "trellis", if you fail to "see" it,
@@ -78,6 +82,8 @@ explicitly call \code{print(spplot(...))}. If \code{identify} is TRUE,
 the plot is plotted and the return value is a vector with row names of
 the selected points.
 
+\code{spplot.locator} returns a matrix with identified point locations;
+use \code{trellis.focus} first to focus on a given panel.
 }
 
 \section{Methods}{

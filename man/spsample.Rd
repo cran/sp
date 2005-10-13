@@ -56,7 +56,7 @@ except \code{"random"} }
 	holding a valid proj4 string}
 \item{nsig}{ for "pretty" coordinates; \code{spsample} do not result in
 pretty grids }
-  \item{iter}{default = 4: number of times to try to place sample points in a polygon before giving up and returning NULL - this occurs when trying to hit a small and awkwardly shaped polygon in a large bounding box with a small number of points}
+  \item{iter}{default = 4: number of times to try to place sample points in a polygon before giving up and returning NULL - this may occur when trying to hit a small and awkwardly shaped polygon in a large bounding box with a small number of points}
 }
 \value{ an object of class \link{SpatialPoints-class}. The number of
 points is only guaranteed to equal \code{n} when sampling is done in a
@@ -89,7 +89,7 @@ sampling intensity (density) }
 \note{If an \link{Polygon-class} object has zero area (i.e. is a line),
 samples on this line element are returned. If the area is very close
 to zero, the algorithm taken here (generating points in a square area,
-selecting those inside the polygon) may be very resource intensive }
+selecting those inside the polygon) may be very resource intensive. When numbers of points per polygon are small and type="random", the number searched for is inflated to ensure hits, and the points returned sampled among these. }
 
 \references{Chapter 3 in B.D. Ripley, 1981. Spatial Statistics, Wiley}
 \author{Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}}

@@ -20,7 +20,7 @@ are never to be generated; only derived classes can be meaningful }
     \item{\code{proj4string}:}{Object of class \code{"CRS"};
 	holding a valid proj4 string, which can be used for unprojecting
 	or reprojecting coordinates; it is initialised to NA. Other strings
-	are checked for validity in the spproj package.}
+	are checked for validity in the spproj package, but attempts to assign a string containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped.}
   }
 }
 \section{Methods}{
@@ -31,8 +31,8 @@ are never to be generated; only derived classes can be meaningful }
     \item{gridded}{\code{signature(obj = "Spatial")}: logical, tells whether
 	the data is on a regular spatial grid }
     \item{plot}{\code{signature(x = "Spatial", y = "missing")}: plot method
-	for spatial objects; does nothing but setting up a plotting region and
-	possibly drawing axes.  }
+	for spatial objects; does nothing but setting up a plotting region choosing
+	a suitlable aspect if not given, (see below) and possibly drawing axes.  }
 	\item{summary}{\code{signature(object = "Spatial")}: summarize object}
   }
 }
@@ -40,7 +40,12 @@ are never to be generated; only derived classes can be meaningful }
 \author{ r-spatial team; Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}
 Roger Bivand, Barry Rowlinson, Virgilio G\'{o}mez-Rubio
 }
-\note{  }
+\note{  
+	The default aspect for map plots is 1; if however data are not
+	projected (coordinates are longlat), the aspect is by default set to
+	1/cos(My * pi)/180) with My the y coordinate of the middle of the map
+	(the mean of ylim, which defaults to the y range of bounding box)
+}
 
 \section{Warning }{this class is not useful in itself, but all spatial
 classes in this package derive from it }

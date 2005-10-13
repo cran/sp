@@ -100,12 +100,13 @@ nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 	inout <- bbo[1] < offset && bbo[2] >= offset
 	if (inout) {
 		lines <- getLinesLinesSlot(obj)
+		ID <- getLinesIDSlot(obj)
 		sll <- list()
 		for (i in 1:length(lines)) {
 			sll <- c(sll, .nowrapLine(lines[[i]], 
 				offset=offset, eps=eps))
 		}
-		res <- Lines(sll)
+		res <- Lines(sll, ID=ID)
 	} else res <- obj
 	res
 }
@@ -115,8 +116,10 @@ nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 	inout <- bbo[1] < offset && bbo[2] >= offset
 	if (inout) {
 		crds <- coordinates(obj)
+#		zoffset <- as.logical(sapply(crds[,1], function(x) 
+#			all.equal(x, offset, tolerance = .Machine$double.eps)))
 		zoffset <- as.logical(sapply(crds[,1], function(x) 
-			all.equal(x, offset, tolerance = .Machine$double.eps)))
+			abs(x - offset) < eps[1]))
 		if (any(zoffset)) {
 			brks <- which(zoffset)
 			n <- length(brks)

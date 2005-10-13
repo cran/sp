@@ -9,6 +9,18 @@ proj4string = function(sd) {
 		stop("proj4string only works for class(es extending) Spatial")
 	if (!is(value, "CRS"))
 		stop("assigned value must be CRS object")
+	p4str <- value@projargs
+	ll <- FALSE
+	if (!is.na(p4str)) {
+		res <- grep("longlat", p4str, fixed=TRUE)
+		if (length(res) != 0) ll <- TRUE
+	}
+	if (ll) {
+		bb <- bbox(sd)
+		if (any(bb[1,1] < -180 || bb[1,2] > 360 || 
+			bb[2,1] < -90 || bb[2,2] > 90)) 
+			stop("Geographical CRS given to non-conformant data")
+	}
 	sd@proj4string = value;
 	sd
 }

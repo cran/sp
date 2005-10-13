@@ -12,13 +12,11 @@ SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
 	new("SpatialPolygonsDataFrame", Sr, data=data)
 }
 
-"polygons<-" = function(object, value) {
-	if (!is(value, "SpatialPolygons"))
-		stop("right-hand side should be of class SpatialPolygons")
-	if (!is(object, "data.frame"))
-		stop("assigned value should be of class data.frmae")
-	SpatialPolygonsDataFrame(value, object)
-}
+setReplaceMethod("polygons", signature(object = "data.frame", value = "SpatialPolygons"),
+	function(object, value) SpatialPolygonsDataFrame(value, object))
+
+setMethod("polygons", signature(obj = "SpatialPolygons"),
+	function(obj) as(obj, "SpatialPolygons"))
 
 names.SpatialPolygonsDataFrame = function(x) names(x@data)
 "names<-.SpatialPolygonsDataFrame" = function(x,value) { names(x@data) = value; x }

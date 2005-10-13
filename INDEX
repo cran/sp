@@ -13,9 +13,9 @@ contourLines2SLDF       Converter functions to build
                         SpatialLinesDataFrame objects
 coordinates             sets spatial coordinates to create spatial
                         data, or retrieves spatial coordinates
-coordinates-methods     retrieves spatial coordinates
-coordnames-methods      retrieve or assign coordinate names for
-                        classes in sp
+coordinates-methods     retrieve (or set) spatial coordinates
+coordnames-methods      retrieve or assign coordinate names for classes
+                        in sp
 CRS-class               Class "CRS" of coordinate reference system
                         arguments
 degAxis                 axis with degrees
@@ -25,8 +25,8 @@ DMS-class               Class "DMS" for degree, minute, decimal second
                         values
 gridded-methods         specify spatial data as being gridded, or find
                         out whether they are
-gridlines               Create N-S and E-W grid lines over a
-                        geographic region
+gridlines               Create N-S and E-W grid lines over a geographic
+                        region
 GridTopology-class      Class "GridTopology" ~~~
 image.SpatialGridDataFrame
                         image gridded spatial data, or convert to
@@ -51,15 +51,14 @@ Polygon-class           Class "Polygon"
 polygons                sets spatial coordinates to create spatial
                         data, or retrieves spatial coordinates
 Polygons-class          Class "Polygons"
-polygons-methods        Retrieve polygons from
-                        SpatialPolygonsDataFrame object
+polygons-methods        Retrieve polygons from SpatialPolygonsDataFrame
+                        object
 read.asciigrid          read/write to/from (ESRI) asciigrid format
 recenter-methods        Methods for Function recenter in Package 'sp'
 Rlogo                   Rlogo jpeg image
 select.spatial          select points spatially
 sp                      A package providing classes and methods for
-                        spatial data: points, lines, polygons and
-                        grids
+                        spatial data: points, lines, polygons and grids
 Spatial-class           Class "Spatial" ~~~
 SpatialGrid-class       Class "SpatialGrid" ~~~
 SpatialGridDataFrame-class
@@ -85,6 +84,8 @@ SpatialPolygons         create objects of class SpatialPolygons or
 SpatialPolygons-class   Class "SpatialPolygons"
 SpatialPolygonsDataFrame-class
                         Class "SpatialPolygonsDataFrame"
+spDistsN1               Euclidean or Great Circle distance between
+                        points
 spmap.to.lev            rearrange data in SpatialPointsDataFrame or
                         SpatialGridDataFrame for plotting with spplot
                         (levelplot/xyplot wrapper)
@@ -93,5 +94,4 @@ spsample                sample point locations in (or on) a spatial
                         object
 transform-methods       place holder for transform methods in library
                         spproj
-zerodist                find point pairs with equal spatial
-                        coordinates
+zerodist                find point pairs with equal spatial coordinates

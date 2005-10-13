@@ -1,6 +1,7 @@
 #
 plot.SpatialPolygons <- function(x, col, border = par("fg"), add=FALSE, xlim=NULL, 
-	ylim=NULL, asp=1, xpd = NULL, density = NULL, angle = 45, pbg=NULL, axes = FALSE, ...) {
+	ylim=NULL, xpd = NULL, density = NULL, angle = 45, pbg=NULL, 
+	axes = FALSE, ...) {
 
 	if (is.null(pbg))
 #ifdef R
@@ -12,7 +13,7 @@ plot.SpatialPolygons <- function(x, col, border = par("fg"), add=FALSE, xlim=NUL
 		stop("Not a SpatialPolygons object")
 
 	if (! add) 
-		plot(as(x, "Spatial"), xlim=xlim, ylim=ylim, asp=asp, axes = axes, ...)
+		plot(as(x, "Spatial"), xlim=xlim, ylim=ylim, axes = axes, ...)
 
 	if (missing(col)) col <- NA
 	n <- length(getSpPpolygonsSlot(x))
