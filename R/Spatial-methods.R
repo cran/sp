@@ -121,7 +121,7 @@ print.summary.Spatial = function(x, ...) {
 
 plot.Spatial <- function(x, xlim=NULL, ylim=NULL, 
 		asp = ifelse(is.na(proj4string(x)) || is.projected(x), 1.0, 1/cos((mean(ylim) * pi)/180)), 
-		axes = FALSE, ...) {
+		axes = FALSE, bg = par("bg"), ...) {
 	bbox <- bbox(x)
 	if (is.null(xlim)) xlim <- bbox[1,]
 	if (is.null(ylim)) ylim <- bbox[2,]
@@ -132,6 +132,9 @@ plot.Spatial <- function(x, xlim=NULL, ylim=NULL,
 		plot.default(x = bbox[1,], y = bbox[2,], type = "n", 
 			xlim = xlim, ylim = ylim, asp = asp, ...)
 	}
+	pl_reg <- par("usr")
+	rect(xleft=pl_reg[1], ybottom=pl_reg[3], xright=pl_reg[2], 
+		ytop=pl_reg[4], col=bg, border=FALSE)
 	if (axes) { # set up default axes system & box:
 		box()
 		isp = is.projected(x)

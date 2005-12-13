@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.1  (2005-06-20), ISBN 3-900051-07-0
+Version 2.2.0  (2005-10-06 r35749)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -238,4 +239,23 @@ $yc
 6 8  3 1.5
 7 1  1 0.0
 8 4  2 0.0
+> 
+> df = as.data.frame(df)
+> set.seed(133331)
+> df$xc = df$xc + rep(.001*rnorm(3), 3)[1:8]
+> df.sp = SpatialPoints(df[c("xc", "yc")])
+> df.grd = SpatialPixels(df.sp, tolerance = .01)
+> df.grd[1:4,,tolerance=.01]
+Object of class SpatialPixels
+Grid topology:
+   cellcentre.offset  cellsize cells.dim
+xc          1.000433 0.9995197         3
+yc          1.500000 1.5000000         2
+SpatialPoints:
+           xc  yc
+[1,] 1.000433 3.0
+[2,] 1.997926 3.0
+[3,] 2.999472 3.0
+[4,] 1.000433 1.5
+Coordinate Reference System (CRS) arguments: NA 
 > 

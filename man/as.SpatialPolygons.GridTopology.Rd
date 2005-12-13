@@ -1,6 +1,8 @@
 \name{as.SpatialPolygons.GridTopology}
 \alias{as.SpatialPolygons.GridTopology}
 \alias{IDvaluesGridTopology}
+\alias{as.SpatialPolygons.SpatialPixels}
+\alias{IDvaluesSpatialPixels}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Make SpatialPolygons object from GridTopology object}
 \description{
@@ -9,19 +11,21 @@
 \usage{
 as.SpatialPolygons.GridTopology(grd, proj4string = CRS(as.character(NA)))
 IDvaluesGridTopology(obj)
+as.SpatialPolygons.SpatialPixels(obj, proj4string=CRS(as.character(NA)))
+IDvaluesSpatialPixels(obj)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{grd,obj}{\code{GridTopology} object}
+  \item{grd,obj}{\code{GridTopology} object or \code{SpatialPixels} object}
   \item{proj4string}{projection string of class CRS}
 }
 
 \value{
-  \code{as.SpatialPolygons.GridTopology} returns a \code{SpatialPolygons} object;
-\code{IDvaluesGridTopology} returns a character vector with the \code{GridTopology} object column and row indices.
+  \code{as.SpatialPolygons.GridTopology} and \code{as.SpatialPolygons.SpatialPixels} return a \code{SpatialPolygons} object;
+\code{IDvaluesGridTopology} and \code{IDvaluesSpatialPixels} return a character vector with the object grid indices.
 }
 
-\seealso{\code{\link{GridTopology}}, \code{\link{SpatialPolygons}}}
+\seealso{\code{\link{GridTopology}}, \code{\link{SpatialPixels}}, \code{\link{SpatialPolygons}}}
 
 \examples{
 grd <- GridTopology(cellcentre.offset=c(-175,55), cellsize=c(10,10), cells.dim=c(4,4))

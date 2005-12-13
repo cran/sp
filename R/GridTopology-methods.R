@@ -38,7 +38,7 @@ coordinatevalues = function(obj) {
 	ret
 }
 
-points2grid = function(points, tolerance) {
+points2grid = function(points, tolerance=sqrt(.Machine$double.eps)) {
 	# work out grid topology from points
 	n = dimensions(points)
 	ret = new("GridTopology", 
@@ -53,22 +53,25 @@ points2grid = function(points, tolerance) {
     	difx = diff(sux)
 		if (length(difx) == 0)
 			stop(paste("cannot determine cell size from constant coordinate", i))
-		ru.difx = range(unique(difx))
-    	err1 = diff(ru.difx)/max(range(abs(sux)))
+		#ru.difx = range(unique(difx))
+		ru.difx = range(unique(difx)) # min to max x coord leaps
+    	err1 = diff(ru.difx) #?? /max(range(abs(sux))) # (max-min)/max(abs(x))
     	if (err1 > tolerance) { 
 			xx = ru.difx / min(ru.difx)
-			err2 = max(abs(floor(xx) - xx))
+			err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
 			if (err2 > tolerance) {
 				cat(paste("suggested tolerance minimum:", err2))
        			stop(paste("dimension", i,": coordinate intervals are not constant"))
 			} else if (Warn) {
 				warning(paste("grid has empty column/rows in dimension", i))
+				difx = difx[difx < ru.difx[1] + tolerance]
 				Warn = FALSE # warn once per dimension
 			}
 		}
 		ret@cellsize[i] = mean(difx)
 		ret@cellcentre.offset[i] = min(sux)
-    	ret@cells.dim[i] = length(sux)
+    	ret@cells.dim[i] = as.integer(round(diff(range(sux))/ret@cellsize[i]) + 1) 
+			#was: length(sux), but this will not cope with empty rows.
 	}
 	nm = dimnames(cc)[[2]]
 	names(ret@cellsize) = nm
@@ -136,19 +139,8 @@ as.SpatialPolygons.GridTopology <- function(grd, proj4string=CRS(as.character(NA
 IDvaluesGridTopology <- function(obj) {
 	if (!is(obj, "GridTopology"))
 		stop("function only works for objects of class or extending GridTopology")
-	ret = list()
-	for (i in seq(along=obj@cells.dim)) {
-		if (i == 2) # y-axis is the exception--starting at top of map, and decreasing:
-			ret[[i]] = 1 + ((obj@cells.dim[i] - 1):0)
-		else
-			ret[[i]] = 1 + (0:(obj@cells.dim[i] - 1))
-	}
-	ns = names(obj@cellcentre.offset)
-	if (is.null(ns))
-		ns = paste("s", 1:length(ret), sep = "") #dimnames(obj@bbox)[[1]]
-	names(ret) = ns
-	cc <- do.call("expand.grid", ret)
+	cc <- getGridIndex(coordinates(obj), obj)
 	res <- as.matrix(sapply(cc, as.integer))
-	paste("c", cc[,1], "r", cc[,2], sep="")
+	paste("g", cc, sep="")
 }
 

@@ -23,7 +23,7 @@ spplot(obj, ...)
 spplot.grid(obj, zcol = names(obj), ..., names.attr, 
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 	panel = panel.gridplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ], 
-	ylim = bbox(obj)[2, ])
+	ylim = bbox(obj)[2, ], checkEmptyRC = TRUE)
 spplot.polygons(obj, zcol = names(obj), ..., names.attr, 
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 	panel = panel.polygonsplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ], 
@@ -75,6 +75,9 @@ e.g. \code{exp(x)~x+y|name} to plot the exponent of the z-variable}
 \item{height}{height of scale bar; width is 1.0}
 \item{n}{see locator}
 \item{type}{see locator}
+\item{checkEmptyRC}{logical; if TRUE, a check is done to see if
+empty rows or columns are present, and need to be taken care of. Setting
+to FALSE may improve speed. }
 }
 \value{
 spplot returns a lattice plot of class "trellis", if you fail to "see" it,

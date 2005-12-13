@@ -5,7 +5,7 @@
 \title{ define spatial grid with attribute data }
 \description{ defines spatial grid by offset, cell size and dimensions }
 \usage{
-SpatialPixelsDataFrame(points, data, tolerance = 10 * .Machine$double.eps, 
+SpatialPixelsDataFrame(points, data, tolerance = sqrt(.Machine$double.eps), 
 		proj4string = CRS(as.character(NA)))
 SpatialGridDataFrame(grid, data, proj4string = CRS(as.character(NA)))
 }

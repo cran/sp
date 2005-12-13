@@ -8,7 +8,7 @@ importFrom(lattice, levelplot, xyplot, trellis.par.set,
 	panel.levelplot, panel.superpose, trellis.par.get,
 	trellis.focus, trellis.unfocus)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
-	grid.layout, unit, frameGrob, placeGrob, rectGrob)
+	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
 
 export(CRS, print.CRS, proj4string, "proj4string<-", is.projected)
 
@@ -64,7 +64,7 @@ export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
 	getPolygonHoleSlot, getPolygonsPolygonsSlot, getPolygonsplotOrderSlot,
 	getPolygonsLabptSlot, getPolygonsIDSlot, getSpPpolygonsSlot,
 	getSpPplotOrderSlot, getSpPPolygonsLabptSlots, getSpPPolygonsIDSlots,
-	getSpPnParts)
+	getSpPnParts, getSpPnHoles)
 
 export(as.SpatialPolygons.PolygonsList, Polygons, Polygon, SpatialPolygons,
 	SpatialPolygonsDataFrame)
@@ -81,7 +81,7 @@ export(transform.Spatial)
 export(makegrid, sample.Spatial, sample.Line, sample.Polygon, sample.Polygons,
 	sample.Sgrid)
 
-export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology)
+export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels)
 
 export(dd2dms, print.DMS, char2dms, as.character.DMS,
 	as.double.DMS, as.numeric.DMS)
@@ -137,6 +137,9 @@ S3method("$", SpatialLinesDataFrame)
 S3method("$", SpatialPolygonsDataFrame)
 S3method("$", AttributeList)
 
+S3method("$<-", SpatialPoints)
+S3method("$<-", SpatialPixels)
+S3method("$<-", SpatialGrid)
 S3method("$<-", SpatialPointsDataFrame)
 S3method("$<-", SpatialPixelsDataFrame)
 S3method("$<-", SpatialGridDataFrame)
@@ -173,6 +176,7 @@ S3method(lines, SpatialLines)
 
 S3method(names, SpatialPointsDataFrame)
 S3method(names, SpatialPixelsDataFrame)
+S3method(names, SpatialGridDataFrame)
 S3method(names, SpatialLinesDataFrame)
 S3method(names, SpatialPolygonsDataFrame)
 S3method(names, AttributeList)

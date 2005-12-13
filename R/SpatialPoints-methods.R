@@ -99,3 +99,5 @@ setReplaceMethod("coordnames",
 		x
 	}
 )
+
+"$<-.SpatialPoints" = function(x,i,value) { SpatialPointsDataFrame(x, data.frame(i = value)) }

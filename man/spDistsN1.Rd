@@ -19,7 +19,7 @@ spDistsN1(pts, pt, longlat = FALSE)
   A numeric vector of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE
 }
 \note{The function can also be used to find a local kilometer equivalent to a plot scaled in decimal degrees in order to draw a scale bar.}
-
+\references{\url{http://home.att.net/~srschmitt/script_greatcircle.html}}
 \author{Roger Bivand}
 
 

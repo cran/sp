@@ -69,3 +69,7 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
 "$<-.SpatialPolygonsDataFrame" = function(x,i,value) { x@data[[i]]=value; x }
 
 setMethod("summary", "SpatialPolygonsDataFrame", summary.Spatial)
+
+setMethod("coordinates", "SpatialPolygonsDataFrame", 
+	function(obj) getSpPPolygonsLabptSlots(obj))
+

@@ -15,10 +15,10 @@ defines spatial grid by offset, cell size and dimensions
 }
 \usage{
 GridTopology(cellcentre.offset, cellsize, cells.dim)
-SpatialPixels(points, tolerance = 10 * .Machine$double.eps)
+SpatialPixels(points, tolerance = sqrt(.Machine$double.eps))
 SpatialGrid(grid, proj4string = CRS(as.character(NA)))
 coordinatevalues(obj)
-points2grid(points, tolerance)
+points2grid(points, tolerance = sqrt(.Machine$double.eps))
 getGridIndex(cc, grid, all.inside = TRUE)
 getGridTopology(obj)
 areaSpatialGrid(obj)
@@ -68,6 +68,11 @@ are non-missing valued.
 SpatialGrid stores grid topology and may or may not store the coordinates
 of the actual points, which may form a subset of the full grid. To find
 out or change this, see \link{fullgrid}.
+
+points2grid tries to figure out the grid topology from points. It succees
+only if points on a grid line have constant y column, and points on a
+grid column have constant x coordinate, etc. In other cases, use signif
+on the raw coordinate matrices to make sure this is the case.
 }
 
 \references{ }

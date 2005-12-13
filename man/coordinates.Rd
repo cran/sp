@@ -22,13 +22,21 @@ are part of object, giving the reference does not duplicate them, giving
 their value does duplicate them in the resulting structure.
 }
 }
-\value{ an object of class SpatialPointsDataFrame }
+\value{ usually an object of class SpatialPointsDataFrame; if the coordinates
+set cover the full set of variables in object, an object of class SpatialPoints
+is returned }
 \examples{
 # data.frame
 data(meuse.grid)
 coordinates(meuse.grid) <- ~x+y
 gridded(meuse.grid) <- TRUE
+class(meuse.grid)
 bbox(meuse.grid)
+
+data(meuse)
+meuse.xy = meuse[c("x", "y")]
+coordinates(meuse.xy) <- ~x+y
+class(meuse.xy)
 
 }
 \keyword{manip}
