@@ -1,46 +1,62 @@
-makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = c(0.5,0.5),
-		type = "regular", ...) {
-#	bb = bbox(x)
-	bb = x
-	rx = bb[1,]
-	ry = bb[2,]
-	if (missing(cellsize))
-		cellsize = signif(sqrt(diff(rx) * diff(ry)/n), nsig)
+makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5,nrow(bb))) {
+	if (is(x, "Spatial"))
+		bb = bbox(x)
+	else
+		bb = x
+	# rx = bb[1,]
+	# ry = bb[2,]
+	if (missing(cellsize)) {
+		pw = 1.0/nrow(bb)
+		cellsize = signif((prod(apply(bb, 1, diff))/n) ^ pw, nsig)
+	}
+	if (length(cellsize) == 1)
+		cellsize = rep(cellsize, nrow(bb))
 # in some cases with small n, min* can be larger than bbox max values
 # so guard imposed to step down from cellsize
-	minx = max(rx[1], signif(rx[1] + offset[1] * cellsize, nsig))
-	miny = max(ry[1], signif(ry[1] + offset[2] * cellsize, nsig))
-	if (minx < rx[2]) seqx = seq(minx, rx[2], by = cellsize)
-	else seqx = seq(minx, rx[2], by = -cellsize)
-	if (miny < ry[2]) seqy = seq(miny, ry[2], by = cellsize)
-	else seqy = seq(miny, ry[2], by = -cellsize)
+	min.coords = pmax(bb[,1], signif(bb[,1] + offset * cellsize, nsig))
+	# minx = max(rx[1], signif(rx[1] + offset[1] * cellsize, nsig))
+	# miny = max(ry[1], signif(ry[1] + offset[2] * cellsize, nsig))
+	expand.grid.arglist = list()
+	for (i in 1:nrow(bb)) {
+		name = paste("x", i, sep = "")
+		sign = ifelse(min.coords[i] < bb[i,2], 1, -1)
+		expand.grid.arglist[[name]] = seq(min.coords[i], bb[i,2], sign * cellsize[i])
+	}
+	# if (minx < rx[2]) seqx = seq(minx, rx[2], by = cellsize)
+	# else seqx = seq(minx, rx[2], by = -cellsize)
+	# if (miny < ry[2]) seqy = seq(miny, ry[2], by = cellsize)
+	# else seqy = seq(miny, ry[2], by = -cellsize)
 	# type = "regular" :
-	xy = expand.grid(x = seqx, y = seqy)
-	if (type == "stratified") {
-		n = nrow(xy)
-		xy$x = xy$x + (runif(n) - 0.5) * cellsize
-		xy$y = xy$y + (runif(n) - 0.5) * cellsize
-	} else if (type == "nonaligned") {
-		nx = length(seqx)
-		ny = length(seqy)
-		x0 <- rep(runif(ny), rep(nx, ny))
-		y0 <- rep(runif(nx), ny)
-		xy$x = xy$x + (x0 - 0.5) * cellsize
-		xy$y = xy$y + (y0 - 0.5) * cellsize
-	} else if (type != "regular")
-		stop(paste("sampling type", type, "not recognized"))
+	xy = do.call("expand.grid", expand.grid.arglist)
+	attr(xy, "cellsize") = cellsize
 	return(xy)
 }
 
-sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(2), cellsize, ...) {
-	if (type == "random") {
-		xc = runif(n) * diff(bb[1,]) + bb[1,1]
-		yc = runif(n) * diff(bb[2,]) + bb[2,1]
-		xy = cbind(xc, yc)
-	} else
-		xy = makegrid(#x
-bbox(x), n = n, nsig = 20, cellsize = cellsize, 
-			offset = offset, type = type)
+sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), cellsize, ...) {
+	if (type == "random")
+		xy = apply(bb, 1, function(x) runif(n) * diff(x) + x[1])
+	else {
+		xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize, offset = offset)
+		cellsize = attr(xy, "cellsize")
+		if (type == "stratified") {
+			n = nrow(xy)
+			for (j in 1:ncol(xy))
+				xy[,j] = xy[,j] + (runif(n) - 0.5) * cellsize[j]
+			#apply(xy, 2, function(x) x + (runif(n) - 0.5) * cellsize[1])
+			# xy$x = xy$x + (runif(n) - 0.5) * cellsize
+			# xy$y = xy$y + (runif(n) - 0.5) * cellsize
+		} else if (type == "nonaligned") {
+			if (ncol(xy) != 2)
+				stop("sorry, nonaligned is only implemented for 2D")
+			nx = length(unique(xy[,1]))
+			ny = length(unique(xy[,2]))
+			x0 <- rep(runif(ny), rep(nx, ny))
+			y0 <- rep(runif(nx), ny)
+			xy[,1] = xy[,1] + (x0 - 0.5) * cellsize[1]
+			xy[,2] = xy[,2] + (y0 - 0.5) * cellsize[2]
+		} else if (type != "regular")
+			stop(paste("sampling type", type, "not recognized"))
+	}
 	SpatialPoints(xy, CRS(proj4string(x)))
 }
 setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
@@ -183,12 +199,11 @@ sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type=type, offset = of
 setMethod("spsample", signature(x = "SpatialPolygons"), sample.SpatialPolygons)
 
 sample.Sgrid = function(x, n, type = "random", bb = bbox(x),
-		offset = runif(2), ...) {
+		offset = runif(nrow(bb)), ...) {
 	area = areaSpatialGrid(x)
 	if (area == 0.0)
 		stop("cannot sample from grid with zero area")
-	bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-	pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
+	pts = spsample(as(x, "Spatial"), n, type, offset = offset, ...)
 	#id = overlay(as(x, "SpatialGrid"), pts)
 	id = overlay(x, pts)
 	if (is(id, "SpatialPointsDataFrame"))
@@ -199,7 +214,7 @@ sample.Sgrid = function(x, n, type = "random", bb = bbox(x),
 setMethod("spsample", signature(x = "SpatialGrid"), sample.Sgrid)
 
 sample.Spixels = function(x, n, type = "random", bb = bbox(x),
-		offset = runif(2), ...) {
+		offset = runif(nrow(bb)), ...) {
 	area = areaSpatialGrid(x)
 	if (area == 0.0)
 		stop("cannot sample from grid with zero area")

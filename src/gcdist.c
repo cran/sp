@@ -29,7 +29,7 @@ void sp_dists(double *u, double *v, double *uout, double *vout,
 }
 
 
-/* http://home.att.net/~srschmitt/greatcircle.html */
+/* http://home.att.net/~srschmitt/script_greatcircle.html */
 
 void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2, 
 		double *dist) {

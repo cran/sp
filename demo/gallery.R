@@ -30,9 +30,9 @@ data(meuse)
 coordinates(meuse)=~x+y
 
 scale = list("SpatialPolygonsRescale", layout.scale.bar(), 
-	offset = c(178600,333100), scale = 500, fill=c("transparent","black"))
-text1 = list("sp.text", c(178600,333200), "0")
-text2 = list("sp.text", c(179100,333200), "500 m")
+	offset = c(178600,332990), scale = 500, fill=c("transparent","black"))
+text1 = list("sp.text", c(178600,333090), "0")
+text2 = list("sp.text", c(179100,333090), "500 m")
 arrow = list("SpatialPolygonsRescale", layout.north.arrow(), 
 	offset = c(178750,332500), scale = 400)
 ## points plot with scale bar, scale bar text, north arrow and title:

@@ -62,8 +62,9 @@ setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
 		object = object[ , -coord.numbers, drop = FALSE]
 		stripped = coord.numbers
 		# ... but as.data.frame(x) will merge them back in, so nothing gets lost.
-		if (ncol(object) == 0) stop(
-			"only coords columns present: use SpatialPoints to create a points object")
+		if (ncol(object) == 0)
+			#stop("only coords columns present: use SpatialPoints to create a points object")
+			return(SpatialPoints(cc))
 	} else
 		stripped = numeric(0)
 	SpatialPointsDataFrame(data = object, coords = cc, coords.nrs = stripped,

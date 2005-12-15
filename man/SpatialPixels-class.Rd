@@ -36,7 +36,9 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
    each point on the grid; coordinates are not stored in objects of class SpatialGrid}
    \item{summary}{\code{signature(object = "SpatialPixels")}: summarize object}
    \item{plot}{\code{signature(x = "SpatialPixels")}: plots cell centers }
-   \item{"["}{\code{signature(x = "SpatialPixels")}: select pixel cells}
+   \item{"["}{\code{signature(x = "SpatialPixels")}: select pixel cells; the argument
+   \code{drop=TRUE} (default) recalculates grid topology for the selection, if
+   \code{drop=FALSE} the grid topology of the parent object is kept. }
  }
 }
 \references{ }

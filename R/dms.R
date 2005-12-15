@@ -96,9 +96,16 @@ setMethod("show", "DMS", function(object) print.DMS(object))
 	nmin <- regexpr(chm, y)
 	nsec <- regexpr(chs, y)
 	deg <- as(substr(y, 1, ndeg-1), "integer")
-	min <- as(ifelse(nmin < 1, 0, substr(y, ndeg+1, nmin-1)), "integer")
-	sec <- as(ifelse(nsec < 1, 0, substr(y, nmin+1, nsec-1)), "numeric")
-	
+	smin <- substr(y, ndeg+1, nmin-1)
+	dotmin <- regexpr("\\.", smin)
+	ifelse (dotmin < 0, {
+		min <- as(ifelse(nmin < 1, 0, smin), "integer")
+		sec <- as(ifelse(nsec < 1, 0, 
+		    substr(y, nmin+1, nsec-1)), "numeric")
+	}, {
+		min <- as(ifelse(nmin < 1, 0, smin), "integer")
+		sec <- (as(smin, "numeric") - min) * 60
+	})
 	WS <- ifelse(x == "W" | x == "S", TRUE, FALSE)
 	    
 	dms <- new("DMS", WS=WS, deg=deg, min=min, sec=sec, NS=NS)

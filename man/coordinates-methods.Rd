@@ -7,6 +7,8 @@
 \alias{coordinates,matrix-method}
 \alias{coordinates,SpatialPoints-method}
 \alias{coordinates,SpatialPointsDataFrame-method}
+\alias{coordinates,SpatialPolygons-method}
+\alias{coordinates,SpatialPolygonsDataFrame-method}
 \alias{coordinates,Line-method}
 \alias{coordinates,Lines-method}
 \alias{coordinates,SpatialLines-method}
@@ -26,6 +28,9 @@
 \item{obj = "SpatialPoints"}{ object of, or deriving from, SpatialPoints }
 \item{obj = "SpatialPointsDataFrame"}{ object of, or deriving from, 
 	SpatialPointsDataFrame }
+\item{obj = "SpatialPolygons"}{ object of, or deriving from, SpatialPolygons }
+\item{obj = "SpatialPolygonsDataFrame"}{ object of, or deriving from, 
+	SpatialPolygonsDataFrame }
 \item{obj = "Line"}{ object of class Line; returned value is matrix }
 \item{obj = "Lines"}{ object of class Lines; returned value is list of matrices }
 \item{obj = "SpatialLines"}{ object of, or deriving from, SpatialLines; returned

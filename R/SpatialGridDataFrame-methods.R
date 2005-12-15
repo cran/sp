@@ -1,4 +1,5 @@
-SpatialPixelsDataFrame = function(points, data, tolerance = 10 * .Machine$double.eps, 
+SpatialPixelsDataFrame = function(points, data, 
+		tolerance = sqrt(.Machine$double.eps), 
 		proj4string = CRS(as.character(NA))) {
 	if (is.null(points))
 		stop("points argument is NULL")

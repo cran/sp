@@ -11,6 +11,7 @@
 \alias{getSpPPolygonsIDSlots}
 \alias{getSpPPolygonsLabptSlots}
 \alias{getSpPnParts}
+\alias{getSpPnHoles}
 \alias{getSpPplotOrderSlot}
 \alias{getSpPpolygonsSlot}
 \alias{getPolygonAreaSlot}

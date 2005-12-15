@@ -1,6 +1,6 @@
 "spmap.to.lev" <- function (data, zcol = 1:n, n = 2, names.attr)
 {
-	if (!extends(class(data), "SpatialPointsDataFrame"))
+	if (!(is(data, "SpatialPointsDataFrame") || (is(data, "SpatialGridDataFrame"))))
 		stop("data is not of a class that extends SpatialPointsDataFrame")
 
 	if (dimensions(data) > 2) {

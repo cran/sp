@@ -15,7 +15,7 @@ setClass("SpatialGridDataFrame",
 		if (length(object@grid.index) > 0)
 			stop("grid.index should have length zero")
 		if (.NumberOfCells(object@grid) != nrow(object@data))
-			stop("unequal number of objects in full grid and data.frame")
+			stop("unequal number of objects in full grid and data slot")
 		return(TRUE)
 	}
 )

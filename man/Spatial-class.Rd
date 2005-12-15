@@ -32,7 +32,7 @@ are never to be generated; only derived classes can be meaningful }
 	the data is on a regular spatial grid }
     \item{plot}{\code{signature(x = "Spatial", y = "missing")}: plot method
 	for spatial objects; does nothing but setting up a plotting region choosing
-	a suitlable aspect if not given, (see below) and possibly drawing axes.  }
+	a suitable aspect if not given(see below), colouring the plot background using either a bg= argument or par("bg"), and possibly drawing axes.  }
 	\item{summary}{\code{signature(object = "Spatial")}: summarize object}
   }
 }

@@ -4,6 +4,7 @@ degreeLabelsNS = function(x) {
 	paste(abs(x), "*degree", dir[pos])
 }
 degreeLabelsEW = function(x) {
+	x <- ifelse(x > 180, x - 360, x)
 	pos = sign(x) + 2
 	dir = c("*W", "", "*E")
 	paste(abs(x), "*degree", dir[pos])

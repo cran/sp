@@ -1,12 +1,13 @@
-SpatialPixels = function(points, tolerance = 10 * .Machine$double.eps) {
+SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps)) {
 	if (!is(points, "SpatialPoints"))
 		stop("points should be of class or extending SpatialPoints")
+	is.gridded = gridded(points)
 	points = as(points, "SpatialPoints")
 	grid = points2grid(points, tolerance)
-	points@bbox[1,1] = points@bbox[1,1] - 0.5 * grid@cellsize[1]
-	points@bbox[1,2] = points@bbox[1,2] + 0.5 * grid@cellsize[1]
-	points@bbox[2,1] = points@bbox[2,1] - 0.5 * grid@cellsize[2]
-	points@bbox[2,2] = points@bbox[2,2] + 0.5 * grid@cellsize[2]
+	if (!is.gridded) {
+		points@bbox[,1] = points@bbox[,1] - 0.5 * grid@cellsize
+		points@bbox[,2] = points@bbox[,2] + 0.5 * grid@cellsize
+	}
 	new("SpatialPixels", points, grid = grid, 
 		grid.index = getGridIndex(coordinates(points), grid))
 }
@@ -15,10 +16,8 @@ setMethod("coordinates", "SpatialPixels", function(obj) obj@coords)
 
 SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	pts = boguspoints(grid)
-	pts@bbox[1,1] = pts@bbox[1,1] - 0.5 * grid@cellsize[1]
-	pts@bbox[1,2] = pts@bbox[1,2] + 0.5 * grid@cellsize[1]
-	pts@bbox[2,1] = pts@bbox[2,1] - 0.5 * grid@cellsize[2]
-	pts@bbox[2,2] = pts@bbox[2,2] + 0.5 * grid@cellsize[2]
+	pts@bbox[,1] = pts@bbox[,1] - 0.5 * grid@cellsize
+	pts@bbox[,2] = pts@bbox[,2] + 0.5 * grid@cellsize
 	proj4string(pts) = proj4string
 	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
 }
@@ -32,10 +31,10 @@ getGridTopology = function(obj) {
 }
 
 areaSpatialGrid = function(obj) {
-	cellarea = prod(obj@grid@cellsize[1:2])
+	cellarea = prod(obj@grid@cellsize)
 	if (is(obj, "SpatialGrid"))
 		return(prod(obj@grid@cells.dim) * cellarea)
-	else
+	else # take number of cells:
 		length(obj@grid.index) * cellarea
 }
 
@@ -93,15 +92,23 @@ subset.SpatialPixels <- function(x, subset, select, drop = FALSE, ...) {
 
 setMethod("[", "SpatialPixels",
 	function(x, i, j, ..., drop = TRUE) {
-		drop <- FALSE
 #		if (!missing(drop))
 #			stop("don't supply drop: it needs to be FALSE anyway")
 		if (!missing(j))
 			stop("can only select pixels with a single index")
 		if (missing(i))
 			return(x)
-		res = as(x, "SpatialPoints")[i]
-		gridded(res) = TRUE
+		if (drop) { # default: adjust bbox and grid
+			res = as(x, "SpatialPoints")[i]
+			tolerance = list(...)$tolerance
+			if (!is.null(tolerance))
+				res = SpatialPixels(res, tolerance = tolerance)
+			else
+				gridded(res) = TRUE
+		} else
+			res = new("SpatialPixels", bbox = x@bbox, proj4string = x@proj4string,	
+				coords = x@coords[i, , drop = FALSE], grid = x@grid, 
+				grid.index = x@grid.index[i])
 		res
 	}
 )
@@ -151,4 +158,48 @@ print.SpatialGrid = function(x, ...) {
 	print(summary(x@grid))
 	print(as(x, "SpatialPoints"))
 	invisible(x)
+}
+"$<-.SpatialGrid" = function(x,i,value) {
+	df = data.frame(value)
+	names(df) = as.character(substitute(i))
+	SpatialGridDataFrame(x@grid, df) 
+}
+"$<-.SpatialPixels" = function(x,i,value) { 
+	df = data.frame(value)
+	names(df) = as.character(substitute(i))
+	SpatialPixelsDataFrame(x, df)
+}
+
+# make a SpatialPolygons from a SpatialPixels - Kohris Sahlen workshop
+
+as.SpatialPolygons.SpatialPixels <- function(obj, proj4string=CRS(as.character(NA)))
+{
+	obj_crds <- coordinates(obj)
+	IDs <- IDvaluesSpatialPixels(obj)
+	nPolygons <- nrow(obj_crds)
+	cS <- slot(slot(obj, "grid"), "cellsize")
+	cS2 <- cS/2
+	cS2x <- cS2[1]
+	cS2y <- cS2[2]
+	Srl <- vector(mode="list", length=nPolygons)
+	for (i in 1:nPolygons) {
+		xi <- obj_crds[i,1]
+		yi <- obj_crds[i,2]
+		x <- c(xi-cS2x, xi-cS2x, xi+cS2x, xi+cS2x, xi-cS2x)
+		y <- c(yi-cS2y, yi+cS2y, yi+cS2y, yi-cS2y, yi-cS2y)
+		Srl[[i]] <- Polygons(list(Polygon(coords=cbind(x, y)
+#, proj4string=proj4string
+)), ID=IDs[i])
+	}
+	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=proj4string)
+	res
+}
+
+IDvaluesSpatialPixels <- function(obj) {
+	if (!is(obj, "SpatialPixels"))
+		stop("function only works for objects of class or extending SpatialPixels")
+
+	cc <- slot(obj, "grid.index")
+	res <- as.matrix(sapply(cc, as.integer))
+	paste("g", cc, sep="")
 }

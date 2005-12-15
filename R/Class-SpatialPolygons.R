@@ -77,4 +77,9 @@ getSpPnParts <- function(SpP) {
 	sapply(Srs, function(x) length(getPolygonsPolygonsSlot(x)))
 }
 
+getSpPnHoles <- function(SpP) {
+	Srs <- getSpPpolygonsSlot(SpP)
+	sapply(Srs, function(x) sapply(getPolygonsPolygonsSlot(x), 
+		getPolygonHoleSlot))
+}
 
