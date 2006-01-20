@@ -39,15 +39,14 @@ x 15 m.
 data(meuse)
 }
 \note{row.names refer to the original sample number}
-\authors{ The actual field data were collected by Ruud van Rijn and
-Mathieu Rikken }
+\author{ The actual field data were collected by Ruud van Rijn and
+Mathieu Rikken; compiled for R by Edzer J. Pebesma }
 \references{ 
 P.A. Burrough, R.A. McDonnell, 1998. Principles of Geographical Information
 Systems. Oxford University Press.
 
 \url{http:/www.gstat.org/}
 }
-\author{ }
 \keyword{datasets}
 
 \examples{
