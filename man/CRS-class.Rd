@@ -24,7 +24,7 @@ Objects can be created by calls of the form \code{CRS("projargs")}, where "proja
 \references{\url{http://www.remotesensing.org/proj/}}
 \author{Roger Bivand \email{Roger.Bivand@nhh.no}}
 
-\notes{
+\note{
 Lists of projections may be seen by using the programs installed with the PROJ.4 library, in particular proj and cs2cs; with the latter, -lp lists projections, -le ellipsoids, -lu units, and -ld datum(s) known to the installed software. These are added to in successive releases, so tracking the website or compiling and installing the most recent revisions will give the greatest choice. On occasion, ellipsoid parameters may be passed through directly. Tracing projection arguments is easier now than before the mass ownership of GPS receivers raised the issue of matching coordinates from different argument sets (GPS output and paper map, for example).}
 
 

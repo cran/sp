@@ -364,6 +364,7 @@ fill.call.groups = function(lst, z, ..., cuts,
 	if (!missing(cex))
 		lst$cex = cex
 	if (is.numeric(z)) {
+		z = na.omit(z)
     	if (length(cuts) == 1) {
 			if (do.log) {
        			lz = log(z)

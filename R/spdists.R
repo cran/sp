@@ -13,6 +13,16 @@ spDistsN1 <- function(pts, pt, longlat=FALSE) {
 	lonlat <- as.integer(longlat)
 	res <- .C("sp_dists", x, y, xx, yy, n, dists, lonlat, 
 		PACKAGE = "sp")[[6]]
+	if (any(!is.finite(res))) {
+		nAn <- which(!is.finite(res))
+		dx <- abs(x[nAn] - xx)
+		dy <- abs(y[nAn] - yy)
+		if (all((c(dx, dy) < .Machine$double.eps ^ 0.5)))
+			res[nAn] <- 0
+		else
+			stop(paste("non-finite distances in spDistsN1"))
+
+	}
 	res
 }
 
