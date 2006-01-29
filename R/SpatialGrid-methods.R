@@ -137,6 +137,15 @@ setMethod("[", "SpatialGrid",
 )
 
 setAs("SpatialPixels", "SpatialGrid", function(from) SpatialGrid(from@grid, from@proj4string))
+
+as.data.frame.SpatialPixels = function(x, row.names, optional)
+	as.data.frame(coordinates(x))
+
+as.data.frame.SpatialGrid = as.data.frame.SpatialPixels
+
+setAs("SpatialPixels", "data.frame", function(from) as.data.frame.SpatialPixels(from))
+setAs("SpatialGrid", "data.frame", function(from) as.data.frame.SpatialGrid(from))
+
 #setAs("SpatialGrid", "SpatialPixels", function(from)
 #	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
 #)
