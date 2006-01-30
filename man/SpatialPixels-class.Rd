@@ -4,7 +4,9 @@
 \alias{[,SpatialPixels-method}
 \alias{coerce,SpatialPixels,SpatialGrid-method}
 \alias{print.summary.SpatialPixels}
+\alias{as.data.frame.SpatialPixels}
 \alias{summary,SpatialPixels-method}
+\alias{coerce,SpatialPixels,data.frame-method}
 
 \title{Class "SpatialPixels" ~~~ }
 \description{ class for defining a pixels, forming a

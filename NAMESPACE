@@ -148,6 +148,8 @@ S3method("$<-", SpatialPolygonsDataFrame)
 S3method("$<-", AttributeList)
 
 S3method(as.data.frame, SpatialPoints)
+S3method(as.data.frame, SpatialPixels)
+S3method(as.data.frame, SpatialGrid)
 S3method(as.data.frame, SpatialPointsDataFrame)
 S3method(as.data.frame, SpatialPixelsDataFrame)
 S3method(as.data.frame, SpatialGridDataFrame)

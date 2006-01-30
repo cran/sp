@@ -3,7 +3,9 @@
 \alias{SpatialGrid-class}
 \alias{[,SpatialGrid-method}
 \alias{print.summary.SpatialGrid}
+\alias{as.data.frame.SpatialGrid}
 \alias{summary,SpatialGrid-method}
+\alias{coerce,SpatialGrid,data.frame-method}
 
 \title{Class "SpatialGrid" ~~~ }
 \description{ class for defining a full, rectangular grid of
