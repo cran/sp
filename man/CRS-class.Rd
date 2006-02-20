@@ -12,7 +12,7 @@ Objects can be created by calls of the form \code{CRS("projargs")}, where "proja
 }
 \section{Slots}{
   \describe{
-    \item{\code{projargs}:}{Object of class \code{"character"}: projection arguments }
+    \item{\code{projargs}:}{Object of class \code{"character"}: projection arguments; the arguments must be entered exactly as in the PROJ.4 documentation, in particular there cannot be any white space in +<arg>=<value> strings, and successive such strings can only be separated by blanks. }
   }
 }
 
@@ -29,6 +29,13 @@ Lists of projections may be seen by using the programs installed with the PROJ.4
 
 
 \examples{
+if (require(spproj)) {
+  CRSargs(CRS("+proj=longlat +datum=NAD27"))
+  CRSargs(CRS("+init=epsg:4267"))
+  CRSargs(CRS("+init=epsg:26978"))
+  CRSargs(CRS("+proj=stere +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +units=m"))
+  CRSargs(CRS("+init=epsg:28992"))
+}
 }
 \keyword{classes}
 \keyword{spatial}

@@ -10,21 +10,29 @@
 		proj4string = proj4string) # transpose bbox?
 }
 
-check.numeric = function(obj) {
-	lapply(obj, function(x) { if(!is.numeric(x)) 
-		stop("cannot retrieve coordinates from non-numeric elements") })
-	obj
+.checkNumericCoerce2double = function(obj) {
+	if (any(!unlist(lapply(obj, is.numeric))))
+		stop("cannot retrieve coordinates from non-numeric elements")
+	#lapply(obj, function(x) { if(!is.numeric(x)) 
+	#	stop("cannot retrieve coordinates from non-numeric elements") })
+	lapply(obj, as.double)
 }
 
-setMethod("coordinates", "list", function(obj) 
-	as.matrix(check.numeric(as.data.frame(obj))))
-setMethod("coordinates", "data.frame", function(obj) as.matrix(check.numeric(obj)))
+setMethod("coordinates", "list", function(obj)
+		do.call("cbind", .checkNumericCoerce2double(as.data.frame(obj))))
+setMethod("coordinates", "data.frame", function(obj)
+		do.call("cbind", .checkNumericCoerce2double(obj)))
 setMethod("coordinates", "matrix", 
 	function(obj) {
-		if (is.numeric(obj)) 
-			obj
-		else
+		if (!is.numeric(obj))
 			stop("cannot derive coordinates from non-numeric matrix")
+		dn = dimnames(obj)
+		dd = dim(obj)
+#		obj = apply(obj, 2, as.double)
+		storage.mode(obj) <- "double"
+		dim(obj) = dd
+		dimnames(obj) = dn
+		obj
 	}
 )
 

@@ -12,6 +12,8 @@ setClass("SpatialPoints",
 			stop("no points set: too few rows")
 		if (ncol(object@coords) < 2)
 			stop("no points set: too few columns")
+		if (!is.double(object@coords[,1]))
+			stop("coordinates should be double")
 		return(TRUE)
 	}
 )

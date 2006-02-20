@@ -1,4 +1,4 @@
-# Copyright (c) 2003-4 by Barry Rowlingson and Roger Bivand
+# Copyright (c) 2003-6 by Barry Rowlingson and Roger Bivand
 
 if (!is.R()) {
   strsplit <- function(a,b) {
@@ -9,6 +9,7 @@ if (!is.R()) {
 }
 
 "CRS" <- function(projargs) {
+    if (nchar(projargs) == 0) projargs <- as.character(NA)
     if (is.na(projargs)) uprojargs <- projargs
     else uprojargs <- paste(unique(unlist(strsplit(projargs, " "))), 
 	collapse=" ")

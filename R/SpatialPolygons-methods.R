@@ -137,7 +137,9 @@ SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
 }
 
 Polygon <- function(coords, hole=as.logical(NA)) {
-	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
+	
+	coords <- coordinates(coords)
+#	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
 	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
 	cG <- .spFindCG(coords)
 	rD <- cG$rD
