@@ -1,8 +1,10 @@
 Line <- function(coords#, proj4string=CRS(as.character(NA))
 ) {
-	if (!is.matrix(coords)) coords <- as.matrix(coords)
-	if (mode(coords) != "numeric")
-		stop("coordinates should have mode numeric")
+#	if (!is.matrix(coords)) coords <- as.matrix(coords)
+	coords <- coordinates(coords)
+	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
+#	if (mode(coords) != "numeric")
+#		stop("coordinates should have mode numeric")
 #	bbox <- .bboxSlot(coords)
 	new("Line", coords = coords
 #, bbox = as.matrix(bbox), proj4string = proj4string

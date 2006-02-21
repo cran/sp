@@ -17,7 +17,7 @@ setClass("Spatial",
 		if (!is(object@proj4string, "CRS"))
 			return("proj4string slot should be of class CRS")
 		p4str <- object@proj4string@projargs
-		if (!is.na(p4str)) {
+		if (!is.na(p4str) && nchar(p4str) > 0) {
 			res <- grep("longlat", p4str, fixed=TRUE)
 			if (length(res) != 0 # unprojected,
 		    		&& any(bb[1,1] < -180 || bb[1,2] > 360 || 

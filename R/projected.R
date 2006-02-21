@@ -30,7 +30,7 @@ is.projected = function(sd) {
 		stop("is.projected only works for class(es extending) Spatial")
 	p4str <- proj4string(sd)
 #ifdef R
-	if (is.na(p4str)) 
+	if (is.na(p4str) || nchar(p4str) == 0) 
 #else
 #S	if (p4str == "NA")  # bloody S-Plus!
 #endif

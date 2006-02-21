@@ -40,10 +40,15 @@ if (!isGeneric("spsample"))
 if (!isGeneric("summary"))
 	setGeneric("summary", function(object, ...)
 		standardGeneric("summary"))
-if (!isGeneric("transform"))
+if (as.numeric(version$minor) < 3) {
+    if (!isGeneric("transform"))
 	setGeneric("transform", function(x, ...)
 		standardGeneric("transform"))
-
+} else {
+    if (!isGeneric("transform"))
+	setGeneric("transform", function(`_data`, ...)
+		standardGeneric("transform"))
+}
 setMethod("bbox", "Spatial", function(obj) obj@bbox)
 
 setMethod("dimensions", "Spatial", function(obj) nrow(bbox(obj)))
@@ -56,11 +61,23 @@ setMethod("polygons", "Spatial", function(obj) {
 	}
 )
 
-transform.Spatial <- function(x, ...) {
+if (as.numeric(version$minor) < 3) {
+
+    transform.Spatial <- function(x, ...) {
 	if (require(spproj)) 
 		standardGeneric("transform")
 	else 
 		stop("for using (coordinate) transform on objects deriving from Spatial, library spproj is required")
+    }
+
+} else {
+
+    transform.Spatial <- function(`_data`, ...) {
+	if (require(spproj)) 
+		standardGeneric("transform")
+	else 
+		stop("for using (coordinate) transform on objects deriving from Spatial, library spproj is required")
+    }
 }
 
 setMethod("transform", "Spatial", transform.Spatial)
