@@ -170,7 +170,7 @@ Polygons <- function(srl, ID) {
 	if (missing(ID)) stop("Single ID required")
 	if (length(ID) != 1) stop("Single ID required")
 
-	nParts <- length(srl)
+#	nParts <- length(srl)
 # check their plot order
 	areas <- sapply(srl, getPolygonAreaSlot)
 	pO <- order(areas, decreasing=TRUE)

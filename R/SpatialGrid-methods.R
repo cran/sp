@@ -210,5 +210,5 @@ IDvaluesSpatialPixels <- function(obj) {
 
 	cc <- slot(obj, "grid.index")
 	res <- as.matrix(sapply(cc, as.integer))
-	paste("g", cc, sep="")
+	paste("g", res, sep="")
 }
