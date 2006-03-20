@@ -141,6 +141,6 @@ IDvaluesGridTopology <- function(obj) {
 		stop("function only works for objects of class or extending GridTopology")
 	cc <- getGridIndex(coordinates(obj), obj)
 	res <- as.matrix(sapply(cc, as.integer))
-	paste("g", cc, sep="")
+	paste("g", res, sep="")
 }
 

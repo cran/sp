@@ -64,7 +64,8 @@ sp.text = function(loc, txt, ...) {
 sp.panel.layout = function(lst, panel.number, ...) {
 	sp.panel0 = function(x, first = FALSE, ...) {
 		if (is.character(x))
-			obj = get(x)
+#			obj = get(x)
+			x = get(x)
 		if (!is.null(x$which) && is.na(match(panel.number, x$which)))
 			return()
 		if (inherits(x, "list")) {
@@ -164,7 +165,7 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 			lapply(x@Lines[1], function(x) coordinates(x)[1,]))), n, 2, byrow=TRUE) 
 	}
 	dimnames(labpts)[[2]] = c("xlabelpoint", "ylabelpoint")
-	sdf = data.frame(cbind(labpts, sdf))
+	sdf = as.data.frame(cbind(labpts, sdf))
 	coordinates(sdf) = c("xlabelpoint", "ylabelpoint")
 	if (missing(formula))
 		formula = getFormulaLevelplot(sdf, zcol)

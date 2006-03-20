@@ -97,20 +97,6 @@ setAs("SpatialPixelsDataFrame", "AttributeList", function(from) from@data)
 setAs("SpatialGridDataFrame", "AttributeList", function(from) from@data)
 
 subset.SpatialPixelsDataFrame <- function(x, subset, select, drop = FALSE, ...) {
-    if (version$major == 2 & version$minor < 1 ) {
-	subset.matrix <- function (x, subset, select, drop = FALSE, ...) {
-    		if (missing(select)) 
-        		vars <- TRUE
-    		else {
-        		nl <- as.list(1:ncol(x))
-        		names(nl) <- colnames(x)
-        		vars <- eval(substitute(select), nl, parent.frame())
-    		}
-    		if (!is.logical(subset)) 
-        		stop("'subset' must be logical")
-    		x[subset & !is.na(subset), vars, drop = drop]
-		}
-    }
 	xSP <- coordinates(x)
 	dfSP <- as.data.frame(x)
 	cselect <- colnames(xSP)
