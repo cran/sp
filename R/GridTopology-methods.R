@@ -7,11 +7,12 @@ GridTopology = function(cellcentre.offset, cellsize, cells.dim) {
 
 setMethod("show", "GridTopology", function(object) summary(obj))
 
-as.data.frame.GridTopology = function(x, row.names, optional) data.frame(
+as.data.frame.GridTopology = function(x, row.names, optional, ...) data.frame(
 		cellcentre.offset = x@cellcentre.offset,
 		cellsize = x@cellsize,
 		cells.dim = x@cells.dim
 	)
+
 setAs("GridTopology", "data.frame", function(from) as.data.frame.GridTopology(from))
 
 setMethod("coordinates", "GridTopology", function(obj) {

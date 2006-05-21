@@ -12,6 +12,8 @@ setClass("Spatial",
 			return("spatial.dimension should be 2 or more") 
 		if (any(is.na(bb)))
 			return("bbox should never contain NA values")
+		if (any(!is.finite(bb)))
+			return("bbox should never contain infinite values")
 		if (any(bb[,"max"] < bb[,"min"]))
 			return("invalid bbox: max < min")
 		if (!is(object@proj4string, "CRS"))

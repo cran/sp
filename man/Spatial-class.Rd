@@ -16,7 +16,8 @@ are never to be generated; only derived classes can be meaningful }
     \item{\code{bbox}:}{Object of class \code{"matrix"}; 2-column matrix
 	holding the minimum in first and maximum in second column for the
 	x-coordinate (first row), y-coordinate (second row) and optionally,
-	for points and grids only, further coordinates. }
+	for points and grids only, further coordinates. The constructed 
+	Spatial object will be invalid if any bbox values are NA or infinite. }
     \item{\code{proj4string}:}{Object of class \code{"CRS"};
 	holding a valid proj4 string, which can be used for unprojecting
 	or reprojecting coordinates; it is initialised to NA. Other strings

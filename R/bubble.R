@@ -30,8 +30,8 @@
 		az = sqrt(az)
 		q = sqrt(q)
     }
-    cex = as.vector(maxsize * az/max(az))
-    q.cex = as.vector(maxsize * q/max(az))
+    cex = as.vector(maxsize * az/max(az,q))
+    q.cex = as.vector(maxsize * q/max(az,q))
 
     if (identify) {
 		plot(x, y, asp = 1, cex = cex, main = main, ...)

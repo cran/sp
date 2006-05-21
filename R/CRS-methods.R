@@ -19,6 +19,15 @@ if (!is.R()) {
     if (length(grep(" [:alnum:]", uprojargs)) != 0)
 	stop(paste("PROJ4 argument-value pairs must begin with +:", 
 	    uprojargs))
+    if (length(grep("rgdal", search()) > 0) &&
+      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
+	if (!is.na(uprojargs)) {
+		res <- .Call("checkCRSArgs", uprojargs, 
+				PACKAGE="rgdal")
+	} else res <- list(TRUE, as.character(NA))
+	if (!res[[1]]) stop(res[[2]])
+	else uprojargs <- res[[2]]
+    }
     res <- new("CRS", projargs=uprojargs)
     res
 }
