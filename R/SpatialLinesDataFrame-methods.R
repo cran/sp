@@ -17,7 +17,7 @@ setMethod("summary", "SpatialLinesDataFrame", summary.Spatial)
 names.SpatialLinesDataFrame = function(x) names(x@data)
 "names<-.SpatialLinesDataFrame" = function(x,value) { names(x@data)<-value; x }
 
-as.data.frame.SpatialLinesDataFrame = function(x, row.names, optional) x@data
+as.data.frame.SpatialLinesDataFrame = function(x, row.names, optional, ...) x@data
 
 setAs("SpatialLinesDataFrame", "data.frame", function(from)
     as.data.frame.SpatialLinesDataFrame(from))

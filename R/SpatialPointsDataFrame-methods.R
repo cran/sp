@@ -81,22 +81,7 @@ print.SpatialPointsDataFrame = function(x, ...) {
 
 dim.SpatialPointsDataFrame = function(x) dim(x@data)
 
-as.data.frame.SpatialPointsDataFrame = function(x, row.names, optional)  {
-#	if (length(x@coords.nrs) > 0) {
-#		nc = ncol(x@coords)
-#		nd = ncol(x@data)
-#		nm = character(nc+nd)
-#		ret = list()
-#		for (i in 1:nc)
-#			ret[[x@coords.nrs[i]]] = x@coords[,i]
-#		nm[x@coords.nrs] = dimnames(x@coords)[[2]]
-#		idx.new = (1:(nc+nd))[-(x@coords.nrs)]
-#		for (i in 1:nd)
-#			ret[[idx.new[i]]] = x@data[,i]
-#		nm[idx.new] = names(x@data)
-#		names(ret) = nm
-#		data.frame(ret)
-#	} else
+as.data.frame.SpatialPointsDataFrame = function(x, row.names, optional, ...)  {
 	if (length(x@coords.nrs) > 0) {
 		maxi = max(x@coords.nrs, (ncol(x@data) + ncol(x@coords)))
 		ret = list()

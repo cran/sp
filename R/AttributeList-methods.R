@@ -1,7 +1,7 @@
 AttributeList = function(x) new("AttributeList", att = x)
 
-as.data.frame.AttributeList = function(x, row.names = NULL, optional = FALSE)
-	as.data.frame(x@att, row.names, optional)
+as.data.frame.AttributeList = function(x, row.names=NULL, optional=FALSE, ...)
+	as.data.frame(x@att, row.names, optional, ...)
 
 setAs("AttributeList", "data.frame", function(from) as.data.frame(from))
 

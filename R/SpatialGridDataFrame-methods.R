@@ -82,17 +82,16 @@ setAs("SpatialPixelsDataFrame", "matrix", function(from)
 setAs("SpatialGridDataFrame", "matrix", function(from) 
 	as.matrix.SpatialGridDataFrame(from))
 
-as.data.frame.SpatialPixelsDataFrame = function(x, row.names, optional)
+as.data.frame.SpatialPixelsDataFrame = function(x, row.names, optional, ...)
 	as.data.frame(as(x, "SpatialPointsDataFrame"))
 
-as.data.frame.SpatialGridDataFrame = function(x, row.names, optional)
+as.data.frame.SpatialGridDataFrame = function(x, row.names, optional, ...)
 	as.data.frame(as(x, "SpatialPixelsDataFrame"))
 
 setAs("SpatialPixelsDataFrame", "data.frame", function(from) 
 	as.data.frame.SpatialPixelsDataFrame(from))
 setAs("SpatialGridDataFrame", "data.frame", function(from) 
 	as.data.frame.SpatialGridDataFrame(from))
-
 setAs("SpatialPixelsDataFrame", "AttributeList", function(from) from@data)
 setAs("SpatialGridDataFrame", "AttributeList", function(from) from@data)
 
