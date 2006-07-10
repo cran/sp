@@ -5,7 +5,7 @@ GridTopology = function(cellcentre.offset, cellsize, cells.dim) {
 		cells.dim = as.integer(cells.dim))
 }
 
-setMethod("show", "GridTopology", function(object) summary(obj))
+# setMethod("show", "GridTopology", function(object) summary(object))
 
 as.data.frame.GridTopology = function(x, row.names, optional, ...) data.frame(
 		cellcentre.offset = x@cellcentre.offset,

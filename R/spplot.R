@@ -304,7 +304,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 			sp.lines3 = function(x, col, ...) panel.lines(coordinates(x), col = col, ...)
 			sp.lines2 = function(x, col, ...) lapply(x@Lines, sp.lines3, col, ...)
 			for (i in 1:length(grid.polygons@lines))
-				sp.lines2(grid.polygons@lines[[i]], col = col.regions[zcol[i]], ...)
+				sp.lines2(grid.polygons@lines[[i]], col = col.regions[zcol[i]], lwd = lwd, lty = lty, ...)
 		} else {
 			pls = getSpPpolygonsSlot(grid.polygons)
    			pO = getSpPplotOrderSlot(grid.polygons)
@@ -324,7 +324,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 						fill = col.regions[zcol[i]]
 						alpha = alpha.regions
 					}
-					gp = gpar(fill = fill, alpha = alpha, col = col)
+					gp = gpar(fill = fill, alpha = alpha, col = col, lwd = lwd, lty = lty)
 					grid.polygon(coords[,1], coords[,2], default.units = "native", 
 						gp = gp)
 				}

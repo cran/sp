@@ -14,10 +14,10 @@ point.in.polygon(point.x, point.y, pol.x, pol.y)
 \item{pol.y}{numerical array of y-coordinates of polygon}
 }
 \value{ integer array; values are:
-\item{0} point is strictly exterior to pol;
-\item{1} point is strictly interior to pol;
-\item{2} point lies on the relative interior of an edge of pol;
-\item{3} point is a vertex of pol.
+0: point is strictly exterior to pol;
+1: point is strictly interior to pol;
+2: point lies on the relative interior of an edge of pol;
+3: point is a vertex of pol.
 }
 \references{ 
 Uses the C function InPoly(), in gstat file polygon.c;
