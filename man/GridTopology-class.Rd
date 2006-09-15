@@ -4,6 +4,7 @@
 \alias{print.summary.GridTopology}
 \alias{summary,GridTopology-method}
 \alias{show,GridTopology-method}
+\alias{show,summary.GridTopology-method}
 \alias{coerce,GridTopology,data.frame-method}
 
 \title{Class "GridTopology" ~~~ }

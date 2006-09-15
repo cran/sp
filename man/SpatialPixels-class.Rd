@@ -7,6 +7,7 @@
 \alias{as.data.frame.SpatialPixels}
 \alias{summary,SpatialPixels-method}
 \alias{coerce,SpatialPixels,data.frame-method}
+\alias{show,SpatialPixels-method}
 
 \title{Class "SpatialPixels" ~~~ }
 \description{ class for defining a pixels, forming a
