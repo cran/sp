@@ -1,12 +1,12 @@
 Package: sp
-Version: 0.8-19
-Date: 2006-09-15
+Version: 0.8-17
+Date: 2006-06-26
 Title: classes and methods for spatial data
 Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
 Maintainer: Edzer J. Pebesma <e.pebesma@geo.uu.nl>
 Depends: R (>= 2.2.0), methods
 Suggests: RColorBrewer
-Imports: utils, lattice, grid
+Imports: lattice, grid
 Description: A package that provides classes and methods for spatial
   data. The classes document where the spatial location information
   resides, for 2D or 3D data. Utility functions are provided, e.g. for
@@ -31,4 +31,3 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
 	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
 	asciigrid.R spplot.R overlay.R spsample.R recenter.R dms.R
 	gridlines.R spdists.R
-Packaged: Fri Sep 15 10:16:40 2006; edzer

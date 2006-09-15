@@ -93,6 +93,7 @@ print.GridTopology = function(x, ...) {
 	print(res)
 	invisible(res)
 }
+setMethod("show", "GridTopology", function(object) print.GridTopology(object))
 
 summ.GridTopology = function(object, ...) {
 	ret = list()
@@ -107,6 +108,7 @@ print.summary.GridTopology = function(x, ...) {
 	print(x$values)
 	invisible(x)
 }
+#setMethod("show", "summary.GridTopology", function(object) print.summary.GridTopology(object))
 
 # make a SpatialPolygons from a GridTopology - NERSC query
 

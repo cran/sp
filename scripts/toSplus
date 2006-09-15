@@ -1,0 +1,18 @@
+set -e
+from=R
+to=Splus
+for f in `ls R/*.R`
+do 
+ qname=`basename $f`
+ sname=$qname
+ echo $from/$qname "==>>" $to/$sname
+ ./scripts/preproc.pl -ver=SP5 $from/$qname > $to/$sname
+done 
+cat data/*.R > $to/data.q
+for f in `ls man/*.Rd`
+do 
+ rname=`basename $f`
+ sname=`echo $rname | sed s/Rd/sgml/`
+ echo $f "==>>" $to/$sname
+ R CMD Rdconv --type Ssgm $f > $to/$sname
+done

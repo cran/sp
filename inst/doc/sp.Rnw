@@ -20,7 +20,7 @@
 the {\tt sp} Package }
 \author{Edzer J.\ Pebesma\footnote{Dept of Physical Geography,
 Faculty of Geosciences, Utrecht University, P.O. Box 80.115,
-3508 TC Utrecht, The Netherlands {\tt e.pebesma@geog.uu.nl}} \and 
+3508 TC Utrecht, The Netherlands {\tt e.pebesma@geo.uu.nl}} \and 
 Roger S.\ Bivand\footnote{Economic Geography Section, Department of Economics, %
 Norwegian School of Economics and Business Administration, %
 Breiviksveien 40, N-5045 Bergen, Norway; {\tt Roger.Bivand@nhh.no}}}

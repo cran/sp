@@ -162,12 +162,16 @@ print.SpatialPixels = function(x, ...) {
 	print(as(x, "SpatialPoints"))
 	invisible(x)
 }
+setMethod("show", "SpatialPixels", function(object) print.SpatialPixels(object))
+
 print.SpatialGrid = function(x, ...) {
 	cat("Object of class SpatialGrid\n")
 	print(summary(x@grid))
 	print(as(x, "SpatialPoints"))
 	invisible(x)
 }
+setMethod("show", "SpatialGrid", function(object) print.SpatialGrid(object))
+
 "$<-.SpatialGrid" = function(x,i,value) {
 	df = data.frame(value)
 	names(df) = as.character(substitute(i))
