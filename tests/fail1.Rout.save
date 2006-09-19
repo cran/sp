@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0  (2005-10-06 r35749)
+R version 2.4.0 alpha (2006-09-17 r39373)
+Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > library(sp)
@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 > 
 > coordinates(x) <- c("x", "y")
 > try(proj4string(x) <- 1.5)
-Error in "proj4string<-"(`*tmp*`, value = 1.5) : 
+Error in `proj4string<-`(`*tmp*`, value = 1.5) : 
 	assigned value must be CRS object
 > try(coordinates(a) <- cbind(1:10, 10:1))
 Error in try(coordinates(a) <- cbind(1:10, 10:1)) : 
@@ -31,7 +31,7 @@ Error in try(coordinates(a) <- cbind(1:10, 10:1)) :
 > x = meuse
 > # invalid coordinate formulae:
 > try(coordinates(x) <- ~log(x)+sqrt(y)) # no expressions allowed
-Error in "[.data.frame"(object, , -coord.numbers, drop = FALSE) : 
+Error in `[.data.frame`(object, , -coord.numbers, drop = FALSE) : 
 	undefined columns selected
 > try(coordinates(x) <- ~x+y+z) # z is not present
 Error in eval(expr, envir, enclos) : object "z" not found
@@ -45,7 +45,7 @@ Error in validObject(.Object) : invalid class "SpatialPoints" object: spatial.di
 > # is.na.sp.coords
 > a = data.frame(cbind(xx=c(1,NA,2,10),yy=c(2,NA,NA,20)))
 > try(coordinates(a) <- c("xx", "yy")) # should fail!
-Error in "coordinates<-"(`*tmp*`, value = c("xx", "yy")) : 
+Error in `coordinates<-`(`*tmp*`, value = c("xx", "yy")) : 
 	coordinates are not allowed to contain missing values
 > 
 > x = meuse[1:4,]
@@ -63,7 +63,8 @@ Error in "coordinates<-"(`*tmp*`, value = c("xx", "yy")) :
 > 
 > # this will fail, as "x" is not in the data part:
 > try(x[c("zinc", "x", "copper", "zinc")])
-Error in x@data[i, j, drop = FALSE] : undefined columns selected
+Error in `[.data.frame`(x@data, i, j, drop = FALSE) : 
+	undefined columns selected
 > 
 > xx = data.frame(x=1:10, y=1:10)
 > 

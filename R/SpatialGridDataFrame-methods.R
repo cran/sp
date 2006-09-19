@@ -6,37 +6,32 @@ SpatialPixelsDataFrame = function(points, data,
 	if (!is(points, "SpatialPoints"))
 		points = SpatialPoints(points, proj4string = proj4string)
 	points = SpatialPixels(points, tolerance)
-	new("SpatialPixelsDataFrame", points, data = as(data, "AttributeList"))
+	new("SpatialPixelsDataFrame", points, data = data)
 }
 
 SpatialGridDataFrame = function(grid, data, proj4string = CRS(as.character(NA)))
-	new("SpatialGridDataFrame", SpatialGrid(grid, proj4string), 
-		data = as(data, "AttributeList"))
+	new("SpatialGridDataFrame", SpatialGrid(grid, proj4string), data = data)
 
 as.SPixDF.SGDF = function(from) {
-   	#fd = from@data
-   	#data = list()
+   	data = list()
    	n = .NumberOfCells(from@grid)
-   	for (i in seq(along=from@data@att)) {
-		# data[[i]] = vector(mode(from@data[[i]]), n)
+   	for (i in seq(along = from@data)) {
 		v = vector(mode(from@data[[i]]), n)
       	if (is.factor(from@data[[i]]))
 			v = factor(rep(NA, n), levels = levels(from@data[[i]]))
 		else
 			v[-from@grid.index] = NA
 		v[from@grid.index] = from@data[[i]]
-		from@data@att[[i]] = v
+		data[[i]] = v
    	}
-   	#data = data.frame(data)
-	#data = AttributeList(data)
-   	#names(data) = names(from@data)
-	SpatialGridDataFrame(from@grid, from@data, CRS(proj4string(from)))
+   	data = data.frame(data)
+   	names(data) = names(from@data)
+	SpatialGridDataFrame(from@grid, data, CRS(proj4string(from)))
 }
 setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPixDF.SGDF)
 
 as.SGDF.SPixDF = function(from) { 
-	#sel = apply(from@data, 1, function(x) !all(is.na(x)))
-	sel = apply(sapply(from@data@att, is.na), 1, function(x) !all(x))
+	sel = apply(sapply(from@data, is.na), 1, function(x) !all(x))
 	if (!any(sel)) {
 		warning("complete map seems to be NA's -- no selection was made")
 		sel = rep(TRUE, length(sel))
@@ -88,12 +83,12 @@ as.data.frame.SpatialPixelsDataFrame = function(x, row.names, optional, ...)
 as.data.frame.SpatialGridDataFrame = function(x, row.names, optional, ...)
 	as.data.frame(as(x, "SpatialPixelsDataFrame"))
 
-setAs("SpatialPixelsDataFrame", "data.frame", function(from) 
+setAs("SpatialPixelsDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialPixelsDataFrame(from))
-setAs("SpatialGridDataFrame", "data.frame", function(from) 
+setAs("SpatialGridDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialGridDataFrame(from))
-setAs("SpatialPixelsDataFrame", "AttributeList", function(from) from@data)
-setAs("SpatialGridDataFrame", "AttributeList", function(from) from@data)
+#setAs("SpatialPixelsDataFrame", "AttributeList", function(from) from@data)
+#setAs("SpatialGridDataFrame", "AttributeList", function(from) from@data)
 
 subset.SpatialPixelsDataFrame <- function(x, subset, select, drop = FALSE, ...) {
 	xSP <- coordinates(x)

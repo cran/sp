@@ -1,6 +1,7 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 beta (2005-04-10), ISBN 3-900051-07-0
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.1 (2006-06-01)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -11,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > library(sp)
@@ -287,7 +288,7 @@ Data attributes:
 > # row 2, coord+col 9,10
 > x[2,9:10]
        coordinates soil lime
-1 (181025, 333558)    1    1
+2 (181025, 333558)    1    1
 > # coordinates, col 9+10
 > x[,9:10]
        coordinates soil lime
@@ -312,7 +313,7 @@ Data attributes:
 > # second row, coordinates + zinc
 > x[2,"zinc"]
        coordinates zinc
-1 (181025, 333558) 1141
+2 (181025, 333558) 1141
 > # select; re-orders:
 > x[c("zinc","copper")]
        coordinates zinc copper

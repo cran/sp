@@ -20,8 +20,7 @@
 	}
 	if (!is(coords, "SpatialPoints"))
 		coords = SpatialPoints(coords, proj4string = proj4string)
-	new("SpatialPointsDataFrame", coords, data = as(data, "AttributeList"),
-		coords.nrs = coords.nrs)
+	new("SpatialPointsDataFrame", coords, data = data, coords.nrs = coords.nrs)
 }
 
 setMethod("coordinates", "SpatialPointsDataFrame", function(obj) obj@coords)
@@ -101,7 +100,7 @@ as.data.frame.SpatialPointsDataFrame = function(x, row.names, optional, ...)  {
 setAs("SpatialPointsDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialPointsDataFrame(from))
 
-setAs("SpatialPointsDataFrame", "AttributeList", function(from) from@data)
+#setAs("SpatialPointsDataFrame", "AttributeList", function(from) from@data)
 
 names.SpatialPointsDataFrame <- function(x) names(x@data)
 "names<-.SpatialPointsDataFrame" <- function(x, value) { names(x@data) = value; x }

@@ -19,18 +19,18 @@ setClass("DMS", representation(WS="logical", deg="numeric",
 	dd <- abs(dd)
 	deg <- as(floor(dd), "integer")
 	dd <- (dd - deg)*60
-	min <- as(floor(dd), "integer")
-	sec <- (dd - min)*60
+	mins <- as(floor(dd), "integer")
+	sec <- (dd - mins)*60
 	tst <- abs(sec - 60.0) > sqrt(.Machine$double.eps)
         sec <- ifelse(tst, sec, 0.0)
-	min <- ifelse(tst, min, min+1)
-	tst <- min < 60
-        min <- ifelse(tst, min, 0)
+	mins <- ifelse(tst, mins, mins+1)
+	tst <- mins < 60
+        mins <- ifelse(tst, mins, 0)
 	deg <- ifelse(tst, deg, deg+1)
 
-	dms <- new("DMS", WS=WS, deg=deg, min=min, sec=sec, NS=NS)
+	dms <- new("DMS", WS=WS, deg=deg, min=mins, sec=sec, NS=NS)
 	tst <- validObject(dms)
-	if (is(tst, "logical") & tst) return(dms)
+	if (is.logical(tst) & tst) return(dms)
 	else stop(tst)
 	dms
 }
@@ -99,18 +99,18 @@ setMethod("show", "DMS", function(object) print.DMS(object))
 	smin <- substr(y, ndeg+1, nmin-1)
 	dotmin <- regexpr("\\.", smin)
 	ifelse (dotmin < 0, {
-		min <- as(ifelse(nmin < 1, 0, smin), "integer")
+		mins <- as(ifelse(nmin < 1, 0, smin), "integer")
 		sec <- as(ifelse(nsec < 1, 0, 
 		    substr(y, nmin+1, nsec-1)), "numeric")
 	}, {
-		min <- as(ifelse(nmin < 1, 0, smin), "integer")
-		sec <- (as(smin, "numeric") - min) * 60
+		mins <- as(ifelse(nmin < 1, 0, smin), "integer")
+		sec <- (as(smin, "numeric") - mins) * 60
 	})
 	WS <- ifelse(x == "W" | x == "S", TRUE, FALSE)
 	    
-	dms <- new("DMS", WS=WS, deg=deg, min=min, sec=sec, NS=NS)
+	dms <- new("DMS", WS=WS, deg=deg, min=mins, sec=sec, NS=NS)
 	tst <- validObject(dms)
-	if (is(tst, "logical") & tst) return(dms)
+	if (is.logical(tst) & tst) return(dms)
 	else stop(tst)
 	dms
 }

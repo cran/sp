@@ -56,7 +56,7 @@ Methods defined with class "SpatialPolygonsDataFrame" in the signature:
 	\link{SpatialPolygons-class}
 }
 \examples{
-data(ncshp)
+%data(ncshp)
 %nc1 <- as.SpatialPolygons.Shapes(nc.shp$Shapes, as.character(nc.shp$att.data$FIPS))
 %df <- nc.shp$att.data
 %rownames(df) <- as.character(nc.shp$att.data$FIPS)

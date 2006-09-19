@@ -1,5 +1,5 @@
 setClass("SpatialPixelsDataFrame",
-	representation("SpatialPixels", data = "AttributeList", coords.nrs = "numeric"),
+	representation("SpatialPixels", data = "data.frame", coords.nrs = "numeric"),
 	validity = function(object) {
 		if (length(object@grid.index) == 0)
 			stop("grid.index should not have length zero")
@@ -10,7 +10,7 @@ setClass("SpatialPixelsDataFrame",
 )
 
 setClass("SpatialGridDataFrame",
-	representation("SpatialGrid", data = "AttributeList"),
+	representation("SpatialGrid", data = "data.frame"),
 	validity = function(object) {
 		if (length(object@grid.index) > 0)
 			stop("grid.index should have length zero")

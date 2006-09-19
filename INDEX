@@ -3,7 +3,6 @@ as.SpatialPolygons.GridTopology
                         object
 as.SpatialPolygons.PolygonsList
                         Making SpatialPolygons objects
-AttributeList-class     Class "AttributeList"
 bbox,Spatial-method     retrieve bbox from spatial data
 bpy.colors              blue-pink-yellow color scheme that prints well
                         on black/white printers

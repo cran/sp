@@ -3,7 +3,6 @@
 \alias{SpatialPointsDataFrame-class}
 \alias{[,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialPointsDataFrame,data.frame-method}
-\alias{coerce,SpatialPointsDataFrame,AttributeList-method}
 \alias{coerce,SpatialPointsDataFrame,SpatialPoints-method}
 \alias{show,SpatialPointsDataFrame-method}
 % \alias{coordinates,SpatialPointsDataFrame-method}
@@ -29,7 +28,7 @@ or of the form \code{coordinates(x) = xy}; see \link{coordinates}.
 }
 \section{Slots}{
   \describe{
-    \item{\code{data}:}{Object of class \link{AttributeList-class} containing
+    \item{\code{data}:}{Object of class data.frame containing
 		the attribute data (may or may not contain the coordinates in its columns) }
     \item{\code{coords}:}{Object of class \code{"matrix"}; the coordinates matrix
 	(points are rows in the matrix) }
@@ -50,8 +49,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
   \describe{
     \item{[}{\code{signature(x = "SpatialPointsDataFrame")}: subset rows or
 	columns; in case of row subsetting, the coordinates are also subsetted }
-    \item{coerce}{\code{signature(from = "SpatialPointsDataFrame", to = "data.frame")}:      extracts the AttributeList part, and converts it to a data.frame }
-    \item{coerce}{\code{signature(from = "SpatialPointsDataFrame", to = "AttributeList")}:      extracts the AttributeList part  }
+    \item{coerce}{\code{signature(from = "SpatialPointsDataFrame", to = "data.frame")}:   extracts the attribute part }
     \item{coordinates}{\code{signature(obj = "SpatialPointsDataFrame")}: retrieves
 	the coordinates only }
     \item{show}{\code{signature(object = "SpatialPointsDataFrame")}: print method }
