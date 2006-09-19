@@ -207,8 +207,7 @@ sample.Sgrid = function(x, n, type = "random", bb = bbox(x),
 	#id = overlay(as(x, "SpatialGrid"), pts)
 	id = overlay(x, pts)
 	if (is(id, "SpatialPointsDataFrame"))
-		#id = id@data[,1]
-		id = id@data@att[[1]]
+		id = id@data[[1]]
 	pts[which(!is.na(id))]
 }
 setMethod("spsample", signature(x = "SpatialGrid"), sample.Sgrid)
@@ -220,10 +219,9 @@ sample.Spixels = function(x, n, type = "random", bb = bbox(x),
 		stop("cannot sample from grid with zero area")
 	bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
 	pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
-	#id = overlay(as(x, "SpatialGrid"), pts)
 	id = overlay(x, pts)
 	if (is(id, "SpatialPointsDataFrame"))
-		id = id@data@att[[1]]
+		id = id@data[[1]]
 	pts[which(!is.na(id))]
 }
 setMethod("spsample", signature(x = "SpatialPixels"), sample.Spixels)

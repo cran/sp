@@ -14,7 +14,6 @@
 \alias{coerce,SpatialPixelsDataFrame,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialPixelsDataFrame,SpatialGridDataFrame-method}
 \alias{coerce,SpatialPixelsDataFrame,data.frame-method}
-\alias{coerce,SpatialPixelsDataFrame,AttributeList-method}
 \alias{coerce,SpatialPixelsDataFrame,matrix-method}
 \alias{as.data.frame.SpatialPixelsDataFrame}
 
@@ -36,8 +35,7 @@ Ordered full grids are stored instead or unordered non-NA cells;
     \item{\code{grid.index}:}{integer; index of points in the list to points
 	in the full (ordered) grid. x cycles fastest; all coordinates increase
 	from low to hight except y, which decreases from high to low }
-    \item{\code{data}:}{Object of class \link{AttributeList-class}
-		containing the attribute data }
+    \item{\code{data}:}{Object of class data.frame, containing the attribute data }
   }
 }
 \section{Extends}{

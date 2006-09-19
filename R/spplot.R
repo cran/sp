@@ -61,12 +61,12 @@ sp.text = function(loc, txt, ...) {
 	panel.text(loc[1], loc[2], txt, ...)
 }
 
-sp.panel.layout = function(lst, panel.number, ...) {
+sp.panel.layout = function(lst, p.number, ...) {
 	sp.panel0 = function(x, first = FALSE, ...) {
 		if (is.character(x))
 #			obj = get(x)
 			x = get(x)
-		if (!is.null(x$which) && is.na(match(panel.number, x$which)))
+		if (!is.null(x$which) && is.na(match(p.number, x$which)))
 			return()
 		if (inherits(x, "list")) {
 			# print(paste(class(x), "first val", first, "first obj", x$first))
@@ -85,7 +85,7 @@ sp.panel.layout = function(lst, panel.number, ...) {
 			sp.grid(x, ...)
 		else stop(paste("cannot plot object of class", class(x)))
 	}
-	if (!is.null(lst$which) && is.na(match(panel.number, lst$which)))
+	if (!is.null(lst$which) && is.na(match(p.number, lst$which)))
 		return()
 	else
 		lst$which = NULL
@@ -131,7 +131,7 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		aspect = aspect, panel = panel, xlab = xlab, ylab = ylab, scales = scales,
 		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
 	# deal with factor variables:
-	if (all(unlist(lapply(obj@data@att[zcol], is.factor)))) {
+	if (all(unlist(lapply(obj@data[zcol], is.factor)))) {
 		args$data[[zcol2]] = as.numeric(args$data[[zcol2]])
 		if (is.null(args$colorkey) || (is.logical(args$colorkey) && args$colorkey)
 				|| (is.list(args$colorkey) && is.null(args$colorkey$at) && 
@@ -252,7 +252,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 }
 setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
 
-panel.gridplot = function(x, y, z, subscripts, ..., panel.number, sp.layout) {
+panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
 	# set first = TRUE defaults for polygons objects in sp.layout:
 	if (!missing(sp.layout) && inherits(sp.layout, "list")) {
 		if (inherits(sp.layout[[1]], "list")) {
@@ -267,9 +267,10 @@ panel.gridplot = function(x, y, z, subscripts, ..., panel.number, sp.layout) {
 			sp.layout$first = TRUE
 	}
 	# print(sp.layout)
-	sp.panel.layout(sp.layout, panel.number, first = TRUE)
+
+	sp.panel.layout(sp.layout, panel.number(), first = TRUE)
 	panel.levelplot(x, y, z, subscripts, ...)
-	sp.panel.layout(sp.layout, panel.number)
+	sp.panel.layout(sp.layout, panel.number())
 }
 
 panel.polygonsplot =
@@ -279,7 +280,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
    		cex = add.text$cex, font = add.text$font, fontfamily = add.text$fontfamily, 
    		fontface = add.text$fontface, col.text = add.text$col, ..., 
    		col.regions = regions$col, alpha.regions = regions$alpha, 
-		grid.polygons, sp.layout, panel.number) 
+		grid.polygons, sp.layout) 
 {
 	regions <- trellis.par.get("regions")
 	add.line <- trellis.par.get("add.line")
@@ -297,8 +298,9 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 	y <- as.numeric(y[subscripts])
 	z <- as.numeric(z[subscripts])
 	zcol <- as.numeric(zcol[subscripts])
+
 	if (is(grid.polygons, "SpatialLines"))
-		sp.panel.layout(sp.layout, panel.number)
+		sp.panel.layout(sp.layout, panel.number())
 	if (any(subscripts)) {
 		if (is(grid.polygons, "SpatialLines")) {
 			sp.lines3 = function(x, col, ...) panel.lines(coordinates(x), col = col, ...)
@@ -332,11 +334,12 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 		}
 	}
 	if (!is(grid.polygons, "SpatialLines"))
-		sp.panel.layout(sp.layout, panel.number)
+		sp.panel.layout(sp.layout, panel.number())
 }
 
-panel.pointsplot = function(x, y, subscripts, col, sp.layout, ..., panel.number) {
-	sp.panel.layout(sp.layout, panel.number)
+panel.pointsplot = function(x, y, subscripts, col, sp.layout, ...) {
+
+	sp.panel.layout(sp.layout, panel.number())
 	panel.superpose(x, y, subscripts, col = col, ...)
 }
 
@@ -581,7 +584,7 @@ addNAemptyRows = function(obj) {
 			xy = rbind(xy, cbind(missing.x, rep(xy[1,2], length(missing.x))))
 		if (length(missing.y) > 0)
 			xy = rbind(xy, cbind(rep(xy[1,1], length(missing.y)), missing.y))
-		newatt = AttributeList(lapply(obj@data@att, function(x) c(x, rep(NA, n))))
+		newatt = data.frame(lapply(obj@data, function(x) c(x, rep(NA, n))))
 		obj = SpatialPointsDataFrame(xy, newatt, obj@coords.nrs, obj@proj4string, FALSE)
 	} else
 		obj = as(obj, "SpatialPointsDataFrame")

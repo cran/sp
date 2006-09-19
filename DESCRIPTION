@@ -1,10 +1,10 @@
 Package: sp
-Version: 0.8-20
+Version: 0.9-1
 Date: 2006-09-19
 Title: classes and methods for spatial data
 Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
 Maintainer: Edzer J. Pebesma <e.pebesma@geo.uu.nl>
-Depends: R (<= 2.3.1), methods
+Depends: R (>= 2.4.0), methods
 Suggests: RColorBrewer
 Imports: utils, lattice, grid
 Description: A package that provides classes and methods for spatial
@@ -14,10 +14,9 @@ Description: A package that provides classes and methods for spatial
   retrieving coordinates, for subsetting, print, summary, etc.
 License: GPL version 2 or later
 URL: http://r-spatial.sourceforge.net/
-SaveImage: yes
+LazyLoad: yes
 Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
 	projected.R Class-SpatialPoints.R SpatialPoints-methods.R
-	Class-AttributeList.R AttributeList-methods.R
 	Class-SpatialPointsDataFrame.R SpatialPointsDataFrame-methods.R
 	Class-GridTopology.R Class-SpatialGrid.R
 	Class-SpatialGridDataFrame.R Class-SpatialLines.R
@@ -31,4 +30,4 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
 	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
 	asciigrid.R spplot.R overlay.R spsample.R recenter.R dms.R
 	gridlines.R spdists.R
-Packaged: Tue Sep 19 11:28:40 2006; rsb
+Packaged: Tue Sep 19 11:31:06 2006; rsb

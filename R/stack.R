@@ -21,47 +21,21 @@
 	data
 }
 
-stack.AttributeList = function(x, ...) {
-	ns = names(x)
-	if (all(unlist(lapply(x@att, is.factor)))) {
-		# the expensive but robust way:
-		x = stack(lapply(x@att, as.character), ...)
-		x$values = factor(x$values)
-	} else
-		x = stack(lapply(x@att, as.numeric), ...)
-	x$ind = factor(x$ind, levels = ns) # don't sort alphabetically
-	x
-}
-
 stack.SpatialPointsDataFrame = function (x, select, ...)
 {
 	xd = x@data
    	cc = coordinates(x)
 	cc.names = dimnames(cc)[[2]]
 
-	#if (!missing(select)) {
-	#	if (!is.numeric(select)) {
-	#		nl = as.list(1:ncol(xd))
-	#		names(nl) = names(xd)
-	#		vars = eval(substitute(select), nl, parent.frame())
-	#	} else
-	#		vars = select
-	#	xd = xd[, vars, drop = FALSE]
-	#}
-	#xd = xd[, unlist(lapply(xd, is.vector)), drop = FALSE]
-
 	if (!missing(select))
 		xd = xd[select]
 	nc = ncol(xd)
-	xd = stack(xd)
+	xd = stack(data.frame(lapply(xd, as.numeric)))
 
 	ccr = data.frame(rep(cc[,1], nc))
 	for (i in 2:ncol(cc))
 		ccr = data.frame(ccr, rep(cc[,i], nc))
 	names(ccr) = cc.names
-	#data.frame(ccr, values = unlist(unname(xd)),
-	#	ind = factor(rep(names(xd), lapply(xd, length)), 
-	#		levels = names(xd)))
 	data.frame(ccr, xd)
 }
 

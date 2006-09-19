@@ -16,8 +16,7 @@ SpatialPointsDataFrame(coords, data, coords.nrs = numeric(0),
 (each row is a point); in case of SpatialPointsDataFrame an object
 of class \link{SpatialPoints-class} is also allowed}
 \item{proj4string}{ projection string of class \link{CRS-class}}
-\item{data}{ object of class \code{data.frame} or of class
-\link{AttributeList-class}; the number of rows in \code{data} 
+\item{data}{ object of class \code{data.frame}; the number of rows in \code{data} 
 should equal the number of points in the \code{coords} object}
 \item{coords.nrs}{numeric; if present, records the column positions where
 in \code{data} the coordinates were taken from (used by \link{coordinates<-})}

@@ -1,7 +1,7 @@
 setClass("SpatialPointsDataFrame",
-	representation("SpatialPoints", data = "AttributeList", coords.nrs = "numeric"),
+	representation("SpatialPoints", data = "data.frame", coords.nrs = "numeric"),
 	prototype = list(bbox = matrix(NA), proj4string = CRS(as.character(NA)),
-		coords = matrix(NA), data = new("AttributeList", att=list()), 
+		coords = matrix(NA), data = data.frame(), 
 		coords.nrs = numeric(0)),
 	validity = function(object) {
 		#if (!inherits(object@data, "data.frame"))
