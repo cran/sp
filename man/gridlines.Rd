@@ -27,7 +27,7 @@ the return object inherits the projection information of \code{x}; \code{gridat}
   of Roger Bivand.
 }
 
-\seealso{ Function transform in package \code{spproj} }
+\seealso{ Function spTransform in package \code{rgdal} }
 
 \examples{
 data(meuse)

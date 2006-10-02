@@ -6,7 +6,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Make SpatialPolygons object from GridTopology object}
 \description{
-  Converts grids of regular rectangles into a \code{SpatialPolygons} object, which can be transformed to a different projection or datum. The function is not suitable for high-resolution grids. The ordering of the grid cells is as in \code{coordinates()} of the same object, and is reported by \code{IDvaluesGridTopology}.
+  Converts grids of regular rectangles into a \code{SpatialPolygons} object, which can be transformed to a different projection or datum with \code{spTransform} in package \code{rgdal}. The function is not suitable for high-resolution grids. The ordering of the grid cells is as in \code{coordinates()} of the same object, and is reported by \code{IDvaluesGridTopology}.
 }
 \usage{
 as.SpatialPolygons.GridTopology(grd, proj4string = CRS(as.character(NA)))
@@ -25,7 +25,10 @@ IDvaluesSpatialPixels(obj)
 \code{IDvaluesGridTopology} and \code{IDvaluesSpatialPixels} return a character vector with the object grid indices.
 }
 
-\seealso{\code{\link{GridTopology}}, \code{\link{SpatialPixels}}, \code{\link{SpatialPolygons}}}
+\seealso{\code{\link{GridTopology}}, \code{\link{SpatialPixels}}, \code{\link{SpatialPolygons}}
+\code{spTransform} in package \code{rgdal}
+}
+
 
 \examples{
 grd <- GridTopology(cellcentre.offset=c(-175,55), cellsize=c(10,10), cells.dim=c(4,4))

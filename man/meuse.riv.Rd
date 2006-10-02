@@ -12,8 +12,8 @@ data set. }
 }
 \details{
 \code{x} and \code{y} are in RDM, the Dutch topographical map
-coordinate system. See examples of \code{transform} in the
-spproj package for projection parameters.
+coordinate system. See examples of \code{spTransform} in the
+rgdal package for projection parameters.
 }
 \references{
 See the \link{meuse} documentation
