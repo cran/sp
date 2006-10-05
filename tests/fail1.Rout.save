@@ -1,5 +1,5 @@
 
-R version 2.4.0 alpha (2006-09-17 r39373)
+R version 2.4.0 (2006-10-03)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -24,7 +24,7 @@ Type 'q()' to quit R.
 Error in `proj4string<-`(`*tmp*`, value = 1.5) : 
 	assigned value must be CRS object
 > try(coordinates(a) <- cbind(1:10, 10:1))
-Error in try(coordinates(a) <- cbind(1:10, 10:1)) : 
+Error in coordinates(a) <- cbind(1:10, 10:1) : 
 	object "a" not found
 > # fails because a is not found; passes if a assigned NULL, see pass1.R
 > 

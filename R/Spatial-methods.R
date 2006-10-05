@@ -81,27 +81,6 @@ setMethod("polygons", "Spatial", function(obj) {
 	}
 )
 
-if (as.numeric(version$minor) < 3) {
-
-    transform.Spatial <- function(x, ...) {
-	if (require(spproj)) 
-		standardGeneric("transform")
-	else 
-		stop("for using (coordinate) transform on objects deriving from Spatial, library spproj is required")
-    }
-
-} else {
-
-    transform.Spatial <- function(`_data`, ...) {
-	if (require(spproj)) 
-		standardGeneric("transform")
-	else 
-		stop("for using (coordinate) transform on objects deriving from Spatial, library spproj is required")
-    }
-}
-
-setMethod("transform", "Spatial", transform.Spatial)
-
 summary.Spatial = function(object, ...) {
     obj = list()
 	obj[["class"]] = class(object)

@@ -76,8 +76,6 @@ export(select.spatial)
 
 export(read.asciigrid, write.asciigrid)
 
-export(transform.Spatial)
-
 export(makegrid, sample.Spatial, sample.Line, sample.Polygon, sample.Polygons,
 	sample.Sgrid)
 
@@ -109,7 +107,7 @@ exportClasses(DMS)
 
 exportMethods(show, bbox, coordinates, "coordinates<-",
 	coordnames, "coordnames<-", gridded, polygons, "polygons<-",
-	dimensions, coerce, "[", transform, overlay, plot, recenter,
+	dimensions, coerce, "[", overlay, plot, recenter,
 	spplot, spsample, summary)
 
 S3method("[[", SpatialPointsDataFrame)

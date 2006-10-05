@@ -34,8 +34,8 @@ spplot.points(obj, zcol = names(obj), ..., names.attr,
 	xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04))
 mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 	fill = "black", just = "right")
-sp.theme()
-layout.north.arrow()
+sp.theme(set = FALSE, regions = list(col = bpy.colors(100)), ...)
+layout.north.arrow(type = 1)
 layout.scale.bar(height = 0.05)
 spplot.locator(n = 512, type = "n", ...)
 }
@@ -72,6 +72,9 @@ e.g. \code{exp(x)~x+y|name} to plot the exponent of the z-variable}
 \item{heights}{heights of grob}
 \item{fill}{fill color of grob}
 \item{just}{grob placement justification}
+\item{set}{ logical; if TRUE, trellis.par.set is called, else a list is returned
+that can be passed to trellis.par.set() }
+\item{regions}{ color ramp for the theme }
 \item{height}{height of scale bar; width is 1.0}
 \item{n}{see locator}
 \item{type}{see locator}
