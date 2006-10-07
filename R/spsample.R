@@ -102,6 +102,7 @@ sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 		its <- 0
 		n_now <- 0
 		bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
+	        bb.area <- bb.area + bb.area*its*0.1
 		xSP <- new("Spatial", bbox=bbox(x), proj4string=proj4string)
 		if (type == "random") {
 		    brks <- c(1,3,6,10,20,100)
@@ -169,9 +170,12 @@ proj4string=CRS(as.character(NA)), iter=4, ...) {
 	        Not_NAs <- !is.na(id)
 	        if (!any(Not_NAs)) res <- NULL
 	        else res <- pts[which(Not_NAs)]
+	        if (nrow(res@coords) < n) res <- NULL
 	    }
 	    its <- its+1
 	}
+	if (!is.null(res) && n < nrow(res@coords) && type == "random") 
+		res <- res[sample(nrow(res@coords), n)]
 	res
 }
 setMethod("spsample", signature(x = "Polygons"), sample.Polygons)
@@ -186,14 +190,18 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 	its <- 0
 	while (is.null(res) && its < iter) {
 	    bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
+	    bb.area <- bb.area + bb.area*its*0.1
 	    pts = #spsample(as(x, "Spatial")
 sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type=type, offset = offset, ...)
 	    Over_pts_x <- overlay(pts, x)
 	    Not_NAs <- !is.na(Over_pts_x)
 	    if (!any(Not_NAs)) res <- NULL
 	    else res <- pts[which(Not_NAs)]
+	    if (nrow(res@coords) < n) res <- NULL
 	    its <- its+1
 	}
+	if (!is.null(res) && n < nrow(res@coords) && type == "random") 
+		res <- res[sample(nrow(res@coords), n)]
 	res
 }
 setMethod("spsample", signature(x = "SpatialPolygons"), sample.SpatialPolygons)

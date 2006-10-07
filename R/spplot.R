@@ -115,6 +115,7 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
 		aspect = mapasp(obj,xlim,ylim), panel = panel.gridplot, sp.layout = NULL, formula, 
 		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,], checkEmptyRC = TRUE) {
+	if (is.null(zcol)) stop("no names method for object")
 	if (checkEmptyRC)
 		sdf = addNAemptyRows(obj) # returns SpatialPointsDataFrame
 	else
@@ -155,7 +156,8 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 		panel = panel.polygonsplot, sp.layout = NULL, formula, 
 		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,]) {
 
-	sdf = as.data.frame(obj)
+	if (is.null(zcol)) stop("no names method for object")
+	sdf = as(obj, "data.frame")
 	if (is(obj, "SpatialPolygonsDataFrame"))
 		labpts = getSpPPolygonsLabptSlots(obj)
 	else {
@@ -213,6 +215,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		sp.layout = NULL, identify = FALSE, formula,
 		xlim = bbexpand(bbox(obj)[1,], 0.04), ylim = bbexpand(bbox(obj)[2,], 0.04)) {
 
+	if (is.null(zcol)) stop("no names method for object")
 	dots = list(...)
 	sdf = obj
 	# create formula:

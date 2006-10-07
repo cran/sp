@@ -91,4 +91,6 @@ spmap.to.lev            rearrange data in SpatialPointsDataFrame or
 spplot                  Plot methods for spatial data with attributes
 spsample                sample point locations in (or on) a spatial
                         object
+transform-methods       place holder for transform methods in library
+                        spproj
 zerodist                find point pairs with equal spatial coordinates
