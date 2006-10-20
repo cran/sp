@@ -1,4 +1,5 @@
 makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5,nrow(bb))) {
+#cat("n in makegrid", n, "\n")
 	if (is(x, "Spatial"))
 		bb = bbox(x)
 	else
@@ -33,9 +34,14 @@ makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5,nrow(bb))
 }
 
 sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), cellsize, ...) {
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.Spatial", n, "\n")
 	if (type == "random")
 		xy = apply(bb, 1, function(x) runif(n) * diff(x) + x[1])
 	else {
+	   if (is.na(n))
+		xy = makegrid(bb, nsig = 20, cellsize = cellsize, offset = offset)
+	   else
 		xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize, offset = offset)
 		cellsize = attr(xy, "cellsize")
 		if (type == "stratified") {
@@ -64,6 +70,8 @@ setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
 sample.Line = function(x, n, type, offset = runif(1),
 proj4string=CRS(as.character(NA)), ...) {
 #...) {
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.Line", n, "\n")
 	cc = coordinates(x)
 	dxy = apply(cc, 2, diff)
 	if (inherits(dxy, "matrix"))
@@ -92,6 +100,8 @@ setMethod("spsample", signature(x = "Line"), sample.Line)
 sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(2), proj4string=CRS(as.character(NA)), iter=4, ...) {
 #...) {
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.Polygon", n, "\n")
 	area = getPolygonAreaSlot(x)
 	if (area == 0.0)
 		spsample(Line(getPolygonCoordsSlot(x)), 
@@ -122,7 +132,8 @@ sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 		    if (!is.null(res)) n_now <- nrow(res@coords)
 		    its <- its+1
 		}
-		if (!is.null(res) && n < nrow(res@coords) && type == "random") 
+		if (type == "random")
+		    if (!is.null(res) && n < nrow(res@coords)) 
 			res <- res[sample(nrow(res@coords), n)]
 		res
 	}
@@ -134,6 +145,8 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 #...) {
 proj4string=CRS(as.character(NA)), iter=4, ...) {
 	#stop("not functioning yet...")
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.Polygons", n, "\n")
 	area = sapply(getPolygonsPolygonsSlot(x), getPolygonAreaSlot) # also available for Polygons!
 	if (sum(area) == 0.0)
 		# distribute n over the lines, according to their length?
@@ -170,11 +183,12 @@ proj4string=CRS(as.character(NA)), iter=4, ...) {
 	        Not_NAs <- !is.na(id)
 	        if (!any(Not_NAs)) res <- NULL
 	        else res <- pts[which(Not_NAs)]
-	        if (nrow(res@coords) < n) res <- NULL
+	        if (type == "random" && nrow(res@coords) < n) res <- NULL
 	    }
 	    its <- its+1
 	}
-	if (!is.null(res) && n < nrow(res@coords) && type == "random") 
+	if (type == "random")
+	    if (!is.null(res) && n < nrow(res@coords)) 
 		res <- res[sample(nrow(res@coords), n)]
 	res
 }
@@ -183,6 +197,8 @@ setMethod("spsample", signature(x = "Polygons"), sample.Polygons)
 sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(2), iter=4, ...) {
 	#stop("not functioning yet...")
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.SpatialPolygons", n, "\n")
 	area = sum(unlist(lapply(getSpPpolygonsSlot(x),getPolygonAreaSlot)))
 	if (area <= 0.0)
 		stop("cannot sample in zero-area polygons")
@@ -197,10 +213,11 @@ sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type=type, offset = of
 	    Not_NAs <- !is.na(Over_pts_x)
 	    if (!any(Not_NAs)) res <- NULL
 	    else res <- pts[which(Not_NAs)]
-	    if (nrow(res@coords) < n) res <- NULL
+	    if (type == "random" && nrow(res@coords) < n) res <- NULL
 	    its <- its+1
 	}
-	if (!is.null(res) && n < nrow(res@coords) && type == "random") 
+	if (type == "random")
+	    if (!is.null(res) && n < nrow(res@coords)) 
 		res <- res[sample(nrow(res@coords), n)]
 	res
 }
@@ -208,6 +225,8 @@ setMethod("spsample", signature(x = "SpatialPolygons"), sample.SpatialPolygons)
 
 sample.Sgrid = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(nrow(bb)), ...) {
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.Sgrid", n, "\n")
 	area = areaSpatialGrid(x)
 	if (area == 0.0)
 		stop("cannot sample from grid with zero area")
@@ -222,6 +241,8 @@ setMethod("spsample", signature(x = "SpatialGrid"), sample.Sgrid)
 
 sample.Spixels = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(nrow(bb)), ...) {
+	if (missing(n)) n <- as.integer(NA)
+#cat("n in sample.Spixels", n, "\n")
 	area = areaSpatialGrid(x)
 	if (area == 0.0)
 		stop("cannot sample from grid with zero area")
