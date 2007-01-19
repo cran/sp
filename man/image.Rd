@@ -7,12 +7,15 @@
 \title{ image gridded spatial data, or convert to format for image }
 \description{
 Convert gridded data in SpatialGridDataFrame to image format; call
-image on data in SpatialGridDataFrame format
+image on data in SpatialGridDataFrame format. The aspect ratio is set as either 1 for projected data, or stretched by distance from Equator for geographical coordinates.
 }
 \usage{
-image.SpatialGridDataFrame(x, attr = 1, xcol = 1, ycol = 2, 
-	red=NULL, green=NULL, blue=NULL, asp = 1, axes = FALSE, xlim = NULL,
-	ylim = NULL, add = FALSE, ...)
+\method{image}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2, 
+	red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL,
+	ylim = NULL, add = FALSE, ..., setParUsrBB=FALSE)
+\method{image}{SpatialPixelsDataFrame}(x, ...) 
+\method{contour}{SpatialGridDataFrame}(x, ...) 
+\method{contour}{SpatialPixelsDataFrame}(x, ...) 
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
 }
 \arguments{
@@ -23,7 +26,7 @@ a column number }
 \item{xcol}{ column number of x-coordinate, in the coordinate matrix }
 \item{ycol}{ column number of y-coordinate, in the coordinate matrix }
 \item{red,green,blue}{columns names or numbers given instead of the \code{attr} argument when the data represent an image encoded in three colour bands on the 0-255 integer scale; all three columns must be given in this case, and the attribute values will be constructed using function \code{rgb} }
-\item{asp}{ aspect ratio of unit x and unit y axis }
+%\item{asp}{ aspect ratio of unit x and unit y axis }
 \item{axes}{ logical; should coordinate axes be drawn? }
 \item{xlim}{ x-axis limits }
 \item{ylim}{ y-axis limits }
@@ -32,6 +35,7 @@ by \code{plot(as(x, "Spatial"),axes=axes,xlim=xlim,ylim=ylim,asp=asp)}
 which sets up axes and plotting region; if TRUE, the image is added
 to the existing plot. }
 \item{...}{ arguments passed to \link{image}, see examples }
+\item{setParUsrBB}{default FALSE, see \code{\link{Spatial-class}} for further details}
 }
 \value{ \code{as.image.SpatialGridDataFrame} returns the list with
 elements \code{x} and \code{y}, containing the coordinates of the cell

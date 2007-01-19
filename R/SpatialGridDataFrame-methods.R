@@ -57,13 +57,13 @@ setIs("SpatialPixelsDataFrame", "SpatialPointsDataFrame",
 	}, replace = function(obj, value) stop("no replace function for this coercion")
 )
 
-as.matrix.SpatialPixelsDataFrame = function(x) {
+as.matrix.SpatialPixelsDataFrame = function(x, ...) {
 	# fullgrid(x) = TRUE
 	x = as(x, "SpatialGridDataFrame")
 	as(x, "matrix")
 }
 
-as.matrix.SpatialGridDataFrame = function(x, byrow = FALSE) {
+as.matrix.SpatialGridDataFrame = function(x, byrow = FALSE, ...) {
 	if (ncol(x@data) > 1)
 		warning(
 		"as.matrix.SpatialPixelsDataFrame uses first column;\n pass subset or [] for other columns")

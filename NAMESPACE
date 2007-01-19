@@ -27,19 +27,6 @@ export(SpatialPoints, SpatialPointsDataFrame)
 export(Line, Lines, SpatialLines, SpatialLinesDataFrame, as.SpatialLines.SLDF,
 	gridat)
 
-export(
-#contourLines2LinesList, contourLines2df, contourLines2SpatialLines, 
-contourLines2SLDF)
-
-#export(
-#arcobj2LineList, arcobj2df, arcobj2SpatialLines, 
-#arcobj2SLDF)
-
-#export(
-#shapes2LineList, shapes2SpatialLines, 
-#shp2SLDF)
-
-export(Mapgen2SL)
 
 export(layout.scale.bar, layout.north.arrow, sp.theme,
 	mapLegendGrob, spplot.key, panel.gridplot, panel.polygonsplot,

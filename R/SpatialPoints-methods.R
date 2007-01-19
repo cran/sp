@@ -40,16 +40,19 @@ setMethod("coordinates", "matrix",
 {
 	cat("SpatialPoints:\n")
 	print(x@coords)
-	cat("Coordinate Reference System (CRS) arguments:", proj4string(x),
-		"\n")
+	pst <- paste(strwrap(paste(
+		"Coordinate Reference System (CRS) arguments:", 
+		proj4string(x))), collapse="\n")
+	cat(pst, "\n")
 }
 setMethod("show", "SpatialPoints", function(object) print.SpatialPoints(object))
 
 plot.SpatialPoints = function(x, pch = 3, axes = FALSE, add = FALSE, 
-	xlim = NULL, ylim = NULL, ...) 
+	xlim = NULL, ylim = NULL, ..., setParUsrBB=FALSE) 
 {
 	if (! add)
-		plot(as(x, "Spatial"), axes = axes, xlim = xlim, ylim = ylim)
+		plot(as(x, "Spatial"), axes = axes, xlim = xlim, ylim = ylim, 
+			..., setParUsrBB=setParUsrBB)
 	cc = coordinates(x)
 	points(cc[,1], cc[,2], pch = pch, ...)
 }
@@ -89,6 +92,7 @@ setMethod("coordnames", signature(x = "SpatialPoints"),
 setReplaceMethod("coordnames", 
 	signature(x = "SpatialPoints", value = "character"),
 	function(x, value) {
+		dimnames(x@bbox)[[1]] = value
 		dimnames(x@coords)[[2]] = value
 		x
 	}

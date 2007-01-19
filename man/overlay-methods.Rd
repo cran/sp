@@ -16,17 +16,16 @@ operation on all point-polygons combinations.
 \section{Methods}{
 \describe{
 \item{x = "SpatialPoints", y = "SpatialPolygons"}{ returns a numeric vector of length
-equal to the number of points; the number is the id (number) of the polygon of \code{y}
+equal to the number of points; the number is the index (number) of the polygon of \code{y}
 in which a point falls; NA denotes the point does not fall in a polygon; if a point
-falls in multiple polygons, the last polygon is recorded. 
-}
+falls in multiple polygons, the last polygon is recorded.  }
 \item{x = "SpatialPointsDataFrame", y = "SpatialPolygons"}{ equal to the previous method,
 except that an argument \code{fn=xxx} is allowed, e.g. \code{fn = mean} which will 
-then report a data.frame with the mean values of the \code{x} points fallin in each
+then report a data.frame with the mean values of the \code{x} points falling in each
 polygon (set) of \code{y} }
-\item{x = "SpatialPolygons", y = "SpatialPoints"}{ returns the polygon id of points in \code{y};
-if \code{x} is a \code{SpatialRingDataFrame}, a data.frame with rows from \code{x}
-corresponding to ponits in \code{y} is returned.
+\item{x = "SpatialPolygons", y = "SpatialPoints"}{ returns the polygon index of points in \code{y};
+if \code{x} is a \code{SpatialPolygonsDataFrame}, a data.frame with rows from \code{x}
+corresponding to points in \code{y} is returned.}
 \item{x = "SpatialGridDataFrame", y = "SpatialPoints"}{ returns object of class
 SpatialPointsDataFrame with grid attribute values x at spatial
 point locations y; NA for NA grid cells or points outside grid, and NA values
@@ -38,7 +37,7 @@ spatial point locations y; NA for NA grid cells or points outside the grid }
 \item{x = "SpatialPixels", y = "SpatialPoints"}{ returns grid values x at spatial
 point locations y; NA for NA grid cells or points outside the grid }
 }
-}}
+}
 \author{Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}}
 \note{points on a polygon boundary and points corresponding to a polygon vertex are
 considered to be inside the polygon}

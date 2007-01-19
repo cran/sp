@@ -6,6 +6,7 @@
 \alias{as.data.frame.SpatialGrid}
 \alias{summary,SpatialGrid-method}
 \alias{coerce,SpatialGrid,data.frame-method}
+\alias{coerce,SpatialGrid,SpatialPixels-method}
 \alias{show,SpatialGrid-method}
 
 \title{Class "SpatialGrid" ~~~ }

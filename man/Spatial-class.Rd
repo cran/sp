@@ -4,9 +4,11 @@
 \alias{print.summary.Spatial}
 \alias{summary,Spatial-method}
 \alias{plot,Spatial,missing-method}
+\alias{getParUsrBB}
+\alias{setParUsrBB}
 % \alias{coerce,SpatialDataFrame,SpatialData-method}
 
-\title{Class "Spatial" ~~~ }
+\title{Class "Spatial"}
 \description{ An abstract class from which useful spatial classes are
 derived }
 \section{Objects from the Class}{
@@ -37,7 +39,7 @@ are never to be generated; only derived classes can be meaningful }
 	\item{summary}{\code{signature(object = "Spatial")}: summarize object}
   }
 }
-\references{  }
+
 \author{ r-spatial team; Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}
 Roger Bivand, Barry Rowlinson, Virgilio G\'{o}mez-Rubio
 }
@@ -45,7 +47,9 @@ Roger Bivand, Barry Rowlinson, Virgilio G\'{o}mez-Rubio
 	The default aspect for map plots is 1; if however data are not
 	projected (coordinates are longlat), the aspect is by default set to
 	1/cos(My * pi)/180) with My the y coordinate of the middle of the map
-	(the mean of ylim, which defaults to the y range of bounding box)
+	(the mean of ylim, which defaults to the y range of bounding box).
+
+The argument \code{setParUsrBB} may be used to pass the logical value \code{TRUE} to functions within \code{plot.Spatial}. When set to \code{TRUE}, par(\dQuote{usr}) will be overwritten with \code{c(xlim, ylim)}, which defaults to the bounding box of the spatial object. This is only needed in the particular context of graphic output to a specified device with given width and height, to be matched to the spatial object, when using par(\dQuote{xaxs}) and par(\dQuote{yaxs}) in addition to \code{par(mar=c(0,0,0,0))}.
 }
 
 \section{Warning }{this class is not useful in itself, but all spatial

@@ -17,6 +17,12 @@
 \alias{coordnames<-,SpatialPolygons,character-method}
 \alias{coordnames<-,Polygons,character-method}
 \alias{coordnames<-,Polygon,character-method}
+\alias{coordnames<-,GridTopology,character-method}
+\alias{coordnames<-,SpatialGrid,character-method}
+\alias{coordnames<-,SpatialPixels,character-method}
+\alias{coordnames<-,GridTopology,character-method}
+\alias{coordnames<-,SpatialGrid,character-method}
+\alias{coordnames<-,SpatialPixels,character-method}
 \title{ retrieve or assign coordinate names for classes in sp}
 \description{
 retrieve or assign coordinate names for classes in \pkg{sp}
@@ -40,5 +46,8 @@ retrieve or assign coordinate names for classes in \pkg{sp}
 \item{x = "SpatialPolygons", value = "character"}{ assigns coordinate names }
 \item{x = "Polygons", value = "character"}{ assigns coordinate names }
 \item{x = "Polygon", value = "character"}{ assigns coordinate names }
+\item{x = "GridTopology", value = "character"}{ assigns coordinate names }
+\item{x = "SpatialGrid", value = "character"}{ assigns coordinate names }
+\item{x = "SpatialPixels", value = "character"}{ assigns coordinate names }
 }}
 \keyword{methods}
