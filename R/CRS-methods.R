@@ -34,7 +34,10 @@ if (!is.R()) {
 
 "print.CRS" <- function(x, ...)
 {
-	cat("CRS arguments:", x@projargs, "\n")
+    pst <- paste(strwrap(x@projargs), collapse="\n")
+    if (nchar(pst) < 40) cat(paste("CRS arguments:", pst, "\n"))
+    else cat(paste("CRS arguments:\n", pst, "\n"))
+    invisible(pst)
 }
 
 setMethod("show", "CRS", function(object) print.CRS(object))

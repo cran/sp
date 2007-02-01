@@ -11,12 +11,26 @@
 	}
 	coord.names = dimnames(data@coords)[[2]]
 
-	data = stack(as(data, "SpatialPointsDataFrame"), zcol) # replace with data.frame
-	if (!missing(names.attr)) {
+	if (missing(names.attr)) {
+		if (is.character(zcol))
+			names.attr = zcol
+		else {
+			names.attr = names(data)[zcol]
+			zcol = names.attr
+		}
+	} else {
 		if (length(names.attr) != length(zcol))
 			stop("length names.attr should match length of zcol")
-		data$ind = factor(as.integer(data$ind), labels = names.attr)
+		if (!is.character(zcol))
+			zcol = names(data)[zcol]
 	}
+
+	data = stack(as(data, "SpatialPointsDataFrame"), zcol) # replace with data.frame
+	#data$ind = factor(as.character(data$ind), levels = zcol, labels = names.attr)
+	# Arien Lam suggested:
+	#data$ind = factor(data$ind, levels = unique(data$ind), labels = names.attr)
+	# better (as it avoids unique()) is:
+	data$ind = factor(data$ind, levels = zcol, labels = names.attr)
 	names(data) = c(coord.names, "z", "name")
 	data
 }

@@ -139,7 +139,10 @@ print.summary.SpatialPointsDataFrame = function(x, ...) {
 	print(x$data)
 	cat("Coordinates:\n")
 	print(x$coords)
-	cat("Coordinate Reference System (CRS) arguments:", x$proj, "\n")
+	pst <- paste(strwrap(paste(
+		"Coordinate Reference System (CRS) arguments:", x$proj)),
+		collapse="\n")
+	cat(pst, "\n")
 	cat("\n")
 }
 

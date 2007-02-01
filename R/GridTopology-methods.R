@@ -20,6 +20,16 @@ setMethod("coordinates", "GridTopology", function(obj) {
 	as.matrix(sapply(cc, as.numeric))
 })
 
+coordnamesGT = function(x, value) {
+	names(x@cellcentre.offset) = value
+	names(x@cellsize) = value
+	names(x@cells.dim) = value
+	x
+}
+
+setReplaceMethod("coordnames", 
+	signature(x = "GridTopology", value = "character"), coordnamesGT)
+
 coordinatevalues = function(obj) {
 	if (!is(obj, "GridTopology"))
 		stop("function only works for objects of class or extending GridTopology")
@@ -90,6 +100,8 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps)) {
 print.GridTopology = function(x, ...) {
 	res = data.frame(rbind(x@cellcentre.offset, x@cellsize, as.numeric(x@cells.dim)))
 	rownames(res) = c("cellcentre.offset", "cellsize", "cells.dim")
+	if (!is.null(names(x@cellcentre.offset)))
+		names(res) = names(x@cellcentre.offset)
 	print(res)
 	invisible(res)
 }

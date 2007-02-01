@@ -40,15 +40,6 @@ if (!isGeneric("spsample"))
 if (!isGeneric("summary"))
 	setGeneric("summary", function(object, ...)
 		standardGeneric("summary"))
-if (as.numeric(version$minor) < 3) {
-    if (!isGeneric("transform"))
-	setGeneric("transform", function(x, ...)
-		standardGeneric("transform"))
-} else {
-    if (!isGeneric("transform"))
-	setGeneric("transform", function(`_data`, ...)
-		standardGeneric("transform"))
-}
 
 bbox.default <- function(obj) {
 	is_points <- function(obj) {
@@ -100,19 +91,22 @@ summary.Spatial = function(object, ...) {
 setMethod("summary", "Spatial", summary.Spatial)
 
 print.summary.Spatial = function(x, ...) {
-	cat(paste("Object of class ", x[["class"]], "\n", sep = ""))
+    cat(paste("Object of class ", x[["class"]], "\n", sep = ""))
     cat("Coordinates:\n")
     print(x[["bbox"]])
     cat(paste("Is projected:", x[["is.projected"]], "\n"))
-    cat(paste("proj4string : [", x[["proj4string"]], "]\n", sep=""))
+#    cat(paste("proj4string : [", x[["proj4string"]], "]\n", sep=""))
+    pst <- paste(strwrap(x[["proj4string"]]), collapse="\n")
+    if (nchar(pst) < 40) cat(paste("proj4string : [", pst, "]\n", sep=""))
+    else cat(paste("proj4string :\n[", pst, "]\n", sep=""))
     if (!is.null(x$npoints)) {
         cat("Number of points: ")
-		cat(x$npoints)
-		cat("\n")
-	}
+        cat(x$npoints)
+        cat("\n")
+    }
     if (!is.null(x$n.polygons)) {
         cat("Number of polygons: ")
-		cat(x$n.polygons)
+        cat(x$n.polygons)
         cat("\n")
     }
 	if (!is.null(x$grid)) {
@@ -135,18 +129,24 @@ print.summary.Spatial = function(x, ...) {
 #		return(1/cos((mean(ylim) * pi)/180))
 #}
 
+
+
 plot.Spatial <- function(x, xlim=NULL, ylim=NULL, 
-		asp = ifelse(is.na(proj4string(x)) || is.projected(x), 1.0, 1/cos((mean(ylim) * pi)/180)), 
-		axes = FALSE, bg = par("bg"), ...) {
+	asp = NA, axes = FALSE, bg = par("bg"), ..., setParUsrBB=FALSE) {
 	bbox <- bbox(x)
 	if (is.null(xlim)) xlim <- bbox[1,]
 	if (is.null(ylim)) ylim <- bbox[2,]
+	if (is.na(asp)) asp <- ifelse(is.na(proj4string(x)) || is.projected(x),
+		1.0, 1/cos((mean(ylim) * pi)/180))
 	frame() # S-Plus compatible version of plot.new()
-	if (is.R())
+	if (is.R()) {
 		plot.window(xlim = xlim, ylim = ylim, asp = asp, ...)
-	else {
+		if (setParUsrBB) par(usr=c(xlim, ylim))
+	} else {
 		plot.default(x = bbox[1,], y = bbox[2,], type = "n", 
-			xlim = xlim, ylim = ylim, asp = asp, ...)
+			xlim = xlim, ylim = ylim, asp = asp, 
+			ann=FALSE, axes=FALSE, ...)
+		if (setParUsrBB) par(usr=c(xlim, ylim))
 	}
 	pl_reg <- par("usr")
 	rect(xleft=pl_reg[1], ybottom=pl_reg[3], xright=pl_reg[2], 

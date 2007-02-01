@@ -8,8 +8,6 @@ bpy.colors              blue-pink-yellow color scheme that prints well
                         on black/white printers
 bubble                  Create a bubble plot of spatial data
 char2dms                Convert character vector to DMS-class object
-contourLines2SLDF       Converter functions to build
-                        SpatialLinesDataFrame objects
 coordinates             sets spatial coordinates to create spatial
                         data, or retrieves spatial coordinates
 coordinates-methods     retrieve (or set) spatial coordinates
@@ -58,7 +56,7 @@ Rlogo                   Rlogo jpeg image
 select.spatial          select points spatially
 sp                      A package providing classes and methods for
                         spatial data: points, lines, polygons and grids
-Spatial-class           Class "Spatial" ~~~
+Spatial-class           Class "Spatial"
 SpatialGrid-class       Class "SpatialGrid" ~~~
 SpatialGridDataFrame-class
                         Class "SpatialGridDataFrame"
@@ -91,6 +89,4 @@ spmap.to.lev            rearrange data in SpatialPointsDataFrame or
 spplot                  Plot methods for spatial data with attributes
 spsample                sample point locations in (or on) a spatial
                         object
-transform-methods       place holder for transform methods in library
-                        spproj
 zerodist                find point pairs with equal spatial coordinates

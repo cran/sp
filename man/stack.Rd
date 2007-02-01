@@ -8,7 +8,8 @@ for plotting with spplot (levelplot/xyplot wrapper) }
 rearrange SpatialPointsDataFrame for plotting with spplot or levelplot }
 \usage{
 spmap.to.lev(data, zcol = 1:n, n = 2, names.attr)
-stack.SpatialPointsDataFrame(x, select, ...)
+\method{stack}{SpatialPointsDataFrame}(x, select, ...)
+\method{stack}{SpatialGridDataFrame}(x, select, ...)
 }
 \arguments{
 \item{data}{ object of class (or extending) SpatialDataFrame }

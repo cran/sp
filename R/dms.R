@@ -48,36 +48,21 @@ as.numeric.DMS <- function(from) {
 
 setAs("DMS", "numeric", as.numeric.DMS)
 
-as.character.DMS <- function(from) {
-	if (!inherits(from, "DMS")) stop("not a DMS object")
-	if (!from@NS) tag <- c("W", "E")
+as.character.DMS <- function(x, ...) {
+	if (!inherits(x, "DMS")) stop("not a DMS object")
+	if (!x@NS) tag <- c("W", "E")
 	else tag <- c("S", "N")
-	res <- ifelse(from@WS, tag[1], tag[2])
-	res <- paste(ifelse(round(from@sec, digits=3) != "0", 
-		paste(round(from@sec, digits=3), '\"', sep=""), ""), 
+	res <- ifelse(x@WS, tag[1], tag[2])
+	res <- paste(ifelse(round(x@sec, digits=3) != "0", 
+		paste(round(x@sec, digits=3), '\"', sep=""), ""), 
 		res, sep="")
-	res <- paste(ifelse(((from@min != 0) | 
-		(round(from@sec, digits=3) != "0")),
-		paste("d", from@min, "\'", sep=""), ""), res, sep="")
-	res <- paste(from@deg, res, sep="")
+	res <- paste(ifelse(((x@min != 0) | 
+		(round(x@sec, digits=3) != "0")),
+		paste("d", x@min, "\'", sep=""), ""), res, sep="")
+	res <- paste(x@deg, res, sep="")
 	invisible(res)
 }
-
-setAs("DMS", "character", function(from) {
-	if (!from@NS) tag <- c("W", "E")
-	else tag <- c("S", "N")
-	res <- ifelse(from@WS, tag[1], tag[2])
-	res <- paste(ifelse(round(from@sec, digits=3) != "0", 
-		paste(round(from@sec, digits=3), '\"', sep=""), ""), 
-		res, sep="")
-	res <- paste(ifelse(((from@min != 0) | 
-		(round(from@sec, digits=3) != "0")),
-		paste("d", from@min, "\'", sep=""), ""), res, sep="")
-	res <- paste(from@deg, res, sep="")
-	invisible(res)
-    }
-)
-
+setAs("DMS", "character", function(from) as.character.DMS(from))
 
 setMethod("show", "DMS", function(object) print.DMS(object))
 

@@ -1,8 +1,10 @@
-SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps)) {
+SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps), 
+		proj4string = CRS(as.character(NA))) {
 	if (!is(points, "SpatialPoints"))
 		stop("points should be of class or extending SpatialPoints")
 	is.gridded = gridded(points)
 	points = as(points, "SpatialPoints")
+	proj4string(points) = proj4string
 	grid = points2grid(points, tolerance)
 	if (!is.gridded) {
 		points@bbox[,1] = points@bbox[,1] - 0.5 * grid@cellsize
@@ -19,10 +21,26 @@ SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	pts@bbox[,1] = pts@bbox[,1] - 0.5 * grid@cellsize
 	pts@bbox[,2] = pts@bbox[,2] + 0.5 * grid@cellsize
 	proj4string(pts) = proj4string
-	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
+# RSB
+#	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
+	new("SpatialGrid", new("SpatialPixels", pts, grid = grid, 
+		grid.index = integer(0)))
+# representation of SG is Spix
 }
 
 setMethod("coordinates", "SpatialGrid", function(obj) coordinates(obj@grid))
+
+coordnamesSG = function(x, value) {
+	dimnames(x@bbox)[[1]] = value
+	dimnames(x@coords)[[2]] = value
+	coordnames(x@grid) = value
+	x
+}
+
+setReplaceMethod("coordnames", 
+	signature(x = "SpatialGrid", value = "character"), coordnamesSG)
+setReplaceMethod("coordnames", 
+	signature(x = "SpatialPixels", value = "character"), coordnamesSG)
 
 getGridTopology = function(obj) {
 	if (!is(obj, "SpatialPixels"))
@@ -137,6 +155,12 @@ setMethod("[", "SpatialGrid",
 )
 
 setAs("SpatialPixels", "SpatialGrid", function(from) SpatialGrid(from@grid, from@proj4string))
+#setAs("SpatialGrid", "SpatialPixels", 
+#	function(from) {
+#		pts = new("SpatialPoints", coords = coordinates(from),
+#			bbox = from@bbox, proj4string = from@proj4string)
+#		new("SpatialPixels", pts, grid = from@grid, grid.index = 1:NROW(cc))
+#})
 
 as.data.frame.SpatialPixels = function(x, row.names, optional, ...)
 	as.data.frame(coordinates(x))
@@ -146,9 +170,10 @@ as.data.frame.SpatialGrid = as.data.frame.SpatialPixels
 setAs("SpatialPixels", "data.frame", function(from) as.data.frame.SpatialPixels(from))
 setAs("SpatialGrid", "data.frame", function(from) as.data.frame.SpatialGrid(from))
 
-#setAs("SpatialGrid", "SpatialPixels", function(from)
-#	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
-#)
+# uncommented 070122 RSB
+setAs("SpatialGrid", "SpatialPixels", function(from)
+	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
+)
 
 setMethod("summary", "SpatialPixels", summary.Spatial)
 setMethod("summary", "SpatialGrid", summary.Spatial)
