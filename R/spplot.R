@@ -117,7 +117,7 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,], checkEmptyRC = TRUE) {
 	if (is.null(zcol)) stop("no names method for object")
 	if (checkEmptyRC)
-		sdf = addNAemptyRows(obj) # returns SpatialPointsDataFrame
+		sdf = addNAemptyRowsCols(obj) # returns SpatialPointsDataFrame
 	else
 		sdf = as(obj, "SpatialPointsDataFrame")
 	if (missing(formula))
@@ -253,7 +253,9 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 	} else
 		plt
 }
-setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
+setMethod("spplot", signature("SpatialPointsDataFrame"), 
+	function(obj, zcol, ...) spplot.points(obj, zcol, ...)
+)
 
 panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
 	# set first = TRUE defaults for polygons objects in sp.layout:
@@ -371,14 +373,15 @@ fill.call.groups = function(lst, z, ..., cuts,
 	if (!missing(cex))
 		lst$cex = cex
 	if (is.numeric(z)) {
-		z = na.omit(z)
+		valid = !is.na(z)
+		#z = na.omit(z)
     	if (length(cuts) == 1) {
 			if (do.log) {
        			lz = log(z)
-       			cuts = c(min(z), exp(seq(min(lz), max(lz), length = cuts + 
-           			1))[2:(cuts)], max(z))
+       			cuts = c(min(z[valid]), exp(seq(min(lz[valid]), max(lz[valid]), length = cuts + 
+           			1))[2:(cuts)], max(z[valid]))
 			} else
-				cuts = seq(min(z), max(z), length = cuts + 1)
+				cuts = seq(min(z[valid]), max(z[valid]), length = cuts + 1)
     	}
     	lst$groups = cut(as.matrix(z), cuts, dig.lab = 4, include.lowest = TRUE)
 	} else
@@ -575,12 +578,21 @@ colorkey.factor = function(f, colorkey = list()) {
 	res
 }
 
-addNAemptyRows = function(obj) {
+addNAemptyRowsCols = function(obj) {
 	# accept gridded; return SpatialPointsDataFrame with NA records on empty row/cols
+	fullgrid(obj) = FALSE
+	nfull = obj@grid@cells.dim[1] * obj@grid@cells.dim[2]
+	missingpatt = rep(TRUE, nfull)
+	missingpatt[obj@grid.index] = FALSE
+	missingpatt = matrix(missingpatt,
+		obj@grid@cells.dim[1], obj@grid@cells.dim[2], byrow = FALSE)
+	missing.x = which(apply(missingpatt, 1, all))
+	missing.y = which(apply(missingpatt, 2, all))
+
 	xy = coordinates(obj)[,1:2]
 	coordvals = coordinatevalues(obj@grid)
-	missing.x = coordvals[[1]][is.na(match(coordvals[[1]],xy[,1]))]
-	missing.y = coordvals[[2]][is.na(match(coordvals[[2]],xy[,2]))]
+	missing.x = coordvals[[1]][missing.x]
+	missing.y = coordvals[[2]][missing.y]
 	n = length(missing.x) + length(missing.y)
 	if (n > 0) {
 		if (length(missing.x) > 0)

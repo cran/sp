@@ -24,9 +24,13 @@ function(obj, zero = 0.0)
 	matrix(ret[ret[,1] < ret[,2],], ncol = 2)
 }
 
-remove.duplicates <- function(obj, zero = 0.0) {
+remove.duplicates <- function(obj, zero = 0.0, remove.second = TRUE) {
 	zd = zerodist(obj, zero)
-	res <- subset(obj, !(1:nrow(obj) %in% zd[,2]))
+	if (remove.second) 
+		idx = 2
+	else
+		idx = 1
+	res <- subset(obj, !(1:nrow(coordinates(obj)) %in% zd[,idx]))
 	res
 #	obj[-zd[,2], ]
 }

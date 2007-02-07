@@ -5,12 +5,14 @@
 \description{ find point pairs with equal spatial coordinates }
 \usage{ 
 zerodist(obj, zero = 0.0) 
-remove.duplicates(obj, zero = 0.0)
+remove.duplicates(obj, zero = 0.0, remove.second = TRUE)
 }
 \arguments{
 \item{obj}{ object of, or extending, class \link{SpatialPoints} }
-\item{zero}{ value to be compared to for establishing when a distance
-is considered zero (default 0.0) }
+\item{zero}{ distance values less than or equal to this threshold value are
+considered to have zero distance (default 0.0) }
+\item{remove.second}{logical; if TRUE, the second of each pair of duplicate
+points is removed, if not the first}
 }
 \value{pairs of row numbers with identical coordinates, numeric(0) if no
 such pairs are found }
