@@ -31,13 +31,21 @@ as.SPixDF.SGDF = function(from) {
 setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPixDF.SGDF)
 
 as.SGDF.SPixDF = function(from) { 
+	# find rows with only NA's in attribute table:
 	sel = apply(sapply(from@data, is.na), 1, function(x) !all(x))
 	if (!any(sel)) {
 		warning("complete map seems to be NA's -- no selection was made")
 		sel = rep(TRUE, length(sel))
 	}
-   	SpatialPixelsDataFrame(points = coordinates(from)[sel,], 
-		data = from@data[sel,,drop=FALSE], proj4string = CRS(proj4string(from)))
+   	#SpatialPixelsDataFrame(points = coordinates(from)[sel,], 
+	#	data = from@data[sel,,drop=FALSE], proj4string = CRS(proj4string(from)))
+	new("SpatialPixelsDataFrame", 
+		new("SpatialPixels", 
+			new("SpatialPoints", coords = coordinates(from)[sel,], 
+				bbox = from@bbox, proj4string = CRS(proj4string(from))),
+			grid = from@grid, 
+			grid.index = which(sel)),
+		data = from@data[sel,,drop=FALSE])
 }
 setAs("SpatialGridDataFrame", "SpatialPixelsDataFrame", as.SGDF.SPixDF)
 setAs("SpatialGridDataFrame", "SpatialPointsDataFrame", 
@@ -60,10 +68,10 @@ setIs("SpatialPixelsDataFrame", "SpatialPointsDataFrame",
 as.matrix.SpatialPixelsDataFrame = function(x, ...) {
 	# fullgrid(x) = TRUE
 	x = as(x, "SpatialGridDataFrame")
-	as(x, "matrix")
+	as(x, "matrix", ...)
 }
 
-as.matrix.SpatialGridDataFrame = function(x, byrow = FALSE, ...) {
+as.matrix.SpatialGridDataFrame = function(x, ..., byrow = FALSE) {
 	if (ncol(x@data) > 1)
 		warning(
 		"as.matrix.SpatialPixelsDataFrame uses first column;\n pass subset or [] for other columns")
