@@ -1,4 +1,5 @@
-makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5,nrow(bb))) {
+makegrid = function(x, n = 10000, nsig = 2, cellsize, 
+		offset = rep(0.5,nrow(bb))) {
 #cat("n in makegrid", n, "\n")
 	if (is(x, "Spatial"))
 		bb = bbox(x)
@@ -33,16 +34,21 @@ makegrid = function(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5,nrow(bb))
 	return(xy)
 }
 
-sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), cellsize, ...) {
+sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), 
+		cellsize, ...) {
+
 	if (missing(n)) n <- as.integer(NA)
 #cat("n in sample.Spatial", n, "\n")
 	if (type == "random")
 		xy = apply(bb, 1, function(x) runif(n) * diff(x) + x[1])
+	else if (type == "hexagonal")
+		xy = hexGrid(bb, n = n, offset = offset, cellsize = cellsize)
 	else {
-	   if (is.na(n))
-		xy = makegrid(bb, nsig = 20, cellsize = cellsize, offset = offset)
-	   else
-		xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize, offset = offset)
+		if (is.na(n))
+			xy = makegrid(bb, nsig = 20, cellsize = cellsize, offset = offset)
+		else
+			xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize, 
+					offset = offset)
 		cellsize = attr(xy, "cellsize")
 		if (type == "stratified") {
 			n = nrow(xy)
@@ -68,8 +74,7 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), ce
 setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
 
 sample.Line = function(x, n, type, offset = runif(1),
-proj4string=CRS(as.character(NA)), ...) {
-#...) {
+		proj4string=CRS(as.character(NA)), ...) {
 	if (missing(n)) n <- as.integer(NA)
 #cat("n in sample.Line", n, "\n")
 	cc = coordinates(x)
@@ -98,7 +103,7 @@ proj4string=CRS(as.character(NA)), ...) {
 setMethod("spsample", signature(x = "Line"), sample.Line)
 
 sample.Polygon = function(x, n, type = "random", bb = bbox(x),
-		offset = runif(2), proj4string=CRS(as.character(NA)), iter=4, ...) {
+	offset = runif(2), proj4string=CRS(as.character(NA)), iter=4, ...) {
 #...) {
 	if (missing(n)) n <- as.integer(NA)
 #cat("n in sample.Polygon", n, "\n")
@@ -121,7 +126,7 @@ sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 			brks, all.inside=TRUE)] * bb.area/area)
 		} else n_is <- round(n * bb.area/area)
 		while (is.null(res) && its < iter && n_is > 0 && 
-		    ifelse(type == "random", (n_now < n), TRUE)) {
+		   	ifelse(type == "random", (n_now < n), TRUE)) {
 		    pts = sample.Spatial(xSP, n_is, type=type, 
 			offset = offset, ...)
 		    id = overlay(pts, SpatialPolygons(list(Polygons(list(x),
@@ -254,3 +259,65 @@ sample.Spixels = function(x, n, type = "random", bb = bbox(x),
 	pts[which(!is.na(id))]
 }
 setMethod("spsample", signature(x = "SpatialPixels"), sample.Spixels)
+
+hexGrid = function(bb, n, offset, cellsize) {
+	if (missing(cellsize)) {
+		if (missing(n))
+			stop("need either cellsize or n")
+		area = prod(apply(bb, 1, diff))/n
+		dx = area / (sqrt(3)/2)
+	} else
+		dx = cellsize
+	xy = genHexGrid(dx, bb[,1], bb[,2])
+	attr(xy, "cellsize") = dx
+	xy
+}
+
+# THK, posted to r-sig-geo, 03/03/2007:
+
+genHexGrid <- function(dx, ll = c(0, 0), ur = c(1, 1)) {
+        dy <- sqrt(3) * dx / 2
+
+        x <- seq(ll[1], ur[1] - dx / 2, dx)
+        y <- seq(ll[2], ur[2], dy)
+
+        y <- rep(y, each = length(x))
+        x <- rep(c(x, x + dx / 2), length.out = length(y))
+
+        x <- x + (ur[1] - max(x)) / 2
+        y <- y + (ur[2] - max(y)) / 2
+
+        data.frame(x = x, y = y)
+}
+
+genPolyList <- function(hexGrid) {
+	# EJP; changed:
+	# how to figure out dx from a grid? THK suggested:
+        #dx <- hexGrid$x[2] - hexGrid$x[1]
+	# and the following will also not allways work:
+	dx = 2 * min(diff(sort(unique(hexGrid$x))))
+	dy <- dx / sqrt(3)
+
+	x.offset <- c(-dx / 2, 0, dx / 2, dx / 2, 0, -dx / 2, -dx / 2)
+	y.offset <- c(dy / 2, dy, dy / 2, -dy / 2, -dy, -dy / 2, dy / 2)
+
+	f <- function(i) list(x = hexGrid$x[i] + x.offset,
+		y = hexGrid$y[i] + y.offset)
+
+	ret = lapply(1:length(hexGrid$x), f)
+}
+
+as.SpatialPolygons.HexGrid = function(hex) {
+	ret = genPolyList(data.frame(coordinates(hex)))
+	npoly = length(ret)
+	Srl <- vector(mode="list", length=npoly)
+	IDS = paste("ID", 1:npoly, sep="")
+	for (i in 1:npoly)
+		Srl[[i]] = Polygons(list(Polygon(ret[[i]])), IDS[i])
+	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=CRS(proj4string(hex)))
+	res
+}
+
+# xy <- genHexGrid(0.05)
+# plot(xy, asp = 1, axes = F, pch = 19, xlab = NA, ylab = NA, cex = 0.5)
+# lapply(genPolyList(xy), polygon, xpd = NA, ypd = NA)

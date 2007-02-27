@@ -3,12 +3,11 @@ image.SpatialPixelsDataFrame = function(x, ...)
 	image(as(x, "SpatialGridDataFrame"), ...)
 
 image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2, 
-		red=NULL, green=NULL, blue=NULL,# asp = 1, 
-		axes = FALSE, xlim = NULL, 
+		red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL, 
 		ylim = NULL, add = FALSE, ..., setParUsrBB=FALSE) {
 
 	if (!add)
-		plot(as(x, "Spatial"),# asp = asp, 
+		plot(as(x, "Spatial"),
 			xlim = xlim, ylim = ylim, axes = axes, ..., 
 			setParUsrBB=setParUsrBB)
 	if (is.null(red)) 
@@ -27,11 +26,17 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 	}
 }
 
-contour.SpatialGridDataFrame = function(x, ...) 
-	contour(as.image.SpatialGridDataFrame(x), ...)
+contour.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2, 
+		add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE, ..., setParUsrBB = FALSE)  {
+	if (!add)
+		plot(as(x, "Spatial"),
+			xlim = xlim, ylim = ylim, axes = axes, ..., 
+			setParUsrBB=setParUsrBB)
+	contour(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = TRUE, ...)
+}
 
 contour.SpatialPixelsDataFrame = function(x, ...)
-	contour(as.image.SpatialGridDataFrame(as(x, "SpatialGridDataFrame")), ...)
+	contour(as(x, "SpatialGridDataFrame"), ...)
 
 as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2) {
 	cv = coordinatevalues(getGridTopology(x))

@@ -225,8 +225,9 @@ cbind.SpatialGridDataFrame = function(...) {
 	# verify matching topology:
 	sapply(grds[2:ngrds], function(x) stop.ifnot.equal(x, grds[[1]]))
 	gr = grds[[1]]
-	for (i in 2:ngrds)
-		gr@data = cbind(gr@data, grds[[i]]@data)
+	gr@data = do.call("cbind", lapply(grds, function(x) x@data))
+	#for (i in 2:ngrds)
+	#	gr@data = cbind(gr@data, grds[[i]]@data)
 	gr
 }
 

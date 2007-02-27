@@ -1,4 +1,8 @@
 "gridded<-" = function(obj, value) {
+	if (is(obj, "Spatial"))
+		p4s = proj4string(obj)
+	else
+		p4s = as.character(NA)
 	if (is.logical(value)) {
 		if (is(obj, "SpatialPixelsDataFrame") || is(obj, "SpatialGridDataFrame")) {
 			if (!value)
@@ -27,6 +31,7 @@
 			stop(paste("cannot deal with value of class"), class(value))
 		# further deal with more complex forms of value
 	}
+	proj4string(obj) = CRS(p4s)
 	obj
 }
 
@@ -35,6 +40,7 @@ setMethod("gridded", "Spatial", function(obj) is(obj, "SpatialPixels"))
 fullgrid = function(obj) return(is(obj, "SpatialGrid"))
 
 "fullgrid<-" = function(obj, value) {
+	p4s = proj4string(obj)
 	if (!is(obj, "SpatialPixels"))
 		stop("fullgrid<- only works on objects of class or extending SpatialPixels")
 	if (fullgrid(obj) != value) { # convert:
@@ -50,5 +56,6 @@ fullgrid = function(obj) return(is(obj, "SpatialGrid"))
 				obj = as(obj, "SpatialPixels")
 		}
 	}
+	proj4string(obj) = CRS(p4s)
 	obj
 }

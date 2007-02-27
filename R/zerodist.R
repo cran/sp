@@ -30,7 +30,7 @@ remove.duplicates <- function(obj, zero = 0.0, remove.second = TRUE) {
 		idx = 2
 	else
 		idx = 1
-	res <- subset(obj, !(1:nrow(coordinates(obj)) %in% zd[,idx]))
-	res
-#	obj[-zd[,2], ]
+#	res <- subset(obj, !(1:nrow(coordinates(obj)) %in% zd[,idx]))
+#	res
+	obj[-zd[,idx], ]
 }

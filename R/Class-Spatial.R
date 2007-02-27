@@ -21,10 +21,14 @@ setClass("Spatial",
 		p4str <- object@proj4string@projargs
 		if (!is.na(p4str) && nchar(p4str) > 0) {
 			res <- grep("longlat", p4str, fixed=TRUE)
-			if (length(res) != 0 # unprojected,
-		    		&& any(bb[1,1] < -180 || bb[1,2] > 360 || 
-					bb[2,1] < -90 || bb[2,2] > 90))
-				return("Geographical CRS given to non-conformant data")
+			if (length(res) != 0) # unprojected,
+			  if (!.ll_sanity(bb))
+			  stop("Geographical CRS given to non-conformant data")
+# split out from proj4string<- and Spatial validity to cover numerical fuzz
+# RSB 070216
+#		    		&& any(bb[1,1] < -180 || bb[1,2] > 360 || 
+#					bb[2,1] < -90 || bb[2,2] > 90))
+#				return("Geographical CRS given to non-conformant data")
 		}
 		# validate proj4string here? -- no, that's spproj business
 		return(TRUE)

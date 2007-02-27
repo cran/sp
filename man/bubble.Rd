@@ -11,7 +11,8 @@ residual plots (xyplot wrapper)
 bubble(obj, zcol = 1, ..., fill = TRUE, maxsize = 3, do.sqrt = TRUE, pch, 
 	col = c(2,3), key.entries = quantile(data[,zcol]), main, 
 	identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL) 
+	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, panel = panel.bubble,
+	sp.layout = NULL) 
 }
 \arguments{
 \item{obj}{ object of, or extending, class SpatialPointsDataFrame 
@@ -42,6 +43,8 @@ identification is required. }
 \item{scales}{scales argument as passed to \link{xyplot}}
 \item{xlab}{x-axis label}
 \item{ylab}{y-axis label}
+\item{panel}{panel function used}
+\item{sp.layout}{possible layout items; see \link{spplot}}
 }
 \value{
 returns (or plots) the bubble plot; if \code{identify} is TRUE, returns

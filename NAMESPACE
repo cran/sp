@@ -5,7 +5,7 @@ importFrom(graphics, plot)
 import(utils) # stack, to be changed later (2.5.0?) into
 importFrom(lattice, levelplot, xyplot, trellis.par.set, 
 	panel.lines, panel.text, panel.points, panel.identify,
-	panel.levelplot, panel.superpose, trellis.par.get,
+	panel.levelplot, panel.superpose, panel.xyplot, trellis.par.get,
 	trellis.focus, trellis.unfocus, panel.number)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
@@ -66,12 +66,22 @@ export(read.asciigrid, write.asciigrid)
 export(makegrid, sample.Spatial, sample.Line, sample.Polygon, sample.Polygons,
 	sample.Sgrid)
 
-export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels)
+export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels, as.SpatialPolygons.HexGrid)
 
 export(dd2dms, print.DMS, char2dms, as.character.DMS,
 	as.double.DMS, as.numeric.DMS)
 
 export(spDistsN1)
+
+export(
+	rbind.SpatialPoints,
+	rbind.SpatialPointsDataFrame, 
+	rbind.SpatialPixels,
+	rbind.SpatialPixelsDataFrame,
+	rbind.SpatialPolygons,
+	rbind.SpatialPolygonsDataFrame,
+	rbind.SpatialLines,
+	rbind.SpatialLinesDataFrame)
 
 exportClasses(CRS, 
 	Spatial, 

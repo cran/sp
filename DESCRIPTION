@@ -1,6 +1,6 @@
 Package: sp
-Version: 0.9-8
-Date: 2007-02-07
+Version: 0.9-9
+Date: 2007-02-27
 Title: classes and methods for spatial data
 Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
 Maintainer: Edzer J. Pebesma <e.pebesma@geo.uu.nl>
@@ -29,5 +29,5 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
 	SpatialPolygons-displayMethods.R zerodist.R image.R stack.R
 	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
 	asciigrid.R spplot.R overlay.R spsample.R recenter.R dms.R
-	gridlines.R spdists.R
-Packaged: Sun Feb 11 12:33:15 2007; edzer
+	gridlines.R spdists.R rbind.R
+Packaged: Mon Mar 12 10:15:33 2007; edzer

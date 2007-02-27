@@ -14,7 +14,8 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 	red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL,
 	ylim = NULL, add = FALSE, ..., setParUsrBB=FALSE)
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
-\method{contour}{SpatialGridDataFrame}(x, ...) 
+\method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
+	add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE, ..., setParUsrBB = FALSE)
 \method{contour}{SpatialPixelsDataFrame}(x, ...) 
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
 }

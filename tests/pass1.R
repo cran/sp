@@ -33,3 +33,12 @@ print(summary(x))
 # cc = cbind(sample(1:10), sample(1:10), sample(1:10))
 # coordinates(a) = cc
 # summary(a)
+
+xx = SpatialPointsDataFrame(matrix(1:10,5,2),data.frame(f = 1:5))
+rbind(xx,xx,xx,xx)
+
+grd <- GridTopology(c(1,1), c(1,1), c(10,10))
+polys <- as.SpatialPolygons.GridTopology(grd)
+summary(rbind(polys[1:10], polys[11:20], polys[21:30]))
+plot(rbind(polys[1:10],polys[21:30]))
+title("2 x 10 blocks -- test rbind on SpatialPolygons")

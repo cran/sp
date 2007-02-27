@@ -6,6 +6,7 @@
 \alias{summary,SpatialLinesDataFrame-method}
 \alias{$.SpatialLinesDataFrame}
 \alias{$<-.SpatialLinesDataFrame}
+\alias{rbind.SpatialLinesDataFrame}
 
 \title{a class for spatial lines with attributes }
 \description{ this class holds data consisting of (sets of lines), where each
