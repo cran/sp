@@ -19,6 +19,7 @@
 \alias{print.summary.SpatialPointsDataFrame}
 \alias{ShowSpatialPointsDataFrame}
 \alias{as.SpatialPoints.SpatialPointsDataFrame}
+\alias{rbind.SpatialPointsDataFrame}
 
 \title{Class "SpatialPointsDataFrame" }
 \description{ Class for spatial attributes that have spatial point locations }

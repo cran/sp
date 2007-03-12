@@ -7,6 +7,7 @@
 \alias{$<-.SpatialPolygonsDataFrame}
 \alias{as.data.frame.SpatialPolygonsDataFrame}
 \alias{coerce,SpatialPolygonsDataFrame,data.frame-method}
+\alias{rbind.SpatialPolygonsDataFrame}
 
 \alias{getSpPPolygonsIDSlots}
 \alias{getSpPPolygonsLabptSlots}

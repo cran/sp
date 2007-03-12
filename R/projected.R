@@ -17,12 +17,37 @@ proj4string = function(sd) {
 	}
 	if (ll) {
 		bb <- bbox(sd)
-		if (any(bb[1,1] < -180 || bb[1,2] > 360 || 
-			bb[2,1] < -90 || bb[2,2] > 90)) 
+#		tol <- .Machine$double.eps ^ 0.25
+#		W <- bb[1,1] < -180 && 
+#		    !isTRUE(all.equal((bb[1, 1] - -180), 0, tolerance = tol))
+#		E <- bb[1,2] > 360 && 
+#		    !isTRUE(all.equal((bb[1, 2] - 360), 0, tolerance = tol))
+#		S<- bb[2,1] < -90 && 
+#		    !isTRUE(all.equal((bb[2, 1] - -90), 0, tolerance = tol))
+#		N <- bb[2,2] > 90 && 
+#		    !isTRUE(all.equal((bb[2, 2] - 90), 0, tolerance = tol))
+#		if (any(W || E || S || N)) 
+
+		if (!.ll_sanity(bb))
 			stop("Geographical CRS given to non-conformant data")
 	}
 	sd@proj4string = value;
 	sd
+}
+
+# split out from proj4string<- and Spatial validity to cover numerical fuzz
+# RSB 070216
+.ll_sanity <- function(bb) {
+	tol <- .Machine$double.eps ^ 0.25
+	W <- bb[1,1] < -180 && 
+	    !isTRUE(all.equal((bb[1, 1] - -180), 0, tolerance = tol))
+	E <- bb[1,2] > 360 && 
+	    !isTRUE(all.equal((bb[1, 2] - 360), 0, tolerance = tol))
+	S<- bb[2,1] < -90 && 
+	    !isTRUE(all.equal((bb[2, 1] - -90), 0, tolerance = tol))
+	N <- bb[2,2] > 90 && 
+	    !isTRUE(all.equal((bb[2, 2] - 90), 0, tolerance = tol))
+	return(!(any(W || E || S || N))) 
 }
 
 is.projected = function(sd) {

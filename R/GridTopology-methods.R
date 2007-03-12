@@ -145,6 +145,8 @@ as.SpatialPolygons.GridTopology <- function(grd, proj4string=CRS(as.character(NA
 	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=proj4string)
 	res
 }
+setAs("GridTopology", "SpatialPolygons", function(from)
+	as.SpatialPolygons.GridTopology(from))
 
 # mostly copied from coordinates() for GridTopology, 
 # makes IDs "c(i)r(j)" matching the coordinates

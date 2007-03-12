@@ -2,7 +2,8 @@
 	pch, col = c(2, 3), key.entries = quantile(data[,zcol]),
 	main = ifelse(is.numeric(zcol), names(data)[zcol], zcol),
     identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL) 
+	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, panel = panel.bubble,
+	sp.layout = NULL) 
 {
 	obj = as(obj, "SpatialPointsDataFrame")
 	data = as.data.frame(obj)
@@ -41,6 +42,11 @@
     		cex = q.cex), text = list(q.text))
 		xyplot(y ~ x, col = z.col, cex = cex, pch = pch, asp = mapasp(obj), 
         	key = key, main = main, scales = scales, xlab = xlab, ylab = ylab,
-			...)
+			panel = panel, sp.layout = sp.layout, ...)
 	}
+}
+
+panel.bubble = function(x, y, subscripts, sp.layout, ...) {
+	sp.panel.layout(sp.layout, panel.number())
+	panel.xyplot(x, y, ...)
 }

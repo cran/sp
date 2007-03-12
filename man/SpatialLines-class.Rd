@@ -5,6 +5,7 @@
 \alias{[,SpatialLines-method}
 \alias{plot,SpatialLines,missing-method}
 \alias{summary,SpatialLines-method}
+\alias{rbind.SpatialLines}
 
 \title{a class for spatial lines }
 \description{ a class that holds spatial lines }

@@ -1,6 +1,7 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.1  (2005-06-20), ISBN 3-900051-07-0
+R version 2.4.1 (2006-12-18)
+Copyright (C) 2006 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -11,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > library(sp)
@@ -111,4 +112,41 @@ Data attributes:
 > # cc = cbind(sample(1:10), sample(1:10), sample(1:10))
 > # coordinates(a) = cc
 > # summary(a)
+> 
+> xx = SpatialPointsDataFrame(matrix(1:10,5,2),data.frame(f = 1:5))
+> rbind(xx,xx,xx,xx)
+   coordinates f
+1       (1, 6) 1
+2       (2, 7) 2
+3       (3, 8) 3
+4       (4, 9) 4
+5      (5, 10) 5
+6       (1, 6) 1
+7       (2, 7) 2
+8       (3, 8) 3
+9       (4, 9) 4
+10     (5, 10) 5
+11      (1, 6) 1
+12      (2, 7) 2
+13      (3, 8) 3
+14      (4, 9) 4
+15     (5, 10) 5
+16      (1, 6) 1
+17      (2, 7) 2
+18      (3, 8) 3
+19      (4, 9) 4
+20     (5, 10) 5
+> 
+> grd <- GridTopology(c(1,1), c(1,1), c(10,10))
+> polys <- as.SpatialPolygons.GridTopology(grd)
+> summary(rbind(polys[1:10], polys[11:20], polys[21:30]))
+Object of class SpatialPolygons
+Coordinates:
+   min  max
+r1 0.5 10.5
+r2 7.5 10.5
+Is projected: NA 
+proj4string : [NA]
+> plot(rbind(polys[1:10],polys[21:30]))
+> title("2 x 10 blocks -- test rbind on SpatialPolygons")
 > 

@@ -5,6 +5,7 @@
 \alias{as.data.frame.SpatialPolygons}
 \alias{plot,SpatialPolygons,missing-method}
 \alias{summary,SpatialPolygons-method}
+\alias{rbind.SpatialPolygons}
 
 \title{Class "SpatialPolygons"}
 \description{  class to hold polygon topology (without attributes) }
