@@ -158,3 +158,7 @@ setMethod("summary", "SpatialPolygons", summary.Spatial)
 setMethod("coordinates", "SpatialPolygons", 
 	function(obj) getSpPPolygonsLabptSlots(obj))
 
+getSpatialPolygonsLabelPoints = function(SP) {
+	ret = t(sapply(slot(SP, "polygons"), function(x) slot(x, "labpt")))
+	SpatialPoints(ret, CRS(proj4string(SP)))
+}

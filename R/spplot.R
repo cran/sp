@@ -254,7 +254,8 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		plt
 }
 setMethod("spplot", signature("SpatialPointsDataFrame"), 
-	function(obj, zcol, ...) spplot.points(obj, zcol, ...)
+	#function(obj, zcol, ...) spplot.points(obj, zcol, ...)
+	spplot.points
 )
 
 panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
