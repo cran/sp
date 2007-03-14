@@ -48,7 +48,7 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialPolygonsDataFrame selection")
     SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
-        data = x@data[i, j, drop = FALSE])
+        data = x@data[i, j, drop = FALSE], match.ID = FALSE)
 ###
 ### RSB: do something with labelpoints here? How can I check they are present?
 ### (label points belong to the Polygons objects, not the SpatialPolygons object)

@@ -3,6 +3,8 @@
 \alias{spsample-methods}
 \alias{spsample,Spatial-method}
 \alias{spsample,Line-method}
+\alias{spsample,Lines-method}
+\alias{spsample,SpatialLines-method}
 \alias{spsample,Polygon-method}
 \alias{spsample,Polygons-method}
 \alias{spsample,SpatialGrid-method}

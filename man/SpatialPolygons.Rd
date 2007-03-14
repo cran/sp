@@ -3,6 +3,7 @@
 \alias{SpatialPolygonsDataFrame}
 \alias{Polygon}
 \alias{Polygons}
+\alias{getSpatialPolygonsLabelPoints}
 \title{ create objects of class SpatialPolygons or SpatialPolygonsDataFrame}
 \description{ create objects of class \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame} from
 lists of \code{Polygons} objects and \code{data.frame}s}
@@ -11,6 +12,7 @@ Polygon(coords, hole=as.logical(NA))
 Polygons(srl, ID)
 SpatialPolygons(Srl, pO, proj4string=CRS(as.character(NA)))
 SpatialPolygonsDataFrame(Sr, data, match.ID = TRUE)
+getSpatialPolygonsLabelPoints(SP)
 
 }
 \arguments{
@@ -25,12 +27,15 @@ equal last coordinates (row) }
 \item{Sr}{ object of class \link{SpatialPolygons-class}}
 \item{data}{ object of class \code{data.frame}; the number of rows in \code{data} should equal the number of \link{Polygons-class} objects in \code{Sr}}
 \item{match.ID}{logical: (default TRUE): match SpatialPolygons member Polygons ID slot values with data frame row names, and re-order the data frame rows if necessary}
+\item{SP}{object of class \link{SpatialPolygons-class}}
 } 
 \value{
 \code{Polygon} returns an object of class \code{Polygon};
 \code{Polygons} returns an object of class \code{Polygons};
 \code{SpatialPolygons} returns object of class \code{SpatialPolygons};
 \code{SpatialPolygonsDataFrame} returns object of class \code{SpatialPolygonsDataFrame}
+\code{getSpatialPolygonsLabelPoints} returns an object of class
+\code{SpatialPoints} with label points.
 }
 \seealso{ \link{SpatialPolygons-class}, \link{SpatialPolygonsDataFrame-class} }
 

@@ -25,7 +25,7 @@ export(SpatialPoints, SpatialPointsDataFrame)
 #export(AttributeList)
 
 export(Line, Lines, SpatialLines, SpatialLinesDataFrame, as.SpatialLines.SLDF,
-	gridat)
+	gridat, LineLength, LinesLength, SpatialLinesLengths)
 
 
 export(layout.scale.bar, layout.north.arrow, sp.theme,
@@ -45,13 +45,13 @@ export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
 #	as.Ring4.matrix)
 
 export(getSLlinesSlot, getLinesLinesSlot, nowrapSpatialLines, 
-	getLinesIDSlot, getSLLinesIDSlots)
+	getLinesIDSlot, getSLLinesIDSlots, getSpatialLinesMidPoints)
 
 export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
 	getPolygonHoleSlot, getPolygonsPolygonsSlot, getPolygonsplotOrderSlot,
 	getPolygonsLabptSlot, getPolygonsIDSlot, getSpPpolygonsSlot,
 	getSpPplotOrderSlot, getSpPPolygonsLabptSlots, getSpPPolygonsIDSlots,
-	getSpPnParts, getSpPnHoles)
+	getSpPnParts, getSpPnHoles, getSpatialPolygonsLabelPoints)
 
 export(as.SpatialPolygons.PolygonsList, Polygons, Polygon, SpatialPolygons,
 	SpatialPolygonsDataFrame)
@@ -66,7 +66,7 @@ export(read.asciigrid, write.asciigrid)
 export(makegrid, sample.Spatial, sample.Line, sample.Polygon, sample.Polygons,
 	sample.Sgrid)
 
-export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels, as.SpatialPolygons.HexGrid)
+export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels, HexPoints2SpatialPolygons)
 
 export(dd2dms, print.DMS, char2dms, as.character.DMS,
 	as.double.DMS, as.numeric.DMS)
