@@ -30,7 +30,7 @@ Class \code{"Spatial"}, by class \code{"SpatialLines"}.
 Methods defined with class "SpatialLinesDataFrame" in the signature:
   \describe{
     \item{[}{\code{signature(x = "SpatialLinesDataFrame")}: subset rows or
-	columns; in case of row subsetting, the line sets are also subsetted }
+	columns; in case of row subsetting, the line sets are also subsetted; NAs are not permitted in the row index }
     \item{coordinates}{\code{signature(obj = "SpatialLinesDataFrame")}: retrieves
 	a list with lists of coordinate matrices }
     \item{show}{\code{signature(object = "SpatialLinesDataFrame")}: print method }

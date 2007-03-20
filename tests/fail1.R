@@ -32,6 +32,9 @@ try(x[c("zinc", "copper", "zinc")])
 # this will fail, as "x" is not in the data part:
 try(x[c("zinc", "x", "copper", "zinc")])
 
+# row index containing missing values will fail:
+try(xx <- x[c(1:3,NA),])
+
 xx = data.frame(x=1:10, y=1:10)
 
 # fails; use SpatialPoints() to create points without attribute 
@@ -54,6 +57,7 @@ Srs3 = Polygons(list(Sr3, Sr4), "s2")
 try(SR <- SpatialPolygons(list(Srs1,Srs2,Srs3))) # will complain
 Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
 SR = SpatialPolygons(list(Srs1,Srs2,Srs3)) # won't complain
+try(SRx <- SR[c(1,2,NA),])
 
 attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3"))
 try(SrDf <- SpatialPolygonsDataFrame(SR, attr)) # will complain
@@ -72,9 +76,17 @@ S2 = Lines(list(Sl2), ID="b")
 S3 = Lines(list(Sl2), ID="a")
 Sl = SpatialLines(list(S1,S2)) # won't complain
 try(Sl1 <- SpatialLines(list(S1,S3))) # will complain
+try(Sl1 <- Sl[c(NA,2),]) # will fail
 
 df = data.frame(z = c(1,2), row.names=getSLLinesIDSlots(Sl))
 Sldf = SpatialLinesDataFrame(Sl, data = df) # won't complain
 df1 = data.frame(z = c(1,2))
 try(Sldf1 <- SpatialLinesDataFrame(Sl, data = df1)) # will complain
 Sldf1 = SpatialLinesDataFrame(Sl, data = df1, match.ID = FALSE) # won't complain
+try(Sldf1 <- Sldf1[c(1,NA),])
+
+data(meuse.grid)
+gridded(meuse.grid) = ~x+y
+try(x <- meuse.grid[c(1:10,NA,12),])
+fullgrid(meuse.grid) = TRUE
+try(x <- meuse.grid[c(1:10,NA,12),])

@@ -61,7 +61,7 @@ void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2,
 		double *dist);
 void sp_dists(double *u, double *v, double *uout, double *vout, 
 		int *n, double *dists, int *lonlat);
-
+SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero);
 
 #endif
 

@@ -146,6 +146,8 @@ setMethod("[", "SpatialGrid",
 		else
 			cols = j
 		idx = 1:prod(gr@cells.dim[1:2])
+		if (any(is.na(rows)) || any(is.na(cols))) 
+			stop("NAs not permitted in indices")
 		m = matrix(idx, gr@cells.dim[2], gr@cells.dim[1], byrow = TRUE)[rows,cols]
 		idx = as.vector(m) # t(m)?
 		cc = SpatialPixels(SpatialPoints(coordinates(x)[idx,], CRS(proj4string(x))))

@@ -181,6 +181,7 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		i = TRUE
 	if (is.matrix(i))
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
+        if (any(is.na(i))) stop("NAs not permitted in row index")
 	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
 		data = x@data[i, j, drop = FALSE], 
 		coords.nrs = x@coords.nrs, 

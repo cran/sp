@@ -44,6 +44,7 @@ setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = TRUE) {
         i = TRUE
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialLinesDataFrame selection")
+    if (any(is.na(i))) stop("NAs not permitted in row index")
     SpatialLinesDataFrame(as(x, "SpatialLines")[i, , drop = FALSE],
         data = x@data[i, j, drop = FALSE])
 })
