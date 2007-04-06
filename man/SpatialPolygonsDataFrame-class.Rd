@@ -45,7 +45,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPolygons"}.
 \section{Methods}{
 Methods defined with class "SpatialPolygonsDataFrame" in the signature:
   \describe{
-    \item{[}{\code{signature(x = "SpatialPolygonsDataFrame")}: select subset of (sets of) polygons}
+    \item{[}{\code{signature(x = "SpatialPolygonsDataFrame")}: select subset of (sets of) polygons; NAs are not permitted in the row index}
 	\item{summary}{\code{\signature(object = "SpatialPolygonsDataFrame")}: summarize object}
   }
 }

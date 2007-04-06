@@ -1,5 +1,5 @@
 
-R version 2.4.0 (2006-10-03)
+R version 2.4.0 Patched (2006-11-25 r39997)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -66,6 +66,10 @@ Error in `coordinates<-`(`*tmp*`, value = c("xx", "yy")) :
 Error in `[.data.frame`(x@data, i, j, drop = FALSE) : 
 	undefined columns selected
 > 
+> # row index containing missing values will fail:
+> try(xx <- x[c(1:3,NA),])
+Error in x[c(1:3, NA), ] : NAs not permitted in row index
+> 
 > xx = data.frame(x=1:10, y=1:10)
 > 
 > # fails; use SpatialPoints() to create points without attribute 
@@ -96,6 +100,8 @@ Error in SpatialPointsDataFrame(x, y) : nr of unique coords ID's (rownames) not 
 Error in validObject(.Object) : invalid class "SpatialPolygons" object: non-unique Polygons ID slot values
 > Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
 > SR = SpatialPolygons(list(Srs1,Srs2,Srs3)) # won't complain
+> try(SRx <- SR[c(1,2,NA),])
+Error in SR[c(1, 2, NA), ] : NAs not permitted in row index
 > 
 > attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3"))
 > try(SrDf <- SpatialPolygonsDataFrame(SR, attr)) # will complain
@@ -117,6 +123,8 @@ Error in SpatialPolygonsDataFrame(SR, attr) :
 > Sl = SpatialLines(list(S1,S2)) # won't complain
 > try(Sl1 <- SpatialLines(list(S1,S3))) # will complain
 Error in validObject(.Object) : invalid class "SpatialLines" object: non-unique Lines ID slot values
+> try(Sl1 <- Sl[c(NA,2),]) # will fail
+Error in Sl[c(NA, 2), ] : NAs not permitted in row index
 > 
 > df = data.frame(z = c(1,2), row.names=getSLLinesIDSlots(Sl))
 > Sldf = SpatialLinesDataFrame(Sl, data = df) # won't complain
@@ -125,4 +133,15 @@ Error in validObject(.Object) : invalid class "SpatialLines" object: non-unique 
 Error in SpatialLinesDataFrame(Sl, data = df1) : 
 	row.names of data and Lines IDs do not match
 > Sldf1 = SpatialLinesDataFrame(Sl, data = df1, match.ID = FALSE) # won't complain
+> try(Sldf1 <- Sldf1[c(1,NA),])
+Error in Sldf1[c(1, NA), ] : NAs not permitted in row index
+> 
+> data(meuse.grid)
+> gridded(meuse.grid) = ~x+y
+> try(x <- meuse.grid[c(1:10,NA,12),])
+Error in as(x, "SpatialPointsDataFrame")[i = i, TRUE, ...] : 
+	NAs not permitted in row index
+> fullgrid(meuse.grid) = TRUE
+> try(x <- meuse.grid[c(1:10,NA,12),])
+Error in meuse.grid[c(1:10, NA, 12), ] : NAs not permitted in index
 > 

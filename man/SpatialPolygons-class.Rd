@@ -28,7 +28,7 @@ Class \code{"Spatial"}, directly.
 \section{Methods}{
 Methods defined with class "SpatialPolygons" in the signature:
   \describe{
-    \item{[}{\code{signature(obj = "SpatialPolygons")}: select subset of (sets of) polygons}
+    \item{[}{\code{signature(obj = "SpatialPolygons")}: select subset of (sets of) polygons; NAs are not permitted in the row index}
 	\item{plot}{\code{\signature(x = "SpatialPolygons", y = "missing")}: 
 	plot polygons in SpatialPolygons object}
 	\item{summary}{\code{\signature(object = "SpatialPolygons")}: summarize object}

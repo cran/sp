@@ -47,6 +47,7 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
         i = TRUE 
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialPolygonsDataFrame selection")
+    if (any(is.na(i))) stop("NAs not permitted in row index")
     SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
         data = x@data[i, j, drop = FALSE], match.ID = FALSE)
 ###

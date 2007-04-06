@@ -1,7 +1,7 @@
 checkCRSequal = function(dots) {
 	if (length(dots) > 1) {
 		p1 = proj4string(dots[[1]])
-		res = unlist(lapply(dots[-1], function(x) all.equal(proj4string(x), p1)))
+		res = unlist(lapply(dots[-1], function(x) identical(proj4string(x), p1)))
 		if (any(!res))
 		#if (!isTRUE(all.equal(proj4string(obj), proj4string(x))))
 			stop("coordinate reference systems differ")

@@ -3,11 +3,11 @@ data(meuse)
 # pick 10 rows
 n = 10
 set.seed(1357) # fix seed for exact reproduction of test:
-ran10 = sample(nrow(meuse), size = n, replace = TRUE)
+ran10 = sample(nrow(meuse), size = n, replace = FALSE)
 meusedup = rbind(meuse, meuse[ran10, ])
 coordinates(meusedup) = c("x", "y")
 zd = zerodist(meusedup)
-sum(abs(zd[1:n,1] - sort(ran10))) # 0!
+sum(abs(sort(zd[,1]) - sort(ran10))) # 0!
 # remove the duplicate rows:
 meusedup2 = meusedup[-zd[,2], ]
 print(summary(meusedup2))

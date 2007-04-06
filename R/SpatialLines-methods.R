@@ -138,6 +138,7 @@ lines.SpatialLines = function(x, y = NULL, ...) invisible(lapply(x@lines,
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
 setMethod("[", "SpatialLines", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j)) stop("only a single index is allowed for [.SpatialLines")
+        if (any(is.na(i))) stop("NAs not permitted in row index")
 	SpatialLines(x@lines[i], CRS(proj4string(x)))
 })
 

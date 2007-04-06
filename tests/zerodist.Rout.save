@@ -1,5 +1,5 @@
 
-R version 2.4.1 (2006-12-18)
+R version 2.4.0 Patched (2006-11-25 r39997)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -20,11 +20,11 @@ Type 'q()' to quit R.
 > # pick 10 rows
 > n = 10
 > set.seed(1357) # fix seed for exact reproduction of test:
-> ran10 = sample(nrow(meuse), size = n, replace = TRUE)
+> ran10 = sample(nrow(meuse), size = n, replace = FALSE)
 > meusedup = rbind(meuse, meuse[ran10, ])
 > coordinates(meusedup) = c("x", "y")
 > zd = zerodist(meusedup)
-> sum(abs(zd[1:n,1] - sort(ran10))) # 0!
+> sum(abs(sort(zd[,1]) - sort(ran10))) # 0!
 [1] 0
 > # remove the duplicate rows:
 > meusedup2 = meusedup[-zd[,2], ]

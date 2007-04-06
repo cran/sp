@@ -184,6 +184,8 @@ subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 	idx = 1:prod(grd@cells.dim[1:2])
 	m = matrix(idx, grd@cells.dim[2], grd@cells.dim[1], byrow = TRUE)[rows,cols]
 	idx = as.vector(m) # t(m)?
+	if (any(is.na(idx)))
+		stop("NAs not permitted in index")
 	pts = SpatialPoints(coordinates(x)[idx,], CRS(proj4string(x)))
 	res = SpatialPixelsDataFrame(SpatialPixels(pts), x@data[idx, k, drop = FALSE])
 	as(res, "SpatialGridDataFrame")

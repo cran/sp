@@ -113,6 +113,8 @@ setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 		else
 			i <- which(i)
 	}
+	if (any(is.na(i)))
+		stop("NAs not permitted in row index")
 	if (length(unique(i)) != length(i))
 		stop("SpatialPolygons selection: can't find plot order if polygons are replicated")
 	SpatialPolygons(x@polygons[i], pO = order(match(i, x@plotOrder)),
@@ -162,3 +164,4 @@ getSpatialPolygonsLabelPoints = function(SP) {
 	ret = t(sapply(slot(SP, "polygons"), function(x) slot(x, "labpt")))
 	SpatialPoints(ret, CRS(proj4string(SP)))
 }
+

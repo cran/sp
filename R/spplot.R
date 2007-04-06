@@ -253,10 +253,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 	} else
 		plt
 }
-setMethod("spplot", signature("SpatialPointsDataFrame"), 
-	#function(obj, zcol, ...) spplot.points(obj, zcol, ...)
-	spplot.points
-)
+setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
 
 panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
 	# set first = TRUE defaults for polygons objects in sp.layout:
