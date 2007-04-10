@@ -180,3 +180,8 @@ degAxis = function (side, at, labels, ...) {
 		} 
         axis(side, at = at, labels = labels, ...)
 }
+
+setReplaceMethod("coordinates", signature(object = "Spatial", value = "ANY"),
+	function(object, value) 
+		stop("setting coordinates cannot be done on Spatial objects, where they have already been set")
+)

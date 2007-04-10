@@ -1,14 +1,8 @@
-Line <- function(coords#, proj4string=CRS(as.character(NA))
-) {
-#	if (!is.matrix(coords)) coords <- as.matrix(coords)
+Line <- function(coords) {
 	coords <- coordinates(coords)
-	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
-#	if (mode(coords) != "numeric")
-#		stop("coordinates should have mode numeric")
-#	bbox <- .bboxSlot(coords)
-	new("Line", coords = coords
-#, bbox = as.matrix(bbox), proj4string = proj4string
-	)
+	if (ncol(coords) != 2) 
+		stop("coords must be a two-column matrix")
+	new("Line", coords = coords)
 }
 
 Lines <- function(slinelist, ID=as.character(NA)) {
@@ -16,22 +10,13 @@ Lines <- function(slinelist, ID=as.character(NA)) {
 		slinelist = list(slinelist)
 	if (any(sapply(slinelist, function(x) !is(x, "Line"))))
 		stop("slinelist not a list of Line objects")
-#	projargs <- unique(sapply(slinelist, proj4string))
-#	if (length(projargs) > 1) 
-#		stop("differing projections among Line objects")
-#	Sp <- new("Spatial", bbox= .bboxSls(slinelist), proj4string=CRS(projargs))
 	new("Lines", Lines = slinelist, ID=ID)
 }
 
 SpatialLines <- function(LinesList, proj4string=CRS(as.character(NA))) {
 	if (any(sapply(LinesList, function(x) !is(x, "Lines")))) 
-		stop("lines not Lines objects")
-#	if (length(unique(sapply(LineList, function(x) proj4string(x)))) != 1) 
-#		stop("Different projections in list of Line objects")
-	Sp <- new("Spatial", 
-#bbox = .bboxSls(LineList), 
-#		proj4string=CRS(proj4string(LineList[[1]]))
-bbox=.bboxCalc(LinesList), proj4string=proj4string)
+		stop("lines list not exclusively filled with Lines objects")
+	Sp <- new("Spatial", bbox = .bboxSls(LinesList), proj4string=proj4string)
 	res <- new("SpatialLines", Sp, lines=LinesList)
 	res
 }
@@ -41,24 +26,6 @@ LineLength = function(cc) {
 		cc = coordinates(cc)
 	dxy = matrix(apply(cc, 2, diff), ncol = 2)
 	sum(sqrt(apply(dxy, 1, function(x) sum(x ** 2))))
-}
-
-# NEW
-.bboxCalc <- function(lst) {
-    rx=range(lapply(lst[[1]]@Lines, function(x) range(x@coords[,1]))[[1]])
-    ry=range(lapply(lst[[1]]@Lines, function(x) range(x@coords[,2]))[[1]])
-	
-	for(i in 1:length(lst))
-	{
-		x = lst[[i]]
-		rxx=range(lapply(x@Lines, function(x) range(x@coords[,1]))[[1]])
-		ryy=range(lapply(x@Lines, function(x) range(x@coords[,2]))[[1]])
-		rx=range(c(rx,rxx))
-		ry=range(c(ry,ryy))
-    }
-	res=rbind(r1=rx,r2=ry)
-    dimnames(res)[[2]] <- c("min", "max")
-	res
 }
 
 bbox.Lines <- function(obj) {
@@ -72,27 +39,21 @@ bbox.Lines <- function(obj) {
 setMethod("bbox", "Lines", bbox.Lines)
 
 bbox.Line <- function(obj) {
-    	rx <- range(obj@coords[,1])
-    	ry <- range(obj@coords[,2])
-	res=rbind(r1=rx,r2=ry)
+    rx <- range(obj@coords[,1])
+    ry <- range(obj@coords[,2])
+	res = rbind(r1 = rx, r2 = ry)
    	dimnames(res)[[2]] <- c("min", "max")
 	res
 }
 
 setMethod("bbox", "Line", bbox.Line)
 
-
 .bboxSls <- function(lst) {
-	x <- sapply(lst, function(x) bbox(x)[1,])
-	y <- sapply(lst, function(x) bbox(x)[2,])
-	r1 <- range(x)
-	r2 <- range(y)
-	res <- rbind(r1, r2)
-	dimnames(res)[[2]] <- c("min", "max")
+	bb = sapply(lst, bbox)
+	res = matrix(c(min(bb[1,]), min(bb[2,]), max(bb[3,]), max(bb[4,])), 2, 2)
+	dimnames(res) = list(c("r1", "r2"), c("min", "max"))
 	res
 }
-
-
 
 plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
 	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE, ..., 
@@ -189,3 +150,30 @@ getSpatialLinesMidPoints = function(SL) {
 LinesLength = function(Ls) sum(sapply(Ls@Lines, function(x) LineLength(x)))
 
 SpatialLinesLengths = function(SL) sapply(SL@lines, LinesLength)
+
+setAs("Lines", "SpatialPoints", function(from) { 
+		SpatialPoints(do.call("rbind", coordinates(from)))
+	}
+)
+setAs("SpatialLines", "SpatialPoints", function(from) { 
+		SpatialPoints(
+			do.call("rbind", 
+				lapply(from@lines, function(x) as(x, "SpatialPoints"))),
+			CRS(proj4string(from))
+		)
+	}
+)
+SpatialLines2SpatialPointsDataFrame = function(from) {
+	spp = as(as(from, "SpatialLines"), "SpatialPoints")
+	L = lapply(from@lines, function(x) {rep(1:length(x@Lines), 
+		times = sapply(x@Lines, function(x) nrow(x@coords)))})
+	IDs = sapply(from@lines, function(x) x@ID)
+	L2 = rep(IDs, times = sapply(L, length))
+	L3 = rep(1:length(from@lines), times = sapply(L, length))
+	L = unlist(L)
+	SpatialPointsDataFrame(spp, data.frame(Lines.NR = L3, Lines.ID=L2, Line.NR=L), 
+		proj4string=CRS(proj4string(from)))
+}
+setAs("SpatialLines", "SpatialPointsDataFrame", function(from)
+	SpatialLines2SpatialPointsDataFrame(from)
+)

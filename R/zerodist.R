@@ -32,7 +32,8 @@ function(obj, zero = 0.0)
 	# calculates matrix with pairwise distances for 
 	# coordinate vectors x and y:
 	cc = coordinates(obj)
-	matrix(.Call("sp_zerodist", as.vector(t(cc)), ncol(cc), zero), ncol = 2, byrow = TRUE) + 1
+	matrix(.Call("sp_zerodist", as.vector(t(cc)), ncol(cc), zero), 
+		ncol = 2, byrow = TRUE) + 1
 }
 
 remove.duplicates <- function(obj, zero = 0.0, remove.second = TRUE) {
@@ -41,7 +42,5 @@ remove.duplicates <- function(obj, zero = 0.0, remove.second = TRUE) {
 		idx = 2
 	else
 		idx = 1
-#	res <- subset(obj, !(1:nrow(coordinates(obj)) %in% zd[,idx]))
-#	res
 	obj[-zd[,idx], ]
 }

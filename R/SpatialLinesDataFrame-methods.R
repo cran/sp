@@ -22,13 +22,9 @@ as.data.frame.SpatialLinesDataFrame = function(x, row.names, optional, ...) x@da
 setAs("SpatialLinesDataFrame", "data.frame", function(from)
     as.data.frame.SpatialLinesDataFrame(from))
 
-#"[.SpatialLinesDataFrame" <- function(x, i, j, ... , drop = FALSE) {
 setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = TRUE) {
     missing.i = missing(i)
     missing.j = missing(j)
-    drop <- FALSE
-#    if (drop)
-#        stop("coerce to data.frame first for drop = TRUE")
     nargs = nargs() # e.g., a[3,] gives 2 for nargs, a[3] gives 1.
     if (missing.i && missing.j) {
         i = TRUE
@@ -46,7 +42,7 @@ setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = TRUE) {
         stop("matrix argument not supported in SpatialLinesDataFrame selection")
     if (any(is.na(i))) stop("NAs not permitted in row index")
     SpatialLinesDataFrame(as(x, "SpatialLines")[i, , drop = FALSE],
-        data = x@data[i, j, drop = FALSE])
+        data = x@data[i, j, drop = FALSE], match.ID = FALSE)
 })
 
 "[[.SpatialLinesDataFrame" =  function(x, ...)
@@ -62,3 +58,14 @@ setMethod("[", "SpatialLinesDataFrame", function(x, i, j, ... , drop = TRUE) {
 }
 "$.SpatialLinesDataFrame" = function(x,name) { x@data[[name]] }
 "$<-.SpatialLinesDataFrame" = function(x,i,value) { x@data[[i]]=value; x }
+
+lines.SpatialLinesDataFrame = function(x, y = NULL, ...) 
+	lines(as(x, "SpatialLines"), ...)
+
+setAs("SpatialLinesDataFrame", "SpatialPointsDataFrame", function(from) {
+		spp = as(as(from, "SpatialLines"), "SpatialPointsDataFrame")
+		dfl = from@data[spp$Lines.NR, , drop = FALSE]
+		spp@data = cbind(dfl, spp@data)
+		spp
+	}
+)
