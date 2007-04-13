@@ -41,12 +41,12 @@ as.double.DMS <- function(x, ...) {
 	dd
 }
 
-as.numeric.DMS <- function(from) {
-	if (!inherits(from, "DMS")) stop("not a DMS object")
-	as.double.DMS(from)
+as.numeric.DMS <- function(x, ...) {
+	if (!inherits(x, "DMS")) stop("not a DMS object")
+	as.double.DMS(x)
 }
 
-setAs("DMS", "numeric", as.numeric.DMS)
+setAs("DMS", "numeric", function(from) as.numeric.DMS(from))
 
 as.character.DMS <- function(x, ...) {
 	if (!inherits(x, "DMS")) stop("not a DMS object")
@@ -64,14 +64,13 @@ as.character.DMS <- function(x, ...) {
 }
 setAs("DMS", "character", function(from) as.character.DMS(from))
 
-setMethod("show", "DMS", function(object) print.DMS(object))
-
 "print.DMS" <- function(x, ...)
 {
 	res <- as(x, "character")
 	print(res, quote=FALSE)
 	invisible(res)
 }
+setMethod("show", "DMS", function(object) print.DMS(object))
 
 "char2dms" <- function(from, chd="d", chm="'", chs='"') {
 	x <- substr(from, nchar(from), nchar(from))

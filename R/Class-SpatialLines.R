@@ -6,6 +6,8 @@ setClass("Line",
 			stop("coords cannot contain missing values")
 		if (ncol(object@coords) != 2)
 			return("coords should have 2 columns")
+		if (nrow(object@coords) < 2)
+			return("Line should have at least 2 points")
 		return(TRUE)
 	}
 )
@@ -20,7 +22,7 @@ setClass("Lines",
 
 setClass("SpatialLines",
 	representation("Spatial", lines = "list"),
-	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, 
+	prototype = list(bbox = matrix(rep(NA, 2), 2, 2, 
 			dimnames = list(NULL, c("min","max"))),
 		proj4string = CRS(as.character(NA)),
 		lines = list()),

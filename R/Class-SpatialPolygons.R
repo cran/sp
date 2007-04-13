@@ -5,9 +5,11 @@ setClass("Polygon",
 		coords <- coordinates(object)
 		start <- coords[1,]
 		final <- coords[nrow(coords),]
-		if (!identical(start, final)) stop("ring not closed")
+		if (!identical(start, final)) 
+			stop("ring not closed")
 		return(TRUE)
-})
+	}
+)
 
 setClass("Polygons",
 	representation(Polygons = "list", plotOrder = "integer", 
@@ -18,14 +20,15 @@ setClass("Polygons",
 		if (length(object@Polygons) != length(object@plotOrder))
 			stop("plotOrder and Polygons differ in length")
 		return(TRUE)
-})
+	}
+)
 
 setClass("SpatialPolygons",
-representation("Spatial",
+	representation("Spatial",
 		polygons = "list",
 		plotOrder = "integer"),
 	prototype = list(
-		bbox = matrix(rep(NA, 6), 3, 2, dimnames = list(NULL, c("min","max"))),
+		bbox = matrix(rep(NA, 4), 2, 2, dimnames = list(NULL, c("min","max"))),
 		proj4string = CRS(as.character(NA)),
 		polygons = list(), 
 		plotOrder = integer(0)),

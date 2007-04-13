@@ -6,6 +6,9 @@
 \alias{plot,SpatialLines,missing-method}
 \alias{summary,SpatialLines-method}
 \alias{rbind.SpatialLines}
+\alias{coerce,SpatialLines,SpatialPoints-method}
+\alias{coerce,SpatialLines,SpatialPointsDataFrame-method}
+\alias{coerce,Lines,SpatialPoints-method}
 
 \title{a class for spatial lines }
 \description{ a class that holds spatial lines }

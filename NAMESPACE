@@ -22,8 +22,6 @@ export(dimensions)
  
 export(SpatialPoints, SpatialPointsDataFrame)
 
-#export(AttributeList)
-
 export(Line, Lines, SpatialLines, SpatialLinesDataFrame, as.SpatialLines.SLDF,
 	gridat, LineLength, LinesLength, SpatialLinesLengths)
 
@@ -92,7 +90,6 @@ exportClasses(CRS,
 	Line, 
 	Lines,
 	SpatialLines, 
-	#AttributeList,
  	SpatialPointsDataFrame, 
 	SpatialPixelsDataFrame,
 	SpatialGridDataFrame,
@@ -122,15 +119,11 @@ S3method("[[<-", SpatialPolygonsDataFrame)
 S3method("[[", SpatialLinesDataFrame)
 S3method("[[<-", SpatialLinesDataFrame)
 
-#S3method("[[", AttributeList)
-#S3method("[[<-", AttributeList)
-
 S3method("$", SpatialPointsDataFrame)
 S3method("$", SpatialPixelsDataFrame)
 S3method("$", SpatialGridDataFrame)
 S3method("$", SpatialLinesDataFrame)
 S3method("$", SpatialPolygonsDataFrame)
-#S3method("$", AttributeList)
 
 S3method("$<-", SpatialPoints)
 S3method("$<-", SpatialPixels)
@@ -140,7 +133,6 @@ S3method("$<-", SpatialPixelsDataFrame)
 S3method("$<-", SpatialGridDataFrame)
 S3method("$<-", SpatialLinesDataFrame)
 S3method("$<-", SpatialPolygonsDataFrame)
-#S3method("$<-", AttributeList)
 
 S3method(as.data.frame, SpatialPoints)
 S3method(as.data.frame, SpatialPixels)
@@ -150,7 +142,6 @@ S3method(as.data.frame, SpatialPixelsDataFrame)
 S3method(as.data.frame, SpatialGridDataFrame)
 S3method(as.data.frame, SpatialLinesDataFrame)
 S3method(as.data.frame, SpatialPolygonsDataFrame)
-#S3method(as.data.frame, AttributeList)
 S3method(as.data.frame, GridTopology)
 
 S3method(as.matrix, SpatialGridDataFrame)
@@ -162,7 +153,6 @@ S3method(contour, SpatialPixelsDataFrame)
 S3method(contour, SpatialGridDataFrame)
 
 S3method(dim, SpatialPointsDataFrame)
-#S3method(dim, AttributeList)
 
 S3method(image, SpatialPixelsDataFrame)
 S3method(image, SpatialGridDataFrame)
@@ -170,20 +160,19 @@ S3method(image, SpatialGridDataFrame)
 S3method(lines, Line)
 S3method(lines, Lines)
 S3method(lines, SpatialLines)
+S3method(lines, SpatialLinesDataFrame)
 
 S3method(names, SpatialPointsDataFrame)
 S3method(names, SpatialPixelsDataFrame)
 S3method(names, SpatialGridDataFrame)
 S3method(names, SpatialLinesDataFrame)
 S3method(names, SpatialPolygonsDataFrame)
-#S3method(names, AttributeList)
 
 S3method("names<-", SpatialPointsDataFrame)
 S3method("names<-", SpatialPolygonsDataFrame)
 S3method("names<-", SpatialLinesDataFrame)
 S3method("names<-", SpatialPixelsDataFrame)
 S3method("names<-", SpatialGridDataFrame)
-#S3method("names<-", AttributeList)
 
 # S3method(plot, Spatial)
 # S3method(plot, SpatialPoints)
@@ -218,23 +207,9 @@ S3method(print, summary.SpatialGridDataFrame)
 S3method(stack, SpatialPointsDataFrame)
 S3method(stack, SpatialPixelsDataFrame)
 S3method(stack, SpatialGridDataFrame)
-#S3method(stack, AttributeList)
 
 S3method(subset, SpatialPoints)
 S3method(subset, SpatialPointsDataFrame)
-
-# S3method(summary, Spatial)
-# S3method(summary, GridTopology)
-# S3method(summary, SpatialPoints)
-# S3method(summary, SpatialPointsDataFrame)
-# S3method(summary, SpatialPixels)
-# S3method(summary, SpatialPixelsDataFrame)
-# S3method(summary, SpatialGrid)
-# S3method(summary, SpatialGridDataFrame)
-# S3method(summary, SpatialLines)
-# S3method(summary, SpatialLinesDataFrame)
-# S3method(summary, SpatialPolygonsDataFrame)
-# S3method(summary, AttributeList)
 
 S3method(text, SpatialPointsDataFrame)
 

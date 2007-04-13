@@ -4,14 +4,14 @@ image.SpatialPixelsDataFrame = function(x, ...)
 
 image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2, 
 		red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL, 
-		ylim = NULL, add = FALSE, ..., setParUsrBB=FALSE) {
+		ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE) {
 
 	if (!add)
 		plot(as(x, "Spatial"),
-			xlim = xlim, ylim = ylim, axes = axes, ..., 
+			xlim = xlim, ylim = ylim, axes = axes, asp = asp, ..., 
 			setParUsrBB=setParUsrBB)
 	if (is.null(red)) 
-		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = TRUE, asp = asp, ...)
+		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = TRUE, ...)
 	else {
 		if (is.null(green) || is.null(blue)) 
 			stop("all colour bands must be given")
@@ -22,7 +22,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
 			x@grid@cells.dim[2], byrow=FALSE)
 		res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), z=m[,ncol(m):1])
-		image(res, col=levels(fcols), add = TRUE, asp = asp, ...)
+		image(res, col=levels(fcols), add = TRUE, ...)
 	}
 }
 

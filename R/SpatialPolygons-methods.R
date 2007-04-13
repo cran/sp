@@ -1,5 +1,3 @@
-
-
 SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
 	bb <- .bboxCalcR(Srl)
 	if (missing(pO)) {
@@ -165,3 +163,14 @@ getSpatialPolygonsLabelPoints = function(SP) {
 	SpatialPoints(ret, CRS(proj4string(SP)))
 }
 
+as.Lines.Polygons = function(from) {
+	lst = lapply(from@Polygons, function(x) as(x, "Line"))
+	Lines(lst, from@ID)
+}
+setAs("Polygons", "Lines", as.Lines.Polygons)
+
+as.SpatialLines.SpatialPolygons = function(from)
+	SpatialLines(lapply(from@polygons, function(x) as(x, "Lines")),
+		CRS(proj4string(from)))
+
+setAs("SpatialPolygons", "SpatialLines", as.SpatialLines.SpatialPolygons)

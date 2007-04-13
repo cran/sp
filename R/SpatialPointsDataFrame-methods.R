@@ -163,9 +163,6 @@ subset.SpatialPointsDataFrame <- function(x, subset, select,
 setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 	missing.i = missing(i)
 	missing.j = missing(j)
-	drop <- FALSE
-#	if (drop)
-#		stop("coerce to data.frame first for drop = TRUE")
 	nargs = nargs() # e.g., a[3,] gives 2 for nargs, a[3] gives 1.
 	if (missing.i && missing.j) {
 		i = TRUE
@@ -181,11 +178,13 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		i = TRUE
 	if (is.matrix(i))
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
-        if (any(is.na(i))) stop("NAs not permitted in row index")
+	if (any(is.na(i))) 
+		stop("NAs not permitted in row index")
 	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
 		data = x@data[i, j, drop = FALSE], 
 		coords.nrs = x@coords.nrs, 
-		proj4string = CRS(proj4string(x)))
+		proj4string = CRS(proj4string(x)), 
+		match.ID = FALSE)
 })
 
 "[[.SpatialPointsDataFrame" =  function(x, ...)

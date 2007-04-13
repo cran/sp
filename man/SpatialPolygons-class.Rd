@@ -6,6 +6,8 @@
 \alias{plot,SpatialPolygons,missing-method}
 \alias{summary,SpatialPolygons-method}
 \alias{rbind.SpatialPolygons}
+\alias{coerce,Polygons,Lines-method}
+\alias{coerce,SpatialPolygons,SpatialLines-method}
 
 \title{Class "SpatialPolygons"}
 \description{  class to hold polygon topology (without attributes) }

@@ -6,7 +6,7 @@
 \alias{plot,Spatial,missing-method}
 \alias{getParUsrBB}
 \alias{setParUsrBB}
-% \alias{coerce,SpatialDataFrame,SpatialData-method}
+\alias{coordinates<-,Spatial-method}
 
 \title{Class "Spatial"}
 \description{ An abstract class from which useful spatial classes are
