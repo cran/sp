@@ -4,7 +4,6 @@ SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
 		area <- sapply(Srl, function(x) x@area)
 		pO <- as.integer(order(area, decreasing=TRUE))
 	}
-
 	Sp <- new("Spatial", bbox=bb, proj4string=proj4string)
 	res <- new("SpatialPolygons", Sp, polygons=Srl, plotOrder=as.integer(pO))
 	res
@@ -79,15 +78,14 @@ bbox.Polygons <- function(obj) {
 setMethod("bbox", "Polygons", bbox.Polygons)
 
 bbox.Polygon <- function(obj) {
-    	rx <- range(obj@coords[,1])
-    	ry <- range(obj@coords[,2])
+	rx <- range(obj@coords[,1])
+   	ry <- range(obj@coords[,2])
 	res=rbind(r1=rx,r2=ry)
-    	colnames(res) <- c("min", "max")
+    colnames(res) <- c("min", "max")
 	res
 }
 
 setMethod("bbox", "Polygon", bbox.Polygon)
-
 
 as.SpatialPolygons.PolygonsList <- function(Srl, proj4string=CRS(as.character(NA))) {
 	if (any(sapply(Srl, function(x) !is(x, "Polygons"))))
@@ -98,13 +96,11 @@ as.SpatialPolygons.PolygonsList <- function(Srl, proj4string=CRS(as.character(NA
 
 #	n <- length(Srl)
 
-
 	res <- SpatialPolygons(Srl, proj4string=proj4string)
 	res
 }
 
 setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
-	if (!missing(j)) stop("only a single index is allowed for [.SpatialPolygons")
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)
 			i = 1:length(x@polygons)
@@ -115,8 +111,13 @@ setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 		stop("NAs not permitted in row index")
 	if (length(unique(i)) != length(i))
 		stop("SpatialPolygons selection: can't find plot order if polygons are replicated")
-	SpatialPolygons(x@polygons[i], pO = order(match(i, x@plotOrder)),
-		CRS(proj4string(x)))
+	xx <- SpatialPolygons(x@polygons[i], proj4string=CRS(proj4string(x)))
+	xx
+#	x@polygons = x@polygons[i]
+#	x@bbox <- .bboxCalcR(x@polygons)
+#	area <- sapply(slot(x, "polygons"), function(i) slot(i, "area"))
+#	x@plotOrder <- as.integer(order(area, decreasing=TRUE))
+#	x
 })
 
 setMethod("coordnames", signature(x = "SpatialPolygons"), 
@@ -152,8 +153,6 @@ setReplaceMethod("coordnames",
 		x
 	}
 )
-
-setMethod("summary", "SpatialPolygons", summary.Spatial)
 
 setMethod("coordinates", "SpatialPolygons", 
 	function(obj) getSpPPolygonsLabptSlots(obj))

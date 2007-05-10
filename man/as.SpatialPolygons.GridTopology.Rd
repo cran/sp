@@ -40,6 +40,7 @@ HexPoints2SpatialPolygons(hex, dx)
 
 
 \examples{
+library(lattice)
 grd <- GridTopology(cellcentre.offset=c(-175,55), cellsize=c(10,10), cells.dim=c(4,4))
 SpP_grd <- as.SpatialPolygons.GridTopology(grd)
 plot(SpP_grd)
@@ -57,6 +58,6 @@ plot(xxpl, add = TRUE)
 points(xx, cex = .5)
 df = as.data.frame(meuse.grid)[overlay(meuse.grid, xx),]
 x = SpatialPolygonsDataFrame(xxpl, df, match.ID = FALSE)
-spplot(x["dist"])
+spplot(x, "dist")
 }
 \keyword{spatial}

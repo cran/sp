@@ -4,7 +4,7 @@ SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps),
 		stop("points should be of class or extending SpatialPoints")
 	is.gridded = gridded(points)
 	points = as(points, "SpatialPoints")
-	proj4string(points) = proj4string
+	if (is.na(proj4string(points))) proj4string(points) = proj4string
 	grid = points2grid(points, tolerance)
 	if (!is.gridded) {
 		points@bbox[,1] = points@bbox[,1] - 0.5 * grid@cellsize
@@ -123,10 +123,15 @@ setMethod("[", "SpatialPixels",
 				res = SpatialPixels(res, tolerance = tolerance)
 			else
 				gridded(res) = TRUE
-		} else
+		} else {
 			res = new("SpatialPixels", bbox = x@bbox, proj4string = x@proj4string,	
 				coords = x@coords[i, , drop = FALSE], grid = x@grid, 
 				grid.index = x@grid.index[i])
+			#x@coords = x@coords[i, , drop = FALSE]
+			#x@grid.index = x@grid.index[i]
+			#x@bbox = as.matrix(t(apply(x@coords, 2, range)))
+			#res = x
+		}
 		res
 	}
 )
@@ -177,12 +182,6 @@ setAs("SpatialGrid", "SpatialPixels", function(from)
 	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
 )
 
-setMethod("summary", "SpatialPixels", summary.Spatial)
-setMethod("summary", "SpatialGrid", summary.Spatial)
-
-print.summary.SpatialPixels = print.summary.Spatial
-print.summary.SpatialGrid = print.summary.Spatial
-
 print.SpatialPixels = function(x, ...) {
 	cat("Object of class SpatialPixels\n")
 	print(summary(x@grid))
@@ -199,16 +198,21 @@ print.SpatialGrid = function(x, ...) {
 }
 setMethod("show", "SpatialGrid", function(object) print.SpatialGrid(object))
 
-"$<-.SpatialGrid" = function(x,i,value) {
-	df = data.frame(value)
-	names(df) = as.character(substitute(i))
-	SpatialGridDataFrame(x@grid, df) 
-}
-"$<-.SpatialPixels" = function(x,i,value) { 
-	df = data.frame(value)
-	names(df) = as.character(substitute(i))
-	SpatialPixelsDataFrame(x, df)
-}
+#setReplaceMethod("$", c("SpatialGrid", "character", "ANY"),
+#	function(x,name,value) {
+#		df = data.frame(value)
+#		names(df) = as.character(substitute(name))
+#		SpatialGridDataFrame(x@grid, df) 
+#	}
+#)
+
+#setReplaceMethod("$", c("SpatialPixels", "character", "ANY"),
+#	function(x, name, value) { 
+#		df = data.frame(value)
+#		names(df) = as.character(substitute(name))
+#		SpatialPixelsDataFrame(x, df)
+#	}
+#)
 
 # make a SpatialPolygons from a SpatialPixels - Kohris Sahlen workshop
 as.SpatialPolygons.SpatialPixels <- function(obj) {

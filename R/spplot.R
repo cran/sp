@@ -58,7 +58,10 @@ sp.grid = function(obj, col = 1, alpha = 1, ...) {
 sp.text = function(loc, txt, ...) {
 	if (length(loc) != 2)
 		stop("loc should have length 2")
+	if (!is.numeric(loc))
+		stop("loc should be numeric")
 	panel.text(loc[1], loc[2], txt, ...)
+	#panel.text(loc[[1]], loc[[2]], txt, ...)
 }
 
 sp.panel.layout = function(lst, p.number, ...) {

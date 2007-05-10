@@ -31,7 +31,6 @@ setMethod("coordinates", "SpatialPointsDataFrame", function(obj) obj@coords)
 
 setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
   function(object, value) {
-#"coordinates<-" = function(object, value) {
 	coord.numbers = NULL
 	#if (!is.list(object))
 	#	stop("coordinates can only be set on objects of class data.frame or list")
@@ -66,9 +65,8 @@ setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
 			return(SpatialPoints(cc))
 	} else
 		stripped = numeric(0)
-	SpatialPointsDataFrame(data = object, coords = cc, coords.nrs = stripped,
+	SpatialPointsDataFrame(coords = cc, data = object, coords.nrs = stripped,
 		match.ID = FALSE)
-#}
   }
 )
 
@@ -124,28 +122,6 @@ text.SpatialPointsDataFrame = function(x, ...) {
     do.call(text, lst)
 }
 
-summary.SpatialPointsDataFrame = function(object, ...) {
-    obj = list()
-	obj[["data"]] = summary(object@data)
-	obj[["coords"]] = summary(object@coords)
-	obj[["proj"]] = proj4string(object)
-    class(obj) = "summary.SpatialPointsDataFrame"
-    obj
-}
-#setMethod("summary", "SpatialPointsDataFrame", summary.SpatialPointsDataFrame)
-
-print.summary.SpatialPointsDataFrame = function(x, ...) {
-	cat("attribute table data:\n")
-	print(x$data)
-	cat("Coordinates:\n")
-	print(x$coords)
-	pst <- paste(strwrap(paste(
-		"Coordinate Reference System (CRS) arguments:", x$proj)),
-		collapse="\n")
-	cat(pst, "\n")
-	cat("\n")
-}
-
 subset.SpatialPointsDataFrame <- function(x, subset, select, 
 		drop = FALSE, ...) {
 	xSP <- coordinates(x)
@@ -159,7 +135,6 @@ subset.SpatialPointsDataFrame <- function(x, subset, select,
 	SPDF
 }
 
-#"[.SpatialPointsDataFrame" <- function(x, i, j, ... , drop = FALSE) {
 setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 	missing.i = missing(i)
 	missing.j = missing(j)
@@ -180,29 +155,16 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
-	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
-		data = x@data[i, j, drop = FALSE], 
-		coords.nrs = x@coords.nrs, 
-		proj4string = CRS(proj4string(x)), 
-		match.ID = FALSE)
-})
-
-"[[.SpatialPointsDataFrame" =  function(x, ...)
-#setMethod("[[", "SpatialPointsDataFrame", function(x, ...)
-	x@data[[...]]
-#)
-
-"[[<-.SpatialPointsDataFrame" =  function(x, i, j, value) {
-	if (!missing(j))
-		stop("only valid calls are x[[i]] <- value")
-	if (is.character(i) && any(!is.na(match(i, dimnames(coordinates(x))[[2]]))))
-		stop(paste(i, "is already present as a coordinate name!"))
-	x@data[[i]] <- value
+	coords.nrs = x@coords.nrs
+	if (!isTRUE(j)) # i.e., we do some sort of column selection
+		coords.nrs = numeric(0) # will move coordinate colums last
+#	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
+#		data = x@data[i, j, drop = FALSE], 
+#		coords.nrs = coords.nrs, 
+#		proj4string = CRS(proj4string(x)), 
+#		match.ID = FALSE)
+	x@coords = x@coords[i, , drop = FALSE]
+	x@bbox = .bboxCoords(x@coords)
+	x@data = x@data[i, j, ..., drop = FALSE]
 	x
-}
-
-"$.SpatialPointsDataFrame" = function(x, name) x@data[[name]]
-
-"$<-.SpatialPointsDataFrame" = function(x, i, value) { x@data[[i]] = value; x }
-
-setMethod("summary", "SpatialPointsDataFrame", summary.Spatial)
+})

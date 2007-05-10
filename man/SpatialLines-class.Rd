@@ -30,7 +30,7 @@ Class \code{"Spatial"}, directly.
 \section{Methods}{
   \describe{
     \item{[}{\code{signature(obj = "SpatialLines")}: select subset of (sets of) lines; NAs are not permitted in the row index}
-	coordinates; value is a list of lists with matrices }
+	\item{coordinates}{ value is a list of lists with matrices }
 	\item{plot}{\code{\signature(x = "SpatialLines", y = "missing")}: 
 	plot lines in SpatialLines object}
 	\item{lines}{\code{\signature(x = "SpatialLines")}: 

@@ -81,9 +81,8 @@ summary.Spatial = function(object, ...) {
     if (is(object, "SpatialPoints"))
         obj[["npoints"]] = nrow(object@coords)
 	if (is(object, "SpatialGrid"))
-		obj[["grid"]] = gridparameters(as(object, "SpatialGrid"))
-    if (is(object, "SpatialPointsDataFrame") || is(object, "SpatialLinesDataFrame") 
-			|| is(object, "SpatialGridDataFrame") || is(object, "SpatialPolygonsDataFrame"))
+		obj[["grid"]] = gridparameters(object)
+	if ("data" %in% slotNames(object))
         obj[["data"]] = summary(object@data)
     class(obj) = "summary.Spatial"
     obj
@@ -184,4 +183,40 @@ degAxis = function (side, at, labels, ...) {
 setReplaceMethod("coordinates", signature(object = "Spatial", value = "ANY"),
 	function(object, value) 
 		stop("setting coordinates cannot be done on Spatial objects, where they have already been set")
+)
+
+setMethod("[[", c("Spatial", "ANY", "missing"), 
+	function(x, i, j, ...) {
+		if (!("data" %in% slotNames(x)))
+			stop("no [[ method for object without attributes")
+		x@data[[i]]
+	}
+)
+
+setReplaceMethod("[[", c("Spatial", "ANY", "missing", "ANY"), 
+	function(x, i, j, value) {
+		if (!("data" %in% slotNames(x)))
+			stop("no [[ method for object without attributes")
+		if (is.character(i) && any(!is.na(match(i, dimnames(coordinates(x))[[2]]))))
+			stop(paste(i, "is already present as a coordinate name!"))
+		x@data[[i]] <- value
+		x
+	}
+)
+
+setMethod("$", c("Spatial", "character"), 
+	function(x, name) {
+		if (!("data" %in% slotNames(x)))
+			stop("no $ method for object without attributes")
+		x@data[[name]]
+	}
+)
+
+setReplaceMethod("$", c("Spatial", "character", "ANY"), 
+	function(x, name, value) { 
+		if (!("data" %in% slotNames(x)))
+			stop("no $<- method for object without attributes")
+		x@data[[name]] = value 
+		x 
+	}
 )

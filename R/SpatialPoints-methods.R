@@ -4,10 +4,14 @@
 	if (is.null(colnames))
 		colnames = paste("coords.x", 1:(dim(coords)[2]), sep = "")
 	dimnames(coords) = list(NULL, colnames) # strip row names
+	new("SpatialPoints", coords = coords, bbox = .bboxCoords(coords),
+		proj4string = proj4string) # transpose bbox?
+}
+
+.bboxCoords = function(coords) {
 	bbox = t(apply(coords, 2, range))
 	dimnames(bbox)[[2]] = c("min", "max")
-	new("SpatialPoints", coords = coords, bbox = as.matrix(bbox),
-		proj4string = proj4string) # transpose bbox?
+	as.matrix(bbox)
 }
 
 .checkNumericCoerce2double = function(obj) {
@@ -48,13 +52,13 @@ setMethod("coordinates", "matrix",
 setMethod("show", "SpatialPoints", function(object) print.SpatialPoints(object))
 
 plot.SpatialPoints = function(x, pch = 3, axes = FALSE, add = FALSE, 
-	xlim = NULL, ylim = NULL, ..., setParUsrBB=FALSE) 
+	xlim = NULL, ylim = NULL, ..., setParUsrBB=FALSE, cex = 1, col = 1, lwd = 1, bg = 1) 
 {
 	if (! add)
 		plot(as(x, "Spatial"), axes = axes, xlim = xlim, ylim = ylim, 
 			..., setParUsrBB=setParUsrBB)
 	cc = coordinates(x)
-	points(cc[,1], cc[,2], pch = pch, ...)
+	points(cc[,1], cc[,2], pch = pch, cex = cex, col = col, lwd = lwd, bg = bg)
 }
 setMethod("plot", signature(x = "SpatialPoints", y = "missing"),
 	function(x,y,...) plot.SpatialPoints(x,...))
@@ -82,18 +86,17 @@ setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	drop = FALSE
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
-	SpatialPoints(coords=x@coords[i, , drop=drop], 
-		proj4string = CRS(proj4string(x)))
+#	SpatialPoints(coords=x@coords[i, , drop=drop], 
+#		proj4string = CRS(proj4string(x)))
+	x@coords = x@coords[i, , drop = FALSE]
+	x@bbox = .bboxCoords(x@coords)
+	x
 })
-
-setMethod("summary", "SpatialPoints", summary.Spatial)
-
-print.summary.SpatialPoints = print.summary.Spatial
 
 setMethod("coordnames", signature(x = "SpatialPoints"),
 	function(x) dimnames(x@coords)[[2]])
-setReplaceMethod("coordnames", 
-	signature(x = "SpatialPoints", value = "character"),
+
+setReplaceMethod("coordnames", signature(x = "SpatialPoints", value = "character"),
 	function(x, value) {
 		dimnames(x@bbox)[[1]] = value
 		dimnames(x@coords)[[2]] = value
@@ -101,4 +104,6 @@ setReplaceMethod("coordnames",
 	}
 )
 
-"$<-.SpatialPoints" = function(x,i,value) { SpatialPointsDataFrame(x, data.frame(i = value)) }
+#setReplaceMethod("$", c("SpatialPoints", "character", "ANY"),
+#	function(x, name, value) SpatialPointsDataFrame(x, data.frame(name = value)) 
+#)

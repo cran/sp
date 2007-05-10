@@ -237,8 +237,7 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 	while (is.null(res) && its < iter) {
 	    bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
 	    bb.area <- bb.area + bb.area*its*0.1
-	    pts = #spsample(as(x, "Spatial")
-sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type=type, offset = offset, ...)
+	    pts = sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type=type, offset = offset, ...)
 	    Over_pts_x <- overlay(pts, x)
 	    Not_NAs <- !is.na(Over_pts_x)
 	    if (!any(Not_NAs)) res <- NULL

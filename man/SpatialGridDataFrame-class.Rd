@@ -3,15 +3,10 @@
 \alias{SpatialGridDataFrame-class}
 \alias{[,SpatialGridDataFrame-method}
 \alias{show,SpatialGridDataFrame-method}
-\alias{[[,SpatialGridDataFrame-method}
-\alias{[[<-,SpatialGridDataFrame-method}
-\alias{$.SpatialGridDataFrame}
-\alias{$<-.SpatialGridDataFrame}
 \alias{cbind.SpatialGridDataFrame}
 % \alias{SpatialGridDataFrame}
 \alias{plot.SpatialGridDataFrame}
 \alias{print.summary.SpatialGridDataFrame}
-\alias{summary.SpatialGridDataFrame}
 \alias{coerce,SpatialGridDataFrame,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,SpatialPixelsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,data.frame-method}
@@ -49,9 +44,6 @@ Class \code{"Spatial"}, by class \code{"SpatialGrid"}.
     \item{coordinates}{\code{signature(x = "SpatialGridDataFrame")}: retrieves (and calculates!) coordinates }
     \item{[}{\code{signature(x = "SpatialGridDataFrame")}: selects rows, columns, and attributes; returns an
 	object of class \code{SpatialGridDataFrame}}
-    \item{[[}{\code{signature(x = "SpatialGridDataFrame")}: retrieves an attribute, dropping everything 
-	else (topology) }
-    \item{[[<-}{\code{signature(x = "SpatialGridDataFrame")}: assigns or replaces an attribute }
 	\item{as.matrix}{\code{signature(x = "SpatialGridDataFrame")}: coerce to matrix }
 	\item{cbind}{\code{signature(...)}: if arguments have identical topology, combine their
 	attribute values}

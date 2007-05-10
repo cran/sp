@@ -2,9 +2,6 @@
 \docType{class}
 \alias{SpatialPolygonsDataFrame-class}
 \alias{[,SpatialPolygonsDataFrame-method}
-\alias{summary,SpatialPolygonsDataFrame-method}
-\alias{$.SpatialPolygonsDataFrame}
-\alias{$<-.SpatialPolygonsDataFrame}
 \alias{as.data.frame.SpatialPolygonsDataFrame}
 \alias{coerce,SpatialPolygonsDataFrame,data.frame-method}
 \alias{coerce,SpatialPolygonsDataFrame,SpatialLinesDataFrame-method}
@@ -47,7 +44,6 @@ Class \code{"Spatial"}, by class \code{"SpatialPolygons"}.
 Methods defined with class "SpatialPolygonsDataFrame" in the signature:
   \describe{
     \item{[}{\code{signature(x = "SpatialPolygonsDataFrame")}: select subset of (sets of) polygons; NAs are not permitted in the row index}
-	\item{summary}{\code{\signature(object = "SpatialPolygonsDataFrame")}: summarize object}
   }
 }
 \references{ }

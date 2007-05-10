@@ -7,6 +7,10 @@
 \alias{getParUsrBB}
 \alias{setParUsrBB}
 \alias{coordinates<-,Spatial-method}
+\alias{[[<-,Spatial,ANY,missing-method}
+\alias{[[,Spatial,ANY,missing-method}
+\alias{$<-,Spatial,character-method}
+\alias{$,Spatial,character-method}
 
 \title{Class "Spatial"}
 \description{ An abstract class from which useful spatial classes are

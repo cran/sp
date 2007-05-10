@@ -41,8 +41,9 @@ functions}
 \item{type}{ character; \code{"random"} for completely spatial random;
 \code{"regular"} for regular (systematically aligned) sampling;
 \code{"stratified"} for stratified random (one single random location in
-each "cell"); or \code{"nonaligned"} for nonaligned systematic sampling
-(nx random y coordinates, ny random x coordinates) }
+each "cell"); \code{"nonaligned"} for nonaligned systematic sampling
+(nx random y coordinates, ny random x coordinates); \code{"hexagonal"}
+for sampling on a hexagonal lattice}
 \item{bb}{ bounding box of the sampled domain; setting this to a smaller
 value leads to sub-region sampling }
 \item{offset}{ for regular sampling only: the offset (position) of the regular
