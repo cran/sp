@@ -21,7 +21,7 @@ one, or demotes a gridded structure back to a non-structured one.
 	gridparameters(obj)
 }
 \arguments{
-\item{obj}{ object deriviving from class "Spatial" (for gridded), or }
+\item{obj}{ object deriviving from class "Spatial" (for gridded), or
 object of class \link{SpatialGridDataFrame-class} (for fullgrid and gridparameters) }
 }
 \section{Methods}{

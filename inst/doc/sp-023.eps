@@ -25,8 +25,8 @@
 /c   { newpath 0 360 arc } def
 /r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } def
 /p1  { stroke } def
-/p2  { gsave bg setrgbcolor fill grestore newpath } def
-/p3  { gsave bg setrgbcolor fill grestore stroke } def
+/p2  { gsave bg fill grestore newpath } def
+/p3  { gsave bg fill grestore stroke } def
 /t   { 6 -2 roll moveto gsave rotate
        ps mul neg 0 2 1 roll rmoveto
        1 index stringwidth pop
@@ -80,8 +80,8 @@ dup length dict begin
 %%Page: 1 1
 bp
 59.04 73.44 401.76 372.96 cl
-/bg { 0 0 0 } def
-0 0 0 rgb
+/bg { 0 setgray } def
+0 setgray
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -94,14 +94,14 @@ np
 0 -70.52 l
 -70.52 -35.26 l
 cp p3
-/bg { 1 0 0 } def
+/bg { 1 0 0 rgb } def
 np
  212.77 170.31 m
 -105.78 0 l
 70.52 35.26 l
 35.26 -35.26 l
 cp p3
-/bg { 0 0.8039 0 } def
+/bg { 0 0.8039 0 rgb } def
 np
  177.51 276.09 m
 211.56 0 l
@@ -109,7 +109,7 @@ np
 -35.26 35.26 l
 0 70.52 l
 cp p3
-/bg { 1 1 1 } def
+/bg { 1 setgray } def
 np
  212.77 240.83 m
 0 -35.26 l

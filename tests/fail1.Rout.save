@@ -1,6 +1,6 @@
 
-R version 2.4.0 Patched (2006-11-25 r39997)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.0 (2007-04-23)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -63,7 +63,7 @@ Error in `coordinates<-`(`*tmp*`, value = c("xx", "yy")) :
 > 
 > # this will fail, as "x" is not in the data part:
 > try(x[c("zinc", "x", "copper", "zinc")])
-Error in `[.data.frame`(x@data, i, j, drop = FALSE) : 
+Error in `[.data.frame`(x@data, i, j, ..., drop = FALSE) : 
 	undefined columns selected
 > 
 > # row index containing missing values will fail:
@@ -144,4 +144,10 @@ Error in as(x, "SpatialPointsDataFrame")[i = i, TRUE, ...] :
 > fullgrid(meuse.grid) = TRUE
 > try(x <- meuse.grid[c(1:10,NA,12),])
 Error in meuse.grid[c(1:10, NA, 12), ] : NAs not permitted in index
+> 
+> try(x <- meuse[[c("zinc", "cadmium")]])
+Error in .subset2(x, i) : subscript out of bounds
+> try(meuse[[c("zn", "cd")]] <- cbind(meuse$zinc, meuse$cadmium))
+Error in x[[i]] <- value : no such index at level 1
+
 > 

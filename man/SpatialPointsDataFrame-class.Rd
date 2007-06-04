@@ -5,18 +5,9 @@
 \alias{coerce,SpatialPointsDataFrame,data.frame-method}
 \alias{coerce,SpatialPointsDataFrame,SpatialPoints-method}
 \alias{show,SpatialPointsDataFrame-method}
-% \alias{coordinates,SpatialPointsDataFrame-method}
-% \alias{coordinates}
-% \alias{SpatialPointsDataFrame}
-\alias{[[.SpatialPointsDataFrame}
-\alias{[[<-.SpatialPointsDataFrame}
-\alias{$.SpatialPointsDataFrame}
-\alias{$<-.SpatialPointsDataFrame}
 \alias{as.data.frame.SpatialPointsDataFrame}
 \alias{dim.SpatialPointsDataFrame}
 \alias{print.SpatialPointsDataFrame}
-\alias{summary,SpatialPointsDataFrame-method}
-\alias{print.summary.SpatialPointsDataFrame}
 \alias{ShowSpatialPointsDataFrame}
 \alias{as.SpatialPoints.SpatialPointsDataFrame}
 \alias{rbind.SpatialPointsDataFrame}
@@ -49,12 +40,12 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
 \section{Methods}{
   \describe{
     \item{[}{\code{signature(x = "SpatialPointsDataFrame")}: subset rows or
-	columns; in case of row subsetting, the coordinates are also subsetted }
+	columns; in case of row subsetting, the coordinates are also subsetted, return
+	SpatialPointsDataFrame}
     \item{coerce}{\code{signature(from = "SpatialPointsDataFrame", to = "data.frame")}:   extracts the attribute part }
     \item{coordinates}{\code{signature(obj = "SpatialPointsDataFrame")}: retrieves
 	the coordinates only }
     \item{show}{\code{signature(object = "SpatialPointsDataFrame")}: print method }
-    \item{summary}{\code{signature(object = "SpatialPointsDataFrame")}: summarize object}
     \item{points}{\code{signature(x = "SpatialPointsDataFrame")}: add points to plot}
   }
 }

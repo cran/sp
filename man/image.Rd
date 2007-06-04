@@ -11,11 +11,13 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 }
 \usage{
 \method{image}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2, 
-	red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL,
+	col = heat.colors(12), red=NULL, green=NULL, blue=NULL,
+        axes = FALSE, xlim = NULL,
 	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE)
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
 \method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
-	add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE, ..., setParUsrBB = FALSE)
+	col = 1, add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE,
+         ..., setParUsrBB = FALSE)
 \method{contour}{SpatialPixelsDataFrame}(x, ...) 
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
 }
@@ -26,6 +28,7 @@ the column name in the data.frame of \code{data} (as.data.frame(data)), or
 a column number }
 \item{xcol}{ column number of x-coordinate, in the coordinate matrix }
 \item{ycol}{ column number of y-coordinate, in the coordinate matrix }
+\item{col}{a vector of colors }
 \item{red,green,blue}{columns names or numbers given instead of the \code{attr} argument when the data represent an image encoded in three colour bands on the 0-255 integer scale; all three columns must be given in this case, and the attribute values will be constructed using function \code{rgb} }
 %\item{asp}{ aspect ratio of unit x and unit y axis }
 \item{axes}{ logical; should coordinate axes be drawn? }

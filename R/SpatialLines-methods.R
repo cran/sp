@@ -81,8 +81,6 @@ plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
 	}
 }
 
-setMethod("summary", "SpatialLines", summary.Spatial)
-
 setMethod("plot", signature(x = "SpatialLines", y = "missing"),
 	function(x, y, ...) plotSpatialLines(x, ...))
 
@@ -97,11 +95,15 @@ lines.SpatialLines = function(x, y = NULL, ...) invisible(lapply(x@lines,
 	function(x, ...) lines(x, ...), ...))
 
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
-setMethod("[", "SpatialLines", function(x, i, j, ..., drop = TRUE) {
-	if (!missing(j)) stop("only a single index is allowed for [.SpatialLines")
+setMethod("[", "SpatialLines", 
+	function(x, i, j, ..., drop = TRUE) {
         if (any(is.na(i))) stop("NAs not permitted in row index")
-	SpatialLines(x@lines[i], CRS(proj4string(x)))
-})
+		#SpatialLines(x@lines[i], CRS(proj4string(x)))
+		x@lines = x@lines[i]
+		x@bbox = .bboxSls(x@lines)
+		x
+	}
+)
 
 setMethod("coordnames", signature(x = "SpatialLines"), 
 	function(x) coordnames(x@lines[[1]])

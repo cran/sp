@@ -90,3 +90,6 @@ gridded(meuse.grid) = ~x+y
 try(x <- meuse.grid[c(1:10,NA,12),])
 fullgrid(meuse.grid) = TRUE
 try(x <- meuse.grid[c(1:10,NA,12),])
+
+try(x <- meuse[[c("zinc", "cadmium")]])
+try(meuse[[c("zn", "cd")]] <- cbind(meuse$zinc, meuse$cadmium))

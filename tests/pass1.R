@@ -58,3 +58,8 @@ summary(as(Sl, "SpatialPoints"))
 summary(as(Sl, "SpatialPointsDataFrame"))
 SlDf = SpatialLinesDataFrame(Sl, data.frame(xx = c("foo", "bar")), match.ID = FALSE)
 summary(as(SlDf, "SpatialPointsDataFrame"))
+
+meuse[["xxx"]] = log(meuse$zinc)
+summary(meuse)
+meuse$xxy = log(meuse[["zinc"]])
+summary(meuse)

@@ -2,16 +2,19 @@
 image.SpatialPixelsDataFrame = function(x, ...)
 	image(as(x, "SpatialGridDataFrame"), ...)
 
-image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2, 
+image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
+                col = heat.colors(12), 
 		red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL, 
-		ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE) {
+		ylim = NULL, add = FALSE, ..., asp = NA, 
+		setParUsrBB=FALSE) {
 
 	if (!add)
 		plot(as(x, "Spatial"),
 			xlim = xlim, ylim = ylim, axes = axes, asp = asp, ..., 
 			setParUsrBB=setParUsrBB)
 	if (is.null(red)) 
-		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = TRUE, ...)
+		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), 
+                  add = TRUE, col = col, ...)
 	else {
 		if (is.null(green) || is.null(blue)) 
 			stop("all colour bands must be given")
@@ -26,13 +29,15 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 	}
 }
 
-contour.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2, 
-		add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE, ..., setParUsrBB = FALSE)  {
+contour.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
+                col = 1, add = FALSE, xlim = NULL, ylim = NULL,
+                axes = FALSE, ..., setParUsrBB = FALSE)  {
 	if (!add)
 		plot(as(x, "Spatial"),
 			xlim = xlim, ylim = ylim, axes = axes, ..., 
 			setParUsrBB=setParUsrBB)
-	contour(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), add = TRUE, ...)
+	contour(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), col = col,
+          add = TRUE, ...)
 }
 
 contour.SpatialPixelsDataFrame = function(x, ...)

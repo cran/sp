@@ -45,28 +45,23 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialPolygonsDataFrame selection")
     if (any(is.na(i))) stop("NAs not permitted in row index")
-    SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
-        data = x@data[i, j, drop = FALSE], match.ID = FALSE)
+    #SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
+    #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)
+	x@data = x@data[i, j, ..., drop = FALSE]
+	if (is.logical(i)) {
+		if (length(i) == 1 && i)
+			i = 1:length(x@polygons)
+		else
+			i <- which(i)
+	}
+	x@polygons = x@polygons[i]
+	x@bbox <- .bboxCalcR(x@polygons)
+	x@plotOrder = order(match(i, x@plotOrder))
+	x
 ###
 ### RSB: do something with labelpoints here? How can I check they are present?
 ### (label points belong to the Polygons objects, not the SpatialPolygons object)
 })
-
-"[[.SpatialPolygonsDataFrame" =  function(x, ...)
-#setMethod("[[", "SpatialPolygonsDataFrame", function(x, ...)
-    x@data[[...]]
-#)
-
-"[[<-.SpatialPolygonsDataFrame" =  function(x, i, j, value) {
-    if (!missing(j))
-        stop("only valid calls are x[[i]] <- value")
-    x@data[[i]] <- value
-    x
-}
-"$.SpatialPolygonsDataFrame" = function(x,name) { x@data[[name]] }
-"$<-.SpatialPolygonsDataFrame" = function(x,i,value) { x@data[[i]]=value; x }
-
-setMethod("summary", "SpatialPolygonsDataFrame", summary.Spatial)
 
 setMethod("coordinates", "SpatialPolygonsDataFrame", 
 	function(obj) getSpPPolygonsLabptSlots(obj))
