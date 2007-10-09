@@ -1,5 +1,5 @@
 
-R version 2.5.0 (2007-04-23)
+R version 2.6.0 (2007-10-03)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -22,17 +22,16 @@ Type 'q()' to quit R.
 > coordinates(x) <- c("x", "y")
 > try(proj4string(x) <- 1.5)
 Error in `proj4string<-`(`*tmp*`, value = 1.5) : 
-	assigned value must be CRS object
+  assigned value must be CRS object
 > try(coordinates(a) <- cbind(1:10, 10:1))
-Error in coordinates(a) <- cbind(1:10, 10:1) : 
-	object "a" not found
+Error in coordinates(a) <- cbind(1:10, 10:1) : object "a" not found
 > # fails because a is not found; passes if a assigned NULL, see pass1.R
 > 
 > x = meuse
 > # invalid coordinate formulae:
 > try(coordinates(x) <- ~log(x)+sqrt(y)) # no expressions allowed
 Error in `[.data.frame`(object, , -coord.numbers, drop = FALSE) : 
-	undefined columns selected
+  undefined columns selected
 > try(coordinates(x) <- ~x+y+z) # z is not present
 Error in eval(expr, envir, enclos) : object "z" not found
 > x$x2 = x$x^2
@@ -40,13 +39,14 @@ Error in eval(expr, envir, enclos) : object "z" not found
 > try(coordinates(x) <- ~x+y+x2+y2) # 4D now passes check...
 > x = meuse
 > try(coordinates(x) <- ~x) # 1D not allowed
-Error in validObject(.Object) : invalid class "SpatialPoints" object: spatial.dimension should be 2 or more
+Error in validObject(.Object) : 
+  invalid class "SpatialPoints" object: spatial.dimension should be 2 or more
 > 
 > # is.na.sp.coords
 > a = data.frame(cbind(xx=c(1,NA,2,10),yy=c(2,NA,NA,20)))
 > try(coordinates(a) <- c("xx", "yy")) # should fail!
 Error in `coordinates<-`(`*tmp*`, value = c("xx", "yy")) : 
-	coordinates are not allowed to contain missing values
+  coordinates are not allowed to contain missing values
 > 
 > x = meuse[1:4,]
 > coordinates(x) = c(1,2)
@@ -64,7 +64,7 @@ Error in `coordinates<-`(`*tmp*`, value = c("xx", "yy")) :
 > # this will fail, as "x" is not in the data part:
 > try(x[c("zinc", "x", "copper", "zinc")])
 Error in `[.data.frame`(x@data, i, j, ..., drop = FALSE) : 
-	undefined columns selected
+  undefined columns selected
 > 
 > # row index containing missing values will fail:
 > try(xx <- x[c(1:3,NA),])
@@ -79,7 +79,8 @@ Error in x[c(1:3, NA), ] : NAs not permitted in row index
 > dimnames(x) = list(c(1,1:4), NULL)
 > y = data.frame(a = 1:5, b = 5:1)
 > try(SpatialPointsDataFrame(x, y)) # will complain:
-Error in SpatialPointsDataFrame(x, y) : nr of unique coords ID's (rownames) not equal to nr of data records
+Error in SpatialPointsDataFrame(x, y) : 
+  nr of unique coords ID's (rownames) not equal to nr of data records
 > SpatialPointsDataFrame(x, y, match.ID = FALSE) # won't complain
   coordinates a b
 1      (3, 3) 1 5
@@ -97,7 +98,8 @@ Error in SpatialPointsDataFrame(x, y) : nr of unique coords ID's (rownames) not 
 > Srs2 = Polygons(list(Sr2), "s2")
 > Srs3 = Polygons(list(Sr3, Sr4), "s2")
 > try(SR <- SpatialPolygons(list(Srs1,Srs2,Srs3))) # will complain
-Error in validObject(.Object) : invalid class "SpatialPolygons" object: non-unique Polygons ID slot values
+Error in validObject(.Object) : 
+  invalid class "SpatialPolygons" object: non-unique Polygons ID slot values
 > Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
 > SR = SpatialPolygons(list(Srs1,Srs2,Srs3)) # won't complain
 > try(SRx <- SR[c(1,2,NA),])
@@ -106,7 +108,7 @@ Error in SR[c(1, 2, NA), ] : NAs not permitted in row index
 > attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3"))
 > try(SrDf <- SpatialPolygonsDataFrame(SR, attr)) # will complain
 Error in SpatialPolygonsDataFrame(SR, attr) : 
-	row.names of data and Polygons IDs do not match
+  row.names of data and Polygons IDs do not match
 > SrDf = SpatialPolygonsDataFrame(SR, attr, match.ID = FALSE) # won't complain
 > attr = data.frame(a=1:3, b=3:1, row.names=c("s1", "s2", "s3/4"))
 > SrDf = SpatialPolygonsDataFrame(SR, attr) # won't complain
@@ -122,7 +124,8 @@ Error in SpatialPolygonsDataFrame(SR, attr) :
 > S3 = Lines(list(Sl2), ID="a")
 > Sl = SpatialLines(list(S1,S2)) # won't complain
 > try(Sl1 <- SpatialLines(list(S1,S3))) # will complain
-Error in validObject(.Object) : invalid class "SpatialLines" object: non-unique Lines ID slot values
+Error in validObject(.Object) : 
+  invalid class "SpatialLines" object: non-unique Lines ID slot values
 > try(Sl1 <- Sl[c(NA,2),]) # will fail
 Error in Sl[c(NA, 2), ] : NAs not permitted in row index
 > 
@@ -131,7 +134,7 @@ Error in Sl[c(NA, 2), ] : NAs not permitted in row index
 > df1 = data.frame(z = c(1,2))
 > try(Sldf1 <- SpatialLinesDataFrame(Sl, data = df1)) # will complain
 Error in SpatialLinesDataFrame(Sl, data = df1) : 
-	row.names of data and Lines IDs do not match
+  row.names of data and Lines IDs do not match
 > Sldf1 = SpatialLinesDataFrame(Sl, data = df1, match.ID = FALSE) # won't complain
 > try(Sldf1 <- Sldf1[c(1,NA),])
 Error in Sldf1[c(1, NA), ] : NAs not permitted in row index
@@ -140,7 +143,7 @@ Error in Sldf1[c(1, NA), ] : NAs not permitted in row index
 > gridded(meuse.grid) = ~x+y
 > try(x <- meuse.grid[c(1:10,NA,12),])
 Error in as(x, "SpatialPointsDataFrame")[i = i, TRUE, ...] : 
-	NAs not permitted in row index
+  NAs not permitted in row index
 > fullgrid(meuse.grid) = TRUE
 > try(x <- meuse.grid[c(1:10,NA,12),])
 Error in meuse.grid[c(1:10, NA, 12), ] : NAs not permitted in index

@@ -1,6 +1,333 @@
+2007-10-09 09:57  rsbivand
+
+	* DESCRIPTION, man/meuse.Rd, man/meuse.grid.Rd, man/meuse.riv.Rd,
+	  tests/fail1.Rout.save, tests/grid.Rout.save,
+	  tests/spplot.Rout.save: docType
+
+2007-10-06 23:46  rsbivand
+
+	* R/SpatialGrid-methods.R: new() mess in SpatialGrid
+
+2007-06-28 10:23  edzer
+
+	* CHANGES, R/Class-SpatialLines.R, R/spsample.R:
+	  Class-SpatialLines.R: removed check that a line needs at least 2
+	  points, otherwise, map2SpatialLines in maptools would need
+	  modification; spsample.R: added correct area computation,
+	  subtracting holes to get better estimate of sampling density.
+
+2007-06-04 14:45  edzer
+
+	* man/image.Rd: added link to r-sig-geo mail for image legend
+
+2007-06-04 14:24  edzer
+
+	* DESCRIPTION, R/SpatialGridDataFrame-methods.R, R/image.R,
+	  man/image.Rd: version update; cbind for SGDF now keeps
+	  proj4string (but does not check equality); typo in Rd
+
+2007-06-04 11:47  rsbivand
+
+	* ChangeLog, inst/ChangeLog: Changelog
+
+2007-06-04 10:28  rsbivand
+
+	* R/image.R, man/image.Rd: image col=
+
+2007-05-31 22:26  rsbivand
+
+	* R/SpatialGrid-methods.R, R/SpatialPolygons-methods.R,
+	  man/as.SpatialPolygons.GridTopology.Rd: proj4string retention in
+	  SpatialPixel
+
+2007-05-25 17:46  edzer
+
+	* R/Spatial-methods.R: xx
+
+2007-05-24 10:13  edzer
+
+	* man/: SpatialLines-class.Rd, gridded-methods.Rd: matching braces
+
+2007-05-21 16:08  edzer
+
+	* R/SpatialPolygonsDataFrame-methods.R: [ with logical row
+	  selection didn't work
+
+2007-05-21 13:31  edzer
+
+	* R/Spatial-methods.R: remove comment
+
+2007-05-20 21:50  rsbivand
+
+	* R/Spatial-methods.R: $<- no print
+
+2007-05-16 15:19  edzer
+
+	* R/SpatialPointsDataFrame-methods.R: xx
+
+2007-05-16 13:59  edzer
+
+	* R/spsample.R, man/spsample.Rd: hex stuff
+
+2007-05-16 09:49  edzer
+
+	* tests/: fail1.R, fail1.Rout.save, pass1.R, pass1.Rout.save: added
+	  tests $ $<- [[ [[<-
+
+2007-05-15 22:21  edzer
+
+	* R/Spatial-methods.R, R/SpatialGrid-methods.R,
+	  R/SpatialPoints-methods.R, R/spplot.R, man/SpatialGrid-class.Rd,
+	  man/SpatialPixels-class.Rd, tests/spplot.R,
+	  tests/spplot.Rout.save: removed $<- for SpatialPoints and
+	  SpatialPixels; inheritance screwed things up
+
+2007-05-14 12:08  edzer
+
+	* NAMESPACE, R/Spatial-methods.R, R/SpatialGrid-methods.R,
+	  R/SpatialGridDataFrame-methods.R, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, man/Spatial-class.Rd,
+	  man/SpatialGridDataFrame-class.Rd,
+	  man/SpatialLinesDataFrame-class.Rd,
+	  man/SpatialPixelsDataFrame-class.Rd,
+	  man/SpatialPointsDataFrame-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd: moved several S4 methods,
+	  [[, $, [[<-, $<-, summary to top level (Spatial) class; modified
+	  docs for that
+
+2007-05-11 12:07  edzer
+
+	* NAMESPACE, R/SpatialGrid-methods.R, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, tests/fail1.Rout.save:
+	  thinner version of [, many without the constructor function call
+
+2007-05-10 14:21  edzer
+
+	* R/SpatialGrid-methods.R, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R,
+	  man/SpatialPointsDataFrame-class.Rd: same thing..
+
+2007-05-10 14:04  edzer
+
+	* DESCRIPTION, NAMESPACE, R/SpatialGrid-methods.R,
+	  R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/gridlines.R,
+	  man/SpatialGrid-class.Rd, man/SpatialGridDataFrame-class.Rd,
+	  man/SpatialLinesDataFrame-class.Rd, man/SpatialPixels-class.Rd,
+	  man/SpatialPixelsDataFrame-class.Rd, man/SpatialPoints-class.Rd,
+	  man/SpatialPointsDataFrame-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd: [[, [[<-, $ and $<- now
+	  use S4 mechanism.
+
+2007-04-26 10:58  edzer
+
+	* DESCRIPTION, R/SpatialPointsDataFrame-methods.R: remove
+	  coords.nrs in case of column selection
+
+2007-04-13 09:45  edzer
+
+	* R/dms.R: resolve as.numeric.DMS warning for R prerel
+
+2007-04-10 11:09  edzer
+
+	* R/SpatialLines-methods.R, tests/pass1.Rout.save: xx
+
+2007-04-10 11:03  edzer
+
+	* R/SpatialLines-methods.R: xx
+
+2007-04-10 10:54  edzer
+
+	* R/: SpatialLinesDataFrame-methods.R, zerodist.R: small bug
+
+2007-04-10 09:41  edzer
+
+	* DESCRIPTION, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, man/SpatialLines-class.Rd,
+	  tests/pass1.R, tests/pass1.Rout.save: more lines -> SPointsDF
+	  coercion; added tests to pass1.R
+
+2007-04-09 23:29  edzer
+
+	* R/SpatialLines-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, man/Spatial-class.Rd,
+	  man/SpatialLines-class.Rd, man/SpatialLinesDataFrame-class.Rd,
+	  man/SpatialPolygons-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd, man/image.Rd: coerce
+	  methods Polygons -> Lines -> Points
+
+2007-04-06 22:19  edzer
+
+	* DESCRIPTION, NAMESPACE, R/Class-SpatialLines.R,
+	  R/Class-SpatialPolygons.R, R/Spatial-methods.R,
+	  R/SpatialLines-methods.R, R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/image.R:
+	  as.SpatialLines.SpatialPolygons
+
+2007-04-06 13:16  edzer
+
+	* R/rbind.R, R/zerodist.R, src/init.c, src/sp.h, src/zerodist.c,
+	  tests/zerodist.R, tests/zerodist.Rout.save: better CRS check in
+	  rbind; R -> C implementation of zerodist();
+
+2007-03-20 13:41  edzer
+
+	* INDEX, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialPoints-methods.R, R/SpatialPolygons-methods.R,
+	  R/spplot.R, tests/fail1.R, tests/fail1.Rout.save: NAs in row
+	  index; spplot method setting for points.
+
+2007-03-20 09:42  rsbivand
+
+	* R/: SpatialGrid-methods.R, SpatialPoints-methods.R,
+	  SpatialPointsDataFrame-methods.R: banning NAs in row indices
+
+2007-03-19 22:10  rsbivand
+
+	* DESCRIPTION, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, man/SpatialLines-class.Rd,
+	  man/SpatialLinesDataFrame-class.Rd, man/SpatialPolygons-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd: banning NAs in row indices
+
+2007-03-14 13:18  edzer
+
+	* DESCRIPTION: version update
+
+2007-03-14 11:51  edzer
+
+	* R/SpatialLines-methods.R: xx
+
+2007-03-14 11:00  edzer
+
+	* R/SpatialLines-methods.R, R/spsample.R, man/SpatialLines.Rd,
+	  man/spsample.Rd: docs
+
+2007-03-14 10:22  edzer
+
+	* INDEX, R/spsample.R: line sampling
+
+2007-03-14 01:02  edzer
+
+	* R/spsample.R: bugs
+
+2007-03-14 00:44  edzer
+
+	* NAMESPACE, R/SpatialLines-methods.R, R/spsample.R: spsample along
+	  SpatialLines objects
+
+2007-03-13 21:54  edzer
+
+	* INDEX, NAMESPACE, R/SpatialLines-methods.R,
+	  R/SpatialPolygons-methods.R, R/spplot.R, man/SpatialLines.Rd,
+	  man/SpatialPolygons.Rd: added getSpatialLinesMidPoints and
+	  getSpatialPolygonsLabelPoints, both returning a SpatialPoints
+	  object with correct CRS; small but in spplot with points, zcol
+	  not specified.
+
+2007-03-12 11:50  edzer
+
+	* DESCRIPTION, NAMESPACE, R/SpatialPolygonsDataFrame-methods.R,
+	  R/spsample.R, man/as.SpatialPolygons.GridTopology.Rd: name change
+	  of Hex stuff (now HexPoints2SpatialPolygons); [ method for SPolDF
+	  has match.ID = FALSE; version
+
+2007-03-12 10:43  edzer
+
+	* INDEX, tests/zerodist.Rout.save: pass test
+
+2007-03-12 08:55  edzer
+
+	* man/image.Rd: doc typo
+
+2007-03-07 11:33  edzer
+
+	* R/image.R, man/image.Rd: contour now better behaves like image
+
+2007-03-07 09:52  edzer
+
+	* R/SpatialGrid-methods.R, R/spsample.R,
+	  man/as.SpatialPolygons.GridTopology.Rd: docs update; remove
+	  proj4string argument in as.SpatialPolygons.SpatialPixels, as it
+	  should inherit from the object passed.
+
+2007-03-06 22:46  edzer
+
+	* NAMESPACE, R/GridTopology-methods.R, R/SpatialGrid-methods.R,
+	  R/SpatialGridDataFrame-methods.R, R/spsample.R: mostly hexagonal
+	  sampling & polygons stuff
+
+2007-02-27 21:28  edzer
+
+	* DESCRIPTION, R/gridded.R: version, and gridded(x)=TRUE removed
+	  the proj4string.
+
+2007-02-16 17:01  edzer
+
+	* INDEX, R/zerodist.R: don't use subset in remove.duplicates, it
+	  copies coordinates
+
+2007-02-16 10:29  rsbivand
+
+	* R/: Class-Spatial.R, projected.R: .ll_sanity split out; numeric
+	  fuzz permitted
+
+2007-02-12 17:52  edzer
+
+	* INDEX, NAMESPACE, R/rbind.R, man/SpatialLines-class.Rd,
+	  man/SpatialLinesDataFrame-class.Rd, man/SpatialPixels-class.Rd,
+	  man/SpatialPixelsDataFrame-class.Rd,
+	  man/SpatialPolygons-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd, tests/pass1.R,
+	  tests/pass1.Rout.save: rbind, test and docs
+
+2007-02-12 16:31  edzer
+
+	* DESCRIPTION, NAMESPACE, R/rbind.R, man/SpatialPoints-class.Rd,
+	  man/SpatialPointsDataFrame-class.Rd, tests/pass1.R,
+	  tests/pass1.Rout.save: rbind stuff + test
+
+2007-02-12 16:20  edzer
+
+	* DESCRIPTION, NAMESPACE, R/bubble.R, man/bubble.Rd: bubble
+	  extension; version update
+
+2007-02-10 22:00  edzer
+
+	* R/SpatialGridDataFrame-methods.R: xx
+
+2007-02-10 21:56  edzer
+
+	* INDEX, R/SpatialGridDataFrame-methods.R, R/spplot.R: from SGDF to
+	  SPixDF is now more efficient, does not recalculate index twice;
+	  in spplot I solved the problem with empty rows/col, I believe
+
+2007-02-07 11:25  edzer
+
+	* INDEX, R/spplot.R: solved bug in spplot.points when NA's are
+	  present in attributes
+
+2007-02-07 10:24  edzer
+
+	* DESCRIPTION: version update
+
+2007-02-07 10:24  edzer
+
+	* R/SpatialGridDataFrame-methods.R, R/zerodist.R, man/zerodist.Rd:
+	  zerodist issue
+
 2007-02-01 11:46  rsbivand
 
-	* INDEX, inst/doc/sp.Rnw: \pkg in sp.Rnw
+	* INDEX, inst/doc/sp.Rnw, ChangeLog, inst/ChangeLog: \pkg in sp.Rnw
 
 2007-01-22 15:41  edzer
 

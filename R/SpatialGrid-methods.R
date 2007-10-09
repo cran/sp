@@ -23,8 +23,18 @@ SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	proj4string(pts) = proj4string
 # RSB
 #	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
-	new("SpatialGrid", new("SpatialPixels", pts, grid = grid, 
-		grid.index = integer(0)))
+#	new("SpatialGrid", new("SpatialPixels", pts, grid = grid, 
+#		grid.index = integer(0)))
+# very odd long initiation times 071006 RSB
+
+	SPix <- new("SpatialPixels", pts, grid = grid, grid.index = integer(0))
+	res <- new("SpatialGrid")
+	slot(res, "grid") <- slot(SPix, "grid")
+	slot(res, "grid.index") <- slot(SPix, "grid.index")
+	slot(res, "coords") <- slot(SPix, "coords")
+	slot(res, "bbox") <- slot(SPix, "bbox")
+	slot(res, "proj4string") <- slot(SPix, "proj4string")
+	res
 # representation of SG is Spix
 }
 

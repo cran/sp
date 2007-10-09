@@ -192,6 +192,7 @@ cbind.SpatialGridDataFrame = function(...) {
 	gr@data = do.call("cbind", lapply(grds, function(x) x@data))
 	#for (i in 2:ngrds)
 	#	gr@data = cbind(gr@data, grds[[i]]@data)
+	proj4string(gr) = CRS(proj4string(grds[[1]]))
 	gr
 }
 

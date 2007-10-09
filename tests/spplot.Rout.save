@@ -1,5 +1,5 @@
 
-R version 2.5.0 (2007-04-23)
+R version 2.7.0 Under development (unstable) (2007-10-08 r43124)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -22,8 +22,10 @@ Type 'q()' to quit R.
 > # deselect 1 row and 2 col:
 > tst = xy.sp[-c(2,6,10,14,9,11,12)]
 Warning messages:
-1: grid has empty column/rows in dimension 1 in: points2grid(points, tolerance) 
-2: grid has empty column/rows in dimension 2 in: points2grid(points, tolerance) 
+1: In points2grid(points, tolerance) :
+  grid has empty column/rows in dimension 1
+2: In points2grid(points, tolerance) :
+  grid has empty column/rows in dimension 2
 > tst
 Object of class SpatialPixels
 Grid topology:
@@ -45,7 +47,9 @@ Coordinate Reference System (CRS) arguments: NA
 > # convert to SpatialPixelsDataFrame:
 > tst = SpatialPixelsDataFrame(tst, data.frame(xx = rnorm(9)))
 Warning messages:
-1: grid has empty column/rows in dimension 1 in: points2grid(points, tolerance) 
-2: grid has empty column/rows in dimension 2 in: points2grid(points, tolerance) 
+1: In points2grid(points, tolerance) :
+  grid has empty column/rows in dimension 1
+2: In points2grid(points, tolerance) :
+  grid has empty column/rows in dimension 2
 > spplot(tst["xx"], main = "empty row + col")
 > 
