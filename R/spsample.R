@@ -229,25 +229,40 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 	#stop("not functioning yet...")
 	if (missing(n)) n <- as.integer(NA)
 #cat("n in sample.SpatialPolygons", n, "\n")
-	area = sum(unlist(lapply(getSpPpolygonsSlot(x),getPolygonAreaSlot)))
+	# EJP, 12/6/07: replaced area calculation with negative areas for holes...
+	#area = sum(unlist(lapply(getSpPpolygonsSlot(x), getPolygonAreaSlot)))
+	getArea = function(x) {
+    		getAreaPolygons = function(x) {
+        		holes = unlist(lapply(x@Polygons, function(x) x@hole))
+        		areas = unlist(lapply(x@Polygons, function(x) x@area))
+        		area = ifelse(holes, -1, 1) * areas
+        		area
+    		}
+    		sum(unlist(lapply(x@polygons, getAreaPolygons)))
+	}
+	area = getArea(x)
 	if (area <= 0.0)
 		stop("cannot sample in zero-area polygons")
 	res <- NULL
 	its <- 0
+	bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
+	n_tot = round(n * bb.area/area) 
 	while (is.null(res) && its < iter) {
-	    bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-	    bb.area <- bb.area + bb.area*its*0.1
-	    pts = sample.Spatial(as(x, "Spatial"), round(n * bb.area/area), type=type, offset = offset, ...)
+	    # enlarge n each iteration:
+	    pts = sample.Spatial(as(x, "Spatial"), n_tot * (1 + its * 0.1), 
+	    	type=type, offset = offset, ...)
 	    Over_pts_x <- overlay(pts, x)
 	    Not_NAs <- !is.na(Over_pts_x)
 	    if (!any(Not_NAs)) res <- NULL
-	    else res <- pts[which(Not_NAs)]
+	    else res <- pts[Not_NAs]
 	    if (type == "random" && nrow(res@coords) < n) res <- NULL
 	    its <- its+1
 	}
 	if (type == "random")
 	    if (!is.null(res) && n < nrow(res@coords)) 
 		res <- res[sample(nrow(res@coords), n)]
+	if (is.null(res))
+		stop("iteration did not converge; try enlarge argument iter")
 	proj4string(res) = CRS(proj4string(x))
 	res
 }

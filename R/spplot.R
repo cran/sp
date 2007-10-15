@@ -356,6 +356,8 @@ fill.call.groups = function(lst, z, ..., cuts,
 	dots = list(...)
     if (missing(pch)) 
         lst$pch = ifelse(fill, 16, 1)
+	else
+		lst$pch = pch
 	if (missing(cuts))
 		cuts = 5
 	if (length(cuts) > 1)

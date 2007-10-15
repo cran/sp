@@ -1,6 +1,6 @@
 \name{meuse.riv}
 \alias{meuse.riv}
-\non_function{}
+\docType{data}
 \title{ River Meuse outline }
 \usage{data(meuse.riv)}
 \description{

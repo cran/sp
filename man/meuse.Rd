@@ -1,5 +1,6 @@
 \name{meuse}
 \alias{meuse}
+\docType{data}
 \title{Meuse river data set}
 \description{
 This data set gives locations and top soil heavy metal concentrations

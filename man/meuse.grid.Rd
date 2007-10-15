@@ -1,6 +1,6 @@
 \name{meuse.grid}
 \alias{meuse.grid}
-\non_function{}
+\docType{data}
 \title{ Prediction Grid for Meuse Data Set }
 \usage{data(meuse.grid)}
 \description{
