@@ -10,17 +10,17 @@
 
 pointsInPolygon = function(pts, Polygon) {
 	pts = coordinates(pts)
-	cc = getPolygonCoordsSlot(Polygon)
+	cc = slot(Polygon, "coords")
 	point.in.polygon(pts[,1], pts[,2], cc[,1], cc[,2])
 }
 
 pointsInPolygons = function(pts, Polygons, which = FALSE) {
-	rings = getPolygonsPolygonsSlot(Polygons)
+	rings = slot(Polygons, "Polygons")
 	res = matrix(unlist(lapply(rings, function(x, pts) 
 		pointsInPolygon(pts, x), pts = pts)), ncol=length(rings))
 	res <- res > 0
-	holes <- sapply(rings, getPolygonHoleSlot)
-	areas <- sapply(rings, getPolygonAreaSlot)
+	holes <- sapply(rings, function(y) slot(y, "hole"))
+	areas <- sapply(rings, function(x) slot(x, "area"))
 	if (any(holes) && any(res[,holes])) {
 		holerows <- which(res[,holes,drop=FALSE], arr.ind=TRUE)[,1]
 		odd <- rowSums(res[holerows,,drop=FALSE])%%2 != 0
@@ -44,7 +44,7 @@ pointsInPolygons = function(pts, Polygons, which = FALSE) {
 }
 
 pointsInSpatialPolygons = function(pts, SpPolygons) {
-	sr = getSpPpolygonsSlot(SpPolygons)
+	sr = slot(SpPolygons, "polygons")
 	res = lapply(sr, function(x, pts) pointsInPolygons(pts, x), pts = pts)
 	ret = rep(as.numeric(NA), nrow(coordinates(pts)))
 	for (i in seq(along = res))

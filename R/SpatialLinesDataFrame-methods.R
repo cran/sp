@@ -1,6 +1,6 @@
 SpatialLinesDataFrame = function(sl, data, match.ID = TRUE) {
 	if (match.ID) {
-		Sl_IDs <- getSLLinesIDSlots(sl)
+		Sl_IDs <- sapply(slot(sl, "lines"), function(x) slot(x, "ID"))
 		data_IDs <- row.names(data)
 		mtch <- match(Sl_IDs, data_IDs)
 		if (any(is.na(mtch)))

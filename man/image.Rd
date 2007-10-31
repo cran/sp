@@ -4,6 +4,7 @@
 \alias{contour.SpatialGridDataFrame}
 \alias{contour.SpatialPixelsDataFrame}
 \alias{as.image.SpatialGridDataFrame}
+\alias{image2Grid}
 \title{ image gridded spatial data, or convert to format for image }
 \description{
 Convert gridded data in SpatialGridDataFrame to image format; call
@@ -20,6 +21,7 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
          ..., setParUsrBB = FALSE)
 \method{contour}{SpatialPixelsDataFrame}(x, ...) 
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
+image2Grid(im, p4 = as.character(NA))
 }
 \arguments{
 \item{x}{ object of class \link{SpatialGridDataFrame} }
@@ -41,6 +43,8 @@ to the existing plot. }
 \item{...}{ arguments passed to \link{image}, see examples }
 \item{asp}{ aspect ratio to be used for plot }
 \item{setParUsrBB}{default FALSE, see \code{\link{Spatial-class}} for further details}
+\item{im}{list with components named x, y, and z, as used for \code{image}}
+\item{p4}{CRS object, proj4 string}
 }
 \value{ \code{as.image.SpatialGridDataFrame} returns the list with
 elements \code{x} and \code{y}, containing the coordinates of the cell

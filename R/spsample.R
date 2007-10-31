@@ -137,9 +137,9 @@ sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 	offset = runif(2), proj4string=CRS(as.character(NA)), iter=4, ...) {
 	if (missing(n)) n <- as.integer(NA)
 #cat("n in sample.Polygon", n, "\n")
-	area = getPolygonAreaSlot(x)
+	area = slot(x, "area")
 	if (area == 0.0)
-		spsample(Line(getPolygonCoordsSlot(x)), 
+		spsample(Line(slot(x, "coords")), 
 			n, type, offset = offset[1], proj4string=proj4string)
 #CRS(proj4string(x))), n, type, offset = offset[1])
 	else {
@@ -178,14 +178,14 @@ setMethod("spsample", signature(x = "Polygon"), sample.Polygon)
 sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 		offset = runif(2), proj4string=CRS(as.character(NA)), iter=4, ...) {
 	if (missing(n)) n <- as.integer(NA)
-	area = sapply(getPolygonsPolygonsSlot(x), getPolygonAreaSlot) # also available for Polygons!
+	area = sapply(slot(x, "Polygons"), function(i) slot(i, "area")) # also available for Polygons!
 	if (sum(area) == 0.0)
 		# distribute n over the lines, according to their length?
 		stop("sampling over multiple lines not functioning yet...")
 	res <- NULL
 	its <- 0
-	holes <- sapply(getPolygonsPolygonsSlot(x), getPolygonHoleSlot)
-	pls <- getPolygonsPolygonsSlot(x)
+	holes <- sapply(slot(x, "Polygons"), function(y) slot(y, "hole"))
+	pls <- slot(x, "Polygons")
 	smple <- rep(TRUE, length(pls))
 	if (length(pls) > 1) {
 	    for (i in seq(along=pls)) {
@@ -230,7 +230,7 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 	if (missing(n)) n <- as.integer(NA)
 #cat("n in sample.SpatialPolygons", n, "\n")
 	# EJP, 12/6/07: replaced area calculation with negative areas for holes...
-	#area = sum(unlist(lapply(getSpPpolygonsSlot(x), getPolygonAreaSlot)))
+	#area = sum(unlist(lapply(slot(x, "polygons"), function(x) slot(x, "area"))))
 	getArea = function(x) {
     		getAreaPolygons = function(x) {
         		holes = unlist(lapply(x@Polygons, function(x) x@hole))

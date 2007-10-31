@@ -1,8 +1,29 @@
+2007-10-31 15:42  rsbivand
+
+	* DESCRIPTION, NAMESPACE, R/Class-Spatial.R, R/Class-SpatialGrid.R,
+	  R/Class-SpatialLines.R, R/Class-SpatialPoints.R,
+	  R/Class-SpatialPolygons.R, R/SpatialGrid-methods.R,
+	  R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPolygons-displayMethods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/image.R,
+	  R/point.in.polygon.R, R/recenter.R, R/spplot.R, R/spsample.R,
+	  demo/gallery.R, inst/doc/sp.Rnw, man/SpatialPolygons-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd,
+	  man/as.SpatialPolygons.GridTopology.Rd,
+	  man/as.SpatialPolygons.PolygonsList.Rd, man/image.Rd,
+	  man/nowrapSpatialLines.Rd, man/polygons.Rd, tests/fail1.R,
+	  tests/fail1.Rout.save, tests/nc.Rout.save: thingy to slot
+
+2007-10-15 15:15  edzer
+
+	* tests/fail1.Rout.save: conform the R 2.6.0 changed error message
+	  structure
+
 2007-10-09 09:57  rsbivand
 
 	* DESCRIPTION, man/meuse.Rd, man/meuse.grid.Rd, man/meuse.riv.Rd,
 	  tests/fail1.Rout.save, tests/grid.Rout.save,
-	  tests/spplot.Rout.save: docType
+	  tests/spplot.Rout.save, ChangeLog, inst/ChangeLog: docType
 
 2007-10-06 23:46  rsbivand
 

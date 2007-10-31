@@ -45,7 +45,7 @@ Polygons <- function(srl, ID) {
 
 #	nParts <- length(srl)
 # check their plot order
-	areas <- sapply(srl, getPolygonAreaSlot)
+	areas <- sapply(srl, function(x) slot(x, "area"))
 	pO <- order(areas, decreasing=TRUE)
 	holes <- sapply(srl, function(x) x@hole)
 	marea <- which.max(areas)
@@ -56,7 +56,7 @@ Polygons <- function(srl, ID) {
 	}
 	Sarea <- sum(abs(areas))
 # assign label point to the largest member ring
-	lpt <- t(sapply(srl, getPolygonLabptSlot))
+	lpt <- t(sapply(srl, function(x) slot(x, "labpt")))
 	labpt <- lpt[which_list,]
 		
 #	Sp <- new("Spatial", bbox=.bboxSrs(srl), proj4string=CRS(projargs))
@@ -155,9 +155,13 @@ setReplaceMethod("coordnames",
 )
 
 setMethod("coordinates", "SpatialPolygons", 
-	function(obj) getSpPPolygonsLabptSlots(obj))
+	function(obj) {
+            t(sapply(slot(obj, "polygons"), function(i) slot(i, "labpt")))
+})
 
 getSpatialPolygonsLabelPoints = function(SP) {
+	.Deprecated("slot",
+            msg="use *apply and slot directly, or coordinates method")
 	ret = t(sapply(slot(SP, "polygons"), function(x) slot(x, "labpt")))
 	SpatialPoints(ret, CRS(proj4string(SP)))
 }

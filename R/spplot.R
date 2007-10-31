@@ -1,6 +1,6 @@
 sp.polygons = function(obj, col = 1, ...) {
 	sp.polygon3 = function(x, col, ...) { 
-		cc = getPolygonCoordsSlot(x)
+		cc = slot(x, "coords")
 		grid.polygon(cc[,1], cc[,2], default.units = "native", 
 			gp = gpar(col = col, ...))
 		panel.lines(cc, col = col, ...)
@@ -11,11 +11,11 @@ sp.polygons = function(obj, col = 1, ...) {
 		stop(paste("object extending class SpatialPolygons expected; got class", class(obj)))
 	else
 		obj = as(obj, "SpatialPolygons")
-	pls = getSpPpolygonsSlot(obj)
-   	pO <- getSpPplotOrderSlot(obj)
+	pls = slot(obj, "polygons")
+   	pO <- slot(obj, "plotOrder")
    	for (i in pO) {
-   		Srs <- getPolygonsPolygonsSlot(pls[[i]])
-   		pOi <- getPolygonsplotOrderSlot(pls[[i]])
+   		Srs <- slot(pls[[i]], "Polygons")
+   		pOi <- slot(pls[[i]], "plotOrder")
    		for (j in pOi)
 			sp.polygon3(Srs[[j]], col = col, ...)
 	}
@@ -162,7 +162,7 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 	if (is.null(zcol)) stop("no names method for object")
 	sdf = as(obj, "data.frame")
 	if (is(obj, "SpatialPolygonsDataFrame"))
-		labpts = getSpPPolygonsLabptSlots(obj)
+		labpts = coordinates(obj)
 	else {
 		# get first points of each lines object:
 		n = length(obj@lines)
@@ -314,14 +314,14 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 			for (i in 1:length(grid.polygons@lines))
 				sp.lines2(grid.polygons@lines[[i]], col = col.regions[zcol[i]], lwd = lwd, lty = lty, ...)
 		} else {
-			pls = getSpPpolygonsSlot(grid.polygons)
-   			pO = getSpPplotOrderSlot(grid.polygons)
+			pls = slot(grid.polygons, "polygons")
+   			pO = slot(grid.polygons, "plotOrder")
    			for (i in pO) {
-       			Srs <- getPolygonsPolygonsSlot(pls[[i]])
-       			pOi <- getPolygonsplotOrderSlot(pls[[i]])
+       			Srs <- slot(pls[[i]], "Polygons")
+       			pOi <- slot(pls[[i]], "plotOrder")
        			for (j in pOi) {
-					coords = getPolygonCoordsSlot(Srs[[j]])
-					if (getPolygonHoleSlot(Srs[[j]])) {
+					coords = slot(Srs[[j]], "coords")
+					if (slot(Srs[[j]], "hole")) {
 						bg = trellis.par.get()$background
 						if (bg$col == "transparent")
 							fill = "white"
@@ -356,8 +356,6 @@ fill.call.groups = function(lst, z, ..., cuts,
 	dots = list(...)
     if (missing(pch)) 
         lst$pch = ifelse(fill, 16, 1)
-	else
-		lst$pch = pch
 	if (missing(cuts))
 		cuts = 5
 	if (length(cuts) > 1)
@@ -413,15 +411,15 @@ SpatialPolygons2Grob = function(obj, fill) {
 	x = numeric(0)
 	y = numeric(0)
 	id = integer(0)
-	pls = getSpPpolygonsSlot(obj)
-   	pO <- getSpPplotOrderSlot(obj)
+	pls = slot(obj, "polygons")
+   	pO <- slot(obj, "plotOrder")
 	n = 0
    	for (i in pO) {
-   		Srs <- getPolygonsPolygonsSlot(pls[[i]])
-   		pOi <- getPolygonsplotOrderSlot(pls[[i]])
+   		Srs <- slot(pls[[i]], "Polygons")
+   		pOi <- slot(pls[[i]], "plotOrder")
    		for (j in pOi) {
 			n = n + 1
-			cc = getPolygonCoordsSlot(Srs[[j]])
+			cc = slot(Srs[[j]], "coords")
 			x = c(x, cc[,1])
 			y = c(y, cc[,2])
 			id = c(id, rep(n, nrow(cc)))
@@ -439,14 +437,14 @@ SpatialPolygonsRescale = function(obj, offset, scale = 1, fill = "black", col = 
 		offset = c(offset[[1]], offset[[2]])
 	if (length(scale) == 1)
 		scale = rep(scale,2)
-	pls = getSpPpolygonsSlot(obj)
-   	pO = getSpPplotOrderSlot(obj)
+	pls = slot(obj, "polygons")
+   	pO = slot(obj, "plotOrder")
 	fill = rep(fill, length = length(pls))
    	for (i in pO) {
-   		Srs <- getPolygonsPolygonsSlot(pls[[i]])
-   		pOi <- getPolygonsplotOrderSlot(pls[[i]])
+   		Srs <- slot(pls[[i]], "Polygons")
+   		pOi <- slot(pls[[i]], "plotOrder")
    		for (j in pOi) {
-			cc = getPolygonCoordsSlot(Srs[[j]])
+			cc = slot(Srs[[j]], "coords")
 			x = offset[1] + (cc[,1] * scale[1])
 			y = offset[2] + (cc[,2] * scale[2])
 			if (plot.grid) {

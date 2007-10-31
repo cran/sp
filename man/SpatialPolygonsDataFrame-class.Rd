@@ -58,10 +58,10 @@ Methods defined with class "SpatialPolygonsDataFrame" in the signature:
 %nc1 <- as.SpatialPolygons.Shapes(nc.shp$Shapes, as.character(nc.shp$att.data$FIPS))
 %df <- nc.shp$att.data
 %rownames(df) <- as.character(nc.shp$att.data$FIPS)
-%identical(rownames(df), getSpPPolygonsIDSlots(nc1))
+%identical(rownames(df), sapply(slot(nc1, "polygons"), function(i) slot(i, "ID")))
 %ncSpPDF <- SpatialPolygonsDataFrame(nc1, df)
 %names(as(ncSpPDF, "data.frame"))
-%identical(rownames(as(ncSpPDF, "data.frame")), getSpPPolygonsIDSlots(ncSpPDF))
+%identical(rownames(as(ncSpPDF, "data.frame")), sapply(slot(ncSpPDF, "polygons"), function(i) slot(i, "ID")))
 %rrt <- as(ncSpPDF, "data.frame")$SID74/as(ncSpPDF, "data.frame")$BIR74
 %brks <- quantile(rrt, seq(0,1,1/7))
 %cols <- grey((length(brks):2)/length(brks))
@@ -70,11 +70,11 @@ Methods defined with class "SpatialPolygonsDataFrame" in the signature:
 %plot(ncSpPDF, density=dens[findInterval(rrt, brks, all.inside=TRUE)])
 grd <- GridTopology(c(1,1), c(1,1), c(10,10))
 polys <- as.SpatialPolygons.GridTopology(grd)
-centroids <- getSpPPolygonsLabptSlots(polys)
+centroids <- coordinates(polys)
 x <- centroids[,1]
 y <- centroids[,2]
 z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
-ex_1.7 <- SpatialPolygonsDataFrame(polys, data=data.frame(x=x, y=y, z=z, row.names=getSpPPolygonsIDSlots(polys)))
+ex_1.7 <- SpatialPolygonsDataFrame(polys, data=data.frame(x=x, y=y, z=z, row.names=sapply(slot(polys, "polygons"), function(i) slot(i, "ID"))))
 brks <- quantile(z, seq(0,1,1/7))
 cols <- grey((length(brks):2)/length(brks))
 dens <- (2:length(brks))*3

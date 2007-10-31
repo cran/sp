@@ -4,6 +4,7 @@ setClass("Spatial",
 	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, dimnames = list(NULL, c("min","max"))),
 		proj4string = CRS(as.character(NA))), # prototype should not pass validity
 	validity = function(object) {
+# print("Entering validation: Spatial")
 		bb = bbox(object)
 		if (!is.matrix(bb))
 			return("bbox should be a matrix")

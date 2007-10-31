@@ -39,50 +39,85 @@ setClass("SpatialPolygons",
 				!is(x, "Polygons"))))) 
 			return("polygons not Polygons objects")
 		if (length(object@polygons) != 
-			length(unique(getSpPPolygonsIDSlots(object)))) 
+			length(unique(sapply(slot(object, "polygons"), 
+                            function(i) slot(i, "ID"))))) 
 				return("non-unique Polygons ID slot values")
 		return(TRUE)
 	}
 )
 
-getPolygonCoordsSlot <- function(Polygon) Polygon@coords
+getPolygonCoordsSlot <- function(Polygon) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+    Polygon@coords
+}
 
-getPolygonLabptSlot <- function(Polygon) Polygon@labpt
+getPolygonLabptSlot <- function(Polygon)  {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygon@labpt
+}
 
-getPolygonAreaSlot <- function(Polygon) Polygon@area
+getPolygonAreaSlot <- function(Polygon)  {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygon@area
+}
 
-getPolygonHoleSlot <- function(Polygon) Polygon@hole
+getPolygonHoleSlot <- function(Polygon)  {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygon@hole
+}
 
-getPolygonsPolygonsSlot <- function(Polygons) Polygons@Polygons
+getPolygonsPolygonsSlot <- function(Polygons) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygons@Polygons
+}
 
-getPolygonsplotOrderSlot <- function(Polygons) Polygons@plotOrder
+getPolygonsplotOrderSlot <- function(Polygons) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygons@plotOrder
+}
 
-getPolygonsLabptSlot <- function(Polygons) Polygons@labpt
+getPolygonsLabptSlot <- function(Polygons) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygons@labpt
+}
 
-getPolygonsIDSlot <- function(Polygons) Polygons@ID
+getPolygonsIDSlot <- function(Polygons) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   Polygons@ID
+}
 
-getSpPpolygonsSlot <- function(SpP) SpP@polygons
+getSpPpolygonsSlot <- function(SpP) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   SpP@polygons
+}
 
-getSpPplotOrderSlot <- function(SpP) SpP@plotOrder
+getSpPplotOrderSlot <- function(SpP) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+   SpP@plotOrder
+}
 
 getSpPPolygonsLabptSlots <- function(SpP) {
-	Srs <- getSpPpolygonsSlot(SpP)
-	t(sapply(Srs, getPolygonsLabptSlot))
+    .Deprecated("coordinates", msg="use coordinates method")
+	Srs <- slot(SpP, "polygons")
+	t(sapply(Srs, function(i) slot(i, "labpt")))
 }
 
 getSpPPolygonsIDSlots <- function(SpP) {
-	Srs <- getSpPpolygonsSlot(SpP)
-	sapply(Srs, getPolygonsIDSlot)
+    .Deprecated("coordinates", msg="use *apply and slot directly")
+	Srs <- slot(SpP, "polygons")
+	sapply(Srs, function(i) slot(i, "ID"))
 }
 
 getSpPnParts <- function(SpP) {
-	Srs <- getSpPpolygonsSlot(SpP)
-	sapply(Srs, function(x) length(getPolygonsPolygonsSlot(x)))
+    .Deprecated("coordinates", msg="use *apply and slot directly")
+	Srs <- slot(SpP, "polygons")
+	sapply(Srs, function(x) length(slot(x, "Polygons")))
 }
 
 getSpPnHoles <- function(SpP) {
-	Srs <- getSpPpolygonsSlot(SpP)
-	sapply(Srs, function(x) sapply(getPolygonsPolygonsSlot(x), 
-		getPolygonHoleSlot))
+    .Deprecated("coordinates", msg="use *apply and slot directly")
+	Srs <- slot(SpP, "polygons")
+	sapply(Srs, function(x) sapply(slot(x, "Polygons"), 
+		function(y) slot(y, "hole")))
 }
 

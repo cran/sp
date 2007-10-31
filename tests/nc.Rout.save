@@ -20,7 +20,7 @@ Type 'q()' to quit R.
 > # nc1 <- as.SpatialPolygons.Shapes(nc.shp$Shapes, as.character(nc.shp$att.data$FIPS))
 > # df <- nc.shp$att.data
 > # rownames(df) <- as.character(nc.shp$att.data$FIPS)
-> # identical(rownames(df), getSpPPolygonsIDSlots(nc1))
+> # identical(rownames(df), sapply(slot(nc1, "polygons"), function(i) slot(i, "ID")))
 > # nc <- SpatialPolygonsDataFrame(nc1, df)
 > # 
 > # nc$X = factor(sample(1:5,100,replace=T),labels=letters[1:5])

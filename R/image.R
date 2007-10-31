@@ -48,3 +48,26 @@ as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2) {
 	m = as(x, "matrix")
 	list(x = cv[[xcol]], y = sort(cv[[ycol]]), z = m[,ncol(m):1])
 }
+
+# contributed by Michael Sumner 24 Oct 2007
+
+image2Grid <- function (im, p4 = as.character(NA)) 
+{
+    if (!all(names(im) %in% c("x", "y", "z"))) 
+        stop("image must have components x, y, and z")
+    cells.dim <- dim(im$z)
+    xx <- im$x
+    yy <- im$y
+    lx <- length(xx)
+    ly <- length(yy)
+    if (all(c(lx, ly) == (cells.dim + 1))) {
+        print("corners")
+        xx <- xx[-1] - diff(xx[1:2])/2
+        yy <- yy[-1] - diff(yy[1:2])/2
+    }
+    SpatialGridDataFrame(GridTopology(c(xx[1], yy[1]), c(diff(xx[1:2]), 
+        diff(yy[1:2])), cells.dim), data.frame(z = as.vector(im$z[, 
+        ncol(im$z):1])), proj4string = CRS(p4))
+}
+
+

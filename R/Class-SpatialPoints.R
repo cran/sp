@@ -4,6 +4,7 @@ setClass("SpatialPoints",
 		proj4string = CRS(as.character(NA)),
 		coords = matrix(0)),
 	validity = function(object) {
+# print("Entering validation: SpatialPoints")
 		if (!is.matrix(object@coords))
 			stop("coords slot is not a matrix")
 		if (length(object@coords) == 0)

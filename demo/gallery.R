@@ -298,7 +298,7 @@ library(sp)
 library(maptools)
 nc2 <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 plot(nc2)
-invisible(text(getSpPPolygonsLabptSlots(nc2), labels=as.character(nc2$NAME), cex=0.4))
+invisible(text(coordinates(nc2), labels=as.character(nc2$NAME), cex=0.4))
 library(sp)
 
 ## plot of SpatialPolygonsDataFrame, using grey shades

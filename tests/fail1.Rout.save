@@ -129,7 +129,7 @@ Error in validObject(.Object) :
 > try(Sl1 <- Sl[c(NA,2),]) # will fail
 Error in Sl[c(NA, 2), ] : NAs not permitted in row index
 > 
-> df = data.frame(z = c(1,2), row.names=getSLLinesIDSlots(Sl))
+> df = data.frame(z = c(1,2), row.names=sapply(slot(Sl, "lines"), function(x) slot(x, "ID")))
 > Sldf = SpatialLinesDataFrame(Sl, data = df) # won't complain
 > df1 = data.frame(z = c(1,2))
 > try(Sldf1 <- SpatialLinesDataFrame(Sl, data = df1)) # will complain

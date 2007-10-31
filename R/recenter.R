@@ -7,7 +7,7 @@ recenter.SpatialPolygons <- function(obj) {
 	if (is.na(proj)) stop("unknown coordinate reference system")
 	if (proj) stop("cannot recenter projected coordinate reference system")
 	projargs <- CRS(proj4string(obj))
-	pls <- getSpPpolygonsSlot(obj)
+	pls <- slot(obj, "polygons")
 	Srl <- lapply(pls, recenter.Polygons)
 	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=projargs)
 	res
@@ -16,8 +16,8 @@ recenter.SpatialPolygons <- function(obj) {
 setMethod("recenter", "SpatialPolygons", recenter.SpatialPolygons)
 
 recenter.Polygons <- function(obj) {
-	ID <- getPolygonsIDSlot(obj)
-	rings <- getPolygonsPolygonsSlot(obj)
+	ID <- slot(obj, "ID")
+	rings <- slot(obj, "Polygons")
 	srl <- lapply(rings, recenter.Polygon)
 	res <- Polygons(srl, ID=ID)
 	res
@@ -25,8 +25,8 @@ recenter.Polygons <- function(obj) {
 
 
 recenter.Polygon <- function(obj) {
-	crds <- getPolygonCoordsSlot(obj)
-	hole <- getPolygonHoleSlot(obj)
+	crds <- slot(obj, "coords")
+	hole <- slot(obj, "hole")
 	inout <- (crds[,1] < 0)
 	if (all(inout)) {
 		crds[,1] <- crds[,1]+360
@@ -46,7 +46,7 @@ recenter.SpatialLines <- function(obj) {
 	if (is.na(proj)) stop("unknown coordinate reference system")
 	if (proj) stop("cannot recenter projected coordinate reference system")
 	projargs <- CRS(proj4string(obj))
-	lns <- getSLlinesSlot(obj)
+	lns <- slot(obj, "lines")
 	Sll <- lapply(lns, recenter.Lines)
 	res <- SpatialLines(Sll, projargs)
 	res
@@ -56,8 +56,8 @@ setMethod("recenter", "SpatialLines", recenter.SpatialLines)
 
 
 recenter.Lines <- function(obj) {
-	ID <- getLinesIDSlot(obj)
-	lines <- getLinesLinesSlot(obj)
+	ID <- slot(obj, "ID")
+	lines <- slot(obj, "Lines")
 	sll <- lapply(lines, recenter.Line)
 	res <- Lines(sll, ID=ID)
 	res
@@ -88,7 +88,7 @@ nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 	bblong <- bbox(obj)[1,]
 	inout <- bblong[1] < offset && bblong[2] >= offset
 	if (inout) {
-		pls <- getSLlinesSlot(obj)
+		pls <- slot(obj, "lines")
 		Srl <- lapply(pls, .nowrapLines, offset=offset, eps=eps)
 		res <- SpatialLines(Srl, proj4CRS)
 	} else res <- obj
@@ -99,8 +99,8 @@ nowrapSpatialLines <- function(obj, offset=0, eps=rep(.Machine$double.eps, 2)) {
 	bbo <- range(sapply(obj@Lines, function(x) range(x@coords[,1])))
 	inout <- bbo[1] < offset && bbo[2] >= offset
 	if (inout) {
-		lines <- getLinesLinesSlot(obj)
-		ID <- getLinesIDSlot(obj)
+		lines <- slot(obj, "Lines")
+		ID <- slot(obj, "ID")
 		sll <- list()
 		for (i in 1:length(lines)) {
 			sll <- c(sll, .nowrapLine(lines[[i]], 
