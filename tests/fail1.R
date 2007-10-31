@@ -78,7 +78,7 @@ Sl = SpatialLines(list(S1,S2)) # won't complain
 try(Sl1 <- SpatialLines(list(S1,S3))) # will complain
 try(Sl1 <- Sl[c(NA,2),]) # will fail
 
-df = data.frame(z = c(1,2), row.names=getSLLinesIDSlots(Sl))
+df = data.frame(z = c(1,2), row.names=sapply(slot(Sl, "lines"), function(x) slot(x, "ID")))
 Sldf = SpatialLinesDataFrame(Sl, data = df) # won't complain
 df1 = data.frame(z = c(1,2))
 try(Sldf1 <- SpatialLinesDataFrame(Sl, data = df1)) # will complain

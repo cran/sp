@@ -32,15 +32,16 @@ export(layout.scale.bar, layout.north.arrow, sp.theme,
 	sp.grid, SpatialPolygonsRescale, spplot.locator)
 # export(sp.pagefn)
 
-export(as.image.SpatialGridDataFrame)
+export(as.image.SpatialGridDataFrame, image2Grid)
 
 export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
 	SpatialPixels, SpatialPixelsDataFrame, SpatialGrid,
 	SpatialGridDataFrame, GridTopology, getGridTopology,
 	areaSpatialGrid, gridlines, gridat)
 
-export(getSLlinesSlot, getLinesLinesSlot, nowrapSpatialLines, 
-	getLinesIDSlot, getSLLinesIDSlots, getSpatialLinesMidPoints)
+export(getSLlinesSlot, getLinesLinesSlot, 
+	getLinesIDSlot, getSLLinesIDSlots)
+export(nowrapSpatialLines, getSpatialLinesMidPoints)
 
 export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
 	getPolygonHoleSlot, getPolygonsPolygonsSlot, getPolygonsplotOrderSlot,

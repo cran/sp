@@ -27,11 +27,11 @@ data.frame to a SpatialPolygonsDataFrame object }
 %class(df)
 grd <- GridTopology(c(1,1), c(1,1), c(10,10))
 polys <- as.SpatialPolygons.GridTopology(grd)
-centroids <- getSpPPolygonsLabptSlots(polys)
+centroids <- coordinates(polys)
 x <- centroids[,1]
 y <- centroids[,2]
 z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
-df <- data.frame(x=x, y=y, z=z, row.names=getSpPPolygonsIDSlots(polys))
+df <- data.frame(x=x, y=y, z=z, row.names=sapply(slot(polys, "polygons"), function(i) slot(i, "ID")))
 polygons(df) <- polys
 class(df)
 summary(df)

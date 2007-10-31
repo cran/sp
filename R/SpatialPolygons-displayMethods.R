@@ -17,11 +17,11 @@ plot.SpatialPolygons <- function(x, col, border = par("fg"), add=FALSE, xlim=NUL
 			..., setParUsrBB=setParUsrBB)
 
 	if (missing(col)) col <- NA
-	n <- length(getSpPpolygonsSlot(x))
+	n <- length(slot(x, "polygons"))
 	if (length(border) != n)
 		border <- rep(border, n, n)
-	polys <- getSpPpolygonsSlot(x)
-	pO <- getSpPplotOrderSlot(x)
+	polys <- slot(x, "polygons")
+	pO <- slot(x, "plotOrder")
 	if (!is.null(density)) {
 		if (length(density) != n)
 			density <- rep(density, n, n)
@@ -48,25 +48,25 @@ setMethod("plot", signature(x = "SpatialPolygons", y = "missing"),
 		stop("Not an Polygons object")
 	if (is.na(col)) hatch <- TRUE
 	else hatch <- FALSE
-	pO <- getPolygonsplotOrderSlot(Sr)
-	polys <- getPolygonsPolygonsSlot(Sr)
+	pO <- slot(Sr, "plotOrder")
+	polys <- slot(Sr, "Polygons")
 	
 	for (i in pO) {
 		if (hatch) {
-			if (!getPolygonHoleSlot(polys[[i]]))
-				.polygon(getPolygonCoordsSlot(polys[[i]]), 
+			if (!slot(polys[[i]], "hole"))
+				.polygon(slot(polys[[i]], "coords"), 
 					border = border, xpd = xpd, 
 					density = density, angle = angle,
 					hatch=TRUE, ...)
-			else .polygon(getPolygonCoordsSlot(polys[[i]]), 
+			else .polygon(slot(polys[[i]], "coords"), 
 					border = border, xpd = xpd, col=pbg, 
 					density = NULL, ...)
 		} else {
-			if (!getPolygonHoleSlot(polys[[i]]))
-				.polygon(getPolygonCoordsSlot(polys[[i]]), 
+			if (!slot(polys[[i]], "hole"))
+				.polygon(slot(polys[[i]], "coords"), 
 					border = border, xpd = xpd, 
 					col=col, ...)
-			else .polygon(getPolygonCoordsSlot(polys[[i]]), 
+			else .polygon(slot(polys[[i]], "coords"), 
 				border = border, xpd = xpd, col=pbg, ...)
 		}
 	}

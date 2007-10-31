@@ -1,6 +1,7 @@
 SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
 	if (match.ID) {
-		Sr_IDs <- getSpPPolygonsIDSlots(Sr)
+		Sr_IDs <- sapply(slot(Sr, "polygons"),
+                    function(i) slot(i, "ID"))
 		data_IDs <- row.names(data)
 		mtch <- match(Sr_IDs, data_IDs)
 		if (any(is.na(mtch)))
@@ -64,7 +65,9 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
 })
 
 setMethod("coordinates", "SpatialPolygonsDataFrame", 
-	function(obj) getSpPPolygonsLabptSlots(obj))
+	function(obj) {
+            t(sapply(slot(obj, "polygons"), function(i) slot(i, "labpt")))
+})
 
 setAs("SpatialPolygonsDataFrame", "SpatialLinesDataFrame", 
 	function(from) SpatialLinesDataFrame(as(from, "SpatialLines"),

@@ -1,6 +1,6 @@
 Package: sp
-Version: 0.9-16
-Date: 2007-10-09
+Version: 0.9-17
+Date: 2007-10-31
 Title: classes and methods for spatial data
 Author: Edzer J. Pebesma <e.pebesma@geo.uu.nl>, Roger Bivand <Roger.Bivand@nhh.no> and others
 Maintainer: Edzer J. Pebesma <e.pebesma@geo.uu.nl>
@@ -12,7 +12,7 @@ Description: A package that provides classes and methods for spatial
   resides, for 2D or 3D data. Utility functions are provided, e.g. for
   plotting data as maps, spatial selection, as well as methods for
   retrieving coordinates, for subsetting, print, summary, etc.
-License: GPL version 2 or later
+License: GPL (>= 2)
 URL: http://r-spatial.sourceforge.net/
 LazyLoad: yes
 Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
@@ -30,4 +30,4 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R
 	bpy.colors.R bubble.R mapasp.R select.spatial.R gridded.R
 	asciigrid.R spplot.R overlay.R spsample.R recenter.R dms.R
 	gridlines.R spdists.R rbind.R
-Packaged: Mon Oct 15 15:18:25 2007; edzer
+Packaged: Wed Oct 31 16:47:32 2007; rsb

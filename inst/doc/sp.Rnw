@@ -440,7 +440,7 @@ The class {\tt SpatialLinesDataFrame} is designed for holding
 lines data that have an attribute table (data.frame) attached
 to it:
 <<>>=
-df = data.frame(z = c(1,2), row.names=getSLLinesIDSlots(Sl))
+df = data.frame(z = c(1,2), row.names=sapply(slot(Sl, "lines"), function(x) slot(x, "ID")))
 Sldf = SpatialLinesDataFrame(Sl, data = df)
 summary(Sldf)
 @

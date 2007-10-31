@@ -24,11 +24,7 @@ nowrapSpatialLines(obj, offset = 0, eps = rep(.Machine$double.eps, 2))
 \examples{
 Sl <- SpatialLines(list(Lines(list(Line(cbind(sin(seq(-4,4,0.4)), seq(1,21,1)))))), proj4string=CRS("+proj=longlat"))
 summary(Sl)
-#lapply(sapply(getSLlinesSlot(Sl), getLinesLinesSlot), bbox)
-#lapply(sapply(getSLlinesSlot(recenter(Sl)), getLinesLinesSlot), bbox)
 nwSL <- nowrapSpatialLines(Sl)
 summary(nwSL)
-#lapply(sapply(getSLlinesSlot(nwSL), getLinesLinesSlot), bbox)
-#lapply(sapply(getSLlinesSlot(recenter(nwSL)), getLinesLinesSlot), bbox)
 }
 \keyword{spatial}

@@ -3,7 +3,7 @@ SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps),
 	if (!is(points, "SpatialPoints"))
 		stop("points should be of class or extending SpatialPoints")
 	is.gridded = gridded(points)
-	points = as(points, "SpatialPoints")
+#	points = as(points, "SpatialPoints")
 	if (is.na(proj4string(points))) proj4string(points) = proj4string
 	grid = points2grid(points, tolerance)
 	if (!is.gridded) {
@@ -23,7 +23,7 @@ SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	proj4string(pts) = proj4string
 # RSB
 #	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
-#	new("SpatialGrid", new("SpatialPixels", pts, grid = grid, 
+#	res <- new("SpatialGrid", new("SpatialPixels", pts, grid = grid, 
 #		grid.index = integer(0)))
 # very odd long initiation times 071006 RSB
 
@@ -35,6 +35,7 @@ SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	slot(res, "bbox") <- slot(SPix, "bbox")
 	slot(res, "proj4string") <- slot(SPix, "proj4string")
 	res
+# avoids recursive validation in new("SpatialGrid", ...)
 # representation of SG is Spix
 }
 

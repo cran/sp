@@ -30,21 +30,32 @@ setClass("SpatialLines",
 		if (any(unlist(lapply(object@lines, function(x) 
 			!is(x, "Lines"))))) stop("lines not Lines objects")
 		if (length(object@lines) != 
-			length(unique(getSLLinesIDSlots(object)))) 
+			length(unique(sapply(slot(object, "lines"),
+                            function(x) slot(x, "ID"))))) 
 				return("non-unique Lines ID slot values")
 		return(TRUE)
 	}
 )
 
-getSLlinesSlot <- function(SL) SL@lines
+getSLlinesSlot <- function(SL) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+    SL@lines
+}
 
-getLinesLinesSlot <- function(SL) SL@Lines
+getLinesLinesSlot <- function(SL) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+    SL@Lines
+}
 
-getLinesIDSlot <- function(Lines) Lines@ID
+getLinesIDSlot <- function(Lines) {
+    .Deprecated("slot", msg="use *apply and slot directly")
+    Lines@ID
+}
 
 getSLLinesIDSlots <- function(SL) {
-	Sls <- getSLlinesSlot(SL)
-	sapply(Sls, getLinesIDSlot)
+        .Deprecated("slot", msg="use *apply and slot directly")
+	Sls <- slot(SL, "lines")
+	sapply(Sls, function(x) slot(x, "ID"))
 }
 
 
