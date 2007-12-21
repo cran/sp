@@ -1,23 +1,27 @@
-"point.in.polygon" = function(point.x, point.y, pol.x, pol.y) {
-	.Call("R_point_in_polygon_sp", 
-		as.numeric(point.x),
-		as.numeric(point.y),
-		as.numeric(pol.x),
-		as.numeric(pol.y), 
-		PACKAGE = "sp"
-	)
+point.in.polygon = function(point.x, point.y, pol.x, pol.y,
+    mode.checked=FALSE) {
+    if (mode.checked) res <- .Call("R_point_in_polygon_sp", point.x,
+        point.y, pol.x, pol.y, PACKAGE = "sp")
+    else res <- .Call("R_point_in_polygon_sp", as.numeric(point.x),
+        as.numeric(point.y), as.numeric(pol.x), as.numeric(pol.y),
+        PACKAGE = "sp")
+    res
 }
 
-pointsInPolygon = function(pts, Polygon) {
+pointsInPolygon = function(pts, Polygon,
+    mode.checked=FALSE) {
 	pts = coordinates(pts)
 	cc = slot(Polygon, "coords")
-	point.in.polygon(pts[,1], pts[,2], cc[,1], cc[,2])
+	point.in.polygon(pts[,1], pts[,2], cc[,1], cc[,2],
+        mode.checked=mode.checked)
 }
 
-pointsInPolygons = function(pts, Polygons, which = FALSE) {
+pointsInPolygons = function(pts, Polygons, which = FALSE,
+    mode.checked=FALSE) {
 	rings = slot(Polygons, "Polygons")
 	res = matrix(unlist(lapply(rings, function(x, pts) 
-		pointsInPolygon(pts, x), pts = pts)), ncol=length(rings))
+		pointsInPolygon(pts, x, mode.checked=mode.checked),
+                pts = pts)), ncol=length(rings))
 	res <- res > 0
 	holes <- sapply(rings, function(y) slot(y, "hole"))
 	areas <- sapply(rings, function(x) slot(x, "area"))
@@ -43,11 +47,46 @@ pointsInPolygons = function(pts, Polygons, which = FALSE) {
 	ret
 }
 
+#pointsInSpatialPolygons = function(pts, SpPolygons) {
+#	sr = slot(SpPolygons, "polygons")
+#	res = lapply(sr, function(x, pts) pointsInPolygons(pts, x), pts = pts)
+#	ret = rep(as.numeric(NA), nrow(coordinates(pts)))
+#	for (i in seq(along = res))
+#		ret[res[[i]] > 0] = i
+#	ret
+#}
+
 pointsInSpatialPolygons = function(pts, SpPolygons) {
-	sr = slot(SpPolygons, "polygons")
-	res = lapply(sr, function(x, pts) pointsInPolygons(pts, x), pts = pts)
-	ret = rep(as.numeric(NA), nrow(coordinates(pts)))
-	for (i in seq(along = res))
-		ret[res[[i]] > 0] = i
-	ret
+    pls = slot(SpPolygons, "polygons")
+    lb <- lapply(pls, function(x) as.double(bbox(x)))
+    cpts <- coordinates(pts)
+    storage.mode(cpts) <- "double"
+    mode.checked <- storage.mode(cpts) == "double"
+    cand0 <- .Call("pointsInBox", lb, cpts[,1], cpts[,2], PACKAGE="sp")
+    m <- length(pls)
+    cand <- .Call("tList", cand0, as.integer(m), PACKAGE="sp")
+    rm(cand0)
+    gc(verbose=FALSE)
+    res <- pointsInPolys2(pls, cand, cpts, mode.checked=mode.checked)
+    res
 }
+
+pointsInPolys2 <- function(pls, cand, pts, mode.checked=FALSE) {
+    n <- nrow(pts)
+    res <- rep(as.integer(NA), n)
+    for (i in seq(along=cand)) {
+        candi <- cand[[i]]
+        if (length(candi) > 0) {
+            ptsi <- pts[candi,,drop=FALSE]
+            ret <- pointsInPolygons(ptsi, pls[[i]], mode.checked=mode.checked)
+            for (j in seq(along=candi)) {
+                jj <- candi[j]
+                if (is.na(res[jj])) res[jj] <- ifelse(ret[j], i,
+                    as.integer(NA))
+            }
+        }
+    }
+    res
+}
+
+

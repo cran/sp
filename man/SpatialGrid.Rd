@@ -76,7 +76,6 @@ grid column have constant x coordinate, etc. In other cases, use signif
 on the raw coordinate matrices to make sure this is the case.
 }
 
-\references{ }
 
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}}
 

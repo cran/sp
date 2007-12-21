@@ -1,3 +1,47 @@
+2007-12-21 13:58  rsbivand
+
+	* DESCRIPTION: release
+
+2007-12-20 13:06  edzer
+
+	* man/overlay.Rd: overlay doc warning on r-devel; description was
+	  missing
+
+2007-12-17 12:54  rsbivand
+
+	* R/point.in.polygon.R, man/point.in.polygon.Rd, src/init.c,
+	  src/pip2.c, src/sp.h, ChangeLog, DESCRIPTION, inst/ChangeLog:
+	  bbox in p-in-p
+
+2007-11-11 19:17  rsbivand
+
+	* NAMESPACE, R/Class-CRS.R, R/Spatial-methods.R,
+	  man/Spatial-class.Rd: Spatial
+
+2007-11-11 13:43  edzer
+
+	* R/spplot.R: allowing an n x 2 matrix to be passed to sp.text,
+	  plotting multiple labels at once.
+
+2007-11-04 21:30  rsbivand
+
+	* ChangeLog, DESCRIPTION, R/Spatial-methods.R,
+	  R/SpatialGridDataFrame-methods.R, inst/ChangeLog,
+	  tests/base.Rout.save, tests/grid.Rout.save: single variable
+	  summary
+
+2007-11-03 21:41  rsbivand
+
+	* man/: GridTopology-class.Rd, Line-class.Rd, Lines-class.Rd,
+	  Polygon-class.Rd, Polygons-class.Rd, SpatialGrid-class.Rd,
+	  SpatialGrid.Rd, SpatialGridDataFrame-class.Rd,
+	  SpatialGridDataFrame.Rd, SpatialLines-class.Rd,
+	  SpatialLinesDataFrame-class.Rd, SpatialPixels-class.Rd,
+	  SpatialPixelsDataFrame-class.Rd, SpatialPoints-class.Rd,
+	  SpatialPointsDataFrame-class.Rd, SpatialPolygons-class.Rd,
+	  SpatialPolygonsDataFrame-class.Rd, bbox.Rd, gridlines.Rd,
+	  image.Rd, polygons-methods.Rd: tidy
+
 2007-10-31 15:42  rsbivand
 
 	* DESCRIPTION, NAMESPACE, R/Class-Spatial.R, R/Class-SpatialGrid.R,

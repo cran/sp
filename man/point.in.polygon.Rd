@@ -5,13 +5,14 @@
 verifies for one or more points whether they fall in a given polygon
 }
 \usage{
-point.in.polygon(point.x, point.y, pol.x, pol.y)
+point.in.polygon(point.x, point.y, pol.x, pol.y, mode.checked=FALSE)
 }
 \arguments{
 \item{point.x}{numerical array of x-coordinates of points}
 \item{point.y}{numerical array of y-coordinates of points}
 \item{pol.x}{numerical array of x-coordinates of polygon}
 \item{pol.y}{numerical array of y-coordinates of polygon}
+\item{mode.checked}{default FALSE, used internally to save time when all the other argument are known to be of storage mode double}
 }
 \value{ integer array; values are:
 0: point is strictly exterior to pol;

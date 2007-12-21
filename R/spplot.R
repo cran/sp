@@ -56,11 +56,14 @@ sp.grid = function(obj, col = 1, alpha = 1, ...) {
 }
 
 sp.text = function(loc, txt, ...) {
-	if (length(loc) != 2)
-		stop("loc should have length 2")
 	if (!is.numeric(loc))
 		stop("loc should be numeric")
-	panel.text(loc[1], loc[2], txt, ...)
+	if (length(loc) == 2)
+		panel.text(loc[1], loc[2], txt, ...)
+	else if (is.matrix(loc) && ncol(loc) == 2 && nrow(loc) == length(txt))
+		panel.text(loc[,1], loc[,2], txt, ...)
+	else
+		stop("loc and txt have non-matching dimensions")
 	#panel.text(loc[[1]], loc[[2]], txt, ...)
 }
 
@@ -356,6 +359,8 @@ fill.call.groups = function(lst, z, ..., cuts,
 	dots = list(...)
     if (missing(pch)) 
         lst$pch = ifelse(fill, 16, 1)
+	else
+		lst$pch = pch
 	if (missing(cuts))
 		cuts = 5
 	if (length(cuts) > 1)

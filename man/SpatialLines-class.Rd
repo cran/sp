@@ -39,13 +39,9 @@ Class \code{"Spatial"}, directly.
 	summarize object }
   }
 }
-\references{ }
 \author{ Roger Bivand, Edzer Pebesma }
-\note{ }
 
 \seealso{
 	\link{Line-class}, \link{Lines-class}
-}
-\examples{
 }
 \keyword{classes}

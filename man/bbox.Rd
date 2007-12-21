@@ -45,4 +45,4 @@ gridded(meuse.grid) <- TRUE
 bbox(meuse.grid)
 
 }
-\keyword{ }
+\keyword{spatial}

@@ -40,9 +40,7 @@ see \link{SpatialGrid}
 		convert to data.frame with columns cellcentre.offset, cellsize and cells.dim}
  }
 }
-\references{ }
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
-\note{  }
 
 \seealso{
   \code{\link{SpatialGridDataFrame-class}}, \code{\link{SpatialGrid-class}}

@@ -1,6 +1,7 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.1  (2004-11-15), ISBN 3-900051-07-0
+R version 2.6.0 (2007-10-03)
+Copyright (C) 2007 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -11,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > library(sp)
@@ -426,13 +427,8 @@ Is projected: NA
 proj4string : [NA]
 Number of points: 10
 Data attributes:
-      zinc       
- Min.   : 183.0  
- 1st Qu.: 272.0  
- Median : 346.5  
- Mean   : 489.2  
- 3rd Qu.: 581.5  
- Max.   :1141.0  
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  183.0   272.0   346.5   489.2   581.5  1141.0 
 > print(summary(x["zinc"])) # compare bbox
 Object of class SpatialPointsDataFrame
 Coordinates:
@@ -443,13 +439,8 @@ Is projected: NA
 proj4string : [NA]
 Number of points: 20
 Data attributes:
-      zinc       
- Min.   : 183.0  
- 1st Qu.: 278.0  
- Median : 455.0  
- Mean   : 569.7  
- 3rd Qu.: 806.8  
- Max.   :1141.0  
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  183.0   278.0   455.0   569.7   806.8  1141.0 
 > 
 > data(meuse.grid)
 > coordinates(meuse.grid) = ~x+y

@@ -21,4 +21,4 @@ Retrieve polygons from SpatialPolygonsDataFrame object
 }
 }
 \keyword{methods}
-\keyword{ }
+\keyword{spatial}

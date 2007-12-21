@@ -58,7 +58,6 @@ certain slices in 3D data. I haven't given this much thought yet.
 \link{filled.contour} seems to misinterpret the coordinate values,
 if we take the image.default manual page as the reference. }
 
-\references{ }
 
 \author{ Edzer J. Pebesma }
 
