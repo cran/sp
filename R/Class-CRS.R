@@ -1,4 +1,8 @@
-# Copyright (c) 2003-4 by Barry Rowlingson and Roger Bivand
+# Copyright (c) 2003-7 by Barry Rowlingson and Roger Bivand
 
 setClass("CRS", representation(projargs = "character"),
-    		prototype = list(projargs = character(1)))
+    		prototype = list(projargs = character(1)),
+                validity = function(object) {
+                  if (length(object@projargs) != 1)
+                    return("projargs must be of length 1")
+})

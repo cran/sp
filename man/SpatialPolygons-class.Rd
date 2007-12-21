@@ -36,9 +36,7 @@ Methods defined with class "SpatialPolygons" in the signature:
 	\item{summary}{\code{\signature(object = "SpatialPolygons")}: summarize object}
   }
 }
-\references{ }
 \author{ Roger Bivand }
-\note{ }
 \seealso{ \link{SpatialPolygons} }
 \examples{
 %data(ncshp)

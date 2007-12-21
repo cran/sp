@@ -1,6 +1,7 @@
 \name{Spatial-class}
 \docType{class}
 \alias{Spatial-class}
+\alias{Spatial}
 \alias{print.summary.Spatial}
 \alias{summary,Spatial-method}
 \alias{plot,Spatial,missing-method}
@@ -23,7 +24,7 @@ are never to be generated; only derived classes can be meaningful }
 	holding the minimum in first and maximum in second column for the
 	x-coordinate (first row), y-coordinate (second row) and optionally,
 	for points and grids only, further coordinates. The constructed 
-	Spatial object will be invalid if any bbox values are NA or infinite. }
+	Spatial object will be invalid if any bbox values are NA or infinite. The column names must be \code{c("min", "max")}}
     \item{\code{proj4string}:}{Object of class \code{"CRS"};
 	holding a valid proj4 string, which can be used for unprojecting
 	or reprojecting coordinates; it is initialised to NA. Other strings
@@ -42,6 +43,15 @@ are never to be generated; only derived classes can be meaningful }
 	a suitable aspect if not given(see below), colouring the plot background using either a bg= argument or par("bg"), and possibly drawing axes.  }
 	\item{summary}{\code{signature(object = "Spatial")}: summarize object}
   }
+}
+
+\usage{
+Spatial(bbox, proj4string = CRS(as.character(NA)))
+}
+
+\arguments{
+\item{bbox}{a bounding box matrix}
+\item{proj4string}{a CRS object}
 }
 
 \author{ r-spatial team; Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}

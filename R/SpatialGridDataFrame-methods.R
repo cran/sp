@@ -201,7 +201,10 @@ print.SpatialPixelsDataFrame = function(x, ...) {
 	print(as(x, "SpatialPixels"))
 	cat("\n")
 	cat("Data summary:\n")
-	print(summary(x@data))
+        if (ncol(x@data) > 1)
+                sobj = summary(x@data)
+            else sobj = summary(x@data[[1]])
+	print(sobj)
 	invisible(x)
 }
 setMethod("show", "SpatialPixelsDataFrame", 
@@ -212,7 +215,10 @@ print.SpatialGridDataFrame = function(x, ...) {
 	print(as(x, "SpatialGrid"))
 	cat("\n")
 	cat("Data summary:\n")
-	print(summary(x@data))
+        if (ncol(x@data) > 1)
+                sobj = summary(x@data)
+            else sobj = summary(x@data[[1]])
+	print(sobj)
 	invisible(x)
 }
 setMethod("show", "SpatialGridDataFrame", 

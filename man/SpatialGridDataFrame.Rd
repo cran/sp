@@ -31,7 +31,6 @@ which may be in the form of a subset (set of pixels) of a full grid. To
 find out or change this, see \link{fullgrid} and \link{SpatialGrid-class}.
 }
 
-\references{ }
 
 \author{ Edzer J. Pebesma }
 

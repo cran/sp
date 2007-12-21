@@ -33,13 +33,9 @@ getLinesIDSlot(Lines)
 }
 
 
-% \references{  }
 \author{ Roger Bivand, Edzer Pebesma }
-% \note{ }
 
 \seealso{
   \link{Lines-class}, \link{SpatialLines-class}
-}
-\examples{
 }
 \keyword{classes}

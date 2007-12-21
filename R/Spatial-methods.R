@@ -1,3 +1,7 @@
+Spatial <- function(bbox, proj4string = CRS(as.character(NA))) {
+        new("Spatial", bbox=bbox, proj4string=proj4string)
+}
+
 if (!isGeneric("bbox"))
 	setGeneric("bbox", function(obj)
 		standardGeneric("bbox"))
@@ -83,7 +87,9 @@ summary.Spatial = function(object, ...) {
 	if (is(object, "SpatialGrid"))
 		obj[["grid"]] = gridparameters(object)
 	if ("data" %in% slotNames(object))
-        obj[["data"]] = summary(object@data)
+	    if (ncol(object@data) > 1)
+                obj[["data"]] = summary(object@data)
+            else obj[["data"]] = summary(object@data[[1]])
     class(obj) = "summary.Spatial"
     obj
 }
@@ -220,3 +226,5 @@ setReplaceMethod("$", c("Spatial", "character", "ANY"),
 		x 
 	}
 )
+
+

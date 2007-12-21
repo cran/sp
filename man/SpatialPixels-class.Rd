@@ -45,9 +45,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
    \code{drop=FALSE} the grid topology of the parent object is kept. }
  }
 }
-\references{ }
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
-\note{  }
 
 \seealso{
   \code{\link{SpatialPixelsDataFrame-class}}, \code{\link{SpatialGrid-class}}

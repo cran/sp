@@ -49,9 +49,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
     \item{points}{\code{signature(x = "SpatialPointsDataFrame")}: add points to plot}
   }
 }
-\references{  }
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
-\note{  }
 
 \seealso{
   \code{\link{coordinates}}, \code{\link{SpatialPoints-class}} 

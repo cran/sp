@@ -49,9 +49,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPixels"}.
   }
 }
 
-\references{  }
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
-\note{  }
 
 \seealso{
   \code{\link{SpatialPixels-class}}, which does not contain the attribute data

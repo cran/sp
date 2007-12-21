@@ -1,8 +1,7 @@
 \name{overlay}
 \alias{overlay}
 \title{ spatial overlay for points, grids and polygons }
-\description{
-}
+\description{ methods for combining map layers with points, grids and/or polygons }
 \usage{
 overlay(x, y, ...)
 }

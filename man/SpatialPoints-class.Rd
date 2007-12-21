@@ -52,9 +52,7 @@ Class \code{"Spatial"}, directly.
     \item{show}{\code{signature(object = "SpatialPoints")}: prints coordinates }
   }
 }
-\references{ ~put references to the literature/web site here ~ }
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
-\note{ }
 
 \seealso{
   \code{\link{SpatialPointsDataFrame-class}}

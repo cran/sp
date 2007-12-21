@@ -23,13 +23,9 @@ Class \code{"Line"}, directly.
 \section{Methods}{
 No methods defined with class "Polygon" in the signature.
 }
-\references{ }
 \author{ Roger Bivand }
-\note{ }
 
 \seealso{
 	\link{Polygons-class}, \link{SpatialPolygons-class}
-}
-\examples{
 }
 \keyword{classes}

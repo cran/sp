@@ -19,6 +19,8 @@ export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 export(coordinatevalues)
 
 export(dimensions)
+
+export(Spatial)
  
 export(SpatialPoints, SpatialPointsDataFrame)
 

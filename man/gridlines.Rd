@@ -20,8 +20,6 @@ gridat(x, easts = pretty(bbox(x)[1,]), norths = pretty(bbox(x)[2,]), offset=0.5)
 \value{ \code{gridlines} returns an object of class \link{SpatialLines-class}, with lines as specified;
 the return object inherits the projection information of \code{x}; \code{gridat} returns a SpatialPointsDataFrame with points at the west and south ends of the grid lines created by \code{gridlines}, with degree labels}
 
-\details{  }
-
 \author{
   Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}, using example code
   of Roger Bivand.

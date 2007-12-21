@@ -22,13 +22,9 @@ or (preferred) by calls to the function \link{Line}
     \item{lines}{\code{signature(x = "Line")}: add lines to a plot }
   }
 }
-% \references{  }
 \author{ Roger Bivand, Edzer Pebesma }
-% \note{ }
 
 \seealso{
   \link{Lines-class}, \link{SpatialLines-class}
-}
-\examples{
 }
 \keyword{classes}

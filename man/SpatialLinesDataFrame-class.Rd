@@ -36,13 +36,9 @@ Methods defined with class "SpatialLinesDataFrame" in the signature:
     \item{lines}{\code{signature(object = "SpatialLinesDataFrame")}: add lines to plot}
   }
 }
-\references{ }
 \author{ Roger Bivand; Edzer Pebesma }
-\note{ }
 
 \seealso{
 	\link{SpatialLines-class}
-}
-\examples{
 }
 \keyword{classes}
