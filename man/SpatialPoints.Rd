@@ -6,9 +6,9 @@
 \link{SpatialPointsDataFrame-class} from
 coordinates, and from coordinates and \code{data.frame}s}
 \usage{ 
-SpatialPoints(coords, proj4string=CRS(as.character(NA)))
+SpatialPoints(coords, proj4string=CRS(as.character(NA)), bbox = NULL)
 SpatialPointsDataFrame(coords, data, coords.nrs = numeric(0), 
-		proj4string = CRS(as.character(NA)), match.ID = TRUE)
+      proj4string = CRS(as.character(NA)), match.ID = TRUE, bbox = NULL)
 
 }
 \arguments{
@@ -16,6 +16,7 @@ SpatialPointsDataFrame(coords, data, coords.nrs = numeric(0),
 (each row is a point); in case of SpatialPointsDataFrame an object
 of class \link{SpatialPoints-class} is also allowed}
 \item{proj4string}{ projection string of class \link{CRS-class}}
+\item{bbox}{bounding box matrix, usually NULL and constructed from the data, but may be passed through for coercion purposes if clearly needed}
 \item{data}{ object of class \code{data.frame}; the number of rows in \code{data} 
 should equal the number of points in the \code{coords} object}
 \item{coords.nrs}{numeric; if present, records the column positions where

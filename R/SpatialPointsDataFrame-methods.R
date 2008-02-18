@@ -1,5 +1,6 @@
 "SpatialPointsDataFrame" = function(coords, data, coords.nrs = numeric(0), 
-		proj4string = CRS(as.character(NA)), match.ID = TRUE) {
+		proj4string = CRS(as.character(NA)), match.ID = TRUE,
+                bbox=NULL) {
 	if (!is(coords, "SpatialPoints"))
 		coords = coordinates(coords)
 	if (match.ID && is.matrix(coords)) {
@@ -19,7 +20,8 @@
 		}
 	}
 	if (!is(coords, "SpatialPoints"))
-		coords = SpatialPoints(coords, proj4string = proj4string)
+		coords = SpatialPoints(coords, proj4string = proj4string, 
+			bbox=bbox)
 	new("SpatialPointsDataFrame", coords, data = data, coords.nrs = coords.nrs)
 }
 

@@ -1,5 +1,5 @@
 
-R version 2.6.0 (2007-10-03)
+R version 2.6.1 (2007-11-26)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -80,6 +80,10 @@ y 329600 333760
 Is projected: NA 
 proj4string : [NA]
 Number of points: 3103
+Grid attributes:
+  cellcentre.offset cellsize cells.dim
+x            178460       40        78
+y            329620       40       104
 Data attributes:
      part.a           part.b            dist             soil       ffreq   
  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :1.000   1: 779  
@@ -149,6 +153,10 @@ yc -0.75 3.75
 Is projected: NA 
 proj4string : [NA]
 Number of points: 9
+Grid attributes:
+   cellcentre.offset cellsize cells.dim
+xc                 1      1.0         3
+yc                 0      1.5         3
 Data attributes:
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
    1.00    2.75    4.50    4.75    6.50    9.00    1.00 

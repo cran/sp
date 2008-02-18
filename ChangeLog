@@ -1,6 +1,42 @@
+2008-02-17 21:27  rsbivand
+
+	* R/spsample.R: spsample polygon
+
+2008-02-17 19:34  rsbivand
+
+	* R/spsample.R: spsample polygon
+
+2008-02-17 19:28  rsbivand
+
+	* DESCRIPTION, R/spsample.R, ChangeLog, inst/ChangeLog: spsample
+	  polygon
+
+2008-01-29 09:08  rsbivand
+
+	* DESCRIPTION, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, man/SpatialPoints.Rd,
+	  tests/grid.Rout.save: SP bbox
+
+2008-01-21 20:14  rsbivand
+
+	* R/gridded.R, man/SpatialPoints-class.Rd: gridded
+
+2008-01-20 21:39  rsbivand
+
+	* ChangeLog, R/Spatial-methods.R, inst/ChangeLog: summary
+
+2008-01-20 21:10  rsbivand
+
+	* DESCRIPTION, R/gridded.R, man/SpatialPoints-class.Rd,
+	  man/overlay.Rd: coerce
+
+2007-12-21 14:03  rsbivand
+
+	* tests/fail1.Rout.save: release
+
 2007-12-21 13:58  rsbivand
 
-	* DESCRIPTION: release
+	* DESCRIPTION, ChangeLog, inst/ChangeLog: release
 
 2007-12-20 13:06  edzer
 
