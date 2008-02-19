@@ -1,7 +1,10 @@
 \name{overlay}
 \alias{overlay}
 \title{ spatial overlay for points, grids and polygons }
-\description{ methods for combining map layers with points, grids and/or polygons }
+\description{
+overlay combines points (or grids) and polygons by performing point-in-polygon
+operation on all point-polygons combinations
+}
 \usage{
 overlay(x, y, ...)
 }

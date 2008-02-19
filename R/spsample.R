@@ -38,6 +38,7 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 		cellsize, ...) {
 
 	if (missing(n)) n <- as.integer(NA)
+	n <- ceiling(n)
 #cat("n in sample.Spatial", n, "\n")
 	if (type == "random")
 		xy = apply(bb, 1, function(x) runif(n) * diff(x) + x[1])
@@ -45,10 +46,10 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 		xy = hexGrid(bb, n = n, offset = offset, cellsize = cellsize)
 	else {
 		if (is.na(n))
-			xy = makegrid(bb, nsig = 20, cellsize = cellsize, offset = offset)
+			xy = makegrid(bb, nsig = 20, cellsize = cellsize, 
+				offset = offset)
 		else
-			xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize, 
-					offset = offset)
+			xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize,				offset = offset)
 		cellsize = attr(xy, "cellsize")
 		if (type == "stratified") {
 			n = nrow(xy)
@@ -69,6 +70,9 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 		} else if (type != "regular")
 			stop(paste("sampling type", type, "not recognized"))
 	}
+# Patrick Girardoux 080217
+	if (!is.na(n) && n == 1 && !is.matrix(xy) && is.vector(xy)) 
+		xy <- matrix(xy, ncol=nrow(bb))
 	SpatialPoints(xy, CRS(proj4string(x)))
 }
 setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
@@ -213,7 +217,10 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 	        Not_NAs <- !is.na(id)
 	        if (!any(Not_NAs)) res <- NULL
 	        else res <- pts[which(Not_NAs)]
-	        if (type == "random" && nrow(res@coords) < n) res <- NULL
+# Patrick Girardoux 080217
+#	        if (type == "random" && nrow(res@coords) < n) res <- NULL
+	        if(!is.null(res))
+	            if (type == "random" && nrow(res@coords) < n) res <- NULL
 	    }
 	    its <- its+1
 	}
@@ -255,14 +262,17 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 	    Not_NAs <- !is.na(Over_pts_x)
 	    if (!any(Not_NAs)) res <- NULL
 	    else res <- pts[Not_NAs]
-	    if (type == "random" && nrow(res@coords) < n) res <- NULL
+# Patrick Girardoux 080217
+#	    if (type == "random" && nrow(res@coords) < n) res <- NULL
+	    if(!is.null(res))
+	         if (type == "random" && nrow(res@coords) < n) res <- NULL
 	    its <- its+1
 	}
 	if (type == "random")
 	    if (!is.null(res) && n < nrow(res@coords)) 
 		res <- res[sample(nrow(res@coords), n)]
 	if (is.null(res))
-		stop("iteration did not converge; try enlarge argument iter")
+		stop("iteration did not converge; try enlarging argument iter")
 	proj4string(res) = CRS(proj4string(x))
 	res
 }

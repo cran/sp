@@ -1,10 +1,12 @@
-"SpatialPoints" = function(coords, proj4string = CRS(as.character(NA))) {
+"SpatialPoints" = function(coords, proj4string = CRS(as.character(NA)),
+        bbox=NULL) {
 	coords = coordinates(coords) # checks numeric mode
 	colnames = dimnames(coords)[[2]]
 	if (is.null(colnames))
 		colnames = paste("coords.x", 1:(dim(coords)[2]), sep = "")
 	dimnames(coords) = list(NULL, colnames) # strip row names
-	new("SpatialPoints", coords = coords, bbox = .bboxCoords(coords),
+        if (is.null(bbox)) bbox <- .bboxCoords(coords)
+	new("SpatialPoints", coords = coords, bbox = bbox,
 		proj4string = proj4string) # transpose bbox?
 }
 

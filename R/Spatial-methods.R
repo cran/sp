@@ -84,7 +84,7 @@ summary.Spatial = function(object, ...) {
     obj[["proj4string"]] = object@proj4string@projargs
     if (is(object, "SpatialPoints"))
         obj[["npoints"]] = nrow(object@coords)
-	if (is(object, "SpatialGrid"))
+	if (is(object, "SpatialGrid") || is(object, "SpatialPixels"))
 		obj[["grid"]] = gridparameters(object)
 	if ("data" %in% slotNames(object))
 	    if (ncol(object@data) > 1)

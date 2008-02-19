@@ -35,6 +35,17 @@
 	obj
 }
 
+setAs("SpatialPoints", "SpatialPixels", function(from) {
+    gridded(from) <- TRUE
+    from
+})
+
+setAs("SpatialPointsDataFrame", "SpatialPixelsDataFrame", function(from) {
+    gridded(from) <- TRUE
+    from
+})
+
+
 setMethod("gridded", "Spatial", function(obj) is(obj, "SpatialPixels"))
 
 fullgrid = function(obj) return(is(obj, "SpatialGrid"))
