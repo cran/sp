@@ -28,9 +28,9 @@ see \link{SpatialGrid}
   }
 }
 
-\section{Extends}{
+%\section{Extends}{
 % Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
-}
+%}
 \section{Methods}{
  \describe{
    \item{coordinates}{\code{signature(x = "SpatialGrid")}: calculates coordinates for

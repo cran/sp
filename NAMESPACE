@@ -13,8 +13,8 @@ importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 export(CRS, print.CRS, proj4string, "proj4string<-", is.projected)
 
 export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
-	mapasp, point.in.polygon, spmap.to.lev, zerodist, remove.duplicates,
-	degAxis)
+	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
+	remove.duplicates, degAxis)
 
 export(coordinatevalues)
 

@@ -315,10 +315,17 @@ hexGrid = function(bb, n, offset, cellsize) {
 		if (missing(n))
 			stop("need either cellsize or n")
 		area = prod(apply(bb, 1, diff))/n
-		dx = area / (sqrt(3)/2)
+#		dx = area / (sqrt(3)/2)
+#		suggested by Don MacQueen, macq@llnl.gov, Fri Mar 14 16:00:07 CET 2008
+		dx = sqrt(area)/(sqrt(3)/2)
 	} else
 		dx = cellsize
 	xy = genHexGrid(dx, bb[,1], bb[,2])
+
+#		also suggested by Don MacQueen, macq@llnl.gov, Fri Mar 14 16:00:07 CET 2008:
+	xy[,1] <- xy[,1] + offset[1] * dx 
+	xy[,2] <- xy[,2] + offset[2] * dx * sqrt(3)/2
+
 	attr(xy, "cellsize") = dx
 	xy
 }
