@@ -25,7 +25,6 @@ No methods defined with class "Polygon" in the signature.
 }
 \author{ Roger Bivand }
 
-\seealso{
-	\link{Polygons-class}, \link{SpatialPolygons-class}
-}
+\seealso{\link{Polygons-class}, \link{SpatialPolygons-class}}
+
 \keyword{classes}

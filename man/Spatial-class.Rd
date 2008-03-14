@@ -75,10 +75,9 @@ classes in this package derive from it }
 %  \code{\link{SpatialPolygons-class}},
 %  \code{\link{SpatialArcs-class}},
   \code{\link{SpatialPointsDataFrame-class}},
-  \code{\link{SpatialGridDataFrame-class}},
+  \code{\link{SpatialGridDataFrame-class}}
 %  \code{\link{SpatialPolygonsDataFrame-class}},
 }
-\examples{
-}
+%\examples{}
 
 \keyword{classes}

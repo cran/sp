@@ -24,6 +24,4 @@ No methods defined with class "Polygons" in the signature.
 \author{ Roger Bivand }
 \note{ By default, single polygons (where Polygons is a list of length one) are not expected to be holes, but in multiple polygons, hole definitions for member polygons can be set. Polygon objects belonging to an Polygons object should either not overlap one-other, or should be fully included (as lakes or islands in lakes). They should not be self-intersecting. Checking of hole FALSE/TRUE status for Polygons objects is included in the spgpc wrapper package for gpclib functions, function checkPolygonsHoles() (currently on sourceforge). }
 
-\seealso{
-}
 \keyword{classes}

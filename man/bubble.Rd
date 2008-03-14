@@ -50,7 +50,7 @@ identification is required. }
 returns (or plots) the bubble plot; if \code{identify} is TRUE, returns
 the indexes (row numbers) of identified points.
 }
-\references{ }
+%\references{ }
 \author{ Edzer J. Pebesma }
 \seealso{\link{xyplot}, \link{mapasp}, \link{identify}}
 \examples{

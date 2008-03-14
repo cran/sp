@@ -1,4 +1,4 @@
-# Copyright (c) 2003-6 by Barry Rowlingson and Roger Bivand
+# Copyright (c) 2003-8 by Barry Rowlingson and Roger Bivand
 
 if (!is.R()) {
   strsplit <- function(a,b) {
@@ -19,8 +19,10 @@ if (!is.R()) {
     if (length(grep(" [:alnum:]", uprojargs)) != 0)
 	stop(paste("PROJ4 argument-value pairs must begin with +:", 
 	    uprojargs))
-    if (length(grep("rgdal", search()) > 0) &&
-      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
+#    if (length(grep("rgdal", search()) > 0) &&
+#      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
+# sessionInfo()/read.dcf() problem in loop 080307
+     if ("rgdal" %in% .packages()) {
 	if (!is.na(uprojargs)) {
 		res <- .Call("checkCRSArgs", uprojargs, 
 				PACKAGE="rgdal")

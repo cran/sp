@@ -24,9 +24,7 @@
 #	matrix(ret[ret[,1] < ret[,2],], ncol = 2)
 #}
 
-"zerodist" <-
-function(obj, zero = 0.0)
-{
+zerodist <- function(obj, zero = 0.0) {
 	if (!extends(class(obj), "SpatialPoints"))
 		stop("obj should be of, or extend, class SpatialPoints")
 	# calculates matrix with pairwise distances for 
@@ -34,6 +32,21 @@ function(obj, zero = 0.0)
 	cc = coordinates(obj)
 	matrix(.Call("sp_zerodist", as.vector(t(cc)), ncol(cc), zero), 
 		ncol = 2, byrow = TRUE) + 1
+}
+
+zerodist2 <- function (obj1, obj2, zero = 0) {
+    if (!(extends(class(obj1), "SpatialPoints")
+    		&& extends(class(obj2), "SpatialPoints"))) 
+        stop("obj1 and obj2 should be of, or extend, class SpatialPoints")
+    cc1 = coordinates(obj1)
+    cc2 = coordinates(obj2)
+	n = nrow(cc1)
+	cc = rbind(cc1, cc2)
+	ret = matrix(.Call("sp_zerodist", as.vector(t(cc)), ncol(cc), zero), 
+		ncol = 2, byrow = TRUE) + 1
+	ret = ret[ret[,1] <= n & ret[,2] > n,]
+	ret[,2] = ret[,2] - n
+	ret
 }
 
 remove.duplicates <- function(obj, zero = 0.0, remove.second = TRUE) {

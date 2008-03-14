@@ -74,7 +74,5 @@ examples with R code.
 }
 \seealso{\link{spplot}, \link{spplot-methods}}
 \author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
-\examples{
-
-}
+%\examples{}
 \keyword{dplot}

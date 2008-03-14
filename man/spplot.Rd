@@ -171,8 +171,7 @@ sets the colors to \link{bpy.colors}.
 \references{
 \url{http://r-spatial.sourceforge.net/}
 }
-\seealso{
-}
+\seealso{\link[lattice]{xyplot}, \link[lattice]{latticeplot}}
 \author{
 Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}
 }

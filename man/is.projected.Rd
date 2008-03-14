@@ -29,8 +29,6 @@ returns the number of spatial dimensions (2 or 3).  }
 
 \seealso{ \link{CRS} }
 
-\examples{
-
-}
+%\examples{}
 
 \keyword{spatial}
