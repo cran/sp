@@ -3,7 +3,7 @@ overlayPointsWithPolygons = function(x, y, fn = NULL) {
 	y = as(y, "SpatialPolygons")
 	id = pointsInSpatialPolygons(x, y)
 	if (!is.null(fn)) {
-		df = as(x, "data.frame")
+		df = x@data
 		data.frame(t(data.frame(lapply(split(df, id), fn))))
 	} else
 		id

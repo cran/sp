@@ -53,8 +53,9 @@ as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2) {
 
 image2Grid <- function (im, p4 = as.character(NA)) 
 {
-    if (!all(names(im) %in% c("x", "y", "z"))) 
+    if (!all(c("x", "y", "z") %in% names(im))) 
         stop("image must have components x, y, and z")
+# RSB reversed test order
     cells.dim <- dim(im$z)
     xx <- im$x
     yy <- im$y
