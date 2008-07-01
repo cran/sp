@@ -49,7 +49,7 @@ coordinatevalues = function(obj) {
 	ret
 }
 
-points2grid = function(points, tolerance=sqrt(.Machine$double.eps)) {
+points2grid = function(points, tolerance=sqrt(.Machine$double.eps), round=NULL, fuzz.tol=3) {
 	# work out grid topology from points
 	n = dimensions(points)
 	ret = new("GridTopology", 
@@ -57,31 +57,46 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps)) {
 		cellsize = numeric(n),
 		cells.dim = as.integer(rep(1,n)))
 	cc = coordinates(points)
+	nr <- nrow(cc)
 	for (i in 1:n) { # loop over x, y, and possibly z
-		Warn = TRUE
 		x = cc[, i]
-    	sux = sort(unique(x))
-    	difx = diff(sux)
+    		sux = sort(unique(x))
+		fuzz <- nr/length(sux) < fuzz.tol
+    		difx = diff(sux)
 		if (length(difx) == 0)
 			stop(paste("cannot determine cell size from constant coordinate", i))
 		#ru.difx = range(unique(difx))
 		ru.difx = range(unique(difx)) # min to max x coord leaps
-    	err1 = diff(ru.difx) #?? /max(range(abs(sux))) # (max-min)/max(abs(x))
-    	if (err1 > tolerance) { 
+    		err1 = diff(ru.difx) #?? /max(range(abs(sux))) # (max-min)/max(abs(x))
+    		if (err1 > tolerance) { 
 			xx = ru.difx / min(ru.difx)
 			err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
 			if (err2 > tolerance) {
 				cat(paste("suggested tolerance minimum:", err2))
        			stop(paste("dimension", i,": coordinate intervals are not constant"))
-			} else if (Warn) {
-				warning(paste("grid has empty column/rows in dimension", i))
-				difx = difx[difx < ru.difx[1] + tolerance]
-				Warn = FALSE # warn once per dimension
+			} else if (fuzz) {
+				o <- kmeans(difx, 2)
+				mdx <- which.max(o$centers)
+				difx_in <- difx[o$cluster == mdx]
+				dxsd <- sd(difx_in)
+				if (dxsd > tolerance) {
+				    warning(paste("grid has empty column/rows in dimension", i))
+				    hh <- hist(difx_in, plot=FALSE)
+				    hh1 <- which.max(hh$counts)
+				    hh1a <- difx_in >= hh$breaks[hh1]
+				    hh1b <- difx_in <= hh$breaks[(hh1+1)]
+				    difx <- mean(difx_in[hh1a & hh1b])
+				} else difx <- max(o$centers)
+				if (!is.null(round))
+				    difx <- round(difx, digits=round)
+			} else {
+			    difx = difx[difx < ru.difx[1] + tolerance]
+			    warning(paste("grid has empty column/rows in dimension", i))
 			}
 		}
 		ret@cellsize[i] = mean(difx)
 		ret@cellcentre.offset[i] = min(sux)
-    	ret@cells.dim[i] = as.integer(round(diff(range(sux))/ret@cellsize[i]) + 1) 
+    		ret@cells.dim[i] = as.integer(round(diff(range(sux))/ret@cellsize[i]) + 1) 
 			#was: length(sux), but this will not cope with empty rows.
 	}
 	nm = dimnames(cc)[[2]]
