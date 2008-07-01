@@ -18,9 +18,18 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 	else {
 		if (is.null(green) || is.null(blue)) 
 			stop("all colour bands must be given")
-		fcols <- factor(rgb(red=x@data[red][[1]], 
-			green=x@data[green][[1]], 
-			blue=x@data[blue][[1]], max=255))
+# modified to handle NAs in input (typical for coercion of Spatial Pixels
+# to Spatial Grid)
+		xd <- x@data[,c(red, green, blue)]
+		NAs <- is.na(xd[,1]) | is.na(xd[,2]) | is.na(xd[,3])
+		if (any(NAs)) xd <- xd[!NAs,]
+		RGBs <- rgb(xd, max=255)
+		if (any(NAs)) {
+		    z <- rep(NA, length(NAs))
+		    z[!NAs] <- RGBs
+		    RGBs <- z
+		}
+		fcols <- factor(RGBs)
 		cv <- coordinatevalues(getGridTopology(x))
 		m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
 			x@grid@cells.dim[2], byrow=FALSE)
