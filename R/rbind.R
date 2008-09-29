@@ -8,6 +8,16 @@ checkCRSequal = function(dots) {
 	}
 }
 
+makeUniqueIDs <- function(lst) {
+	ids = sapply(lst, function(i) slot(i, "ID"))
+	if (any(duplicated(ids))) {
+		ids <- make.unique(as.character(unlist(ids)), sep = "")
+		for (i in seq(along = ids))
+			lst[[i]]@ID = ids[i]
+	}
+	lst
+}
+
 rbind.SpatialPoints <- function(...) {
 	dots = list(...)
 	checkCRSequal(dots)
@@ -35,11 +45,13 @@ rbind.SpatialPixelsDataFrame = function(...) {
 	sp
 }
 
-rbind.SpatialPolygons = function(...) {
+rbind.SpatialPolygons = function(..., makeUniqueIDs = FALSE) {
 	dots = list(...)
 	checkCRSequal(dots)
 	# checkIDSclash(dots)
 	pl = do.call("c", lapply(dots, function(x) slot(x, "polygons")))
+	if (makeUniqueIDs)
+		pl = makeUniqueIDs(pl)
 	SpatialPolygons(pl, proj4string = CRS(proj4string(dots[[1]])))
 }
 
@@ -50,17 +62,19 @@ rbind.SpatialPolygonsDataFrame <- function(...) {
 	SpatialPolygonsDataFrame(pl, df)
 }
 
-rbind.SpatialLines = function(...) {
+
+rbind.SpatialLines = function(..., makeUniqueIDs = FALSE) {
 	dots = list(...)
 	checkCRSequal(dots)
-	# checkIDSclash(dots)
-	pl = do.call("c", lapply(dots, function(x) slot(x, "lines")))
-	SpatialLines(pl, proj4string = CRS(proj4string(dots[[1]])))
+	ll = do.call("c", lapply(dots, function(x) slot(x, "lines")))
+	if (makeUniqueIDs)
+		ll = makeUniqueIDs(ll)
+	SpatialLines(ll, proj4string = CRS(proj4string(dots[[1]])))
 }
 
 rbind.SpatialLinesDataFrame <- function(...) {
 	dots = list(...)
-	pl = do.call("rbind", lapply(dots, function(x) as(x, "SpatialLines")))
+	ll = do.call("rbind", lapply(dots, function(x) as(x, "SpatialLines")))
 	df = do.call("rbind", lapply(dots, function(x) x@data))
-	SpatialLinesDataFrame(pl, df)
+	SpatialLinesDataFrame(ll, df)
 }

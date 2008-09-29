@@ -6,7 +6,7 @@
 \description{ defines spatial grid by offset, cell size and dimensions }
 \usage{
 SpatialPixelsDataFrame(points, data, tolerance = sqrt(.Machine$double.eps), 
-		proj4string = CRS(as.character(NA)))
+		proj4string = CRS(as.character(NA)), round=NULL, fuzz.tol=3)
 SpatialGridDataFrame(grid, data, proj4string = CRS(as.character(NA)))
 }
 \arguments{
@@ -16,6 +16,8 @@ SpatialGridDataFrame(grid, data, proj4string = CRS(as.character(NA)))
 	\item{data}{ data.frame; contains the attribute (actual grid) data }
 	\item{tolerance}{ precision up to which extent points should be 
 	exactly on a grid }
+        \item{round}{default NULL, otherwise a value passed to as the digits argument to \code{round} for setting cell size}
+        \item{fuzz.tol}{default 3 - a tuning argument to attempt to detect fuzz - the ratio of row/col coordinates to unique row/col coordinates}
     \item{proj4string}{object of class \link{CRS-class} in the first
 	form only used when \code{points} does not inherit from \link{Spatial-class}}
 }

@@ -37,6 +37,8 @@ mapasp                  Calculate aspect ratio for plotting geographic
                         maps
 meuse                   Meuse river data set
 meuse.grid              Prediction Grid for Meuse Data Set
+meuse.grid_ll           Prediction Grid for Meuse Data Set,
+                        geographical coordinates
 meuse.riv               River Meuse outline
 nowrapSpatialLines      Split SpatialLines components at offset
 overlay                 spatial overlay for points, grids and polygons

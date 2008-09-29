@@ -42,7 +42,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
    \item{"["}{\code{signature(x = "SpatialGrid")}: select rows and columns }
  }
 }
-\author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
+\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialGridDataFrame-class}}, \code{\link{SpatialGrid}}

@@ -1,6 +1,6 @@
 
-R version 2.6.0 (2007-10-03)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.7.1 (2008-06-23)
+Copyright (C) 2008 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -153,4 +153,45 @@ Error in .subset2(x, i, exact = exact) : subscript out of bounds
 > try(meuse[[c("zn", "cd")]] <- cbind(meuse$zinc, meuse$cadmium))
 Error in x[[i]] <- value : no such index at level 1
 
+> 
+> data(meuse.grid)
+> coordinates(meuse.grid) <- c("x", "y")
+> gridded(meuse.grid) <- TRUE
+> gridparameters(meuse.grid)
+  cellcentre.offset cellsize cells.dim
+x            178460       40        78
+y            329620       40       104
+> 
+> data(meuse.grid)
+> set.seed(1)
+> meuse.grid$x <- meuse.grid$x + rnorm(length(meuse.grid$x), 0, 0.0002)
+> meuse.grid$y <- meuse.grid$y + rnorm(length(meuse.grid$y), 0, 0.0002)
+> coordinates(meuse.grid) <- c("x", "y")
+> try(gridded(meuse.grid) <- TRUE)
+suggested tolerance minimum: 0.0769195556640625 
+Error in points2grid(points, tolerance, round, fuzz.tol) : 
+  dimension 1 : coordinate intervals are not constant
+> try(meuse.grid <- SpatialPixelsDataFrame(as(meuse.grid, "SpatialPoints"),
++   data=as(meuse.grid, "data.frame"), tolerance=0.5, round=1))
+> gridparameters(meuse.grid)
+  cellcentre.offset cellsize cells.dim
+x            178460       40        78
+y            329620       40       104
+> 
+> data(meuse.grid_ll)
+> try(gridded(meuse.grid_ll) <- TRUE)
+suggested tolerance minimum: 0.81832277783954 
+Error in points2grid(points, tolerance, round, fuzz.tol) : 
+  dimension 1 : coordinate intervals are not constant
+> try(meuse.grid_ll <- SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data=as(meuse.grid_ll, "data.frame"), tolerance=0.9, fuzz.tol=2))
+Warning messages:
+1: In points2grid(points, tolerance, round, fuzz.tol) :
+  grid topology may be corrupt in dimwnsion 1
+2: In points2grid(points, tolerance, round, fuzz.tol) :
+  grid topology may be corrupt in dimwnsion 2
+> gridparameters(meuse.grid_ll)
+  cellcentre.offset     cellsize cells.dim
+x          5.721109 1.420405e-05      3103
+y         50.955770 1.191063e-05      3103
+> 
 > 

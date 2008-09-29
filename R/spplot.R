@@ -1,8 +1,8 @@
-sp.polygons = function(obj, col = 1, ...) {
-	sp.polygon3 = function(x, col, ...) { 
+sp.polygons = function(obj, col = 1, fill="transparent", ...) {
+	sp.polygon3 = function(x, col, fill, ...) { 
 		cc = slot(x, "coords")
 		grid.polygon(cc[,1], cc[,2], default.units = "native", 
-			gp = gpar(col = col, ...))
+			gp = gpar(col = col, fill = fill, ...))
 		panel.lines(cc, col = col, ...)
 	}
 	if (is.character(obj))
@@ -13,11 +13,13 @@ sp.polygons = function(obj, col = 1, ...) {
 		obj = as(obj, "SpatialPolygons")
 	pls = slot(obj, "polygons")
    	pO <- slot(obj, "plotOrder")
-   	for (i in pO) {
-   		Srs <- slot(pls[[i]], "Polygons")
-   		pOi <- slot(pls[[i]], "plotOrder")
-   		for (j in pOi)
-			sp.polygon3(Srs[[j]], col = col, ...)
+	if (length(fill) != length(pO)) 
+		fill <- rep(fill[1], length(pO))
+	for (i in pO) {
+		Srs <- slot(pls[[i]], "Polygons")
+		pOi <- slot(pls[[i]], "plotOrder")
+		for (j in pOi)
+			sp.polygon3(Srs[[j]], col = col, fill = fill[i], ...)
 	}
 }
 
@@ -147,7 +149,8 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 				args$colorkey = list()
 			ck = args$colorkey
 			args$colorkey = NULL
-			args = append(args, colorkey.factor(sdf[[zcol2]], ck))
+			#args = append(args, colorkey.factor(sdf[[zcol2]], ck))
+			args = append(args, colorkey.factor(obj[[zcol[1]]], ck))
 		}
 	}
 	do.call("levelplot", args)
@@ -201,7 +204,8 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 				args$colorkey = list()
 			ck = args$colorkey
 			args$colorkey = NULL
-			args = append(args, colorkey.factor(sdf[[zcol2]], ck))
+			# args = append(args, colorkey.factor(sdf[[zcol2]], ck))
+			args = append(args, colorkey.factor(obj[[zcol[1]]], ck))
 		}
 	}
 	do.call("levelplot", args)
@@ -611,3 +615,4 @@ addNAemptyRowsCols = function(obj) {
 		obj = as(obj, "SpatialPointsDataFrame")
 	obj
 }
+

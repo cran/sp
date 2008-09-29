@@ -16,7 +16,7 @@ defines spatial grid by offset, cell size and dimensions
 \usage{
 GridTopology(cellcentre.offset, cellsize, cells.dim)
 SpatialPixels(points, tolerance = sqrt(.Machine$double.eps),
-		proj4string = CRS(as.character(NA)))
+		proj4string = CRS(as.character(NA)), round=NULL, fuzz.tol=3)
 SpatialGrid(grid, proj4string = CRS(as.character(NA)))
 coordinatevalues(obj)
 points2grid(points, tolerance = sqrt(.Machine$double.eps), round=NULL, fuzz.tol=3)
@@ -79,7 +79,7 @@ on the raw coordinate matrices to make sure this is the case.
 }
 
 
-\author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}}
+\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 
 \seealso{ 
 \link{SpatialGrid-class},

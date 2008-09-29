@@ -7,8 +7,10 @@ proj4string = function(sd) {
 "proj4string<-" = function(sd, value) {
 	if (!extends(class(sd), "Spatial"))
 		stop("proj4string only works for class(es extending) Spatial")
-	if (!is(value, "CRS"))
-		stop("assigned value must be CRS object")
+	if (!(is(value, "CRS") || is(value, "character")))
+		stop("assigned value must be CRS object or character string")
+	if (is(value, "character"))
+		value = CRS(value)
 	p4str <- value@projargs
 	ll <- FALSE
 	if (!is.na(p4str)) {

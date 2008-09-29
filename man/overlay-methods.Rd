@@ -38,7 +38,7 @@ spatial point locations y; NA for NA grid cells or points outside the grid }
 point locations y; NA for NA grid cells or points outside the grid }
 }
 }
-\author{Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}}
+\author{Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 \note{points on a polygon boundary and points corresponding to a polygon vertex are
 considered to be inside the polygon}
 \seealso{\link{overlay}, \link{point.in.polygon}}

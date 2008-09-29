@@ -8,6 +8,7 @@
 \alias{print.summary.SpatialPixelsDataFrame}
 \alias{coerce,SpatialPixelsDataFrame,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialPixelsDataFrame,SpatialGridDataFrame-method}
+\alias{coerce,SpatialPixelsDataFrame,SpatialPolygonsDataFrame-method}
 \alias{coerce,SpatialPixelsDataFrame,data.frame-method}
 \alias{coerce,SpatialPixelsDataFrame,matrix-method}
 \alias{as.data.frame.SpatialPixelsDataFrame}
@@ -49,7 +50,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPixels"}.
   }
 }
 
-\author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
+\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialPixels-class}}, which does not contain the attribute data

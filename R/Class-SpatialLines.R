@@ -29,10 +29,12 @@ setClass("SpatialLines",
 	validity = function(object) {
 		if (any(unlist(lapply(object@lines, function(x) 
 			!is(x, "Lines"))))) stop("lines not Lines objects")
-		if (length(object@lines) != 
-			length(unique(sapply(slot(object, "lines"),
-                            function(x) slot(x, "ID"))))) 
-				return("non-unique Lines ID slot values")
+		if (any(duplicated(sapply(slot(object, "lines"), function(i) slot(i, "ID")))))
+			return("non-unique Lines ID slot values")
+#		if (length(object@lines) != 
+#			length(unique(sapply(slot(object, "lines"),
+#                            function(x) slot(x, "ID"))))) 
+#				return("non-unique Lines ID slot values")
 		return(TRUE)
 	}
 )

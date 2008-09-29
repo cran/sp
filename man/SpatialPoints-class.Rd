@@ -56,7 +56,7 @@ Class \code{"Spatial"}, directly.
     \item{show}{\code{signature(object = "SpatialPoints")}: prints coordinates }
   }
 }
-\author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
+\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialPointsDataFrame-class}}
