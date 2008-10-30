@@ -93,3 +93,24 @@ try(x <- meuse.grid[c(1:10,NA,12),])
 
 try(x <- meuse[[c("zinc", "cadmium")]])
 try(meuse[[c("zn", "cd")]] <- cbind(meuse$zinc, meuse$cadmium))
+
+data(meuse.grid)
+coordinates(meuse.grid) <- c("x", "y")
+gridded(meuse.grid) <- TRUE
+gridparameters(meuse.grid)
+
+data(meuse.grid)
+set.seed(1)
+meuse.grid$x <- meuse.grid$x + rnorm(length(meuse.grid$x), 0, 0.0002)
+meuse.grid$y <- meuse.grid$y + rnorm(length(meuse.grid$y), 0, 0.0002)
+coordinates(meuse.grid) <- c("x", "y")
+try(gridded(meuse.grid) <- TRUE)
+try(meuse.grid <- SpatialPixelsDataFrame(as(meuse.grid, "SpatialPoints"),
+  data=as(meuse.grid, "data.frame"), tolerance=0.5, round=1))
+gridparameters(meuse.grid)
+
+data(meuse.grid_ll)
+try(gridded(meuse.grid_ll) <- TRUE)
+try(meuse.grid_ll <- SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data=as(meuse.grid_ll, "data.frame"), tolerance=0.9, fuzz.tol=2))
+gridparameters(meuse.grid_ll)
+

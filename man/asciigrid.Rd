@@ -31,7 +31,7 @@ to write the numeric data }
 	as.image is TRUE, as list with components \code{x}, \code{y} and {z}.
 }
 \seealso{ \link{as.image.SpatialGridDataFrame}, \link{image} }
-\author{Edzer J.\ Pebesma, e.pebesma@geo.uu.nl}
+\author{Edzer J.\ Pebesma, edzer.pebesma@uni-muenster.de}
 \examples{
 x <- read.asciigrid(system.file("external/test.ag", package="sp")[1])
 class(x)

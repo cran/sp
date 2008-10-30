@@ -45,6 +45,8 @@ setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... ,
     #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)
 	x@lines = x@lines[i]
 	x@data = x@data[i, j, ..., drop = FALSE]
+# RSB 081003
+	x@bbox = .bboxSls(x@lines)
 	x
 })
 

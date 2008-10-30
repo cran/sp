@@ -24,7 +24,7 @@ returns the number of spatial dimensions (2 or 3).  }
 \details{ proj4 strings are operative through non-CRAN package spproj, see \url{http://r-spatial.sourceforge.net}}
 
 \author{
-  Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}
+  Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}
 }
 
 \seealso{ \link{CRS} }

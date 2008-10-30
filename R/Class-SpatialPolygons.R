@@ -38,10 +38,12 @@ setClass("SpatialPolygons",
 		if (any(unlist(lapply(object@polygons, function(x) 
 				!is(x, "Polygons"))))) 
 			return("polygons not Polygons objects")
-		if (length(object@polygons) != 
-			length(unique(sapply(slot(object, "polygons"), 
-                            function(i) slot(i, "ID"))))) 
-				return("non-unique Polygons ID slot values")
+		if (any(duplicated(sapply(slot(object, "polygons"), function(i) slot(i, "ID")))))
+			return("non-unique Polygons ID slot values")
+#		if (length(object@polygons) != 
+#			length(unique(sapply(slot(object, "polygons"), 
+#                            function(i) slot(i, "ID"))))) 
+#				return("non-unique Polygons ID slot values")
 		return(TRUE)
 	}
 )

@@ -50,7 +50,7 @@ Class \code{"Spatial"}, by class \code{"SpatialGrid"}.
   }
 }
 
-\author{ Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl} }
+\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialGrid-class}}, which does not contain the attribute data,

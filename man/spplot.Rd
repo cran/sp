@@ -166,6 +166,10 @@ combining things.
 \code{sp.theme} returns a lattice theme; use \code{trellis.par.set(sp.theme())}
 after a device is opened or changed to make this work. Currently, this only
 sets the colors to \link{bpy.colors}.
+
+If the attributes to be plotted are of type factor, spplot tries hard to
+come up with a sensible legend reflecting this. The factor levels are
+derived from the first map only; so all factors should be identical.
 }
 
 \references{
@@ -173,7 +177,7 @@ sets the colors to \link{bpy.colors}.
 }
 \seealso{\link[lattice]{xyplot}, \link[lattice]{latticeplot}}
 \author{
-Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}
+Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}
 }
 \examples{
 library(lattice)

@@ -21,7 +21,7 @@ gridat(x, easts = pretty(bbox(x)[1,]), norths = pretty(bbox(x)[2,]), offset=0.5)
 the return object inherits the projection information of \code{x}; \code{gridat} returns a SpatialPointsDataFrame with points at the west and south ends of the grid lines created by \code{gridlines}, with degree labels}
 
 \author{
-  Edzer J. Pebesma, \email{e.pebesma@geo.uu.nl}, using example code
+  Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}, using example code
   of Roger Bivand.
 }
 

@@ -35,7 +35,7 @@ makegrid = function(x, n = 10000, nsig = 2, cellsize,
 }
 
 sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), 
-		cellsize, ...) {
+		cellsize, ..., nclusters = 1) {
 
 	if (missing(n)) n <- as.integer(NA)
 	n <- ceiling(n)
@@ -49,15 +49,17 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 			xy = makegrid(bb, nsig = 20, cellsize = cellsize, 
 				offset = offset)
 		else
-			xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize,				offset = offset)
+			xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize,
+				offset = offset)
 		cellsize = attr(xy, "cellsize")
 		if (type == "stratified") {
 			n = nrow(xy)
 			for (j in 1:ncol(xy))
 				xy[,j] = xy[,j] + (runif(n) - 0.5) * cellsize[j]
-			#apply(xy, 2, function(x) x + (runif(n) - 0.5) * cellsize[1])
-			# xy$x = xy$x + (runif(n) - 0.5) * cellsize
-			# xy$y = xy$y + (runif(n) - 0.5) * cellsize
+		} else if (type == "clustered") {
+			clus = rep(sample(1:nrow(xy), nclusters, replace = FALSE), length = n)
+			for (j in 1:ncol(xy))
+				xy[,j] = xy[clus,j] + (runif(n) - 0.5) * cellsize[j]
 		} else if (type == "nonaligned") {
 			if (ncol(xy) != 2)
 				stop("sorry, nonaligned is only implemented for 2D")

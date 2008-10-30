@@ -23,7 +23,7 @@ a grid with 40 m x 40 m spacing that covers the Meuse Study area
   }
 }
 \details{
-\code{x} and \code{y} are in RDM, the Dutch topographical map
+\code{x} and \code{y} are in RD New, the Dutch topographical map
 coordinate system. Roger Bivand projected this to UTM in the
 R-Grass interface package.
 }
