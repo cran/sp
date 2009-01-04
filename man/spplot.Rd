@@ -110,7 +110,10 @@ methods for \code{spplot}; see \link{spplot-methods}.
 Useful arguments that can be passed as \code{...} are: 
 \describe{
 \item{\code{layout}}{for the layout of panels}
-\item{\code{col.regions}}{to specify fill colours}
+\item{\code{col.regions}}{to specify fill colours; in case the variable
+to be plotted is a factor, this vector should have length equal to the
+number of factor levels; when plotting points it may also have length one,
+using symbol type to distinguish classes }
 \item{\code{pretty}}{ for colour breaks at pretty numbers}
 \item{\code{at}}{to specify at which values colours change}
 \item{\code{as.table}}{to start drawing panels upper-left instead
@@ -167,9 +170,12 @@ combining things.
 after a device is opened or changed to make this work. Currently, this only
 sets the colors to \link{bpy.colors}.
 
-If the attributes to be plotted are of type factor, spplot tries hard to
-come up with a sensible legend reflecting this. The factor levels are
-derived from the first map only; so all factors should be identical.
+If the attributes to be plotted are of type factor, spplot tries
+to create a legend that reflects this. In this case, the color ramp
+passed needs to be of the same length as the number of factor levels.
+The factor levels are derived from the first map; subsequent factors
+with different factor levels result in an error.
+
 }
 
 \references{
@@ -191,14 +197,26 @@ l3 = list("SpatialPolygonsRescale", layout.scale.bar(), offset = c(180500,329800
 l4 = list("sp.text", c(180500,329900), "0")
 l5 = list("sp.text", c(181000,329900), "500 m")
 
-spplot(meuse, c("ffreq"), sp.layout=list(l2,l3,l4,l5),col.regions="black",pch=c(1,2,3),
-	key.space=list(x=0.1,y=.95,corner=c(0,1)))
+spplot(meuse, c("ffreq"), sp.layout=list(l2,l3,l4,l5), col.regions= "black", 
+	pch=c(1,2,3), key.space=list(x=0.1,y=.95,corner=c(0,1)))
 spplot(meuse, c("zinc", "lead"), sp.layout=list(l2,l3,l4,l5, which = 2),
 	key.space=list(x=0.1,y=.95,corner=c(0,1)))
+# plotting factors:
+meuse$f = factor(sample(letters[6:10], 155, replace=TRUE),levels=letters[1:10])
+meuse$g = factor(sample(letters[1:5], 155, replace=TRUE),levels=letters[1:10])
+spplot(meuse, c("f","g"), col.regions=bpy.colors(10))
 
 if (require(RColorBrewer)) {
 	spplot(meuse, c("ffreq"), sp.layout=list(l2,l3,l4,l5),
 		col.regions=brewer.pal(3, "Set1"))
 }
+
+data(meuse.grid)
+gridded(meuse.grid)=~x+y
+meuse.grid$g = factor(sample(letters[1:5], 3103, replace=TRUE),levels=letters[1:10])
+meuse.grid$f = factor(sample(letters[6:10], 3103, replace=TRUE),levels=letters[1:10])
+spplot(meuse.grid, c("f","g"))
+spplot(meuse.grid, c("f","g"), col.regions=bpy.colors(10))
+
 }
 \keyword{dplot}

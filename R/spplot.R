@@ -141,6 +141,9 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
 	# deal with factor variables:
 	if (all(unlist(lapply(obj@data[zcol], is.factor)))) {
+		if (!is.null(args$col.regions) &&
+				nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
+			stop("length of col.regions should match number of factor levels")
 		args$data[[zcol2]] = as.numeric(args$data[[zcol2]])
 		if (is.null(args$colorkey) || (is.logical(args$colorkey) && args$colorkey)
 				|| (is.list(args$colorkey) && is.null(args$colorkey$at) && 
@@ -149,7 +152,6 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 				args$colorkey = list()
 			ck = args$colorkey
 			args$colorkey = NULL
-			#args = append(args, colorkey.factor(sdf[[zcol2]], ck))
 			args = append(args, colorkey.factor(obj[[zcol[1]]], ck))
 		}
 	}
@@ -196,6 +198,9 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 		panel, xlab = xlab, ylab = ylab, scales = scales,
 		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
 	if (all(unlist(lapply(obj@data[zcol], is.factor)))) {
+		if (!is.null(args$col.regions) &&
+				nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
+			stop("length of col.regions should match number of factor levels")
 		args$data[[zcol2]] = as.numeric(args$data[[zcol2]])
 		if (is.null(args$colorkey) || (is.logical(args$colorkey) && args$colorkey)
 				|| (is.list(args$colorkey) && is.null(args$colorkey$at) && 
@@ -204,16 +209,10 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 				args$colorkey = list()
 			ck = args$colorkey
 			args$colorkey = NULL
-			# args = append(args, colorkey.factor(sdf[[zcol2]], ck))
 			args = append(args, colorkey.factor(obj[[zcol[1]]], ck))
 		}
 	}
 	do.call("levelplot", args)
-
-	#levelplot(formula, as(sdf, "data.frame"), aspect = aspect,
-	#	grid.polygons = grid.polygons, panel = panel, xlab = xlab, ylab =
-	#	ylab, scales = scales, sp.layout = sp.layout, xlim = xlim, ylim =
-	#	ylim, ...)
 }
 
 setMethod("spplot", signature("SpatialPolygonsDataFrame"), spplot.polygons)
@@ -245,7 +244,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		panel = panel, aspect = aspect, scales = scales, 
 		xlab = xlab, ylab = ylab, sp.layout = sp.layout,
 		xlim = xlim, ylim = ylim), dots)
-	z = as.vector(as.matrix(as(obj, "data.frame")[zcol]))
+	z = create.z(as(obj, "data.frame"), zcol)
 	args.xyplot = fill.call.groups(args.xyplot, z = z, ...)
 	scales = longlat.scales(obj, scales, xlim, ylim)
 	plt = do.call("xyplot", args.xyplot)
@@ -264,6 +263,17 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		plt
 }
 setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
+
+create.z = function(df, zcol) {
+	if (is.numeric(df[[zcol[1]]]))
+		z = stack(df[zcol])[[1]]
+	else if (is.factor(df[[zcol[1]]])) {
+		lev = levels(df[[zcol[1]]])
+		z = factor(as.vector(sapply(df[zcol], as.character)), levels = lev)
+	} else
+		stop("no support for variable of this type")
+	z
+}
 
 panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
 	# set first = TRUE defaults for polygons objects in sp.layout:
@@ -360,29 +370,28 @@ fill.call.groups = function(lst, z, ..., cuts,
 	col.regions = trellis.par.get("regions")$col, legendEntries = "", pch, 
 	cex = 1, fill = TRUE, do.log = FALSE, key.space = "bottom") 
 {
+	# always:
 	dots = list(...)
     if (missing(pch)) 
         lst$pch = ifelse(fill, 16, 1)
 	else
 		lst$pch = pch
-	if (missing(cuts))
-		cuts = 5
-	if (length(cuts) > 1)
-		ncuts = length(cuts) - 1
-	else {
-		if (is.numeric(z))
-			ncuts = cuts
-		else
-			ncuts = length(unique(z))
-	}
-	if (ncuts != length(col.regions)) {
-		cols = round(1+(length(col.regions)-1)*(0:(ncuts-1))/(ncuts-1))
-		lst$col = col.regions[cols]
-	} else
-		lst$col = col.regions
 	if (!missing(cex))
 		lst$cex = cex
+
 	if (is.numeric(z)) {
+		if (missing(cuts))
+			cuts = 5
+		if (length(cuts) > 1)
+			ncuts = length(cuts) - 1
+		else
+			ncuts = cuts
+		if (ncuts != length(col.regions)) {
+			cols = round(1+(length(col.regions)-1)*(0:(ncuts-1))/(ncuts-1))
+			lst$col = col.regions[cols]
+		} else
+			lst$col = col.regions
+
 		valid = !is.na(z)
 		#z = na.omit(z)
     	if (length(cuts) == 1) {
@@ -394,11 +403,23 @@ fill.call.groups = function(lst, z, ..., cuts,
 				cuts = seq(min(z[valid]), max(z[valid]), length = cuts + 1)
     	}
     	lst$groups = cut(as.matrix(z), cuts, dig.lab = 4, include.lowest = TRUE)
+
+	} else if (is.factor(z)) {
+		if (length(col.regions) == 1)
+			col.regions = rep(col.regions, nlevels(z))
+		if (length(col.regions) != nlevels(z))
+			stop("number of colors does not match number of factor levels")
+		if (!missing(cuts))
+			stop("ncuts cannot be set for factor variable")
+		lst$col = col.regions
+		lst$groups = z
 	} else
-		lst$groups = factor(z)
+		stop("dependent of not-supported class")
+
 	if (missing(legendEntries))
 		legendEntries = levels(lst$groups)
-	n = length(levels(lst$groups))
+	n = nlevels(lst$groups)
+
 	if (!is.null(dots$key))
 		lst$key = dots$key
 	else
@@ -556,12 +577,10 @@ bbexpand = function(x, fraction) {
 }
 
 colorkey.factor = function(f, colorkey = list()) {
-	f.num = as.numeric(f)
-	f.range = range(f.num)
-	at = seq(f.range[1]-0.5, f.range[2]+0.501)
-	at.labels = seq(f.range[1], f.range[2])
 	lf = levels(f)
-	colorkey=append(colorkey, list(labels=list(at=at.labels,labels=lf), 
+	at = seq(0.5, nlevels(f)+0.501)
+	at.labels = seq(1, nlevels(f))
+	colorkey=append(colorkey, list(labels=list(at=at.labels, labels=lf), 
 		height=min(1, .05 * length(lf))))
 	list(at = at, colorkey = colorkey)
 }

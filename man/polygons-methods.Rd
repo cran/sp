@@ -16,9 +16,9 @@ Retrieve polygons from SpatialPolygonsDataFrame object
 }}
 
 \section{Methods for "polygons<-"}{
+\describe{
 \item{object = "data.frame", value="SpatialPolygons"}{ promote data.frame to object of class
-\link{SpatialPolygonsDataFrame-class}, by specifying polygons
-}
-}
+\link{SpatialPolygonsDataFrame-class}, by specifying polygons }
+}}
 \keyword{methods}
 \keyword{spatial}
