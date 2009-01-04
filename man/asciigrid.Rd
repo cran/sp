@@ -28,7 +28,7 @@ to write the numeric data }
 \value{
 	\code{read.asciigrid} returns the grid map read; either as
 	an object of class \link{SpatialGridDataFrame-class} or, if
-	as.image is TRUE, as list with components \code{x}, \code{y} and {z}.
+	as.image is TRUE, as list with components \code{x}, \code{y} and \code{z}.
 }
 \seealso{ \link{as.image.SpatialGridDataFrame}, \link{image} }
 \author{Edzer J.\ Pebesma, edzer.pebesma@uni-muenster.de}

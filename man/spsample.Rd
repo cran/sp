@@ -48,7 +48,7 @@ for sampling on a hexagonal lattice; \code{"clustered"} for clustered sampling}
 value leads to sub-region sampling }
 \item{offset}{ for regular sampling only: the offset (position) of the regular
 grid; the default for \code{spsample} methods is a random location in
-the unit cell $[0,1] \times [0,1]$, leading to a different grid after
+the unit cell [0,1] x [0,1], leading to a different grid after
 each call; if this is set to \code{c(0.5,0.5)}, the returned grid is
 not random (but, in Ripley's wording, "centric systematic") }
 \item{cellsize}{ if missing, a cell size is derived from the sample size

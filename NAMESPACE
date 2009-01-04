@@ -169,3 +169,4 @@ S3method(print, DMS)
 S3method(as.character, DMS)
 S3method(as.numeric, DMS)
 S3method(as.double, DMS)
+

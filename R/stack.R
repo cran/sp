@@ -37,14 +37,24 @@
 
 stack.SpatialPointsDataFrame = function (x, select, ...)
 {
+	lev = NULL
 	xd = x@data
    	cc = coordinates(x)
 	cc.names = dimnames(cc)[[2]]
 
 	if (!missing(select))
 		xd = xd[select]
+	if (is.factor(xd[[1]])) {
+		lev = levels(xd[[1]])
+		if (length(xd) > 1)
+			for (i in 2:length(xd))
+				if (!identical(lev, levels(xd[[i]])))
+					stop("all factors should have identical levels")
+	}
 	nc = ncol(xd)
 	xd = stack(data.frame(lapply(xd, as.numeric)))
+	if (!is.null(lev))
+		xd[[1]] = factor(lev[xd[[1]]], levels = lev)
 
 	ccr = data.frame(rep(cc[,1], nc))
 	for (i in 2:ncol(cc))

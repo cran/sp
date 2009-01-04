@@ -43,7 +43,8 @@ value is list of lists of matrices }
 \item{obj = "SpatialGridDataFrame"}{ object of, or deriving from, SpatialGridDataFrame }
 }}
 \section{Methods for "coordinates<-"}{
+\describe{
 \item{object = "data.frame", value="ANY"}{ promote data.frame to object of class
 \link{SpatialPointsDataFrame-class}, by specifying coordinates; see \link{coordinates}}
-}
+}}
 \keyword{methods}
