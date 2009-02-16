@@ -170,8 +170,7 @@ the dimensions form rows, min/max form the columns
 other types of data (points, lines, grids, polygons), and possibly in
 as a conditioning plot for multiple attributes
 \item {\tt overlay(x, y)} combine two spatial layers of different type,
-e.g. retrieve the polygon or grid values on a set of points, or retrieve the
-points (or a function of their attributes) within (sets of) polygons.
+e.g. retrieve the polygon or grid indexes on a set of points.
 \item {\tt spsample(x)} sampling of spatial points in continuous space 
 within a polygon, a gridded area, or on a spatial line. Subsetting
 and {\tt sample} can be used to subsample full spatial entities.

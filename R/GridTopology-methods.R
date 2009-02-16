@@ -17,7 +17,9 @@ setAs("GridTopology", "data.frame", function(from) as.data.frame.GridTopology(fr
 
 setMethod("coordinates", "GridTopology", function(obj) {
 	cc = do.call("expand.grid", coordinatevalues(obj))
-	as.matrix(sapply(cc, as.numeric))
+#	as.matrix(sapply(cc, as.numeric))
+# dropping dimension for single cell grid
+	do.call("cbind", lapply(cc, as.numeric))
 })
 
 coordnamesGT = function(x, value) {

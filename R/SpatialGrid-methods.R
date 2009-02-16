@@ -196,7 +196,13 @@ setAs("SpatialGrid", "SpatialPixels", function(from)
 print.SpatialPixels = function(x, ...) {
 	cat("Object of class SpatialPixels\n")
 	print(summary(x@grid))
-	print(as(x, "SpatialPoints"))
+	cat("SpatialPoints:\n")
+	print(coordinates(x))
+	pst <- paste(strwrap(paste(
+		"Coordinate Reference System (CRS) arguments:", 
+		proj4string(x))), collapse="\n")
+	cat(pst, "\n")
+#	print(as(x, "SpatialPoints"))
 	invisible(x)
 }
 setMethod("show", "SpatialPixels", function(object) print.SpatialPixels(object))
@@ -204,7 +210,13 @@ setMethod("show", "SpatialPixels", function(object) print.SpatialPixels(object))
 print.SpatialGrid = function(x, ...) {
 	cat("Object of class SpatialGrid\n")
 	print(summary(x@grid))
-	print(as(x, "SpatialPoints"))
+	cat("SpatialPoints:\n")
+	print(coordinates(x))
+	pst <- paste(strwrap(paste(
+		"Coordinate Reference System (CRS) arguments:", 
+		proj4string(x))), collapse="\n")
+	cat(pst, "\n")
+#	print(as(x, "SpatialPoints"))
 	invisible(x)
 }
 setMethod("show", "SpatialGrid", function(object) print.SpatialGrid(object))
