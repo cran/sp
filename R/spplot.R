@@ -265,7 +265,10 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
 
 create.z = function(df, zcol) {
-	if (is.numeric(df[[zcol[1]]]))
+	if (is.logical(df[[zcol[1]]])) {
+		z = stack(df[zcol])[[1]]
+		z = as.factor(z)
+	} else if (is.numeric(df[[zcol[1]]]))
 		z = stack(df[zcol])[[1]]
 	else if (is.factor(df[[zcol[1]]])) {
 		lev = levels(df[[zcol[1]]])
@@ -407,8 +410,13 @@ fill.call.groups = function(lst, z, ..., cuts,
 	} else if (is.factor(z)) {
 		if (length(col.regions) == 1)
 			col.regions = rep(col.regions, nlevels(z))
-		if (length(col.regions) != nlevels(z))
-			stop("number of colors does not match number of factor levels")
+		if (length(col.regions) < nlevels(z))
+			stop("number of colors smaller than number of factor levels")
+		if (length(col.regions) > nlevels(z)) {
+			ncuts = nlevels(z)
+			cols = round(1+(length(col.regions)-1)*(0:(ncuts-1))/(ncuts-1))
+			col.regions = col.regions[cols]
+		}
 		if (!missing(cuts))
 			stop("ncuts cannot be set for factor variable")
 		lst$col = col.regions

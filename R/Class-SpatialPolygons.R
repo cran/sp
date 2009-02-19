@@ -7,6 +7,7 @@ setClass("Polygon",
 		final <- coords[nrow(coords),]
 		if (!identical(start, final)) 
 			stop("ring not closed")
+		stopifnot(all(is.finite(slot(object, "labpt"))))
 		return(TRUE)
 	}
 )
@@ -19,6 +20,7 @@ setClass("Polygons",
 			stop("not a list of Polygon objects")
 		if (length(object@Polygons) != length(object@plotOrder))
 			stop("plotOrder and Polygons differ in length")
+		stopifnot(all(is.finite(slot(object, "labpt"))))
 		return(TRUE)
 	}
 )

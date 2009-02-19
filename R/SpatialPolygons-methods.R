@@ -15,6 +15,10 @@ Polygon <- function(coords, hole=as.logical(NA)) {
 #	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
 	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
 	cG <- .spFindCG(coords)
+        if (!all(is.finite(cG$cents))) {
+		warning("Non-finite label point detected and replaced")
+		cG$cents <- apply(coords, 2, function(x) mean(range(x)))
+	}
 	rD <- cG$rD
 	if (is.na(hole)) {
 		hole <- FALSE
