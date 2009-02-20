@@ -42,6 +42,7 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
 				nzero += 2;
 			}
 		}
+		R_CheckUserInterrupt();
 	}
 	free(x);
 	PROTECT(ret = NEW_INTEGER(nzero));
@@ -53,6 +54,8 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
 	return(ret);
 }
 
+/*
 static SEXP sp_push_zerodist(SEXP ret, int i, int j) {
 	
 }
+*/
