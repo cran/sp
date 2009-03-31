@@ -15,7 +15,7 @@ mapasp(data, xlim, ylim)
 
 	let x = dy/dx, with dy and dx the y- and x-size of the map.
 
-	let s = 1/cos(My * pi)/180) with My the y coordinate of the middle of the map
+	let s = 1/cos((My * pi)/180) with My the y coordinate of the middle of the map
 	(the mean of ylim)
 
 	for latlong (longlat) data, \code{mapasp} returns s * x.

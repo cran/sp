@@ -53,10 +53,11 @@ overlayGridWithPoints = function(x, y, fn = NULL) {
 	idx = getGridIndex(cc, x@grid, all.inside = FALSE)
 	if (!fullgrid(x))
 		idx = match(idx, x@grid.index)
-	if (is(x, "SpatialGridDataFrame"))
-		SpatialPointsDataFrame(cc, x@data[idx, , drop=FALSE], 
-			proj4string = CRS(proj4string(x)))
-	else
+	if (is(x, "SpatialGridDataFrame")) {
+# Rainer Krug 090331 rownames problem in maptools shapefile import
+                cc <- SpatialPoints(cc, proj4string = CRS(proj4string(x)))
+		SpatialPointsDataFrame(cc, x@data[idx, , drop=FALSE])
+	} else
 		return(idx)
 }
 setMethod("overlay", signature("SpatialGridDataFrame", "SpatialPoints"), 

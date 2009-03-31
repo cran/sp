@@ -8,6 +8,7 @@ meusedup = rbind(meuse, meuse[ran10, ])
 coordinates(meusedup) = c("x", "y")
 zd = zerodist(meusedup)
 sum(abs(sort(zd[,1]) - sort(ran10))) # 0!
+zerodist(meusedup, unique.ID = TRUE)
 # remove the duplicate rows:
 meusedup2 = meusedup[-zd[,2], ]
 print(summary(meusedup2))

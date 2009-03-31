@@ -5,7 +5,7 @@
 \title{ find point pairs with equal spatial coordinates }
 \description{ find point pairs with equal spatial coordinates }
 \usage{ 
-zerodist(obj, zero = 0.0) 
+zerodist(obj, zero = 0.0, unique.ID = FALSE) 
 zerodist2(obj1, obj2, zero = 0.0) 
 remove.duplicates(obj, zero = 0.0, remove.second = TRUE)
 }
@@ -15,8 +15,10 @@ remove.duplicates(obj, zero = 0.0, remove.second = TRUE)
 \item{obj2}{ object of, or extending, class \link{SpatialPoints} }
 \item{zero}{ distance values less than or equal to this threshold value are
 considered to have zero distance (default 0.0) }
+\item{unique.ID}{logical; if TRUE, return an ID (integer) for each point 
+that is different only when two points do not share the same location }
 \item{remove.second}{logical; if TRUE, the second of each pair of duplicate
-points is removed, if not the first}
+points is removed, if FALSE remove the first}
 }
 \value{pairs of row numbers with identical coordinates; matrix with zero rows 
 if no such pairs are found. For \code{zerodist}, row number pairs refer to row

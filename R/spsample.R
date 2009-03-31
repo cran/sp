@@ -198,16 +198,19 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 		bbi <- .bbox2SPts(bbox(pls[[i]]), proj4string=proj4string)
 		bb_in <- lapply(pls[-i], function(x, pts) 
 			pointsInPolygon(pts, x), pts = bbi)
-		if (holes[i] || any(unlist(bb_in) > 0)) smple[i] <- FALSE
+		if (holes[i] || any(unlist(bb_in) == 1))
+                    smple[i] <- FALSE
 	    }
 	}
 	sum_area <- sum(area[smple])
 	while (is.null(res) && its < iter) {
 	    ptsres <- vector(mode="list", length=length(area))
 	    for (i in seq(along=ptsres)) {
-		if (smple[i]) ptsres[[i]] <- sample.Polygon(
-		    x=pls[[i]], n=round(n*(area[i]/sum_area)), 
-		    type = type, offset = offset, iter=iter)
+		if (smple[i]) {
+		    nnow <- ceiling(n*(area[i]/sum_area))
+		    ptsres[[i]] <- sample.Polygon(x=pls[[i]], 
+		    n=nnow, type = type, offset = offset, iter=iter)
+		}
 	    }
 	    crds <- do.call("rbind", lapply(ptsres, function(x) 
 	        if (!is.null(x)) coordinates(x)))
