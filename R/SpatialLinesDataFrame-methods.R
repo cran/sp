@@ -60,3 +60,7 @@ setAs("SpatialLinesDataFrame", "SpatialPointsDataFrame", function(from) {
 		spp
 	}
 )
+
+dim.SpatialLinesDataFrame = function(x) dim(x@data)
+
+

@@ -1,6 +1,27 @@
+2009-04-29 13:37  rsbivand
+
+	* DESCRIPTION, R/spdists.R: typos in spDistsN1 messages
+
+2009-04-23 13:06  rsbivand
+
+	* NAMESPACE, ChangeLog, inst/ChangeLog: adding dim for remaining
+	  Spatial*DataFrame classes
+
+2009-04-23 12:57  rsbivand
+
+	* DESCRIPTION, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R,
+	  man/SpatialGridDataFrame-class.Rd,
+	  man/SpatialLinesDataFrame-class.Rd,
+	  man/SpatialPixelsDataFrame-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd: adding dim for remaining
+	  Spatial*DataFrame classes
+
 2009-03-31 14:12  rsbivand
 
-	* DESCRIPTION, R/overlay.R: overlay points on grid rownames problem
+	* DESCRIPTION, R/overlay.R, ChangeLog, inst/ChangeLog: overlay
+	  points on grid rownames problem
 
 2009-03-05 10:54  edzer
 

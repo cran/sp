@@ -235,3 +235,10 @@ names.SpatialGridDataFrame = function(x) names(x@data)
 
 "names<-.SpatialPixelsDataFrame" = function(x,value) { names(x@data) = value; x }
 "names<-.SpatialGridDataFrame" = function(x,value) { names(x@data) = value; x }
+
+dim.SpatialPixelsDataFrame = function(x) dim(x@data)
+
+
+dim.SpatialGridDataFrame = function(x) dim(x@data)
+
+
