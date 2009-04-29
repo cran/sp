@@ -12,6 +12,7 @@
 \alias{coerce,SpatialGridDataFrame,data.frame-method}
 \alias{coerce,SpatialGridDataFrame,matrix-method}
 \alias{as.data.frame.SpatialGridDataFrame}
+\alias{dim.SpatialGridDataFrame}
 
 \title{Class "SpatialGridDataFrame" }
 \description{  Class for spatial attributes that have spatial locations

@@ -13,6 +13,7 @@
 \alias{coerce,SpatialPixelsDataFrame,matrix-method}
 \alias{as.data.frame.SpatialPixelsDataFrame}
 \alias{rbind.SpatialPixelsDataFrame}
+\alias{dim.SpatialPixelsDataFrame}
 
 \title{Class "SpatialPixelsDataFrame" ~~~ }
 \description{  Class for spatial attributes that have spatial locations

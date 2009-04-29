@@ -123,6 +123,10 @@ S3method(contour, SpatialPixelsDataFrame)
 S3method(contour, SpatialGridDataFrame)
 
 S3method(dim, SpatialPointsDataFrame)
+S3method(dim, SpatialLinesDataFrame)
+S3method(dim, SpatialPolygonsDataFrame)
+S3method(dim, SpatialPixelsDataFrame)
+S3method(dim, SpatialGridDataFrame)
 
 S3method(image, SpatialPixelsDataFrame)
 S3method(image, SpatialGridDataFrame)

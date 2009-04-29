@@ -72,3 +72,7 @@ setMethod("coordinates", "SpatialPolygonsDataFrame",
 setAs("SpatialPolygonsDataFrame", "SpatialLinesDataFrame", 
 	function(from) SpatialLinesDataFrame(as(from, "SpatialLines"),
 		from@data, match.ID = FALSE))
+
+dim.SpatialPolygonsDataFrame = function(x) dim(x@data)
+
+
