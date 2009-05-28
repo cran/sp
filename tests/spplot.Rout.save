@@ -1,6 +1,6 @@
 
-R version 2.7.0 Under development (unstable) (2007-10-08 r43124)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.9.0 (2009-04-17)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,9 +22,9 @@ Type 'q()' to quit R.
 > # deselect 1 row and 2 col:
 > tst = xy.sp[-c(2,6,10,14,9,11,12)]
 Warning messages:
-1: In points2grid(points, tolerance) :
+1: In points2grid(points, tolerance, round, fuzz.tol) :
   grid has empty column/rows in dimension 1
-2: In points2grid(points, tolerance) :
+2: In points2grid(points, tolerance, round, fuzz.tol) :
   grid has empty column/rows in dimension 2
 > tst
 Object of class SpatialPixels
@@ -47,9 +47,12 @@ Coordinate Reference System (CRS) arguments: NA
 > # convert to SpatialPixelsDataFrame:
 > tst = SpatialPixelsDataFrame(tst, data.frame(xx = rnorm(9)))
 Warning messages:
-1: In points2grid(points, tolerance) :
+1: In points2grid(points, tolerance, round, fuzz.tol) :
   grid has empty column/rows in dimension 1
-2: In points2grid(points, tolerance) :
+2: In points2grid(points, tolerance, round, fuzz.tol) :
   grid has empty column/rows in dimension 2
 > spplot(tst["xx"], main = "empty row + col")
+Warning message:
+In data.row.names(row.names, rowsi, i) :
+  some row.names duplicated: 2,3,4,5,6,7,8,9,11 --> row.names NOT used
 > 

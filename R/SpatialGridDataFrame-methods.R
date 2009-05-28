@@ -124,7 +124,10 @@ subs.SpatialPixelsDataFrame <- function(x, i, j, ... , drop = FALSE) {
 		else { # withouth a , : x[i] --- column selection
 			#res = as(x, "SpatialPointsDataFrame")[TRUE, j = i, ...]
 			res = x
-			res@data = res@data[TRUE, j = i, ..., drop = drop]
+			#changed, on request of BDR, May 27, 2009:
+			#res@data = res@data[TRUE, j = i, ..., drop = drop]
+			#into
+			res@data = res@data[TRUE, i, ..., drop = drop]
 		}
 	} else if (missing(i))
 		res = as(x, "SpatialPointsDataFrame")[TRUE, j = j, ...]
