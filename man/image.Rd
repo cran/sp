@@ -20,12 +20,12 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 	col = 1, add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE,
          ..., setParUsrBB = FALSE)
 \method{contour}{SpatialPixelsDataFrame}(x, ...) 
-as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2)
+as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2, attr = 1)
 image2Grid(im, p4 = as.character(NA))
 }
 \arguments{
 \item{x}{ object of class \link{SpatialGridDataFrame} }
-\item{attr}{ column number of attribute variable; this may be
+\item{attr}{ column of attribute variable; this may be
 the column name in the data.frame of \code{data} (as.data.frame(data)), or
 a column number }
 \item{xcol}{ column number of x-coordinate, in the coordinate matrix }

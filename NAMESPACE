@@ -142,6 +142,13 @@ S3method(names, SpatialGridDataFrame)
 S3method(names, SpatialLinesDataFrame)
 S3method(names, SpatialPolygonsDataFrame)
 
+S3method(row.names, SpatialPoints)
+S3method(row.names, SpatialLines)
+S3method(row.names, SpatialPolygons)
+S3method(row.names, SpatialPointsDataFrame)
+S3method(row.names, SpatialLinesDataFrame)
+S3method(row.names, SpatialPolygonsDataFrame)
+
 S3method("names<-", SpatialPointsDataFrame)
 S3method("names<-", SpatialPolygonsDataFrame)
 S3method("names<-", SpatialLinesDataFrame)

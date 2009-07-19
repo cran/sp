@@ -9,6 +9,7 @@
 \alias{coerce,SpatialLines,SpatialPoints-method}
 \alias{coerce,SpatialLines,SpatialPointsDataFrame-method}
 \alias{coerce,Lines,SpatialPoints-method}
+\alias{row.names.SpatialLines}
 
 \title{a class for spatial lines }
 \description{ a class that holds spatial lines }
@@ -31,11 +32,11 @@ Class \code{"Spatial"}, directly.
   \describe{
     \item{[}{\code{signature(obj = "SpatialLines")}: select subset of (sets of) lines; NAs are not permitted in the row index}
 	\item{coordinates}{ value is a list of lists with matrices }
-	\item{plot}{\code{\signature(x = "SpatialLines", y = "missing")}: 
+	\item{plot}{\code{signature(x = "SpatialLines", y = "missing")}: 
 	plot lines in SpatialLines object}
-	\item{lines}{\code{\signature(x = "SpatialLines")}: 
+	\item{lines}{\code{signature(x = "SpatialLines")}: 
 	add lines in SpatialLines object to a plot }
-	\item{summary}{\code{\signature(object = "SpatialLines")}: 
+	\item{summary}{\code{signature(object = "SpatialLines")}: 
 	summarize object }
   }
 }

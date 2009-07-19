@@ -26,7 +26,7 @@ Ordered full grids are stored instead or unordered non-NA cells;
 
 \section{Slots}{
   \describe{
-    \item{\code{points}:}{see \link{SpatialPoints}; points slot which is
+    \item{\code{coords}:}{see \link{SpatialPoints}; points slot which is
 	not actually filled with all coordinates (only with min/max) }
     \item{\code{grid}:}{see \link{GridTopology-class}; grid parameters }
     \item{\code{grid.index}:}{see \link{SpatialPixels-class}; this slot

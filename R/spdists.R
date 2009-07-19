@@ -1,7 +1,9 @@
 spDistsN1 <- function(pts, pt, longlat=FALSE) {
+	if (inherits(pts, "SpatialPoints")) pts <- coordinates(pts)
 	if (!is.matrix(pts)) stop("pts must be a matrix")
 	if (ncol(pts) != 2) stop("pts must have two columns")
 	if (!is.numeric(pts)) stop("pts must be numeric")
+	if (inherits(pt, "SpatialPoints")) pt <- coordinates(pt)
 	if (!is.numeric(pt)) stop("pt must be numeric")
 	if (length(pt) != 2) stop("pt must have length two")
 	x <- as.double(pts[,1])

@@ -21,7 +21,7 @@ proj4string(sd) <- value
 returns a character vector of length 1; \code{spatial.dimension}
 returns the number of spatial dimensions (2 or 3).  }
 
-\details{ proj4 strings are operative through non-CRAN package spproj, see \url{http://r-spatial.sourceforge.net}}
+\details{ proj4 strings are operative through CRAN package rgdal}
 
 \author{
   Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}

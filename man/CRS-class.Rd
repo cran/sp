@@ -25,7 +25,7 @@ Objects can be created by calls of the form \code{CRS("projargs")}, where "proja
 \author{Roger Bivand \email{Roger.Bivand@nhh.no}}
 
 \note{
-Lists of projections may be seen by using the programs installed with the PROJ.4 library, in particular proj and cs2cs; with the latter, -lp lists projections, -le ellipsoids, -lu units, and -ld datum(s) known to the installed software. These are added to in successive releases, so tracking the website or compiling and installing the most recent revisions will give the greatest choice. On occasion, ellipsoid parameters may be passed through directly. Tracing projection arguments is easier now than before the mass ownership of GPS receivers raised the issue of matching coordinates from different argument sets (GPS output and paper map, for example).}
+Lists of projections may be seen by using the programs installed with the PROJ.4 library, in particular proj and cs2cs; with the latter, -lp lists projections, -le ellipsoids, -lu units, and -ld datum(s) known to the installed software (available in \pkg{rgdal} using \code{projInfo}). These are added to in successive releases, so tracking the website or compiling and installing the most recent revisions will give the greatest choice. Finding the very important datum transformation parameters to be given with the +towgs84 tag is a further challenge, and is essential when the datums used in data to be used together differ. Tracing projection arguments is easier now than before the mass ownership of GPS receivers raised the issue of matching coordinates from different argument sets (GPS output and paper map, for example).}
 
 
 \examples{
@@ -33,7 +33,8 @@ if (require(rgdal)) {
   print(CRSargs(CRS("+proj=longlat +datum=NAD27")))
   print(CRSargs(CRS("+init=epsg:4267")))
   print(CRSargs(CRS("+init=epsg:26978")))
-  print(CRSargs(CRS("+proj=stere +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +units=m")))
+  print(CRSargs(CRS("+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m")))
+# see http://trac.osgeo.org/gdal/ticket/1987
   print(CRSargs(CRS("+init=epsg:28992")))
 }
 }

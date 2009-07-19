@@ -10,8 +10,8 @@ spDistsN1(pts, pt, longlat = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{pts}{A matrix of 2D points}
-  \item{pt}{A single 2D point}
+  \item{pts}{A matrix of 2D points, or a SpatialPoints or SpatialPointsDataFrame object}
+  \item{pt}{A single 2D point, or a SpatialPoints or SpatialPointsDataFrame object with one point only}
   \item{longlat}{if FALSE, Euclidean distance, if TRUE Great Circle distance}
 }
 
@@ -33,5 +33,9 @@ spDistsN1(utm32, utm32[1,])
 dg <- spDistsN1(ll, ll[1,])
 dg
 dg[2]/km[2]
+data(meuse)
+coordinates(meuse) <- c("x", "y")
+res <- spDistsN1(meuse, meuse[1,])
+summary(res)
 }
 \keyword{spatial}

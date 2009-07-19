@@ -1,6 +1,76 @@
+2009-07-19 15:22  rsbivand
+
+	* ChangeLog, DESCRIPTION, R/SpatialPointsDataFrame-methods.R,
+	  inst/ChangeLog, man/CRS-class.Rd, man/DMS-class.Rd,
+	  man/GridTopology-class.Rd, man/SpatialGridDataFrame-class.Rd,
+	  man/SpatialLines-class.Rd, man/SpatialPixelsDataFrame-class.Rd,
+	  man/SpatialPointsDataFrame-class.Rd,
+	  man/SpatialPolygons-class.Rd, man/coordinates-methods.Rd: RD2
+	  2.10.0 tidy
+
+2009-07-09 23:08  rsbivand
+
+	* ChangeLog, R/Class-Spatial.R, inst/ChangeLog,
+	  man/Spatial-class.Rd, man/is.projected.Rd, DESCRIPTION: change
+	  defunct spproj references to rgdal
+
+2009-07-09 14:03  rsbivand
+
+	* DESCRIPTION, R/spdists.R, man/spDistsN1.Rd: adding SpatialPoints*
+	  to spDistsN1
+
+2009-07-08 12:38  rsbivand
+
+	* ChangeLog, inst/ChangeLog: added row.names methods and [ on
+	  character
+
+2009-07-08 12:33  rsbivand
+
+	* DESCRIPTION, NAMESPACE, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, man/SpatialLines-class.Rd,
+	  man/SpatialLinesDataFrame-class.Rd, man/SpatialPoints-class.Rd,
+	  man/SpatialPointsDataFrame-class.Rd,
+	  man/SpatialPolygons-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd: added row.names methods
+	  and [ on character
+
+2009-07-07 12:02  rsbivand
+
+	* R/SpatialLines-methods.R, R/spsample.R, man/SpatialLines.Rd:
+	  sample for line objects fixes
+
+2009-07-06 15:45  rsbivand
+
+	* ChangeLog, DESCRIPTION, R/spsample.R, inst/ChangeLog,
+	  man/spsample.Rd: sample for line objects fixes
+
+2009-07-05 15:34  rsbivand
+
+	* DESCRIPTION, R/SpatialLines-methods.R, R/spsample.R,
+	  man/SpatialLines.Rd, src/gcdist.c, src/init.c, src/sp.h: zero
+	  length line issue in spsample
+
+2009-05-28 15:00  edzer
+
+	* R/image.R, man/image.Rd: added attr=1 argument to
+	  as.image.SpatialGridDataFrame
+
+2009-05-28 08:09  edzer
+
+	* DESCRIPTION, tests/fail1.Rout.save, tests/spplot.Rout.save:
+	  version update; minor test output changes
+
+2009-05-27 22:39  edzer
+
+	* R/SpatialGridDataFrame-methods.R: change request by BDR,
+	  involving named arguments in [.data.frame
+
 2009-04-29 13:37  rsbivand
 
-	* DESCRIPTION, R/spdists.R: typos in spDistsN1 messages
+	* DESCRIPTION, R/spdists.R, ChangeLog, inst/ChangeLog: typos in
+	  spDistsN1 messages
 
 2009-04-23 13:06  rsbivand
 

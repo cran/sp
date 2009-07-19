@@ -52,9 +52,9 @@ contour.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 contour.SpatialPixelsDataFrame = function(x, ...)
 	contour(as(x, "SpatialGridDataFrame"), ...)
 
-as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2) {
+as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2, attr = 1) {
 	cv = coordinatevalues(getGridTopology(x))
-	m = as(x, "matrix")
+	m = as(x[attr], "matrix")
 	list(x = cv[[xcol]], y = sort(cv[[ycol]]), z = m[,ncol(m):1])
 }
 

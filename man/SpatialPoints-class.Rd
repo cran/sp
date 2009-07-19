@@ -19,6 +19,7 @@
 \alias{summary.SpatialPoints}
 \alias{rbind.SpatialPoints}
 \alias{$<-,SpatialPoints,character-method}
+\alias{row.names.SpatialPoints}
 
 \title{Class "SpatialPoints" ~~~ }
 \description{  Class for (irregularly spaced) points }
