@@ -27,6 +27,10 @@ as.data.frame.SpatialPolygonsDataFrame = function(x, row.names, optional, ...) x
 setAs("SpatialPolygonsDataFrame", "data.frame", function(from)
     as.data.frame.SpatialPolygonsDataFrame(from))
 
+row.names.SpatialPolygonsDataFrame <- function(x) {
+    sapply(slot(x, "polygons"), slot, "ID")
+}
+
 setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) {
     missing.i = missing(i)
     missing.j = missing(j)
@@ -54,7 +58,10 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
 			i = 1:length(x@polygons)
 		else
 			i <- which(i)
-	}
+	} else if (is.character(i)) {
+                i <- match(i, row.names(x))
+        }
+
 	x@polygons = x@polygons[i]
 	x@bbox <- .bboxCalcR(x@polygons)
 	x@plotOrder = order(match(i, x@plotOrder))

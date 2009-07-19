@@ -31,7 +31,7 @@ setClass("Spatial",
 #					bb[2,1] < -90 || bb[2,2] > 90))
 #				return("Geographical CRS given to non-conformant data")
 		}
-		# validate proj4string here? -- no, that's spproj business
+		# validate proj4string here? -- no, that's rdgal's business
 		return(TRUE)
 	}
 )

@@ -8,6 +8,8 @@
 \alias{rbind.SpatialPolygons}
 \alias{coerce,Polygons,Lines-method}
 \alias{coerce,SpatialPolygons,SpatialLines-method}
+\alias{row.names.SpatialPolygons}
+
 
 \title{Class "SpatialPolygons"}
 \description{  class to hold polygon topology (without attributes) }
@@ -31,9 +33,9 @@ Class \code{"Spatial"}, directly.
 Methods defined with class "SpatialPolygons" in the signature:
   \describe{
     \item{[}{\code{signature(obj = "SpatialPolygons")}: select subset of (sets of) polygons; NAs are not permitted in the row index}
-	\item{plot}{\code{\signature(x = "SpatialPolygons", y = "missing")}: 
+	\item{plot}{\code{signature(x = "SpatialPolygons", y = "missing")}: 
 	plot polygons in SpatialPolygons object}
-	\item{summary}{\code{\signature(object = "SpatialPolygons")}: summarize object}
+	\item{summary}{\code{signature(object = "SpatialPolygons")}: summarize object}
   }
 }
 \author{ Roger Bivand }
@@ -58,6 +60,7 @@ Methods defined with class "SpatialPolygons" in the signature:
 grd <- GridTopology(c(1,1), c(1,1), c(10,10))
 polys <- as.SpatialPolygons.GridTopology(grd)
 plot(polys)
-text(coordinates(polys), labels=sapply(slot(polys, "polygons"), function(i) slot(i, "ID")), cex=0.6)
+#text(coordinates(polys), labels=sapply(slot(polys, "polygons"), function(i) slot(i, "ID")), cex=0.6)
+text(coordinates(polys), labels=row.names(polys))
 }
 \keyword{classes}

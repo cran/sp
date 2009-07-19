@@ -22,6 +22,10 @@ as.data.frame.SpatialLinesDataFrame = function(x, row.names, optional, ...) x@da
 setAs("SpatialLinesDataFrame", "data.frame", function(from)
     as.data.frame.SpatialLinesDataFrame(from))
 
+row.names.SpatialLinesDataFrame <- function(x) {
+    sapply(slot(x, "lines"), slot, "ID")
+}
+
 setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... , drop = TRUE) {
     missing.i = missing(i)
     missing.j = missing(j)
@@ -40,6 +44,14 @@ setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... ,
         i = TRUE
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialLinesDataFrame selection")
+    if (is.logical(i)) {
+	if (length(i) == 1 && i)
+	    i = 1:length(x@lines)
+	else
+	    i <- which(i)
+    } else if (is.character(i)) {
+            i <- match(i, row.names(x))
+    }
     if (any(is.na(i))) stop("NAs not permitted in row index")
     #SpatialLinesDataFrame(as(x, "SpatialLines")[i, , drop = FALSE],
     #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)

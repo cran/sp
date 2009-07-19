@@ -104,13 +104,19 @@ as.SpatialPolygons.PolygonsList <- function(Srl, proj4string=CRS(as.character(NA
 	res
 }
 
+row.names.SpatialPolygons <- function(x) {
+    sapply(slot(x, "polygons"), slot, "ID")
+}
+
 setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)
 			i = 1:length(x@polygons)
 		else
 			i <- which(i)
-	}
+	} else if (is.character(i)) {
+                i <- match(i, row.names(x))
+        }
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
 	if (length(unique(i)) != length(i))

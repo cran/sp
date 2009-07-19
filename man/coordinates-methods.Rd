@@ -6,7 +6,7 @@
 \alias{coordinates,data.frame-method}
 \alias{coordinates,matrix-method}
 \alias{coordinates,SpatialPoints-method}
-\alias{coordinates,SpatialPointsDataFrame-method}
+%\alias{coordinates,SpatialPointsDataFrame-method}
 \alias{coordinates,SpatialPolygons-method}
 \alias{coordinates,SpatialPolygonsDataFrame-method}
 \alias{coordinates,Line-method}

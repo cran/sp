@@ -23,8 +23,6 @@ see \link{SpatialGrid}
 	each dimension; coordinates refer to the cell centre }
     \item{\code{cellsize}:}{numeric; vector with the cell size in each dimension}
     \item{\code{cells.dim}:}{integer; vector with number of cells in each dimension}
-    \item{\code{bbox}:}{Object of class \code{"matrix"}; bounding box }
-    \item{\code{proj4string}:}{Object of class \code{"CRS"}; projection  }
   }
 }
 

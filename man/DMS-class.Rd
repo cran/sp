@@ -17,6 +17,7 @@ Objects can be created by calls of the form \code{new("DMS", ...)}, converted fr
     \item{\code{deg}:}{Object of class \code{"numeric"} degrees}
     \item{\code{min}:}{Object of class \code{"numeric"} minutes}
     \item{\code{sec}:}{Object of class \code{"numeric"} decimal seconds}
+    \item{\code{NS}:}{Object of class \code{"logical"} TRUE if input value is a Northing}
   }
 }
 

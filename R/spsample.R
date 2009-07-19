@@ -82,12 +82,14 @@ setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
 sample.Line = function(x, n, type, offset = runif(1), proj4string = CRS(as.character(NA)), ...) {
 	offset = offset[1]
 	if (missing(n)) n <- as.integer(NA)
+	if (!is.finite(n) || n < 1) return(NULL)
 	cc = coordinates(x)
-	dxy = apply(cc, 2, diff)
-	if (inherits(dxy, "matrix"))
-		lengths = apply(dxy, 1, function(x) sqrt(sum(x ** 2)))
-	else # cc has 2 rows:
-		lengths = sqrt(sum(dxy ** 2))
+        lengths = LineLength(cc, longlat=FALSE, sum=FALSE)
+        if (any(abs(lengths) < .Machine$double.eps)) {
+	    wl <- which(abs(lengths) < .Machine$double.eps)
+            cc <- cc[-(wl),]
+            lengths <- lengths[-(wl)]
+        }
 	csl = c(0, cumsum(lengths))
 	maxl = csl[length(csl)]
 	if (type == "random")
@@ -95,13 +97,15 @@ sample.Line = function(x, n, type, offset = runif(1), proj4string = CRS(as.chara
 	else if (type == "stratified")
 		pts = ((1:n) - runif(n))/n * maxl
 	else if (type == "regular")
-		pts = ((1:n) - offset)/n * maxl
+		pts = ((1:n) - (1-offset))/n * maxl
 	else
 		stop(paste("type", type, "not available for Line"))
 	# find coordinates:
 	int = findInterval(pts, csl, all.inside = TRUE)
 	where = (pts - csl[int])/diff(csl)[int]
-	xy = cc[int,] + where * (cc[int+1,] - cc[int,])
+	xy = cc[int, , drop=FALSE] + where * (cc[int+1, , drop=FALSE] - 
+	    cc[int, , drop=FALSE])
+	if (nrow(xy) < 1) return(NULL)
 	SpatialPoints(xy, proj4string)
 }
 setMethod("spsample", signature(x = "Line"), sample.Line)
@@ -109,12 +113,14 @@ setMethod("spsample", signature(x = "Line"), sample.Line)
 sample.Lines = function(x, n, type, offset = runif(1), ...) {
 	L = x@Lines
 	lengths = sapply(L, function(x) LineLength(x@coords))
+        if (sum(lengths) < .Machine$double.eps)
+	    stop("Lines object of no length")
 	nrs = round(lengths / sum(lengths) * n)
 	ret = vector("list", sum(nrs > 0))
 	j = 1
 	for (i in 1:length(L)) {
 		if (nrs[i] > 0) {
-			ret[[j]] = spsample(L[[i]], nrs[i], type = type, offset = offset, ...)
+			ret[[j]] = sample.Line(L[[i]], nrs[i], type = type, offset = offset, ...)
 			j = j+1
 		}
 	}
@@ -123,18 +129,22 @@ sample.Lines = function(x, n, type, offset = runif(1), ...) {
 setMethod("spsample", signature(x = "Lines"), sample.Lines)
 
 sample.SpatialLines = function(x, n, type, offset = runif(1), ...) {
-	lengths = SpatialLinesLengths(x)
+	lengths = SpatialLinesLengths(x, longlat=FALSE)
+        if (sum(lengths) < .Machine$double.eps)
+	    stop("SpatialLines object of no length")
 	nrs = round(lengths / sum(lengths) * n)
+	if (sum(nrs) == 0) 
+	    warning("n too small, increase n and sample from output")
 	ret = vector("list", sum(nrs > 0))
 	j = 1
 	for (i in 1:length(lengths)) {
 		if (nrs[i] > 0) {
-			ret[[j]] = spsample(x@lines[[i]], nrs[i], type = type, offset = offset, ...)
+			ret[[j]] = sample.Lines(x@lines[[i]], nrs[i], type = type, offset = offset, ...)
 			j = j+1
 		}
 	}
 	ret = do.call("rbind", ret)
-	proj4string(ret) = CRS(proj4string(x))
+	if (!is.null(ret)) proj4string(ret) = CRS(proj4string(x))
 	ret
 }
 setMethod("spsample", signature(x = "SpatialLines"), sample.SpatialLines)

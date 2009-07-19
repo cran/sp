@@ -29,6 +29,8 @@ Ordered full grids are stored instead or unordered non-NA cells;
   \describe{
     \item{\code{bbox}:}{Object of class \code{"matrix"}; bounding box }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}; projection }
+    \item{\code{coords}:}{see \link{SpatialPoints}; points slot }
+	\item{\code{coords.nrs}}{see \link{SpatialPointsDataFrame}}
     \item{\code{grid}:}{see \link{GridTopology-class}; grid parameters }
     \item{\code{grid.index}:}{integer; index of points in the list to points
 	in the full (ordered) grid. x cycles fastest; all coordinates increase

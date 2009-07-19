@@ -5,12 +5,15 @@
 \alias{coerce,SpatialPointsDataFrame,data.frame-method}
 \alias{coerce,SpatialPointsDataFrame,SpatialPoints-method}
 \alias{show,SpatialPointsDataFrame-method}
+\alias{points,SpatialPointsDataFrame-method}
+\alias{coordinates,SpatialPointsDataFrame-method}
 \alias{as.data.frame.SpatialPointsDataFrame}
 \alias{dim.SpatialPointsDataFrame}
 \alias{print.SpatialPointsDataFrame}
 \alias{ShowSpatialPointsDataFrame}
 \alias{as.SpatialPoints.SpatialPointsDataFrame}
 \alias{rbind.SpatialPointsDataFrame}
+\alias{row.names.SpatialPointsDataFrame}
 
 \title{Class "SpatialPointsDataFrame" }
 \description{ Class for spatial attributes that have spatial point locations }
@@ -24,7 +27,7 @@ or of the form \code{coordinates(x) = xy}; see \link{coordinates}.
 		the attribute data (may or may not contain the coordinates in its columns) }
     \item{\code{coords}:}{Object of class \code{"matrix"}; the coordinates matrix
 	(points are rows in the matrix) }
-	\item{\code{coords.stripped}}{Object of class logical; if TRUE, when
+	\item{\code{coords.nrs}}{Object of class logical; if TRUE, when
 	the object was created the coordinates were retrieved from the data.frame,
 	and hence stripped from it; after coercion to data.frame, e.g. by 
 	as.data.frame(x), coordinates will again be added (as first few columns) 
@@ -37,17 +40,22 @@ or of the form \code{coordinates(x) = xy}; see \link{coordinates}.
 Class \code{"SpatialPoints"}, directly.
 Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
 }
-\section{Methods}{
-  \describe{
-    \item{[}{\code{signature(x = "SpatialPointsDataFrame")}: subset rows or
-	columns; in case of row subsetting, the coordinates are also subsetted, return
-	SpatialPointsDataFrame}
-    \item{coerce}{\code{signature(from = "SpatialPointsDataFrame", to = "data.frame")}:   extracts the attribute part }
-    \item{coordinates}{\code{signature(obj = "SpatialPointsDataFrame")}: retrieves
-	the coordinates only }
-    \item{show}{\code{signature(object = "SpatialPointsDataFrame")}: print method }
-    \item{points}{\code{signature(x = "SpatialPointsDataFrame")}: add points to plot}
-  }
+\usage{
+  \S4method{[}{SpatialPointsDataFrame}(x, i, j, ..., drop = TRUE)
+  \S4method{coerce}{SpatialPointsDataFrame,SpatialPoints}(from, to, strict=TRUE)
+  \S4method{coerce}{SpatialPointsDataFrame,data.frame}(from, to, strict=TRUE)
+  \S4method{coordinates}{SpatialPointsDataFrame}(obj)
+  \S4method{show}{SpatialPointsDataFrame}(object)
+  \S4method{points}{SpatialPointsDataFrame}(x)
+}
+\arguments{
+  \item{x,from,obj,object}{\code{SpatialPointsDataFrame} object}
+  \item{to}{class to which to coerce}
+  \item{strict}{see \code{\link[methods]{as}}}
+  \item{i}{row indices}
+  \item{j}{column indices}
+  \item{drop}{see \code{\link[base]{[}}}
+  \item{...}{indices passed through}
 }
 \author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 

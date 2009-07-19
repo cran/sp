@@ -28,7 +28,7 @@ are never to be generated; only derived classes can be meaningful }
     \item{\code{proj4string}:}{Object of class \code{"CRS"};
 	holding a valid proj4 string, which can be used for unprojecting
 	or reprojecting coordinates; it is initialised to NA. Other strings
-	are checked for validity in the spproj package, but attempts to assign a string containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped.}
+	are checked for validity in the rgdal package, but attempts to assign a string containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped.}
   }
 }
 \section{Methods}{

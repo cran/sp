@@ -22,7 +22,8 @@
 
 \description{ sample point locations within a square area, a grid,
 a polygon, or on a spatial line, using regular or random sampling
-methods }
+methods; the methods used assume that the geometry used is not spherical, 
+so objects should be in planar coordinates }
 \usage{
 spsample(x, n, type, ...)
 sample.Spatial(x, n, type, bb = bbox(x), offset = runif(nrow(bb)), cellsize, ..., nclusters = 1)
@@ -50,7 +51,10 @@ value leads to sub-region sampling }
 grid; the default for \code{spsample} methods is a random location in
 the unit cell [0,1] x [0,1], leading to a different grid after
 each call; if this is set to \code{c(0.5,0.5)}, the returned grid is
-not random (but, in Ripley's wording, "centric systematic") }
+not random (but, in Ripley's wording, "centric systematic"). For
+line objects, a single offset value is taken, where the value varies within 
+the [0, 1] interval, and 0 is the beginning of each Line object, and 1 
+its end }
 \item{cellsize}{ if missing, a cell size is derived from the sample size
 \code{n}; otherwise, this cell size is used for all sampling methods
 except \code{"random"} }
