@@ -20,9 +20,10 @@
 
 \title{ S Classes and Methods for Spatial Data:\\
 the {\tt sp} Package }
-\author{Edzer J.\ Pebesma\footnote{Dept of Physical Geography,
-Faculty of Geosciences, Utrecht University, P.O. Box 80.115,
-3508 TC Utrecht, The Netherlands {\tt e.pebesma@geo.uu.nl}} \and 
+\author{Edzer J.\ Pebesma\footnote{Institute for Geoinformatics,
+University of Muenster, Weseler Strasse 253, 48151 M\"{u}nster, Germany.
+{\tt edzer.pebesma@uni-muenster.de}}
+\and 
 Roger S.\ Bivand\footnote{Economic Geography Section, Department of Economics, %
 Norwegian School of Economics and Business Administration, %
 Breiviksveien 40, N-5045 Bergen, Norway; {\tt Roger.Bivand@nhh.no}}}
@@ -82,21 +83,20 @@ set.seed(13331)
 The spatial data classes implemented are points, grids, lines, rings
 and polygons. Package {\tt sp} provides classes for the spatial-only
 information (the topology), e.g. {\tt SpatialPoints}, and extensions for
-the case where we attribute information stored in a {\tt data.frame} or
-{\tt AttributeList} (a {\tt data.frame}-like object without row names)
-is available for each point, e.g. {\tt SpatialPointsDataFrame}. The
-available data classes are:
+the case where we attribute information stored in a {\tt data.frame}
+is available for each spatial entity (e.g. for points, the {\tt
+SpatialPointsDataFrame}). The available data classes are:
 
 \begin{center}
 \begin{tabular}{lllll}
 data type & class                        & attributes  & contains \\ \hline
 points    & {\tt SpatialPoints}          & No           &{\tt Spatial}* \\
-points    & {\tt SpatialPointsDataFrame} & {\tt AttributeList} &{\tt SpatialPoints}* \\
+points    & {\tt SpatialPointsDataFrame} & {\tt data.frame} &{\tt SpatialPoints}* \\
 pixels    & {\tt SpatialPixels}          & No           &{\tt SpatialPoints}* \\
-pixels    & {\tt SpatialPixelsDataFrame} & {\tt AttributeList} &{\tt SpatialPixels}* \\
+pixels    & {\tt SpatialPixelsDataFrame} & {\tt data.frame} &{\tt SpatialPixels}* \\
           &                              &              &{\tt SpatialPointsDataFrame}** \\
 full grid & {\tt SpatialGrid  }          & No           &{\tt SpatialPixels}* \\
-full grid & {\tt SpatialGridDataFrame}   & {\tt AttributeList}  &{\tt SpatialGrid}* \\
+full grid & {\tt SpatialGridDataFrame}   & {\tt data.frame}  &{\tt SpatialGrid}* \\
 line      & {\tt Line}                   & No           & \\
 lines     & {\tt Lines}                  & No           & {\tt Line} list \\
 lines     & {\tt SpatialLines}           & No           & {\tt Spatial}*, {\tt Lines} list \\
@@ -113,14 +113,6 @@ The class {\tt Spatial} does never hold actual data, it only provides
 the information common to all derived classes: the spatial coordinates
 bounding box and information about the coordinate reference system
 (geographic projection information).
-
-Row names, allways present in {\tt data.frame} objects, take up too much
-memory and computing time when the number of rows becomes very large. For
-this reason, Points, pixels and grid objects have attributes in an object
-of class {\tt AttributeList}, which tries to mimic {\tt data.frame}
-objects as close as possible, but does not have row names. If row names
-have to be stored in such an object, they should be converted to a column
-in the {\tt AttributeList}.
 
 In the following sections we will show how we can create objects of
 these classes from scratch or from other classes, and which methods and
@@ -156,9 +148,10 @@ as.data.frame}, {\tt as.matrix} and {\tt image} (for gridded data),
 A number of spatial methods are available for the classes in {\tt sp}:
 \begin{itemize}
 \item {\tt dimensions(x)} returns number of spatial dimensions
-\item {\tt y = transform(x, "longlat")} transform from one coordinate
+\item {\tt y = spTransform(x, CRS("+proj=longlat +datum=WGS84"))}
+transform from one coordinate
 reference system (geographic projection) to another (requires package
-spproj)
+rgdal)
 \item {\tt bbox(x)} returns a matrix with the coordinates bounding box;
 the dimensions form rows, min/max form the columns
 \item {\tt coordinates(x)} returns a matrix with the spatial coordinates 
