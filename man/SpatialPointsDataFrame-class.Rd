@@ -54,7 +54,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
   \item{strict}{see \code{\link[methods]{as}}}
   \item{i}{row indices}
   \item{j}{column indices}
-  \item{drop}{see \code{\link[base]{[}}}
+  \item{drop}{see \code{\link[base]{Extract}}}
   \item{...}{indices passed through}
 }
 \author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
