@@ -12,7 +12,8 @@ spmap.to.lev(data, zcol = 1:n, n = 2, names.attr)
 \method{stack}{SpatialGridDataFrame}(x, select, ...)
 }
 \arguments{
-\item{data}{ object of class (or extending) SpatialDataFrame }
+\item{data}{ object of class (or extending) SpatialPointsDataFrame or
+SpatialGridDataFrame }
 \item{zcol}{ z-coordinate column name(s), or a column number (range) (after
 removing the spatial coordinate columns: 1 refers to the first non-coordinate
 column, etc. ) }
@@ -41,7 +42,7 @@ replicates the coordinates. }
 \examples{
 library(lattice)
 data(meuse.grid) # data frame
-coordinates(meuse.grid) = c("x", "y") # promotes to SpatialDataFrame
+coordinates(meuse.grid) = c("x", "y") # promotes to SpatialPointsDataFrame
 meuse.grid[["idist"]] = 1 - meuse.grid[["dist"]] # add variable
 # the following is made much easier by spplot:
 levelplot(z~x+y|name, spmap.to.lev(meuse.grid, z=c("dist","idist"), names.attr =

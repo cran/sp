@@ -60,11 +60,15 @@ as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2, attr = 1) {
 
 # contributed by Michael Sumner 24 Oct 2007
 
-image2Grid <- function (im, p4 = as.character(NA)) 
+image2Grid <- function (im, p4 = as.character(NA), digits=10) 
 {
     if (!all(c("x", "y", "z") %in% names(im))) 
         stop("image must have components x, y, and z")
 # RSB reversed test order
+    lux <- length(unique(signif(diff(im$x), digits=digits)))
+    luy <- length(unique(signif(diff(im$y), digits=digits)))
+    if (lux > 1 || luy > 1) stop("x or y not equally spaced")
+# RSB check for equal spacing
     cells.dim <- dim(im$z)
     xx <- im$x
     yy <- im$y

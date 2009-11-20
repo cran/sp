@@ -113,6 +113,10 @@ row.names.SpatialLines <- function(x) {
     sapply(slot(x, "lines"), slot, "ID")
 }
 
+"row.names<-.SpatialLines" <- function(x, value) {
+	spChFIDs(x, value)
+}
+
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
 setMethod("[", "SpatialLines", 
 	function(x, i, j, ..., drop = TRUE) {

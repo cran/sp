@@ -20,6 +20,9 @@ dimensions,Spatial-method
                         retrieve spatial dimensions from spatial data
 DMS-class               Class "DMS" for degree, minute, decimal second
                         values
+flipHorizontal          rearrange data in SpatialPointsDataFrame or
+                        SpatialGridDataFrame for plotting with spplot
+                        (levelplot/xyplot wrapper)
 gridded-methods         specify spatial data as being gridded, or find
                         out whether they are
 gridlines               Create N-S and E-W grid lines over a geographic
@@ -83,6 +86,7 @@ SpatialPolygons         create objects of class SpatialPolygons or
 SpatialPolygons-class   Class "SpatialPolygons"
 SpatialPolygonsDataFrame-class
                         Class "SpatialPolygonsDataFrame"
+spChFIDs-methods        change feature IDs in spatial objects
 spDistsN1               Euclidean or Great Circle distance between
                         points
 spmap.to.lev            rearrange data in SpatialPointsDataFrame or

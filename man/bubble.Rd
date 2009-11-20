@@ -55,7 +55,7 @@ the indexes (row numbers) of identified points.
 \seealso{\link{xyplot}, \link{mapasp}, \link{identify}}
 \examples{
 data(meuse)
-coordinates(meuse) <- c("x", "y") # promote to SpatialDataFrame
+coordinates(meuse) <- c("x", "y") # promote to SpatialPointsDataFrame
 bubble(meuse, "cadmium", maxsize = 2.5, main = "cadmium concentrations (ppm)", 
     key.entries = 2^(-1:4))
 bubble(meuse, "zinc", main = "zinc concentrations (ppm)",

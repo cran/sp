@@ -26,6 +26,10 @@ row.names.SpatialLinesDataFrame <- function(x) {
     sapply(slot(x, "lines"), slot, "ID")
 }
 
+"row.names<-.SpatialLinesDataFrame" <- function(x, value) {
+    spChFIDs(x, value)
+}
+
 setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... , drop = TRUE) {
     missing.i = missing(i)
     missing.j = missing(j)

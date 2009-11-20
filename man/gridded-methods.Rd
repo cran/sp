@@ -43,7 +43,7 @@ of points to full matrix form and back may change the original order of
 the points, and will remove duplicate points if they were present.
 
 \code{gridparameters} returns, if \code{obj} inherits from
-SpatialDataFrameGrid its grid parameters, else it returns numeric(0).  The
+SpatialGridDataFrame its grid parameters, else it returns numeric(0).  The
 returned value is a data.frame with three columns, named cellcentre.offset
 ("lower left cell centre coordinates"), cellsize, and cells.dim (cell
 dimension); the rows correspond to the spatial dimensions.

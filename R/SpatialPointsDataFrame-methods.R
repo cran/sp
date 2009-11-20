@@ -141,6 +141,14 @@ row.names.SpatialPointsDataFrame <- function(x) {
     dimnames(slot(x, "coords"))[[1]]
 }
 
+"row.names<-.SpatialPointsDataFrame" <- function(x, value) {
+    dimnames(slot(x, "coords"))[[1]] <- value
+    #coords = (slot(x, "coords"))
+    #dimnames(coords)[[1]] <- value
+	#x@coords = coords
+	x
+}
+
 setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 	missing.i = missing(i)
 	missing.j = missing(j)
