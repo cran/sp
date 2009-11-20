@@ -21,7 +21,7 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
          ..., setParUsrBB = FALSE)
 \method{contour}{SpatialPixelsDataFrame}(x, ...) 
 as.image.SpatialGridDataFrame(x, xcol = 1, ycol = 2, attr = 1)
-image2Grid(im, p4 = as.character(NA))
+image2Grid(im, p4 = as.character(NA), digits=10)
 }
 \arguments{
 \item{x}{ object of class \link{SpatialGridDataFrame} }
@@ -45,6 +45,7 @@ to the existing plot. }
 \item{setParUsrBB}{default FALSE, see \code{\link{Spatial-class}} for further details}
 \item{im}{list with components named x, y, and z, as used for \code{image}}
 \item{p4}{CRS object, proj4 string}
+\item{digits}{default 10, number of significant digits to use for checking equal row/column spacing}
 }
 \value{ \code{as.image.SpatialGridDataFrame} returns the list with
 elements \code{x} and \code{y}, containing the coordinates of the cell

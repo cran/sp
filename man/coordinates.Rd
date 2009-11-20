@@ -7,7 +7,7 @@ spatial coordinates }
 \description{ sets spatial coordinates to create spatial data, or retrieves
 spatial coordinates }
 \usage{
-	coordinates(obj)
+	coordinates(obj, ...)
 	coordinates(object) <- value
 }
 \arguments{
@@ -21,6 +21,7 @@ which columns in \code{object} are the spatial coordinates. If the coordinates
 are part of object, giving the reference does not duplicate them, giving
 their value does duplicate them in the resulting structure.
 }
+\item{...}{additional arguments that may be used by particular instances}
 }
 \value{ usually an object of class SpatialPointsDataFrame; if the coordinates
 set cover the full set of variables in object, an object of class SpatialPoints

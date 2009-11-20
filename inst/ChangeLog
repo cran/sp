@@ -1,7 +1,62 @@
+2009-11-19 21:08  rsbivand
+
+	* DESCRIPTION, NAMESPACE: docs linkage problems from maptools
+
+2009-11-19 14:25  edzer
+
+	* R/Spatial-methods.R, man/coordinates.Rd: added ... to arguments
+	  of coordinates method; request from torleif.lunde@cih.uib.no on
+	  r-sig-geo, Nov 19, 2009.
+
+2009-11-05 17:34  edzer
+
+	* DESCRIPTION, INDEX, NAMESPACE, R/Spatial-methods.R,
+	  R/SpatialLines-methods.R, R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPoints-methods.R, R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/chfids.R,
+	  man/spChFIDs-methods.Rd: version update; added row.names<-
+	  methods for points, lines and polygons; moved all the spChFIDs
+	  methods, functions and docs from maptools to sp for this.
+
+2009-11-03 09:29  edzer
+
+	* DESCRIPTION, NAMESPACE, R/flipSGDF.R, man/flip.Rd: added
+	  flipHorizontal/flipVertical contributions on r-sig-geo from
+	  Michael Sumner
+
+2009-11-03 09:21  edzer
+
+	* man/: bubble.Rd, gridded-methods.Rd, stack.Rd: removed more wrong
+	  references to SpatialDataFrame
+
+2009-11-03 09:20  edzer
+
+	* man/stack.Rd: removed reference to SpatialDataFrame
+
+2009-10-22 11:17  rsbivand
+
+	* DESCRIPTION, R/SpatialPolygonsDataFrame-methods.R: allow negative
+	  integer selection of SPolDF
+
+2009-09-30 16:46  edzer
+
+	* inst/CITATION: added asdar book as citation.
+
+2009-09-24 12:57  rsbivand
+
+	* R/image.R, man/image.Rd, ChangeLog, inst/ChangeLog: bug fix
+	  image2Grid
+
+2009-09-22 18:02  rsbivand
+
+	* DESCRIPTION, R/spplot.R, ChangeLog, inst/ChangeLog: adding
+	  auto.key to fill.call.groups()
+
 2009-09-17 10:35  rsbivand
 
-	* DESCRIPTION, man/SpatialPointsDataFrame-class.Rd, man/spplot.Rd:
-	  fix documentation links
+	* DESCRIPTION, man/SpatialPointsDataFrame-class.Rd, man/spplot.Rd,
+	  ChangeLog, inst/ChangeLog: fix documentation links
 
 2009-08-24 15:23  edzer
 

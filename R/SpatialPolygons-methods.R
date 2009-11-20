@@ -108,6 +108,11 @@ row.names.SpatialPolygons <- function(x) {
     sapply(slot(x, "polygons"), slot, "ID")
 }
 
+"row.names<-.SpatialPolygons" <- function(x, value) {
+    spChFIDs(x, value)
+}
+
+
 setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)

@@ -14,3 +14,15 @@ citEntry(entry="Article",
   paste("Pebesma, E.J., R.S. Bivand, 2005. Classes and methods for spatial data in R.",
 	"R News 5 (2), http://cran.r-project.org/doc/Rnews/.")
 )
+
+citEntry(entry="book",
+  author       = "Roger S. Bivand, Edzer J. Pebesma and Virgilio Gomez-Rubio",
+  title        = "Applied spatial data analysis with {R}",
+  year         = "2008",
+  publisher    = "Springer, NY",
+  url          = "http://www.asdar-book.org/",
+  textVersion = 
+  paste("Roger S. Bivand, Edzer J. Pebesma, Virgilio Gomez-Rubio, 2008.",
+	"Applied spatial data analysis with R. Springer, NY.",
+	"http://www.asdar-book.org/")
+)

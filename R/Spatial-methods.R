@@ -6,7 +6,7 @@ if (!isGeneric("bbox"))
 	setGeneric("bbox", function(obj)
 		standardGeneric("bbox"))
 if (!isGeneric("coordinates"))
-	setGeneric("coordinates", function(obj)
+	setGeneric("coordinates", function(obj, ...)
 		standardGeneric("coordinates"))
 if (!isGeneric("coordinates<-"))
 	setGeneric("coordinates<-", function(object, value)
@@ -44,6 +44,9 @@ if (!isGeneric("spsample"))
 if (!isGeneric("summary"))
 	setGeneric("summary", function(object, ...)
 		standardGeneric("summary"))
+if (!isGeneric("spChFIDs"))
+	setGeneric("spChFIDs", function(obj, x)
+		standardGeneric("spChFIDs"))
 
 bbox.default <- function(obj) {
 	is_points <- function(obj) {

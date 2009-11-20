@@ -428,18 +428,22 @@ fill.call.groups = function(lst, z, ..., cuts,
 		legendEntries = levels(lst$groups)
 	n = nlevels(lst$groups)
 
-	if (!is.null(dots$key))
+        if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && 
+          dots$auto.key)) {
+	  if (!is.null(dots$key))
 		lst$key = dots$key
-	else
+	  else
 		lst$key = list(points = list(pch = rep(lst$pch, length = n), 
 			col = rep(lst$col, length = n), cex = rep(cex, length = n)), 
 			text = list(legendEntries))
-	if (is.character(key.space))
+	  if (is.character(key.space))
 		lst$key$space = key.space
-	else if (is.list(key.space))
+	  else if (is.list(key.space))
 		lst$key = append(lst$key, key.space)
-	else
+	  else
 		warning("key.space argument ignored (not list or character)")
+        }
+        if (!is.null(dots$auto.key)) lst$auto.key <- dots$auto.key
 	return(lst)
 }
 

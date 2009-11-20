@@ -87,6 +87,11 @@ row.names.SpatialPoints <- function(x) {
     dimnames(slot(x, "coords"))[[1]]
 }
 
+"row.names<-.SpatialPoints" <- function(x, value) {
+    dimnames(slot(x, "coords"))[[1]] <- value
+	x
+}
+
 #"[.SpatialPoints" =  function(x, i, j, ..., drop = T) {
 setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j))
