@@ -1,6 +1,31 @@
+2009-12-06 12:00  rsbivand
+
+	* DESCRIPTION, tests/fail1.Rout.save: S4 tidying
+
+2009-12-04 18:43  rsbivand
+
+	* DESCRIPTION, R/Spatial-methods.R, ChangeLog, inst/ChangeLog:
+	  signature of S4 methods compliance
+
+2009-12-04 18:32  edzer
+
+	* INDEX, R/Spatial-methods.R, man/Spatial-class.Rd: change to $ and
+	  $<- signatures; should not break functionality needed to pass
+	  check on R base svn r50609
+
+2009-12-03 13:14  rsbivand
+
+	* DESCRIPTION, R/chfids.R, ChangeLog, inst/ChangeLog: spChFIDs
+	  speed-up in R
+
+2009-11-20 10:43  edzer
+
+	* DESCRIPTION: date update
+
 2009-11-19 21:08  rsbivand
 
-	* DESCRIPTION, NAMESPACE: docs linkage problems from maptools
+	* DESCRIPTION, NAMESPACE, ChangeLog, inst/ChangeLog: docs linkage
+	  problems from maptools
 
 2009-11-19 14:25  edzer
 

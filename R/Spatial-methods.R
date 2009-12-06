@@ -213,7 +213,7 @@ setReplaceMethod("[[", c("Spatial", "ANY", "missing", "ANY"),
 	}
 )
 
-setMethod("$", c("Spatial", "character"), 
+setMethod("$", "Spatial", 
 	function(x, name) {
 		if (!("data" %in% slotNames(x)))
 			stop("no $ method for object without attributes")
@@ -221,7 +221,7 @@ setMethod("$", c("Spatial", "character"),
 	}
 )
 
-setReplaceMethod("$", c("Spatial", "character", "ANY"), 
+setReplaceMethod("$", "Spatial", 
 	function(x, name, value) { 
 		if (!("data" %in% slotNames(x)))
 			stop("no $<- method for object without attributes")
@@ -229,5 +229,3 @@ setReplaceMethod("$", c("Spatial", "character", "ANY"),
 		x 
 	}
 )
-
-

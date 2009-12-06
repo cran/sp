@@ -2,7 +2,15 @@ chFIDsSpatialLines <- function(obj, x) {
     nl <- length(slot(obj, "lines"))
     if (length(x) != nl) stop("lengths differ")
     if (length(x) > length(unique(x))) stop("duplicate IDs")
-    for (i in 1:nl) slot(slot(obj, "lines")[[i]], "ID") <- x[i]
+#    for (i in 1:nl) slot(slot(obj, "lines")[[i]], "ID") <- x[i]
+    lns <- slot(obj, "lines")
+    lns1 <- vector(mode="list", length=nl)
+    for (i in 1:nl) {
+         lni <- lns[[i]]
+         slot(lni, "ID") <- x[i]
+         lns1[[i]] <- lni
+     }
+    slot(obj, "lines") <- lns1
     obj
 }
 
@@ -24,7 +32,15 @@ chFIDsSpatialPolygons <- function(obj, x) {
     np <- length(slot(obj, "polygons"))
     if (length(x) != np) stop("lengths differ")
     if (length(x) > length(unique(x))) stop("duplicate IDs")
-    for (i in 1:np) slot(slot(obj, "polygons")[[i]], "ID") <- x[i]
+#    for (i in 1:np) slot(slot(obj, "polygons")[[i]], "ID") <- x[i]
+    pls <- slot(obj, "polygons")
+    pls1 <- vector(mode="list", length=np)
+    for (i in 1:np) {
+         pli <- pls[[i]]
+         slot(pli, "ID") <- x[i]
+         pls1[[i]] <- pli
+     }
+    slot(obj, "polygons") <- pls1
     obj
 }
 
