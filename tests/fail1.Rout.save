@@ -151,7 +151,8 @@ Error in meuse.grid[c(1:10, NA, 12), ] : NAs not permitted in index
 > try(x <- meuse[[c("zinc", "cadmium")]])
 Error in .subset2(x, i, exact = exact) : subscript out of bounds
 > try(meuse[[c("zn", "cd")]] <- cbind(meuse$zinc, meuse$cadmium))
-Error in x[[i]] <- value : no such index at level 1
+Error in `[[<-`(`*tmp*`, i, value = structure(c(1022, 1141, 640, 257,  : 
+  no such index at level 1
 
 > 
 > data(meuse.grid)
