@@ -23,8 +23,31 @@ spDistsN1 <- function(pts, pt, longlat=FALSE) {
 			res[nAn] <- 0
 		else
 			stop(paste("non-finite distances in spDistsN1"))
-
 	}
 	res
 }
 
+spDists <- function(x, y, longlat = FALSE) {
+	if (is(x, "Spatial")) {
+		stopifnot(identical(proj4string(x), proj4string(y)))
+		if (missing(longlat))
+			longlat = !is.na(is.projected(x)) && !is.projected(x)
+		x = coordinates(x)
+		y = coordinates(y)
+	}
+	stopifnot(ncol(x) == ncol(y))
+	if (ncol(x) > 2) {
+		if (longlat)
+			stop("cannot compute spherical distances for longlat data")
+    	d = outer(x[,1], y[,1], "-") ^ 2
+        for (i in 2:ncol(x))
+           	d = d + outer(x[,i], y[,i], "-") ^ 2
+    	sqrt(d)
+	} else {
+		spDiN1 = function(x, y, ll) spDistsN1(y, x, ll)
+		if (nrow(x) < nrow(y))
+			t(apply(x, 1, spDiN1, y = y, ll = longlat))
+		else
+			apply(y, 1, spDiN1, y = x, ll = longlat)
+	}
+}

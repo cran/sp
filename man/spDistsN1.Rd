@@ -1,5 +1,6 @@
 \name{spDistsN1}
 \alias{spDistsN1}
+\alias{spDists}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Euclidean or Great Circle distance between points}
 \description{
@@ -7,17 +8,24 @@
 }
 \usage{
 spDistsN1(pts, pt, longlat = FALSE)
+spDists(x, y, longlat = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{pts}{A matrix of 2D points, or a SpatialPoints or SpatialPointsDataFrame object}
   \item{pt}{A single 2D point, or a SpatialPoints or SpatialPointsDataFrame object with one point only}
+  \item{x}{A matrix of n-D points with row denoting points, or a Spatial object that has a coordinates method}
+  \item{y}{A matrix of n-D points with row denoting points, or a Spatial object that has a coordinates method}
   \item{longlat}{if FALSE, Euclidean distance, if TRUE Great Circle distance}
 }
 
 \value{
-  A numeric vector of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE
+\code{spDistsN1} returns a numeric vector of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE.
+
+\code{spDists} returns a full matrix of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE; it uses \code{spDistsN1} in case points are two-dimensional. It computes all n x n distances, 
+not the required n x (n-1).
 }
+
 \note{The function can also be used to find a local kilometer equivalent to a plot scaled in decimal degrees in order to draw a scale bar.}
 \references{\url{http://home.att.net/~srschmitt/script_greatcircle.html}}
 \author{Roger Bivand}
