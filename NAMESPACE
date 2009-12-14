@@ -72,7 +72,7 @@ export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons
 export(dd2dms, print.DMS, char2dms, as.character.DMS,
 	as.double.DMS, as.numeric.DMS)
 
-export(spDistsN1)
+export(spDistsN1, spDists)
 
 export(flipHorizontal, flipVertical)
 
