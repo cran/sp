@@ -98,7 +98,7 @@ Error in SpatialPointsDataFrame(x, y) :
 > Srs2 = Polygons(list(Sr2), "s2")
 > Srs3 = Polygons(list(Sr3, Sr4), "s2")
 > try(SR <- SpatialPolygons(list(Srs1,Srs2,Srs3))) # will complain
-Error in validObject(.Object) : 
+Error in validObject(res) : 
   invalid class "SpatialPolygons" object: non-unique Polygons ID slot values
 > Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
 > SR = SpatialPolygons(list(Srs1,Srs2,Srs3)) # won't complain

@@ -9,7 +9,7 @@ recenter.SpatialPolygons <- function(obj) {
 	projargs <- CRS(proj4string(obj))
 	pls <- slot(obj, "polygons")
 	Srl <- lapply(pls, recenter.Polygons)
-	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=projargs)
+	res <- SpatialPolygons(Srl, proj4string=projargs)
 	res
 }
 

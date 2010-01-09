@@ -1,4 +1,0 @@
-    rlabs <- unlist(rlabs)
-	    if (any(duplicated(rlabs)))
-		        rlabs <- make.unique(as.character(unlist(rlabs)), sep = "")
-

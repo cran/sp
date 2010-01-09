@@ -46,10 +46,15 @@ Class \code{"Spatial"}, by class \code{"SpatialPolygons"}.
 Methods defined with class "SpatialPolygonsDataFrame" in the signature:
   \describe{
     \item{[}{\code{signature(x = "SpatialPolygonsDataFrame")}: select subset of (sets of) polygons; NAs are not permitted in the row index}
+    \item{rbind}{\code{signature(object = "SpatialPolygonsDataFrame")}: 
+                rbind-like method, see notes below}
   }
 }
 \author{Roger Bivand}
-\note{\code{SpatialPolygonsDataFrame} with default ID matching checks the data frame row names against the Polygons ID slots. They must then agree with each other, and be unique (no Polygons objects can share IDs); the data frame rows will be re-ordered if needed to match the Polygons IDs.}
+\note{\code{SpatialPolygonsDataFrame} with default ID matching checks the data frame row names against the Polygons ID slots. They must then agree with each other, and be unique (no Polygons objects can share IDs); the data frame rows will be re-ordered if needed to match the Polygons IDs..
+
+If you want to \code{rbind} objects with 
+duplicated IDs, see\code{\link{spChFIDs}}.}
 
 \seealso{
 	\link{SpatialPolygons-class}

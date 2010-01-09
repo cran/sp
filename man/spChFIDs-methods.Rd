@@ -26,7 +26,7 @@
 
 \author{Roger Bivand}
 
-\seealso{\code{\link[maptools:spCbind]{spCbind-methods}}, \code{\link[maptools:spRbind]{spRbind-methods}}}
+\seealso{\code{\link[maptools]{spCbind-methods}}, \code{\link[maptools]{spRbind-methods}}}
 
 \examples{
 \dontrun{

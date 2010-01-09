@@ -50,6 +50,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPixels"}.
 	numbers, not grid lines. For selecting a square block in a grid, coerce to
 	a \link{SpatialGridDataFrame-class} first, and use \code{[} on that object}
 	\item{as.matrix}{\code{signature(x = "SpatialPixelsDataFrame")}: coerce to matrix }
+	\item{rbind}{\code{signature(x = "SpatialPixelsDataFrame")}: rbind-like method }
   }
 }
 

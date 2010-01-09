@@ -36,9 +36,17 @@ Class \code{"Spatial"}, directly.
 	plot lines in SpatialLines object}
 	\item{lines}{\code{signature(x = "SpatialLines")}: 
 	add lines in SpatialLines object to a plot }
+	\item{rbind}{\code{signature(object = "SpatialLines")}: 
+	  rbind-like method, see notes }
 	\item{summary}{\code{signature(object = "SpatialLines")}: 
 	summarize object }
   }
+}
+\note{
+\code{rbind} calls the function \code{\link{SpatialLines}}, where it is 
+checked that all IDs are unique. If \code{rbind}-ing \code{SpatialLines} without 
+unique IDs, it is possible to set the argument \code{makeUniqueIDs = TRUE}, although
+it is preferred to change these explicitly with \code{\link{spChFIDs}}.
 }
 \author{ Roger Bivand, Edzer Pebesma }
 

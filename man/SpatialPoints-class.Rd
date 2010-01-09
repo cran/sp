@@ -55,7 +55,7 @@ Class \code{"Spatial"}, directly.
     \item{summary}{\code{signature(object = "SpatialPoints")}: summarize object}
     \item{points}{\code{signature(x = "SpatialPoints")}: add point symbols to plot}
     \item{show}{\code{signature(object = "SpatialPoints")}: prints coordinates }
-  }
+    \item{rbind}{\code{signature(object = "SpatialPoints")}: rbind-like method }  }
 }
 \author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 

@@ -47,6 +47,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
   \S4method{coordinates}{SpatialPointsDataFrame}(obj)
   \S4method{show}{SpatialPointsDataFrame}(object)
   \S4method{points}{SpatialPointsDataFrame}(x)
+  \method{rbind}{SpatialPointsDataFrame}(...)
 }
 \arguments{
   \item{x,from,obj,object}{\code{SpatialPointsDataFrame} object}

@@ -165,7 +165,7 @@ as.SpatialPolygons.GridTopology <- function(grd, proj4string=CRS(as.character(NA
 #, proj4string=proj4string
 )), ID=IDs[i])
 	}
-	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=proj4string)
+	res <- SpatialPolygons(Srl, proj4string=proj4string)
 	res
 }
 setAs("GridTopology", "SpatialPolygons", function(from)
