@@ -1,6 +1,80 @@
+2010-01-09 11:21  rsbivand
+
+	* DESCRIPTION, R/SpatialPolygonsDataFrame-methods.R:
+	  SpatialPolygonsDataFrame [ speedup
+
+2010-01-08 14:38  rsbivand
+
+	* ChangeLog, inst/ChangeLog: identical points fix for sp_lengths
+
+2010-01-08 14:31  rsbivand
+
+	* R/SpatialGrid-methods.R, R/SpatialPoints-methods.R, src/gcdist.c:
+	  identical points fix for sp_lengths
+
+2010-01-07 19:08  rsbivand
+
+	* ChangeLog, inst/ChangeLog: added centroid protection
+
+2010-01-07 13:07  rsbivand
+
+	* DESCRIPTION, inst/include/sp_xports.c, src/sp_xports.c: added
+	  centroid protection
+
+2009-12-18 22:53  rsbivand
+
+	* man/: SpatialLines-class.Rd, SpatialLinesDataFrame-class.Rd,
+	  SpatialPixels-class.Rd, SpatialPixelsDataFrame-class.Rd,
+	  SpatialPoints-class.Rd, SpatialPointsDataFrame-class.Rd,
+	  SpatialPolygons-class.Rd, SpatialPolygonsDataFrame-class.Rd:
+	  rbind documentation improvements
+
+2009-12-18 10:32  rsbivand
+
+	* inst/include/sp_xports.c, src/sp_xports.c, DESCRIPTION,
+	  ChangeLog, inst/ChangeLog: handling infinite label point for
+	  defect polygons
+
+2009-12-17 20:13  rsbivand
+
+	* inst/include/sp_xports.c, src/sp_xports.c: adding C API files for
+	  *Polygon* classes
+
+2009-12-17 18:38  rsbivand
+
+	* DESCRIPTION, R/Class-SpatialPolygons.R, R/GridTopology-methods.R,
+	  R/SpatialGrid-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/chfids.R, R/recenter.R,
+	  R/spsample.R, inst/include/sp.h, inst/include/sp_xports.c,
+	  man/spChFIDs-methods.Rd, src/Rcentroid.c, src/init.c, src/sp.h,
+	  src/sp_xports.c, tests/fail1.Rout.save, tests/pass1.Rout.save,
+	  ChangeLog, inst/ChangeLog: adding C API files for *Polygon*
+	  classes
+
+2009-12-14 09:41  edzer
+
+	* tests/: spDists.R, spDists.Rout.save: added test on reversed
+	  arguments
+
+2009-12-14 09:31  edzer
+
+	* tests/spDists.Rout.save: spDists test output
+
+2009-12-11 17:30  edzer
+
+	* DESCRIPTION: version bump
+
+2009-12-11 17:21  edzer
+
+	* DESCRIPTION, NAMESPACE, R/spdists.R, man/spDistsN1.Rd,
+	  tests/spDists.R: added the spDists function that wraps (for 2D
+	  data) spDistsN1, and returns the distance matrix between two sets
+	  of coordinates.
+
 2009-12-06 12:00  rsbivand
 
-	* DESCRIPTION, tests/fail1.Rout.save: S4 tidying
+	* DESCRIPTION, tests/fail1.Rout.save, ChangeLog, inst/ChangeLog: S4
+	  tidying
 
 2009-12-04 18:43  rsbivand
 

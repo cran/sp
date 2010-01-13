@@ -2,13 +2,16 @@ setClass("Polygon",
 	representation("Line", labpt = "numeric", 
 	area = "numeric", hole = "logical", ringDir = "integer"),
 	validity = function(object) {
-		coords <- coordinates(object)
-		start <- coords[1,]
-		final <- coords[nrow(coords),]
-		if (!identical(start, final)) 
-			stop("ring not closed")
-		stopifnot(all(is.finite(slot(object, "labpt"))))
-		return(TRUE)
+                res <- .Call("Polygon_validate_c", object, PACKAGE="sp")
+                res
+#		coords <- object@coords
+#		start <- coords[1,]
+#		final <- coords[nrow(coords),]
+#		if (!identical(start, final)) 
+#			return("ring not closed")
+#		if (any(!is.finite(object@labpt)))
+#                    return("infinite label point")
+#		return(TRUE)
 	}
 )
 
@@ -16,12 +19,15 @@ setClass("Polygons",
 	representation(Polygons = "list", plotOrder = "integer", 
 	labpt = "numeric", ID = "character", area = "numeric"),
 	validity = function(object) {
-		if (any(sapply(object@Polygons, function(x) !is(x, "Polygon"))))
-			stop("not a list of Polygon objects")
-		if (length(object@Polygons) != length(object@plotOrder))
-			stop("plotOrder and Polygons differ in length")
-		stopifnot(all(is.finite(slot(object, "labpt"))))
-		return(TRUE)
+                res <- .Call("Polygons_validate_c", object, PACKAGE="sp")
+                res
+#		if (any(sapply(object@Polygons, function(x) !is(x, "Polygon"))))
+#			return("not a list of Polygon objects")
+#		if (length(object@Polygons) != length(object@plotOrder))
+#			return("plotOrder and Polygons differ in length")
+#		if (any(!is.finite(object@labpt)))
+#                    return("infinite label point")
+#		return(TRUE)
 	}
 )
 
@@ -35,18 +41,23 @@ setClass("SpatialPolygons",
 		polygons = list(), 
 		plotOrder = integer(0)),
 	validity = function(object) {
-		if (length(object@polygons) != length(object@plotOrder))
-			return("length mismatch")
-		if (any(unlist(lapply(object@polygons, function(x) 
-				!is(x, "Polygons"))))) 
-			return("polygons not Polygons objects")
-		if (any(duplicated(sapply(slot(object, "polygons"), function(i) slot(i, "ID")))))
+#		if (length(object@polygons) != length(object@plotOrder))
+#			return("length mismatch")
+#		if (any(unlist(lapply(object@polygons, function(x) 
+#				!is(x, "Polygons"))))) 
+#			return("polygons not Polygons objects")
+#                pls <- slot(object, "polygons")
+#                IDs <- sapply(pls, slot, "ID")
+                IDs <- .Call("SpatialPolygons_getIDs_c", object, PACKAGE="sp")
+		if (anyDuplicated(IDs))
 			return("non-unique Polygons ID slot values")
+                res <- .Call("SpatialPolygons_validate_c", object, PACKAGE="sp")
+                res
 #		if (length(object@polygons) != 
 #			length(unique(sapply(slot(object, "polygons"), 
 #                            function(i) slot(i, "ID"))))) 
 #				return("non-unique Polygons ID slot values")
-		return(TRUE)
+#		return(TRUE)
 	}
 )
 

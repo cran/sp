@@ -1,7 +1,9 @@
 SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
 	if (match.ID) {
-		Sr_IDs <- sapply(slot(Sr, "polygons"),
-                    function(i) slot(i, "ID"))
+#		Sr_IDs <- sapply(slot(Sr, "polygons"),
+#                    function(i) slot(i, "ID"))
+                Sr_IDs <- .Call("SpatialPolygons_getIDs_c", Sr,
+                    PACKAGE="sp")
 		data_IDs <- row.names(data)
 		mtch <- match(Sr_IDs, data_IDs)
 		if (any(is.na(mtch)))
@@ -28,7 +30,7 @@ setAs("SpatialPolygonsDataFrame", "data.frame", function(from)
     as.data.frame.SpatialPolygonsDataFrame(from))
 
 row.names.SpatialPolygonsDataFrame <- function(x) {
-    sapply(slot(x, "polygons"), slot, "ID")
+    .Call("SpatialPolygons_getIDs_c", x, PACKAGE="sp")
 }
 
 "row.names<-.SpatialPolygonsDataFrame" <- function(x, value) {
@@ -56,7 +58,9 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
     if (any(is.na(i))) stop("NAs not permitted in row index")
     #SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
     #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)
-	x@data = x@data[i, j, ..., drop = FALSE]
+        y <- new("SpatialPolygonsDataFrame")
+        y@proj4string <- x@proj4string
+	y@data = x@data[i, j, ..., drop = FALSE]
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)
 			i = 1:length(x@polygons)
@@ -66,15 +70,18 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
                 i <- match(i, row.names(x))
         }
 
-	x@polygons = x@polygons[i]
-	x@bbox <- .bboxCalcR(x@polygons)
+	y@polygons = x@polygons[i]
+#	x@bbox <- .bboxCalcR(x@polygons)
+        y@bbox <- .Call("bboxCalcR_c", y@polygons, PACKAGE="sp")
         if (is.numeric(i) && i < 0) {
-             area <- sapply(x@polygons, function(y) y@area)
-             x@plotOrder <- as.integer(order(area, decreasing=TRUE))
+#             area <- sapply(x@polygons, function(y) y@area)
+#             x@plotOrder <- as.integer(order(area, decreasing=TRUE))
+              y@plotOrder <- .Call("SpatialPolygons_plotOrder_c",
+                  y@polygons, PACKAGE="sp")
         } else {
-	    x@plotOrder = order(match(i, x@plotOrder))
+	    y@plotOrder = order(match(i, x@plotOrder))
         }
-	x
+	y
 ###
 ### RSB: do something with labelpoints here? How can I check they are present?
 ### (label points belong to the Polygons objects, not the SpatialPolygons object)

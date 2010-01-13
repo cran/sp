@@ -143,8 +143,8 @@ Data attributes:
 Object of class SpatialPolygons
 Coordinates:
    min  max
-r1 0.5 10.5
-r2 7.5 10.5
+x 0.5 10.5
+y 7.5 10.5
 Is projected: NA 
 proj4string : [NA]
 > plot(rbind(polys[1:10],polys[21:30]))

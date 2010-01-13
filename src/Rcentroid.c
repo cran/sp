@@ -27,15 +27,10 @@
 
 #include "sp.h"
 
-#define DIM     2               /* Dimension of points */
-typedef double  tPointd[DIM];   /* type double point */
 
 /*#define PMAX    1000     	 Max # of pts in polygon */
 /* typedef tPointd *tPolygond; */ /* type double polygon */
 
-double  Area2( tPointd a, tPointd b, tPointd c );
-void    FindCG( int n, tPointd *P, tPointd CG, double *Areasum2 );
-void    Centroid3( tPointd p1, tPointd p2, tPointd p3, tPointd c );
 
 void	spRFindCG( int *n, double *x, double *y, double *xc, double *yc, 
 		double *area ) {
@@ -63,44 +58,4 @@ void	spRFindCG( int *n, double *x, double *y, double *xc, double *yc,
 	and three times centroid is used to avoid division
 	until the last moment.
 */
-void     FindCG( int n, tPointd *P, tPointd CG, double *Areasum2)
-{
-        int     i;
-        double  A2;        /* Partial area sum */    
-	tPointd Cent3;
-
-	CG[0] = 0;
-	CG[1] = 0;
-        Areasum2[0] = 0;
-	for (i = 1; i < n-1; i++) {
-	        Centroid3( P[0], P[i], P[i+1], Cent3 );
-	        A2 =  Area2( P[0], P[i], P[i+1]);
-		CG[0] += A2 * Cent3[0];
-		CG[1] += A2 * Cent3[1];
-		Areasum2[0] += A2;
-	      }
-        CG[0] /= 3 * Areasum2[0];
-        CG[1] /= 3 * Areasum2[0];
-	return;
-}
-/*
-	Returns three times the centroid.  The factor of 3 is
-	left in to permit division to be avoided until later.
-*/
-void    Centroid3( tPointd p1, tPointd p2, tPointd p3, tPointd c )
-{
-        c[0] = p1[0] + p2[0] + p3[0];
-        c[1] = p1[1] + p2[1] + p3[1];
-	return;
-}
-/* 
-        Returns twice the signed area of the triangle determined by a,b,c,
-        positive if a,b,c are oriented ccw, and negative if cw.
-*/
-double     Area2( tPointd a, tPointd b, tPointd c )
-{
-	double area;
-	area = (b[0] - a[0]) * (c[1] - a[1]) - (c[0] - a[0]) * (b[1] - a[1]);
-	return(area);
-}
 

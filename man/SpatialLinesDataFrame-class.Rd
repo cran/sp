@@ -36,7 +36,14 @@ Methods defined with class "SpatialLinesDataFrame" in the signature:
     \item{show}{\code{signature(object = "SpatialLinesDataFrame")}: print method }
     \item{plot}{\code{signature(x = "SpatialLinesDataFrame")}: plot points}
     \item{lines}{\code{signature(object = "SpatialLinesDataFrame")}: add lines to plot}
+    \item{rbind}{\code{signature(object = "SpatialLinesDataFrame")}: 
+                rbind-like method}
   }
+}
+\note{
+\code{rbind} for \code{SpatialLinesDataFrame} is only possible for 
+objects with unique IDs. If you want to \code{rbind} objects
+with duplicated IDs, see\code{\link{spChFIDs}}.
 }
 \author{ Roger Bivand; Edzer Pebesma }
 

@@ -1,74 +1,52 @@
 SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
-	bb <- .bboxCalcR(Srl)
-	if (missing(pO)) {
-		area <- sapply(Srl, function(x) x@area)
-		pO <- as.integer(order(area, decreasing=TRUE))
-	}
-	Sp <- new("Spatial", bbox=bb, proj4string=proj4string)
-	res <- new("SpatialPolygons", Sp, polygons=Srl, plotOrder=as.integer(pO))
+#	bb <- .bboxCalcR(Srl)
+#	if (missing(pO)) {
+#		area <- sapply(Srl, function(x) x@area)
+#		pO <- as.integer(order(area, decreasing=TRUE))
+#	}
+#	Sp <- new("Spatial", bbox=bb, proj4string=proj4string)
+#	res <- new("SpatialPolygons", Sp, polygons=Srl, plotOrder=as.integer(pO))
+# RSB 091204
+        if (missing(pO)) pO <- NULL
+        else {
+           stopifnot(is.integer(pO))
+           stopifnot(length(pO) == length(Srl))
+        }
+        stopifnot(is.list(Srl))
+        stopifnot(is(proj4string, "CRS"))
+        res <- .Call("SpatialPolygons_c", Srl, pO, proj4string, PACKAGE="sp")
+        validObject(res)
 	res
 }
 
 Polygon <- function(coords, hole=as.logical(NA)) {
 	
 	coords <- coordinates(coords)
-#	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
+##	if (!is.matrix(coords)) stop("coords must be a two-column matrix")
 	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
-	cG <- .spFindCG(coords)
-        if (!all(is.finite(cG$cents))) {
-		warning("Non-finite label point detected and replaced")
-		cG$cents <- apply(coords, 2, function(x) mean(range(x)))
-	}
-	rD <- cG$rD
-	if (is.na(hole)) {
-		hole <- FALSE
-		if (rD < 0) hole <- TRUE
-	} else {
-		if (hole && rD > 0) coords <- coords[nrow(coords):1,]
-		if (!hole && rD < 0) coords <- coords[nrow(coords):1,]
-	}
-	rD <- .spFindCG(coords)$rD
-	sl <- Line(coords)
-#	rD <- .ringDirxy(coordinates(sl))
-#	cents <- .RingCentrd_2d(coordinates(sl))
-#	.saneRD(rD)
-	res <- new("Polygon", sl, labpt=cG$cents, 
-		area=cG$area, hole=as.logical(hole), 
-		ringDir=as.integer(rD))
-	res
+# RSB 091203
+        n <- dim(coords)[1]
+	if (is.na(hole)) hole <- FALSE
+        stopifnot(is.logical(hole))
+        res <- .Call("Polygon_c", coords, n, hole, PACKAGE="sp")
+#        validObject(res)
+        res
 }
 
 Polygons <- function(srl, ID) {
 	if (any(sapply(srl, function(x) !is(x, "Polygon"))))
 		stop("srl not a list of Polygon objects")
-#	projargs <- unique(sapply(srl, proj4string))
-#	if (length(projargs) > 1) 
-#		stop("differing projections among Polygon objects")
+##	projargs <- unique(sapply(srl, proj4string))
+##	if (length(projargs) > 1) 
+##		stop("differing projections among Polygon objects")
 	if (missing(ID)) stop("Single ID required")
 	if (length(ID) != 1) stop("Single ID required")
-
-#	nParts <- length(srl)
-# check their plot order
-	areas <- sapply(srl, function(x) slot(x, "area"))
-	pO <- order(areas, decreasing=TRUE)
-	holes <- sapply(srl, function(x) x@hole)
-	marea <- which.max(areas)
-	which_list <- ifelse(length(srl) == 1, 1, marea)
-	if (holes[which_list]) {
-		crds <- srl[[which_list]]@coords
-		srl[[which_list]] <- Polygon(coords=crds[nrow(crds):1,])
-	}
-	Sarea <- sum(abs(areas))
-# assign label point to the largest member ring
-	lpt <- t(sapply(srl, function(x) slot(x, "labpt")))
-	labpt <- lpt[which_list,]
-		
-#	Sp <- new("Spatial", bbox=.bboxSrs(srl), proj4string=CRS(projargs))
-	res <- new("Polygons",
-		Polygons=srl, plotOrder=as.integer(pO),
-		labpt=as.numeric(labpt), ID=as.character(ID), area=Sarea)
-	res
-
+        ID <- as.character(ID)
+        stopifnot(nchar(ID) > 0)
+# RSB 091203
+        res <- .Call("Polygons_c", srl, ID, PACKAGE="sp")
+#        validObject(res)
+        res
 }
 
 bbox.Polygons <- function(obj) {
@@ -105,7 +83,7 @@ as.SpatialPolygons.PolygonsList <- function(Srl, proj4string=CRS(as.character(NA
 }
 
 row.names.SpatialPolygons <- function(x) {
-    sapply(slot(x, "polygons"), slot, "ID")
+    .Call("SpatialPolygons_getIDs_c", x, PACKAGE="sp")
 }
 
 "row.names<-.SpatialPolygons" <- function(x, value) {

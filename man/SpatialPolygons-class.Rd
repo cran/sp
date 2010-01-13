@@ -36,7 +36,14 @@ Methods defined with class "SpatialPolygons" in the signature:
 	\item{plot}{\code{signature(x = "SpatialPolygons", y = "missing")}: 
 	plot polygons in SpatialPolygons object}
 	\item{summary}{\code{signature(object = "SpatialPolygons")}: summarize object}
+	\item{rbind}{\code{signature(object = "SpatialPolygons")}: rbind-like method}
   }
+}
+\note{
+\code{rbind} calls the function \code{\link{SpatialPolygons}}, where it is 
+checked that all IDs are unique. If \code{rbind}-ing \code{SpatialPolygons} without 
+unique IDs, it is possible to set the argument \code{makeUniqueIDs = TRUE}, although
+it is preferred to change these explicitly with \code{\link{spChFIDs}}.
 }
 \author{ Roger Bivand }
 \seealso{ \link{SpatialPolygons} }

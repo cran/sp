@@ -221,22 +221,6 @@ print.SpatialGrid = function(x, ...) {
 }
 setMethod("show", "SpatialGrid", function(object) print.SpatialGrid(object))
 
-#setReplaceMethod("$", c("SpatialGrid", "character", "ANY"),
-#	function(x,name,value) {
-#		df = data.frame(value)
-#		names(df) = as.character(substitute(name))
-#		SpatialGridDataFrame(x@grid, df) 
-#	}
-#)
-
-#setReplaceMethod("$", c("SpatialPixels", "character", "ANY"),
-#	function(x, name, value) { 
-#		df = data.frame(value)
-#		names(df) = as.character(substitute(name))
-#		SpatialPixelsDataFrame(x, df)
-#	}
-#)
-
 # make a SpatialPolygons from a SpatialPixels - Kohris Sahlen workshop
 as.SpatialPolygons.SpatialPixels <- function(obj) {
 	obj_crds <- coordinates(obj)
@@ -254,7 +238,7 @@ as.SpatialPolygons.SpatialPixels <- function(obj) {
 		y <- c(yi-cS2y, yi+cS2y, yi+cS2y, yi-cS2y, yi-cS2y)
 		Srl[[i]] <- Polygons(list(Polygon(coords=cbind(x, y))), ID=IDs[i])
 	}
-	res <- as.SpatialPolygons.PolygonsList(Srl, proj4string=CRS(proj4string(obj)))
+	res <- SpatialPolygons(Srl, proj4string=CRS(proj4string(obj)))
 	res
 }
 setAs("SpatialPixels", "SpatialPolygons", function(from) as.SpatialPolygons.SpatialPixels(from))

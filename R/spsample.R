@@ -388,7 +388,6 @@ HexPoints2SpatialPolygons = function(hex, dx) {
 	IDS = paste("ID", 1:npoly, sep="")
 	for (i in 1:npoly)
 		Srl[[i]] = Polygons(list(Polygon(ret[[i]])), IDS[i])
-	res <- as.SpatialPolygons.PolygonsList(Srl, 
-		proj4string=CRS(proj4string(hex)))
+	res <- SpatialPolygons(Srl, proj4string=CRS(proj4string(hex)))
 	res
 }

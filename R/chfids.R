@@ -31,7 +31,7 @@ setMethod("spChFIDs", signature(obj="SpatialLinesDataFrame", x="character"),
 chFIDsSpatialPolygons <- function(obj, x) {
     np <- length(slot(obj, "polygons"))
     if (length(x) != np) stop("lengths differ")
-    if (length(x) > length(unique(x))) stop("duplicate IDs")
+    if (isTRUE(anyDuplicated(x))) stop("duplicate IDs")
 #    for (i in 1:np) slot(slot(obj, "polygons")[[i]], "ID") <- x[i]
     pls <- slot(obj, "polygons")
     pls1 <- vector(mode="list", length=np)
@@ -51,7 +51,7 @@ chFIDsSpatialPolygonsDataFrame <- function(obj, x) {
     SP <- as(obj, "SpatialPolygons")
     SPx <- spChFIDs(SP, x)
     df <- as(obj, "data.frame")
-    row.names(df) <- sapply(slot(SPx, "polygons"), function(x) slot(x, "ID"))
+    row.names(df) <- .Call("SpatialPolygons_getIDs_c", SPx, PACKAGE="sp")
     SpatialPolygonsDataFrame(SPx, data=df)
 }
 

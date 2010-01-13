@@ -43,6 +43,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
    \item{"["}{\code{signature(x = "SpatialPixels")}: select pixel cells; the argument
    \code{drop=TRUE} (default) recalculates grid topology for the selection, if
    \code{drop=FALSE} the grid topology of the parent object is kept. }
+   \item{rbind}{\code{signature(x = "SpatialPixels")}: rbind-like method}
  }
 }
 \author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
