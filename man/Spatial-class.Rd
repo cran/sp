@@ -54,7 +54,7 @@ Spatial(bbox, proj4string = CRS(as.character(NA)))
 \item{proj4string}{a CRS object}
 }
 
-\author{ r-spatial team; Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}
+\author{ r-spatial team; Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}
 Roger Bivand, Barry Rowlinson, Virgilio G\'omez-Rubio
 }
 \note{  

@@ -60,7 +60,7 @@ certain slices in 3D data. I haven't given this much thought yet.
 if we take the image.default manual page as the reference. }
 
 
-\author{ Edzer J. Pebesma }
+\author{ Edzer Pebesma }
 
 \seealso{ \link{image.default}, \link{SpatialGridDataFrame-class},
 \link{levelplot} in package \code{lattice}. Function

@@ -17,7 +17,7 @@ by `palette(cv)', a `col=' specification in graphics functions or in
 \references{ see 
 \url{http://www.ihe.uni-karlsruhe.de/mitarbeiter/vonhagen/palette.en.html};
 gnuplot has this color map. }
-\author{ unknown; R implementation Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}}
+\author{ unknown; R implementation Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 \note{ This color map prints well on black-and-white printers. }
 \seealso{\link{rainbow}, \link{cm.colors}}
 \examples{

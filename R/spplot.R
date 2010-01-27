@@ -109,14 +109,15 @@ sp.panel.layout = function(lst, p.number, ...) {
 }
 
 getFormulaLevelplot = function(sdf, zcol) {
-	if (!is.character(zcol)) 
-		zcol = names(sdf)[zcol]
 	if (length(zcol) > 1)
 		as.formula(paste("z~", paste(dimnames(coordinates(sdf))[[2]], 
 			collapse = "+"), "|name"))
-	else
+	else {
+		if (!is.character(zcol)) 
+			zcol = names(sdf)[zcol]
 		as.formula(paste(zcol, "~", paste(dimnames(coordinates(sdf))[[2]],
 			collapse = "+")))
+	}
 }
 
 spplot.grid = function(obj, zcol = names(obj), ..., names.attr, 
@@ -227,6 +228,8 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 	if (is.null(zcol)) stop("no names method for object")
 	dots = list(...)
 	sdf = obj
+	if (!is.character(zcol)) 
+		zcol = names(sdf)[zcol]
 	# create formula:
 	if (missing(formula)) {
 		if (length(zcol) > 1) {

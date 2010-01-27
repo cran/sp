@@ -34,7 +34,7 @@ find out or change this, see \link{fullgrid} and \link{SpatialGrid-class}.
 }
 
 
-\author{ Edzer J. Pebesma }
+\author{ Edzer Pebesma }
 
 \seealso{ 
 \link{gridded},

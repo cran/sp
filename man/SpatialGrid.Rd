@@ -79,7 +79,7 @@ on the raw coordinate matrices to make sure this is the case.
 }
 
 
-\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}}
+\author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 
 \seealso{ 
 \link{SpatialGrid-class},

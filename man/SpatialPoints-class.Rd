@@ -57,7 +57,7 @@ Class \code{"Spatial"}, directly.
     \item{show}{\code{signature(object = "SpatialPoints")}: prints coordinates }
     \item{rbind}{\code{signature(object = "SpatialPoints")}: rbind-like method }  }
 }
-\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
+\author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialPointsDataFrame-class}}

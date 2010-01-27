@@ -51,7 +51,7 @@ returns (or plots) the bubble plot; if \code{identify} is TRUE, returns
 the indexes (row numbers) of identified points.
 }
 %\references{ }
-\author{ Edzer J. Pebesma }
+\author{ Edzer Pebesma }
 \seealso{\link{xyplot}, \link{mapasp}, \link{identify}}
 \examples{
 data(meuse)

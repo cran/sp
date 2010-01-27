@@ -46,7 +46,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
    \item{rbind}{\code{signature(x = "SpatialPixels")}: rbind-like method}
  }
 }
-\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
+\author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialPixelsDataFrame-class}}, \code{\link{SpatialGrid-class}}

@@ -44,7 +44,8 @@ functions}
 \code{"stratified"} for stratified random (one single random location in
 each "cell"); \code{"nonaligned"} for nonaligned systematic sampling
 (nx random y coordinates, ny random x coordinates); \code{"hexagonal"}
-for sampling on a hexagonal lattice; \code{"clustered"} for clustered sampling}
+for sampling on a hexagonal lattice; \code{"clustered"} for clustered sampling;
+ \code{"Fibonacci"} for Fibonacci sampling on the sphere (see references).}
 \item{bb}{ bounding box of the sampled domain; setting this to a smaller
 value leads to sub-region sampling }
 \item{offset}{ for regular sampling only: the offset (position) of the regular
@@ -106,8 +107,13 @@ samples on this line element are returned. If the area is very close
 to zero, the algorithm taken here (generating points in a square area,
 selecting those inside the polygon) may be very resource intensive. When numbers of points per polygon are small and type="random", the number searched for is inflated to ensure hits, and the points returned sampled among these. }
 
-\references{Chapter 3 in B.D. Ripley, 1981. Spatial Statistics, Wiley}
-\author{Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}}
+\references{Chapter 3 in B.D. Ripley, 1981. Spatial Statistics, Wiley
+
+Fibonacci sampling:  Alvaro Gonzalez, 2010. Measurement of Areas on a
+Sphere Using Fibonacci and Latitude-Longitude Lattices. Mathematical
+Geosciences 42(1), p. 49-64 }
+
+\author{Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 
 \seealso{\link{overlay-methods}, \link{point.in.polygon}, \link{sample}}
 \examples{

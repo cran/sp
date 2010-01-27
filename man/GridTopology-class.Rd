@@ -38,7 +38,7 @@ see \link{SpatialGrid}
 		convert to data.frame with columns cellcentre.offset, cellsize and cells.dim}
  }
 }
-\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
+\author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{SpatialGridDataFrame-class}}, \code{\link{SpatialGrid-class}}

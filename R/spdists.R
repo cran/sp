@@ -27,7 +27,7 @@ spDistsN1 <- function(pts, pt, longlat=FALSE) {
 	res
 }
 
-spDists <- function(x, y, longlat = FALSE) {
+spDists <- function(x, y = x, longlat = FALSE) {
 	if (is(x, "Spatial")) {
 		stopifnot(identical(proj4string(x), proj4string(y)))
 		if (missing(longlat))
@@ -36,12 +36,13 @@ spDists <- function(x, y, longlat = FALSE) {
 		y = coordinates(y)
 	}
 	stopifnot(ncol(x) == ncol(y))
-	if (ncol(x) > 2) {
+	if (ncol(x) != 2) {
 		if (longlat)
-			stop("cannot compute spherical distances for longlat data")
+			stop("cannot compute spherical distances for longlat data in more than 2 dimensions")
     	d = outer(x[,1], y[,1], "-") ^ 2
-        for (i in 2:ncol(x))
-           	d = d + outer(x[,i], y[,i], "-") ^ 2
+        if (ncol(x) > 2)
+			for (i in 2:ncol(x))
+           		d = d + outer(x[,i], y[,i], "-") ^ 2
     	sqrt(d)
 	} else {
 		spDiN1 = function(x, y, ll) spDistsN1(y, x, ll)

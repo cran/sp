@@ -58,7 +58,7 @@ Class \code{"Spatial"}, by class \code{"SpatialPoints"}.
   \item{drop}{see \code{\link[base]{Extract}}}
   \item{...}{indices passed through}
 }
-\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
+\author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
   \code{\link{coordinates}}, \code{\link{SpatialPoints-class}} 

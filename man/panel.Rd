@@ -73,6 +73,6 @@ call function \code{spplot.key} for the last panel drawn on a page.
 examples with R code.
 }
 \seealso{\link{spplot}, \link{spplot-methods}}
-\author{ Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de} }
+\author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 %\examples{}
 \keyword{dplot}

@@ -1,5 +1,5 @@
 
-R version 2.9.0 (2009-04-17)
+R version 2.10.1 (2009-12-14)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -187,9 +187,9 @@ Error in points2grid(points, tolerance, round, fuzz.tol) :
 > try(meuse.grid_ll <- SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data=as(meuse.grid_ll, "data.frame"), tolerance=0.9, fuzz.tol=2))
 Warning messages:
 1: In points2grid(points, tolerance, round, fuzz.tol) :
-  grid topology may be corrupt in dimwnsion 1
+  grid topology may be corrupt in dimension 1
 2: In points2grid(points, tolerance, round, fuzz.tol) :
-  grid topology may be corrupt in dimwnsion 2
+  grid topology may be corrupt in dimension 2
 > gridparameters(meuse.grid_ll)
   cellcentre.offset     cellsize cells.dim
 x          5.721109 1.420405e-05      3103
