@@ -24,7 +24,7 @@ returns the number of spatial dimensions (2 or 3).  }
 \details{ proj4 strings are operative through CRAN package rgdal}
 
 \author{
-  Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}
+  Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}
 }
 
 \seealso{ \link{CRS} }

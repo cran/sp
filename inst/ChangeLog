@@ -1,7 +1,68 @@
+2010-01-26 20:53  rsbivand
+
+	* man/spsample.Rd: change non-ASCII hyphen in man file
+
+2010-01-26 19:04  rsbivand
+
+	* ChangeLog, inst/ChangeLog: hole logic fix; thanks to Javier Munoz
+	  for report
+
+2010-01-26 19:01  rsbivand
+
+	* DESCRIPTION, R/SpatialPolygons-methods.R,
+	  inst/include/sp_xports.c, src/sp_xports.c: hole logic fix; thanks
+	  to Javier Munoz for report
+
+2010-01-26 09:36  edzer
+
+	* R/spplot.R: corrected bug in spplot for points, when zcol was a
+	  numeric array; bug reported by Robert Hijmans.
+
+2010-01-17 17:22  edzer
+
+	* DESCRIPTION, inst/doc/sp.Rnw: more middle initials removed from
+	  author name
+
+2010-01-17 17:21  edzer
+
+	* man/: GridTopology-class.Rd, Spatial-class.Rd,
+	  SpatialGrid-class.Rd, SpatialGrid.Rd,
+	  SpatialGridDataFrame-class.Rd, SpatialGridDataFrame.Rd,
+	  SpatialPixels-class.Rd, SpatialPixelsDataFrame-class.Rd,
+	  SpatialPoints-class.Rd, SpatialPointsDataFrame-class.Rd,
+	  asciigrid.Rd, bpy.colors.Rd, bubble.Rd, gridlines.Rd, image.Rd,
+	  is.projected.Rd, meuse.Rd, overlay-methods.Rd, panel.Rd,
+	  spplot.Rd: removed middle initial in author name
+
+2010-01-17 17:14  edzer
+
+	* R/spsample.R, man/spsample.Rd: added Fibonacci sampling on a
+	  sphere; see reference in spsample documentation.
+
+2010-01-17 17:08  edzer
+
+	* demo/: 00Index, fib.R: added demo script for Fibonacci sampling
+	  on the sphere
+
+2010-01-14 14:43  rsbivand
+
+	* src/gcdist.c, ChangeLog, inst/ChangeLog: 0/360 longlat GC
+	  distance
+
+2010-01-13 22:38  edzer
+
+	* tests/: fail1.Rout.save, grid.Rout.save: consequence of earlier
+	  typo correction
+
+2010-01-12 13:08  edzer
+
+	* R/GridTopology-methods.R, R/spdists.R, man/spDistsN1.Rd: mostly
+	  cosmetic updates.
+
 2010-01-09 11:21  rsbivand
 
-	* DESCRIPTION, R/SpatialPolygonsDataFrame-methods.R:
-	  SpatialPolygonsDataFrame [ speedup
+	* DESCRIPTION, R/SpatialPolygonsDataFrame-methods.R, ChangeLog,
+	  inst/ChangeLog: SpatialPolygonsDataFrame [ speedup
 
 2010-01-08 14:38  rsbivand
 

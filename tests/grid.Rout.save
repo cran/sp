@@ -1,6 +1,6 @@
 
-R version 2.7.1 (2008-06-23)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.10.1 (2009-12-14)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -264,5 +264,5 @@ SpatialPoints:
 Coordinate Reference System (CRS) arguments: NA 
 Warning message:
 In points2grid(points, tolerance, round, fuzz.tol) :
-  grid topology may be corrupt in dimwnsion 1
+  grid topology may be corrupt in dimension 1
 > 

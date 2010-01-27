@@ -42,7 +42,11 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 #cat("n in sample.Spatial", n, "\n")
 	if (type == "random")
 		xy = apply(bb, 1, function(x) runif(n) * diff(x) + x[1])
-	else if (type == "hexagonal")
+	else if (type == "Fibonacci") {
+		if (!identical(is.projected(x), FALSE))
+			warning("Fibonacci sampling is supposed to work on long/lat only")
+		xy = fiboGrid(n %/% 2, bb[1,], bb[2,])
+	} else if (type == "hexagonal")
 		xy = hexGrid(bb, n = n, offset = offset, cellsize = cellsize)
 	else {
 		if (is.na(n))
@@ -390,4 +394,18 @@ HexPoints2SpatialPolygons = function(hex, dx) {
 		Srl[[i]] = Polygons(list(Polygon(ret[[i]])), IDS[i])
 	res <- SpatialPolygons(Srl, proj4string=CRS(proj4string(hex)))
 	res
+}
+
+fiboGrid <- function(N, xlim = c(-180,180), ylim = c(-90,90)) {
+	if (max(xlim) <= 180)
+		subtr = 180
+	else
+		subtr = 0
+    phi = (1 + sqrt(5))/2
+    i = seq(-N, N)
+    P = 2 * N + 1
+    lat = asin(2*i / P) * 180 / pi
+    lon = ((2 * pi * i / phi) %% pi) * 360 / pi - subtr
+    sel = lon <= xlim[2] & lon >= xlim[1] & lat <= ylim[2] & lat >= ylim[1]
+    cbind(lon, lat)[sel, ]
 }

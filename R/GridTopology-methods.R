@@ -105,7 +105,7 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps), round=NULL, 
     		ret@cells.dim[i] = as.integer(round(diff(range(sux))/ret@cellsize[i]) + 1) 
 			#was: length(sux), but this will not cope with empty rows.
 		if (ret@cells.dim[i] > nr/2) 
-		warning(paste("grid topology may be corrupt in dimwnsion", i))
+			warning(paste("grid topology may be corrupt in dimension", i))
 	}
 	nm = dimnames(cc)[[2]]
 	names(ret@cellsize) = nm

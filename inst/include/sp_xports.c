@@ -3,9 +3,9 @@
 #include "sp.h"
 /* remember to touch local_stubs.c */
 
-SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP hole) {
+SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
 
-    SEXP SPans, labpt, Area, ringDir;
+    SEXP SPans, labpt, Area, ringDir, hole;
     double area, xc, yc;
     double *x, *y;
     int pc=0, rev=FALSE;
@@ -35,14 +35,32 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP hole) {
 
     PROTECT(ringDir = NEW_INTEGER(1)); pc++;
     INTEGER_POINTER(ringDir)[0] = (area > 0.0) ? -1 : 1;
-    if (LOGICAL_POINTER(hole)[0] && INTEGER_POINTER(ringDir)[0] == 1) {
-        rev = TRUE;
-        INTEGER_POINTER(ringDir)[0] = -1;
+
+/* RSB 100126 fixing hole assumption
+ thanks to Javier Munoz for report */
+
+    if (INTEGER_POINTER(ihole)[0] == NA_INTEGER) { // trust ring direction
+        if (INTEGER_POINTER(ringDir)[0] == 1) {
+            INTEGER_POINTER(ihole)[0] = 0;
+        } else if (INTEGER_POINTER(ringDir)[0] == -1) {
+            INTEGER_POINTER(ihole)[0] = 1;
+        }
+    } else { // trust hole
+        if (INTEGER_POINTER(ihole)[0] == 1 && 
+            INTEGER_POINTER(ringDir)[0] == 1) {
+            rev = TRUE;
+            INTEGER_POINTER(ringDir)[0] = -1;
+        }
+        if (INTEGER_POINTER(ihole)[0] == 0 && 
+            INTEGER_POINTER(ringDir)[0] == -1) {
+            rev = TRUE;
+            INTEGER_POINTER(ringDir)[0] = 1;
+        }
     }
-    if (!LOGICAL_POINTER(hole)[0] && INTEGER_POINTER(ringDir)[0] == -1) {
-        rev = TRUE;
-        INTEGER_POINTER(ringDir)[0] = 1;
-    }
+
+    PROTECT(hole = NEW_LOGICAL(1)); pc++;
+    if (INTEGER_POINTER(ihole)[0] == 1) LOGICAL_POINTER(hole)[0] = TRUE;
+    else LOGICAL_POINTER(hole)[0] = FALSE;
 
     if (rev) {
         x = (double *) R_alloc((size_t) nn, sizeof(double));

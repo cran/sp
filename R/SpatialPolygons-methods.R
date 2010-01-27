@@ -26,9 +26,11 @@ Polygon <- function(coords, hole=as.logical(NA)) {
 	if (ncol(coords) != 2) stop("coords must be a two-column matrix")
 # RSB 091203
         n <- dim(coords)[1]
-	if (is.na(hole)) hole <- FALSE
         stopifnot(is.logical(hole))
-        res <- .Call("Polygon_c", coords, n, hole, PACKAGE="sp")
+        ihole <- as.integer(hole)
+# RSB 100126 fixing hole assumption
+# thanks to Javier Munoz for report
+        res <- .Call("Polygon_c", coords, n, ihole, PACKAGE="sp")
 #        validObject(res)
         res
 }

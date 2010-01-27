@@ -8,7 +8,7 @@
 }
 \usage{
 spDistsN1(pts, pt, longlat = FALSE)
-spDists(x, y, longlat = FALSE)
+spDists(x, y = x, longlat = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,8 +22,8 @@ spDists(x, y, longlat = FALSE)
 \value{
 \code{spDistsN1} returns a numeric vector of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE.
 
-\code{spDists} returns a full matrix of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE; it uses \code{spDistsN1} in case points are two-dimensional. It computes all n x n distances, 
-not the required n x (n-1).
+\code{spDists} returns a full matrix of distances in the metric of the points if longlat=FALSE, or in kilometers if longlat=TRUE; it uses \code{spDistsN1} in case points are two-dimensional. In case of \code{spDists(x,x)}, it will compute 
+all n x n distances, not the sufficient n x (n-1).
 }
 
 \note{The function can also be used to find a local kilometer equivalent to a plot scaled in decimal degrees in order to draw a scale bar.}

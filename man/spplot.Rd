@@ -183,7 +183,7 @@ with different factor levels result in an error.
 }
 \seealso{\link[lattice]{xyplot}, \link[lattice]{levelplot}}
 \author{
-Edzer J. Pebesma, \email{edzer.pebesma@uni-muenster.de}
+Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}
 }
 \examples{
 library(lattice)
