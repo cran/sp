@@ -63,7 +63,8 @@ void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2,
         if (fabs(lon1[0] - lon2[0]) < DOUBLE_EPS) {
             dist[0] = 0.0;
             return;
-        } else if (((fabs(lon1[0]) + fabs(lon2[0])) - 360.0) < DOUBLE_EPS) {
+/* Wouter Buytaert bug caught 100211 */
+        } else if (fabs((fabs(lon1[0]) + fabs(lon2[0])) - 360.0) < DOUBLE_EPS) {
             dist[0] = 0.0;
             return;
         }

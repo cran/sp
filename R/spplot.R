@@ -618,7 +618,8 @@ colorkey.factor = function(f, colorkey = list()) {
 		if (type == "o" || type == "l")
 			panel.lines(res[(i-1):i,])
 	}
-	dimnames(res) = list(NULL, NULL)
+	if (is.matrix(res))
+		dimnames(res) = list(NULL, NULL)
 	res
 }
 

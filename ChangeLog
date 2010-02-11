@@ -1,6 +1,43 @@
+2010-02-11 08:20  rsbivand
+
+	* DESCRIPTION, INDEX, R/SpatialGrid-methods.R,
+	  R/SpatialGridDataFrame-methods.R, src/gcdist.c: bug fix for
+	  spDistsN1 for 0 latitude, longat=TRUE
+
+2010-02-04 11:52  edzer
+
+	* DESCRIPTION, R/compassRose.R, R/loadmeuse.R, man/compassRose.Rd:
+	  added compass rose from Jim Lemon (see r-sig-geo)
+
+2010-02-03 17:02  edzer
+
+	* man/spplot.Rd: added panel.identify link to seealso in spplot doc
+
+2010-02-03 16:32  edzer
+
+	* R/spplot.R: spplot.locator gave a bug when a single point was
+	  clicked
+
+2010-02-01 16:17  edzer
+
+	* DESCRIPTION, INDEX, NAMESPACE, R/loadmeuse.R, man/loadmeuse.Rd:
+	  functions that loads meuse and meuse.grid to the global env, and
+	  converts them to the appropriate Spatial* structures.
+
+2010-01-27 21:01  rsbivand
+
+	* inst/include/sp_xports.c, man/Polygons-class.Rd, src/sp_xports.c:
+	  more hole fixing
+
+2010-01-27 20:32  rsbivand
+
+	* DESCRIPTION, inst/include/sp_xports.c, src/sp_xports.c: more hole
+	  fixing
+
 2010-01-26 20:53  rsbivand
 
-	* man/spsample.Rd: change non-ASCII hyphen in man file
+	* man/spsample.Rd, ChangeLog, inst/ChangeLog: change non-ASCII
+	  hyphen in man file
 
 2010-01-26 19:04  rsbivand
 

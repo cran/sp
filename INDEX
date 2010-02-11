@@ -8,6 +8,7 @@ bpy.colors              blue-pink-yellow color scheme that prints well
                         on black/white printers
 bubble                  Create a bubble plot of spatial data
 char2dms                Convert character vector to DMS-class object
+compassRose             Display a compass rose.
 coordinates             sets spatial coordinates to create spatial
                         data, or retrieves spatial coordinates
 coordinates-methods     retrieve (or set) spatial coordinates
@@ -36,6 +37,7 @@ is.projected            Sets or retrieves projection attributes on
 Line                    create objects of class Line or Lines
 Line-class              Class "Line"
 Lines-class             Class "Lines"
+loadMeuse               load the Meuse data set
 mapasp                  Calculate aspect ratio for plotting geographic
                         maps
 meuse                   Meuse river data set

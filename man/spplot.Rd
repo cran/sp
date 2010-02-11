@@ -181,7 +181,8 @@ with different factor levels result in an error.
 \references{
 \url{http://r-spatial.sourceforge.net/}
 }
-\seealso{\link[lattice]{xyplot}, \link[lattice]{levelplot}}
+\seealso{\link[lattice]{xyplot}, \link[lattice]{levelplot},
+\link[lattice]{panel.identify} to identify objects }
 \author{
 Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}
 }

@@ -74,7 +74,7 @@ export(dd2dms, print.DMS, char2dms, as.character.DMS,
 
 export(spDistsN1, spDists)
 
-export(flipHorizontal, flipVertical)
+export(flipHorizontal, flipVertical, loadMeuse)
 
 export(
 	rbind.SpatialPoints,
