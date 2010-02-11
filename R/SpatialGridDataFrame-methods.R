@@ -66,8 +66,13 @@ setIs("SpatialPixelsDataFrame", "SpatialPointsDataFrame",
 	}, replace = function(obj, value) stop("no replace function for this coercion")
 )
 
-as.SpatialPolygonsDataFrame.SpatialPixelsDataFrame = function(from)
-	SpatialPolygonsDataFrame(as(from, "SpatialPolygons"), from@data, FALSE)
+as.SpatialPolygonsDataFrame.SpatialPixelsDataFrame = function(from) {
+        df <- from@data
+        SP <- as(from, "SpatialPolygons")
+        row.names(df) <- row.names(SP)
+	SpatialPolygonsDataFrame(SP, df)
+}
+
 setAs("SpatialPixelsDataFrame", "SpatialPolygonsDataFrame",
 	as.SpatialPolygonsDataFrame.SpatialPixelsDataFrame)
 

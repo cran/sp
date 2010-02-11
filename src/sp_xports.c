@@ -138,12 +138,14 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
 
     SEXP ans, labpt, Area, plotOrder, crds, pl, n, hole;
     int nps, i, pc=0, sumholes;
-    double *areas;
+    double *areas, *areaseps, fuzz;
     int *po, *holes;
     SEXP valid;
 
     nps = length(pls);
+    fuzz = R_pow(DOUBLE_EPS, (2.0/3.0));
     areas = (double *) R_alloc((size_t) nps, sizeof(double));
+    areaseps = (double *) R_alloc((size_t) nps, sizeof(double));
     holes = (int *) R_alloc((size_t) nps, sizeof(int));
 
     for (i=0, sumholes=0; i<nps; i++) {
@@ -151,16 +153,16 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
             install("area")))[0]; 
         holes[i] = LOGICAL_POINTER(GET_SLOT(VECTOR_ELT(pls, i),
             install("hole")))[0];
+         areaseps[i] = holes[i] ? areas[i] + fuzz : areas[i];
          sumholes += holes[i];
     }
     po = (int *) R_alloc((size_t) nps, sizeof(int));
     if (nps > 1) {
         for (i=0; i<nps; i++) po[i] = i + R_OFFSET;
-        revsort(areas, po, nps);
+        revsort(areaseps, po, nps);
     } else {
         po[0] = 1;
     }
-
     if (sumholes == nps) {
         crds = GET_SLOT(VECTOR_ELT(pls, (po[0] - R_OFFSET)), install("coords"));
         PROTECT(n = NEW_INTEGER(1)); pc++;
@@ -178,7 +180,8 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
 
     PROTECT(Area = NEW_NUMERIC(1)); pc++;
     NUMERIC_POINTER(Area)[0] = 0.0;
-    for (i=0; i<nps; i++) NUMERIC_POINTER(Area)[0] += fabs(areas[i]);
+    for (i=0; i<nps; i++) 
+        NUMERIC_POINTER(Area)[0] += holes[i] ? 0.0 : fabs(areas[i]);
     SET_SLOT(ans, install("area"), Area);
 
     PROTECT(plotOrder = NEW_INTEGER(nps)); pc++;
