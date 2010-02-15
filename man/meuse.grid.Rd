@@ -4,8 +4,8 @@
 \title{ Prediction Grid for Meuse Data Set }
 \usage{data(meuse.grid)}
 \description{
-The \code{meuse.grid} data frame has 3103 rows and 2 columns;
-a grid with 40 m x 40 m spacing that covers the Meuse Study area
+The \code{meuse.grid} data frame has 3103 rows and 7 columns;
+a grid with 40 m x 40 m spacing that covers the Meuse study area (see \link{meuse})
 }
 \format{
   This data frame contains the following columns:
@@ -15,11 +15,10 @@ a grid with 40 m x 40 m spacing that covers the Meuse Study area
 	\item{dist}{distance to the Meuse river; obtained by a spread
 	(spatial distance) GIS operation, from border of river; normalized to
 	$[0,1]$ }
-	\item{ffreq}{flood frequency; the lower the value, the larger the flood frequency; the origin of this item is questionable}
+	\item{ffreq}{flooding frequency class, for definitions see this item in \link{meuse}; it is not known how this map was generated}
 	\item{part.a}{arbitrary division of the area in two areas, a and b}
 	\item{part.b}{see \code{part.a}}
-	\item{soil}{soil type; it is questionable whether these data come from a real soil
-	map}
+	\item{soil}{soil type, for definitions see this item in \link{meuse}; it is questionable whether these data come from a real soil map, they do not match the published 1:50 000 map}
   }
 }
 \details{
@@ -36,6 +35,7 @@ See the \link{meuse} documentation
 \examples{
 data(meuse.grid)
 coordinates(meuse.grid) = ~x+y
+proj4string(meuse.grid) <- CRS("+init=epsg:28992")
 gridded(meuse.grid) = TRUE
 spplot(meuse.grid)
 }

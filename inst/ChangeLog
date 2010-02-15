@@ -1,8 +1,22 @@
+2010-02-14 20:59  rsbivand
+
+	* DESCRIPTION, R/SpatialPolygonsDataFrame-methods.R: modified
+	  instantiation of SpatialPolygonsDataFrame objects
+
+2010-02-13 22:49  edzer
+
+	* man/: meuse.Rd, meuse.grid.Rd: two small typos
+
+2010-02-13 22:44  edzer
+
+	* man/: meuse.Rd, meuse.grid.Rd: description improvements by David
+	  Rossiter
+
 2010-02-11 08:20  rsbivand
 
 	* DESCRIPTION, INDEX, R/SpatialGrid-methods.R,
-	  R/SpatialGridDataFrame-methods.R, src/gcdist.c: bug fix for
-	  spDistsN1 for 0 latitude, longat=TRUE
+	  R/SpatialGridDataFrame-methods.R, src/gcdist.c, ChangeLog,
+	  inst/ChangeLog: bug fix for spDistsN1 for 0 latitude, longat=TRUE
 
 2010-02-04 11:52  edzer
 

@@ -6,13 +6,21 @@ SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
                     PACKAGE="sp")
 		data_IDs <- row.names(data)
 		mtch <- match(Sr_IDs, data_IDs)
-		if (any(is.na(mtch)))
+                if (!identical(Sr_IDs, data_IDs)) {
+		    if (any(is.na(mtch)))
 			stop("row.names of data and Polygons IDs do not match")
-		if (length(unique(mtch)) != length(Sr_IDs))
+		    if (length(unique(mtch)) != length(Sr_IDs))
 			stop("row.names of data and Polygons IDs do not match")
-		data <- data[mtch, , drop = FALSE]
+		   data <- data[mtch, , drop = FALSE]
+               }
 	}
-	new("SpatialPolygonsDataFrame", Sr, data=data)
+	res <- new("SpatialPolygonsDataFrame")
+        res@bbox <- Sr@bbox
+        res@proj4string <- Sr@proj4string
+        res@plotOrder <- Sr@plotOrder
+        res@data <- data
+        res@polygons <- Sr@polygons
+        res
 }
 
 setReplaceMethod("polygons", signature(object = "data.frame", value = "SpatialPolygons"),
