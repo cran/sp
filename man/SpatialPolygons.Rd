@@ -17,9 +17,9 @@ getSpatialPolygonsLabelPoints(SP)
 }
 \arguments{
 \item{coords}{2-column numeric matrix with coordinates; first point (row) should
-equal last coordinates (row) }
+equal last coordinates (row); if the hole argument is not given, the status of the polygon as a hole or an island will be taken from the ring direction, with clockwise meaning island, and counter-clockwise meaning hole}
+\item{hole}{logical value for setting polygon as hole or not; if the hole argument is not given, the status of the polygon as a hole or an island will be taken from the ring direction, with clockwise meaning island, and counter-clockwise meaning hole}
 \item{proj4string}{ projection string of class \link{CRS-class}}
-\item{hole}{logical value for setting polygon as hole or not}
 \item{srl}{list with \link{Polygon-class} objects}
 \item{ID}{character vector of length one with identifier}
 \item{Srl}{ list with objects of class \link{Polygons-class}}
@@ -29,6 +29,11 @@ equal last coordinates (row) }
 \item{match.ID}{logical: (default TRUE): match SpatialPolygons member Polygons ID slot values with data frame row names, and re-order the data frame rows if necessary}
 \item{SP}{object of class \link{SpatialPolygons-class}}
 } 
+
+\details{
+In \code{Polygon}, if the hole argument is not given, the status of the polygon as a hole or an island will be taken from the ring direction, with clockwise meaning island, and counter-clockwise meaning hole. In \code{Polygons}, if all of the member Polygon objects are holes, the largest by area will be converted to island status. Until 2010-04-17, version 0.9-61, the area of this converted object was erroneously left at its hole value of zero. Thanks to Patrick Giraudoux for spotting the bug.
+}
+
 \value{
 \code{Polygon} returns an object of class \code{Polygon};
 \code{Polygons} returns an object of class \code{Polygons};

@@ -97,4 +97,6 @@ spmap.to.lev            rearrange data in SpatialPointsDataFrame or
 spplot                  Plot methods for spatial data with attributes
 spsample                sample point locations in (or on) a spatial
                         object
+surfaceArea             Compute surface area of a digital elevation
+                        model.
 zerodist                find point pairs with equal spatial coordinates

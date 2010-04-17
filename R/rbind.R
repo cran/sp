@@ -20,12 +20,14 @@ makeUniqueIDs <- function(lst) {
 
 rbind.SpatialPoints <- function(...) {
 	dots = list(...)
+	names(dots) <- NULL
 	checkCRSequal(dots)
 	SpatialPoints(do.call("rbind", lapply(list(...), coordinates)), CRS(proj4string(dots[[1]])))
 }
 
 rbind.SpatialPointsDataFrame <- function(...) {
 	dots = list(...)
+        names(dots) <- NULL # bugfix Clement Calenge 100417
 	sp = do.call("rbind", lapply(dots, function(x) as(x, "SpatialPoints")))
 	df = do.call("rbind", lapply(dots, function(x) x@data))
 	SpatialPointsDataFrame(sp, df, coords.nrs = dots[[1]]@coords.nrs)
@@ -33,6 +35,7 @@ rbind.SpatialPointsDataFrame <- function(...) {
 
 rbind.SpatialPixels = function(...) {
 	dots = list(...)
+	names(dots) <- NULL
 	sp = do.call("rbind", lapply(dots, function(x) as(x, "SpatialPoints")))
 	gridded(sp) = T
 	sp
@@ -40,6 +43,7 @@ rbind.SpatialPixels = function(...) {
 
 rbind.SpatialPixelsDataFrame = function(...) {
 	dots = list(...)
+	names(dots) <- NULL
 	sp = do.call("rbind", lapply(dots, function(x) as(x, "SpatialPointsDataFrame")))
 	gridded(sp) = T
 	sp
@@ -47,6 +51,7 @@ rbind.SpatialPixelsDataFrame = function(...) {
 
 rbind.SpatialPolygons = function(..., makeUniqueIDs = FALSE) {
 	dots = list(...)
+	names(dots) <- NULL
 	checkCRSequal(dots)
 	# checkIDSclash(dots)
 	pl = do.call("c", lapply(dots, function(x) slot(x, "polygons")))
@@ -57,6 +62,7 @@ rbind.SpatialPolygons = function(..., makeUniqueIDs = FALSE) {
 
 rbind.SpatialPolygonsDataFrame <- function(...) {
 	dots = list(...)
+        names(dots) <- NULL # bugfix Clement Calenge 100417
 	pl = do.call("rbind", lapply(dots, function(x) as(x, "SpatialPolygons")))
 	df = do.call("rbind", lapply(dots, function(x) x@data))
 	SpatialPolygonsDataFrame(pl, df)
@@ -65,6 +71,7 @@ rbind.SpatialPolygonsDataFrame <- function(...) {
 
 rbind.SpatialLines = function(..., makeUniqueIDs = FALSE) {
 	dots = list(...)
+	names(dots) <- NULL
 	checkCRSequal(dots)
 	ll = do.call("c", lapply(dots, function(x) slot(x, "lines")))
 	if (makeUniqueIDs)
@@ -74,6 +81,7 @@ rbind.SpatialLines = function(..., makeUniqueIDs = FALSE) {
 
 rbind.SpatialLinesDataFrame <- function(...) {
 	dots = list(...)
+        names(dots) <- NULL # bugfix Clement Calenge 100417
 	ll = do.call("rbind", lapply(dots, function(x) as(x, "SpatialLines")))
 	df = do.call("rbind", lapply(dots, function(x) x@data))
 	SpatialLinesDataFrame(ll, df)
