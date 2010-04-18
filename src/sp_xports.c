@@ -13,7 +13,6 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
     SEXP valid;
 
     SP_PREFIX(spRFindCG_c)(n, coords, &xc, &yc, &area);
-
     if (abs(area) < DOUBLE_EPS) {
         if (!R_FINITE(xc) || !R_FINITE(xc)) {
             if (nn == 1) {
@@ -57,7 +56,6 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
             INTEGER_POINTER(ringDir)[0] = 1;
         }
     }
-
     PROTECT(hole = NEW_LOGICAL(1)); pc++;
     if (INTEGER_POINTER(ihole)[0] == 1) LOGICAL_POINTER(hole)[0] = TRUE;
     else LOGICAL_POINTER(hole)[0] = FALSE;
@@ -163,6 +161,7 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
     } else {
         po[0] = 1;
     }
+
     if (sumholes == nps) {
         crds = GET_SLOT(VECTOR_ELT(pls, (po[0] - R_OFFSET)), install("coords"));
         PROTECT(n = NEW_INTEGER(1)); pc++;
@@ -171,6 +170,8 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
         PROTECT(hole = NEW_LOGICAL(1)); pc++;
         LOGICAL_POINTER(hole)[0] = FALSE;
         pl = SP_PREFIX(Polygon_c)(crds, n, hole);
+/* bug 100417 Patrick Giraudoux */
+        holes[po[0] - R_OFFSET] = LOGICAL_POINTER(hole)[0];
         SET_VECTOR_ELT(pls, (po[0] - R_OFFSET), pl);
     }
 
@@ -180,8 +181,9 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
 
     PROTECT(Area = NEW_NUMERIC(1)); pc++;
     NUMERIC_POINTER(Area)[0] = 0.0;
-    for (i=0; i<nps; i++) 
+    for (i=0; i<nps; i++) {
         NUMERIC_POINTER(Area)[0] += holes[i] ? 0.0 : fabs(areas[i]);
+    }
     SET_SLOT(ans, install("area"), Area);
 
     PROTECT(plotOrder = NEW_INTEGER(nps)); pc++;

@@ -68,6 +68,8 @@ typedef struct polygon {
 void setup_poly_minmax(POLYGON *pl);
 char InPoly(PLOT_POINT q, POLYGON *Poly);
 SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly);
+void sarea(double *heights, int *nx, int *ny, double *w, double *h, 
+	double *sa, int *bycell);
 void spRFindCG( int *n, double *x, double *y, double *xc, double *yc, 
 		double *area );
 void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2, 

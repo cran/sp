@@ -47,6 +47,10 @@ if (!isGeneric("summary"))
 if (!isGeneric("spChFIDs"))
 	setGeneric("spChFIDs", function(obj, x)
 		standardGeneric("spChFIDs"))
+if (!isGeneric("surfaceArea"))
+	setGeneric("surfaceArea", function(m, ...)
+		standardGeneric("surfaceArea"))
+
 
 bbox.default <- function(obj) {
 	is_points <- function(obj) {

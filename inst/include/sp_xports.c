@@ -171,6 +171,8 @@ SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID) {
         PROTECT(hole = NEW_LOGICAL(1)); pc++;
         LOGICAL_POINTER(hole)[0] = FALSE;
         pl = SP_PREFIX(Polygon_c)(crds, n, hole);
+/* bug 100417 Patrick Giraudoux */
+        holes[po[0] - R_OFFSET] = LOGICAL_POINTER(hole)[0];
         SET_VECTOR_ELT(pls, (po[0] - R_OFFSET), pl);
     }
 
