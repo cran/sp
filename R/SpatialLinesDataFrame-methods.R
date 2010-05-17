@@ -79,4 +79,5 @@ setAs("SpatialLinesDataFrame", "SpatialPointsDataFrame", function(from) {
 
 dim.SpatialLinesDataFrame = function(x) dim(x@data)
 
+setMethod("split", "SpatialLinesDataFrame", split.data.frame)
 
