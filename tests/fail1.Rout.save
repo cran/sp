@@ -142,8 +142,7 @@ Error in Sldf1[c(1, NA), ] : NAs not permitted in row index
 > data(meuse.grid)
 > gridded(meuse.grid) = ~x+y
 > try(x <- meuse.grid[c(1:10,NA,12),])
-Error in as(x, "SpatialPointsDataFrame")[i = i, TRUE, ...] : 
-  NAs not permitted in row index
+Error in meuse.grid[c(1:10, NA, 12), ] : NAs not permitted in row index
 > fullgrid(meuse.grid) = TRUE
 > try(x <- meuse.grid[c(1:10,NA,12),])
 Error in meuse.grid[c(1:10, NA, 12), ] : NAs not permitted in index

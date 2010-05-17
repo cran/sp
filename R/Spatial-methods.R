@@ -50,7 +50,9 @@ if (!isGeneric("spChFIDs"))
 if (!isGeneric("surfaceArea"))
 	setGeneric("surfaceArea", function(m, ...)
 		standardGeneric("surfaceArea"))
-
+if (!isGeneric("split"))
+	setGeneric("split", function(x, f, drop = FALSE, ...)
+		standardGeneric("split"))
 
 bbox.default <- function(obj) {
 	is_points <- function(obj) {

@@ -1,5 +1,5 @@
 
-R version 2.9.0 (2009-04-17)
+R version 2.10.1 (2009-12-14)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -52,7 +52,11 @@ Warning messages:
 2: In points2grid(points, tolerance, round, fuzz.tol) :
   grid has empty column/rows in dimension 2
 > spplot(tst["xx"], main = "empty row + col")
-Warning message:
-In data.row.names(row.names, rowsi, i) :
+Warning messages:
+1: In points2grid(points, tolerance, round, fuzz.tol) :
+  grid has empty column/rows in dimension 1
+2: In points2grid(points, tolerance, round, fuzz.tol) :
+  grid has empty column/rows in dimension 2
+3: In data.row.names(row.names, rowsi, i) :
   some row.names duplicated: 2,3,4,5,6,7,8,9,11 --> row.names NOT used
 > 

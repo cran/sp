@@ -20,10 +20,14 @@ that is different only when two points do not share the same location }
 \item{remove.second}{logical; if TRUE, the second of each pair of duplicate
 points is removed, if FALSE remove the first}
 }
-\value{pairs of row numbers with identical coordinates; matrix with zero rows 
-if no such pairs are found. For \code{zerodist}, row number pairs refer to row
-pairs in \code{obj}. For \code{zerodist2}, row number pairs refer to rows in \code{obj}
-and \code{obj2}, respectively. }
+\value{\code{zerodist} and \code{zerodist2} return a two-column matrix
+with in each row pairs of row numbers with identical coordinates;
+a matrix with zero rows is returned if no such pairs are found. For
+\code{zerodist}, row number pairs refer to row pairs in \code{obj}. For
+\code{zerodist2}, row number pairs refer to rows in \code{obj} and
+\code{obj2}, respectively. \code{remove.duplicates} removes duplicate
+observations, or obj if none are present. }
+
 \note{ When using kriging, duplicate observations sharing identical spatial 
 locations result in singular covariance matrices in kriging situations.
 This function may help identifying spatial duplications, so they

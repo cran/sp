@@ -14,7 +14,8 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 \method{image}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2, 
 	col = heat.colors(12), red=NULL, green=NULL, blue=NULL,
         axes = FALSE, xlim = NULL,
-	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE)
+	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE,
+        interpolate = FALSE, angle = 0, useRasterImage=TRUE)
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
 \method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
 	col = 1, add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE,
@@ -43,6 +44,9 @@ to the existing plot. }
 \item{...}{ arguments passed to \link{image}, see examples }
 \item{asp}{ aspect ratio to be used for plot }
 \item{setParUsrBB}{default FALSE, see \code{\link{Spatial-class}} for further details}
+\item{useRasterImage}{default TRUE, use \code{\link[graphics]{rasterImage}} to render the image if available; for legacy rendering set FALSE}
+\item{interpolate}{default FALSE, a logical vector (or scalar) indicating whether to apply linear interpolation to the image when drawing, see \code{\link[graphics]{rasterImage}}}
+\item{angle}{default 0, angle of rotation (in degrees, anti-clockwise from positive x-axis, about the bottom-left corner), see \code{\link[graphics]{rasterImage}}}
 \item{im}{list with components named x, y, and z, as used for \code{image}}
 \item{p4}{CRS object, proj4 string}
 \item{digits}{default 10, number of significant digits to use for checking equal row/column spacing}
@@ -72,9 +76,12 @@ if we take the image.default manual page as the reference. }
 data(meuse.grid)
 coordinates(meuse.grid) = c("x", "y") # promote to SpatialPointsDataFrame
 gridded(meuse.grid) = TRUE            # promote to SpatialGridDataFrame
-image(meuse.grid["dist"], main = "Distance to river Meuse")
 data(meuse)
 coordinates(meuse) = c("x", "y")
+system.time(image(meuse.grid["dist"], main = "Distance to river Meuse"))
+points(coordinates(meuse), pch = "+")
+system.time(image(meuse.grid["dist"], main = "Distance to river Meuse",
+ useRasterImage=TRUE))
 points(coordinates(meuse), pch = "+")
 data(Rlogo)
 d = dim(Rlogo)
@@ -88,7 +95,9 @@ df = as.data.frame(df)
 names(df) = paste("band", 1:d[3], sep="")
 Rlogo <- SpatialGridDataFrame(grid = grid, data = df)
 summary(Rlogo)
-image(Rlogo, red="band1", green="band2", blue="band3")
+system.time(image(Rlogo, red="band1", green="band2", blue="band3"))
+system.time(image(Rlogo, red="band1", green="band2", blue="band3",
+ useRasterImage=TRUE))
 }
 
 \keyword{spatial}

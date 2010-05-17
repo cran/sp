@@ -117,37 +117,48 @@ subset.SpatialPixelsDataFrame <- function(x, subset, select, drop = FALSE, ...) 
 	SpatialPixelsDataFrame(points, data)
 }
 
-subs.SpatialPixelsDataFrame <- function(x, i, j, ... , drop = FALSE) {
-	n.args = nargs()
-	if (!missing(drop))
-		stop("don't supply drop: it needs to be FALSE anyway")
-	if (missing(i) && missing(j))
-		return(x)
-	if (missing(j)) {
-		if (n.args == 3) # with a , : x[i,]
-			res = as(x, "SpatialPointsDataFrame")[i = i, TRUE, ...]
-		else { # withouth a , : x[i] --- column selection
-			#res = as(x, "SpatialPointsDataFrame")[TRUE, j = i, ...]
-			res = x
-			#changed, on request of BDR, May 27, 2009:
-			#res@data = res@data[TRUE, j = i, ..., drop = drop]
-			#into
-			res@data = res@data[TRUE, i, ..., drop = drop]
+setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
+	x = as(x, "SpatialPointsDataFrame")
+	missing.i = missing(i)
+	missing.j = missing(j)
+	nargs = nargs() # e.g., a[3,] gives 2 for nargs, a[3] gives 1.
+	if (missing.i && missing.j) {
+		i = TRUE
+		j = TRUE
+	} else if (missing.j && !missing.i) { 
+		if (nargs == 2) {
+			j = i
+			i = TRUE
+		} else {
+			j = TRUE
 		}
-	} else if (missing(i))
-		res = as(x, "SpatialPointsDataFrame")[TRUE, j = j, ...]
-	else
-		res = as(x, "SpatialPointsDataFrame")[i = i, j = j, ...]
-	gridded(res) = TRUE
-	res
-}
-setMethod("[", "SpatialPixelsDataFrame", subs.SpatialPixelsDataFrame)
+	} else if (missing.i && !missing.j)
+		i = TRUE
+	if (is.matrix(i))
+		stop("matrix argument not supported in SpatialPointsDataFrame selection")
+	if (any(is.na(i))) 
+		stop("NAs not permitted in row index")
+	coords.nrs = x@coords.nrs
+	if (!isTRUE(j)) # i.e., we do some sort of column selection
+		coords.nrs = numeric(0) # will move coordinate colums last
+#	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
+#		data = x@data[i, j, drop = FALSE], 
+#		coords.nrs = coords.nrs, 
+#		proj4string = CRS(proj4string(x)), 
+#		match.ID = FALSE)
+	x@coords = x@coords[i, , drop = FALSE]
+	x@bbox = .bboxCoords(x@coords)
+	x@data = x@data[i, j, ..., drop = FALSE]
+	gridded(x) = TRUE
+	x
+})
+#setMethod("[", "SpatialPixelsDataFrame", subs.SpatialPixelsDataFrame)
 
 subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 	n.args = nargs()
 	dots = list(...)
-	if (!missing(drop))
-		stop("don't supply drop: it needs to be FALSE anyway")
+	if (drop)
+		stop("argument drop needs to be FALSE")
 	missing.i = missing(i)
 	missing.j = missing(j)
 	if (length(dots) > 0) {
@@ -249,4 +260,4 @@ dim.SpatialPixelsDataFrame = function(x) dim(x@data)
 
 dim.SpatialGridDataFrame = function(x) dim(x@data)
 
-
+setMethod("split", "SpatialPixelsDataFrame", split.data.frame)
