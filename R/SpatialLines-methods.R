@@ -46,7 +46,7 @@ LineLength = function(cc, longlat=FALSE, sum=TRUE) {
 bbox.Lines <- function(obj) {
 	rx=range(lapply(obj@Lines, function(x) range(x@coords[,1])))
 	ry=range(lapply(obj@Lines, function(x) range(x@coords[,2])))
-	res=rbind(r1=rx,r2=ry)
+	res=rbind(x=rx,y=ry)
 	dimnames(res)[[2]] <- c("min", "max")
 	res
 }
@@ -56,7 +56,7 @@ setMethod("bbox", "Lines", bbox.Lines)
 bbox.Line <- function(obj) {
     rx <- range(obj@coords[,1])
     ry <- range(obj@coords[,2])
-	res = rbind(r1 = rx, r2 = ry)
+	res = rbind(x = rx, y = ry)
    	dimnames(res)[[2]] <- c("min", "max")
 	res
 }
@@ -66,7 +66,7 @@ setMethod("bbox", "Line", bbox.Line)
 .bboxSls <- function(lst) {
 	bb = sapply(lst, bbox)
 	res = matrix(c(min(bb[1,]), min(bb[2,]), max(bb[3,]), max(bb[4,])), 2, 2)
-	dimnames(res) = list(c("r1", "r2"), c("min", "max"))
+	dimnames(res) = list(c("x", "y"), c("min", "max"))
 	res
 }
 

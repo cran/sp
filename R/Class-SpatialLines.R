@@ -29,7 +29,8 @@ setClass("SpatialLines",
 	validity = function(object) {
 		if (any(unlist(lapply(object@lines, function(x) 
 			!is(x, "Lines"))))) stop("lines not Lines objects")
-		if (any(duplicated(sapply(slot(object, "lines"), function(i) slot(i, "ID")))))
+                IDs <- sapply(slot(object, "lines"), function(i) slot(i, "ID"))
+		if (anyDuplicated(IDs))
 			return("non-unique Lines ID slot values")
 #		if (length(object@lines) != 
 #			length(unique(sapply(slot(object, "lines"),

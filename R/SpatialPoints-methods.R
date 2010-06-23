@@ -44,10 +44,19 @@ setMethod("coordinates", "matrix",
 	}
 )
 
-"print.SpatialPoints" <- function(x, ...)
+asWKTSpatialPoints = function(x, digits = 6) {
+	data.frame(geometry = paste("POINT(",unlist(lapply(data.frame(
+		t(signif(coordinates(x),digits = digits))),
+		paste, collapse=" ")),")",sep=""))
+}
+
+"print.SpatialPoints" <- function(x, ..., digits = 6, asWKT = .asWKT)
 {
 	cat("SpatialPoints:\n")
-	print(x@coords)
+	if (asWKT) 
+		print(asWKTSpatialPoints(x, digits))
+	else
+		print(x@coords)
 	pst <- paste(strwrap(paste(
 		"Coordinate Reference System (CRS) arguments:", 
 		proj4string(x))), collapse="\n")

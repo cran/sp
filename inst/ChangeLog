@@ -1,7 +1,53 @@
+2010-06-23 13:45  edzer
+
+	* R/spplot.R: solved the spplot factor key issue mentioned in
+	  https://stat.ethz.ch/pipermail/r-sig-geo/2010-June/008586.html
+
+2010-06-22 08:52  edzer
+
+	* R/spplot.R: spplot(meuse, scales = list(x = list(draw = TRUE)))
+	  now works.
+
+2010-06-21 09:32  rsbivand
+
+	* DESCRIPTION, R/image.R: checks in image2Grid
+
+2010-06-12 06:19  rsbivand
+
+	* R/spplot.R: warning in spplot for points
+
+2010-06-07 13:06  edzer
+
+	* R/SpatialGrid-methods.R: removed the setAs("SpatialGrid",
+	  "SpatialPoints", ...) coercion, as it breaks csdacm.R of the
+	  ASDAR book.
+
+2010-06-05 18:11  rsbivand
+
+	* man/SpatialGrid-class.Rd: r1/2 to x/y in SL bbox
+
+2010-06-05 18:04  rsbivand
+
+	* R/Class-SpatialLines.R, R/SpatialLines-methods.R,
+	  R/SpatialPolygons-methods.R, tests/pass1.Rout.save: r1/2 to x/y
+	  in SL bbox
+
+2010-05-27 15:23  edzer
+
+	* R/: SpatialGrid-methods.R, SpatialPoints-methods.R,
+	  SpatialPointsDataFrame-methods.R: added (optional) printing using
+	  WKT encodings; added coercion from SpatialGrid to SpatialPoints.
+
+2010-05-27 14:48  edzer
+
+	* R/SpatialPointsDataFrame-methods.R: added x@ in
+	  "[.SpatialPointDataFrame", such that coords.nrs get properly
+	  reset by column selection
+
 2010-05-17 12:41  rsbivand
 
-	* DESCRIPTION, R/image.R, man/image.Rd: use rasterImage where
-	  available
+	* DESCRIPTION, R/image.R, man/image.Rd, ChangeLog, inst/ChangeLog:
+	  use rasterImage where available
 
 2010-05-06 16:19  rsbivand
 
