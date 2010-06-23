@@ -113,10 +113,18 @@ image2Grid <- function (im, p4 = as.character(NA), digits=10)
     lx <- length(xx)
     ly <- length(yy)
     if (all(c(lx, ly) == (cells.dim + 1))) {
-        print("corners")
+        ##print("corners")
+        if (!(lx == nrow(im$z) + 1 && ly == ncol(im$z) + 1 ) )
+            stop("dimensions of z are not length(x)(-1) times length(y)(-1)")
+
         xx <- xx[-1] - diff(xx[1:2])/2
         yy <- yy[-1] - diff(yy[1:2])/2
+    } else {
+
+        if (!(lx == nrow(im$z) && ly == ncol(im$z)))
+            stop("dimensions of z are not length(x) times length(y)")
     }
+
     SpatialGridDataFrame(GridTopology(c(xx[1], yy[1]), c(diff(xx[1:2]), 
         diff(yy[1:2])), cells.dim), data.frame(z = as.vector(im$z[, 
         ncol(im$z):1])), proj4string = CRS(p4))

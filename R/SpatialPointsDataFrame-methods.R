@@ -72,10 +72,16 @@ setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
   }
 )
 
-print.SpatialPointsDataFrame = function(x, ...) {
-	cc = substring(paste(as.data.frame(t(signif(coordinates(x))))),2,999)
-	# could be done in S-Plus by unpaste(x, "c")[[2]]
-	print(data.frame("coordinates" = cc, x@data), ...)
+.asWKT = FALSE
+print.SpatialPointsDataFrame = function(x, ..., digits = 6, asWKT = .asWKT) {
+	#EJP, Fri May 21 12:40:59 CEST 2010
+	if (asWKT)
+		print(data.frame(asWKTSpatialPoints(x, digits), x@data), ...)
+	else { # old style
+		cc = substring(paste(as.data.frame(
+			t(signif(coordinates(x), digits)))),2,999)
+		print(data.frame("coordinates" = cc, x@data), ...)
+	}
 }
 
 dim.SpatialPointsDataFrame = function(x) dim(x@data)
@@ -169,9 +175,9 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
-	coords.nrs = x@coords.nrs
+	#coords.nrs = x@coords.nrs
 	if (!isTRUE(j)) # i.e., we do some sort of column selection
-		coords.nrs = numeric(0) # will move coordinate colums last
+		x@coords.nrs = numeric(0) # will move coordinate colums last
 #	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
 #		data = x@data[i, j, drop = FALSE], 
 #		coords.nrs = coords.nrs, 

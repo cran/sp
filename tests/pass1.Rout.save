@@ -1,6 +1,6 @@
 
-R version 2.5.0 (2007-04-23)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.11.1 (2010-05-31)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -142,7 +142,7 @@ Data attributes:
 > summary(rbind(polys[1:10], polys[11:20], polys[21:30]))
 Object of class SpatialPolygons
 Coordinates:
-   min  max
+  min  max
 x 0.5 10.5
 y 7.5 10.5
 Is projected: NA 
@@ -163,9 +163,9 @@ proj4string : [NA]
 > summary(as(polys, "SpatialLines"))
 Object of class SpatialLines
 Coordinates:
-   min  max
-r1 0.5 10.5
-r2 0.5 10.5
+  min  max
+x 0.5 10.5
+y 0.5 10.5
 Is projected: NA 
 proj4string : [NA]
 > summary(as(Sl, "SpatialPoints"))

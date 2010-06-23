@@ -54,7 +54,7 @@ Polygons <- function(srl, ID) {
 bbox.Polygons <- function(obj) {
 	rx=range(c(sapply(obj@Polygons, function(x) range(x@coords[,1]))))
 	ry=range(c(sapply(obj@Polygons, function(x) range(x@coords[,2]))))
-	res=rbind(r1=rx,r2=ry)
+	res=rbind(x=rx,y=ry)
    	colnames(res) <- c("min", "max")
 	res
 }
@@ -64,7 +64,7 @@ setMethod("bbox", "Polygons", bbox.Polygons)
 bbox.Polygon <- function(obj) {
 	rx <- range(obj@coords[,1])
    	ry <- range(obj@coords[,2])
-	res=rbind(r1=rx,r2=ry)
+	res=rbind(x=rx,y=ry)
     colnames(res) <- c("min", "max")
 	res
 }

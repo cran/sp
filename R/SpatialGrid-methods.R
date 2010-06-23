@@ -185,13 +185,20 @@ as.data.frame.SpatialPixels = function(x, row.names, optional, ...)
 
 as.data.frame.SpatialGrid = as.data.frame.SpatialPixels
 
-setAs("SpatialPixels", "data.frame", function(from) as.data.frame.SpatialPixels(from))
-setAs("SpatialGrid", "data.frame", function(from) as.data.frame.SpatialGrid(from))
+setAs("SpatialPixels", "data.frame", 
+	function(from) as.data.frame.SpatialPixels(from))
+setAs("SpatialGrid", "data.frame", 
+	function(from) as.data.frame.SpatialGrid(from))
 
 # uncommented 070122 RSB
 setAs("SpatialGrid", "SpatialPixels", function(from)
 	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
 )
+# added EJP, 100521
+## outcommented 100607 as it breaks the ASDAR scripts in csdacm.R
+#setAs("SpatialGrid", "SpatialPoints", function(from)
+#	SpatialPoints(coordinates(from), from@proj4string)
+#)
 
 print.SpatialPixels = function(x, ...) {
 	cat("Object of class SpatialPixels\n")
@@ -245,7 +252,8 @@ as.SpatialPolygons.SpatialPixels <- function(obj) {
 	res <- SpatialPolygons(Srl, proj4string=CRS(proj4string(obj)))
 	res
 }
-setAs("SpatialPixels", "SpatialPolygons", function(from) as.SpatialPolygons.SpatialPixels(from))
+setAs("SpatialPixels", "SpatialPolygons", 
+	function(from) as.SpatialPolygons.SpatialPixels(from))
 
 IDvaluesSpatialPixels <- function(obj) {
 	if (!is(obj, "SpatialPixels"))
