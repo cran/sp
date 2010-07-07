@@ -81,3 +81,5 @@ dim.SpatialLinesDataFrame = function(x) dim(x@data)
 
 setMethod("split", "SpatialLinesDataFrame", split.data.frame)
 
+print.SpatialLinesDataFrame = function(x, ..., digits = 6, asWKT = .asWKT)
+	print(data.frame(asWKTSpatialLines(x, digits), x@data),...)

@@ -1,3 +1,51 @@
+2010-07-16 16:07  rsbivand
+
+	* R/: point.in.polygon.R, spsample.R: two changes: pointsInPolygons
+	  and sample.Polygons hole logic
+
+2010-07-14 16:30  rsbivand
+
+	* R/SpatialLines-methods.R, man/Line.Rd, man/nowrapSpatialLines.Rd,
+	  man/recenter-methods.Rd, ChangeLog, inst/ChangeLog: coerce ID to
+	  character in Lines
+
+2010-07-12 21:59  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2010-07-07 23:41  edzer
+
+	* DESCRIPTION: increased version number.
+
+2010-07-07 23:40  edzer
+
+	* NAMESPACE: added length() S3 methods
+
+2010-07-07 23:39  edzer
+
+	* R/: SpatialGrid-methods.R, SpatialLinesDataFrame-methods.R,
+	  SpatialPoints-methods.R, SpatialPointsDataFrame-methods.R,
+	  SpatialPolygons-methods.R: added length() methods for Spatial
+	  objects; small improvements to the asWKT printing.
+
+2010-07-07 16:02  mdsumner
+
+	* R/SpatialLines-methods.R: more consistent handling of lwd and lty
+	  arguments passed to lines() by plotSpatialLines - multiple values
+	  for each are now recycled as necessary
+
+	  also added arguments lend, ljoin and lmitre for lines()
+
+2010-07-06 18:06  edzer
+
+	* R/SpatialLines-methods.R: changed the col recycling in
+	  plot.SpatialLines; suggestion by Michael Sumner on
+	  r-spatial-devel mailing list
+
+2010-06-23 14:24  rsbivand
+
+	* ChangeLog, inst/ChangeLog, DESCRIPTION: tidy
+
 2010-06-23 13:45  edzer
 
 	* R/spplot.R: solved the spplot factor key issue mentioned in

@@ -30,7 +30,7 @@
 
 \examples{
 crds <- matrix(c(179, -179, -179, 179, 50, 50, 52, 52), ncol=2)
-SL <- SpatialLines(list(Lines(list(Line(crds)))), CRS("+proj=longlat"))
+SL <- SpatialLines(list(Lines(list(Line(crds)), "1")), CRS("+proj=longlat"))
 bbox(SL)
 SLr <- recenter(SL)
 bbox(SLr)
@@ -44,7 +44,7 @@ plot(SpP)
 plot(SpPr)
 par(opar)
 crds <- matrix(c(-1, 1, 1, -1, 50, 50, 52, 52), ncol=2)
-SL <- SpatialLines(list(Lines(list(Line(crds)))), CRS("+proj=longlat"))
+SL <- SpatialLines(list(Lines(list(Line(crds)), "1")), CRS("+proj=longlat"))
 bbox(SL)
 SLr <- recenter(SL)
 bbox(SLr)

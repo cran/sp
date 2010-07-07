@@ -172,3 +172,5 @@ as.SpatialLines.SpatialPolygons = function(from)
 		CRS(proj4string(from)))
 
 setAs("SpatialPolygons", "SpatialLines", as.SpatialLines.SpatialPolygons)
+
+length.SpatialPolygons = function(x) { length(x@polygons) }

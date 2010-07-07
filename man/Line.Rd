@@ -5,7 +5,7 @@
 \description{ create objects of class \code{Line} or \code{Lines} from coordinates}
 \usage{ 
 Line(coords)
-Lines(slinelist, ID = as.character(NA))
+Lines(slinelist, ID)
 }
 \arguments{
 \item{coords}{ 2-column numeric matrix with coordinates for a single line }

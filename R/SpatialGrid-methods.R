@@ -263,3 +263,6 @@ IDvaluesSpatialPixels <- function(obj) {
 	res <- as.matrix(sapply(cc, as.integer))
 	paste("g", res, sep="")
 }
+
+length.SpatialPixels = function(x) { nrow(x@coords) }
+length.SpatialGrid = function(x) { .NumberOfCells(x@grid) }
