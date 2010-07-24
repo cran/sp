@@ -16,34 +16,36 @@ pointsInPolygon = function(pts, Polygon,
         mode.checked=mode.checked)
 }
 
-pointsInPolygons = function(pts, Polygons, which = FALSE,
+pointsInPolygons = function(pts, Polygons, #which = FALSE,
     mode.checked=FALSE) {
 	rings = slot(Polygons, "Polygons")
 	res = matrix(unlist(lapply(rings, function(x, pts) 
 		pointsInPolygon(pts, x, mode.checked=mode.checked),
                 pts = pts)), ncol=length(rings))
 	res <- res > 0
-	holes <- sapply(rings, function(y) slot(y, "hole"))
-	areas <- sapply(rings, function(x) slot(x, "area"))
-	if (any(holes) && any(res[,holes])) {
-		holerows <- which(res[,holes,drop=FALSE], arr.ind=TRUE)[,1]
-		odd <- rowSums(res[holerows,,drop=FALSE])%%2 != 0
-		for (i in seq(along = holerows)) {
-			in_p <- which.min(areas[res[holerows[i],,drop=FALSE]])
-			res[holerows[i],] <- FALSE
-			if (odd[i]) res[holerows[i], in_p] <- TRUE
-		}
-		res[,holes] <- FALSE
-	}
-	ret <- apply(res, 1, any)
-	if (which) {
-		reta <- integer(length(ret))
-		for (i in seq(along = ret)) {
-			if (ret[i]) reta[i] <- which(res[i,])
-			else reta[i] <- as.integer(NA)
-		}
-		ret <- reta
-	}
+#	holes <- sapply(rings, function(y) slot(y, "hole"))
+#	areas <- sapply(rings, function(x) slot(x, "area"))
+#	if (any(holes) && any(res[,holes])) {
+#		holerows <- which(res[,holes,drop=FALSE], arr.ind=TRUE)[,1]
+#		odd <- rowSums(res[holerows,,drop=FALSE])%%2 != 0
+#		for (i in seq(along = holerows)) {
+#			in_p <- which.min(areas[res[holerows[i],,drop=FALSE]])
+#			res[holerows[i],] <- FALSE
+#			if (odd[i]) res[holerows[i], in_p] <- TRUE
+#		}
+#		res[,holes] <- FALSE
+#	}
+# revised 100716
+        ret <- rowSums(res) %% 2 != 0
+#	ret <- apply(res, 1, any)
+#	if (which) {
+#		reta <- integer(length(ret))
+#		for (i in seq(along = ret)) {
+#			if (ret[i]) reta[i] <- which(res[i,])
+#			else reta[i] <- as.integer(NA)
+#		}
+#		ret <- reta
+#	}
 	ret
 }
 

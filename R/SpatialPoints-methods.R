@@ -126,3 +126,4 @@ setReplaceMethod("coordnames", signature(x = "SpatialPoints", value = "character
 	}
 )
 
+length.SpatialPoints = function(x) { nrow(x@coords) }

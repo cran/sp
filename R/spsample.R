@@ -212,8 +212,10 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 		bbi <- .bbox2SPts(bbox(pls[[i]]), proj4string=proj4string)
 		bb_in <- lapply(pls[-i], function(x, pts) 
 			pointsInPolygon(pts, x), pts = bbi)
-		if (holes[i] || any(unlist(bb_in) == 1))
-                    smple[i] <- FALSE
+# added condition 100716
+                zzz <- do.call("rbind", bb_in)
+		if (holes[i] || (any(unlist(bb_in) == 1) &&
+                    !(sum(zzz[,i]) %% 2) == 0)) smple[i] <- FALSE
 	    }
 	}
 	sum_area <- sum(area[smple])

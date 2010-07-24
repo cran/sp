@@ -1,20 +1,25 @@
 Line <- function(coords) {
 	coords <- coordinates(coords)
-	if (ncol(coords) != 2) 
+	if (ncol(coords) != 2)
 		stop("coords must be a two-column matrix")
 	new("Line", coords = coords)
 }
 
-Lines <- function(slinelist, ID=as.character(NA)) {
+Lines <- function(slinelist, ID) {
 	if (is(slinelist, "Line"))
 		slinelist = list(slinelist)
 	if (any(sapply(slinelist, function(x) !is(x, "Line"))))
 		stop("slinelist not a list of Line objects")
+	if (missing(ID)) stop("Single ID required")
+	if (length(ID) != 1) stop("Single ID required")
+        ID <- as.character(ID)
+        stopifnot(nchar(ID) > 0)
+
 	new("Lines", Lines = slinelist, ID=ID)
 }
 
 SpatialLines <- function(LinesList, proj4string=CRS(as.character(NA))) {
-	if (any(sapply(LinesList, function(x) !is(x, "Lines")))) 
+	if (any(sapply(LinesList, function(x) !is(x, "Lines"))))
 		stop("lines list not exclusively filled with Lines objects")
 	Sp <- new("Spatial", bbox = .bboxSls(LinesList), proj4string=proj4string)
 	res <- new("SpatialLines", Sp, lines=LinesList)
@@ -24,7 +29,7 @@ SpatialLines <- function(LinesList, proj4string=CRS(as.character(NA))) {
 LineLength = function(cc, longlat=FALSE, sum=TRUE) {
 	if (is(cc, "Line"))
 		cc = coordinates(cc)
-        
+
 	if (!is.matrix(cc)) stop("cc must be a matrix")
 	if (ncol(cc) != 2) stop("cc must have two columns")
 	if (!is.numeric(cc)) stop("cc must be numeric")
@@ -70,31 +75,69 @@ setMethod("bbox", "Line", bbox.Line)
 	res
 }
 
+
+## plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
+## 	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE, ...,
+## 	setParUsrBB=FALSE)
+## {
+## #	frame()
+## #	plot.window(xlim = xlim, ylim = ylim, asp = asp)
+## 	if (! add)
+## 		plot(as(SL, "Spatial"), xlim = xlim, ylim = ylim,
+## 		    axes = axes, ..., setParUsrBB=setParUsrBB)
+## 	lst <- SL@lines
+## 	for (i in seq(along=lst)) {
+## 		sllst = lst[[i]]@Lines
+## 		for (j in seq(along=sllst)) {
+## 			crds <- coordinates(sllst[[j]])
+## 			if (length(col) != length(lst))
+## 				# Michael Sumner, Jul 6 2010;
+## 				# col <- rep(col[1], length(lst))
+##  				col <- rep(col, length = length(lst))
+## 			if (length(lwd) != length(lst))
+## 				lwd <- rep(lwd[1], length(lst))
+## 			if (length(lty) != length(lst))
+## 				lty <- rep(lty[1], length(lst))
+## 			lines(crds, col = col[i], lwd = lwd[i],
+## 				lty = lty[i], ...)
+## 		}
+## 	}
+## }
+
+## MDS 2010-07-07 new handling for col, lwd, lty, and new lend, ljoin, lmitre
 plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
-	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE, ..., 
-	setParUsrBB=FALSE) 
+	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE,
+	lend = 0, ljoin = 0, lmitre = 10, ...,
+	setParUsrBB=FALSE)
 {
 #	frame()
 #	plot.window(xlim = xlim, ylim = ylim, asp = asp)
-	if (! add) 
+	if (! add)
 		plot(as(SL, "Spatial"), xlim = xlim, ylim = ylim,
 		    axes = axes, ..., setParUsrBB=setParUsrBB)
 	lst <- SL@lines
+
+
+	if (length(col) != length(lst)) col <- rep(col, length = length(lst))
+	if (length(lwd) != length(lst)) lwd <- rep(lwd, length = length(lst))
+	if (length(lty) != length(lst)) lty <- rep(lty, length = length(lst))
+	if (length(lend) != length(lst)) lend <- rep(lend, length = length(lst))
+	if (length(ljoin) != length(lst)) ljoin <- rep(ljoin, length = length(lst))
+	if (length(lmitre) != length(lst)) lmitre <- rep(lmitre, length = length(lst))
+
 	for (i in seq(along=lst)) {
 		sllst = lst[[i]]@Lines
 		for (j in seq(along=sllst)) {
 			crds <- coordinates(sllst[[j]])
-			if (length(col) != length(lst)) 
-				col <- rep(col[1], length(lst))
-			if (length(lwd) != length(lst)) 
-				lwd <- rep(lwd[1], length(lst))
-			if (length(lty) != length(lst)) 
-				lty <- rep(lty[1], length(lst))
-			lines(crds, col = col[i], lwd = lwd[i], 
-				lty = lty[i], ...)
+
+			lines(crds, col = col[i], lwd = lwd[i], lty = lty[i],
+				lend = lend[i], ljoin = ljoin[i], lmitre = lmitre[i],
+			...)
 		}
 	}
 }
+
+
 
 setMethod("plot", signature(x = "SpatialLines", y = "missing"),
 	function(x, y, ...) plotSpatialLines(x, ...))
@@ -104,9 +147,9 @@ setMethod("coordinates", "Lines", function(obj) lapply(obj@Lines, coordinates))
 setMethod("coordinates", "SpatialLines", function(obj) lapply(obj@lines, coordinates))
 
 lines.Line = function(x, y = NULL, ...) invisible(lines(coordinates(x), ...))
-lines.Lines = function(x, y = NULL, ...) invisible(lapply(x@Lines, 
+lines.Lines = function(x, y = NULL, ...) invisible(lapply(x@Lines,
 	function(x, ...) lines(x, ...), ...))
-lines.SpatialLines = function(x, y = NULL, ...) invisible(lapply(x@lines, 
+lines.SpatialLines = function(x, y = NULL, ...) invisible(lapply(x@lines,
 	function(x, ...) lines(x, ...), ...))
 
 row.names.SpatialLines <- function(x) {
@@ -118,7 +161,7 @@ row.names.SpatialLines <- function(x) {
 }
 
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
-setMethod("[", "SpatialLines", 
+setMethod("[", "SpatialLines",
 	function(x, i, j, ..., drop = TRUE) {
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)
@@ -136,16 +179,16 @@ setMethod("[", "SpatialLines",
 	}
 )
 
-setMethod("coordnames", signature(x = "SpatialLines"), 
+setMethod("coordnames", signature(x = "SpatialLines"),
 	function(x) coordnames(x@lines[[1]])
 )
-setMethod("coordnames", signature(x = "Lines"), 
+setMethod("coordnames", signature(x = "Lines"),
 	function(x) coordnames(x@Lines[[1]])
 )
-setMethod("coordnames", signature(x = "Line"), 
+setMethod("coordnames", signature(x = "Line"),
 	function(x) dimnames(coordinates(x))[[2]]
 )
-setReplaceMethod("coordnames", 
+setReplaceMethod("coordnames",
 	signature(x = "SpatialLines", value = "character"),
 	function(x, value) {
 		dimnames(x@bbox)[[1]] = value
@@ -154,7 +197,7 @@ setReplaceMethod("coordnames",
 		x
 	}
 )
-setReplaceMethod("coordnames", 
+setReplaceMethod("coordnames",
 	signature(x = "Lines", value = "character"),
 	function(x, value) {
 		for (i in seq(along = x@Lines))
@@ -162,7 +205,7 @@ setReplaceMethod("coordnames",
 		x
 	}
 )
-setReplaceMethod("coordnames", 
+setReplaceMethod("coordnames",
 	signature(x = "Line", value = "character"),
 	function(x, value) {
 		dimnames(x@coords)[[2]] = value
@@ -172,7 +215,7 @@ setReplaceMethod("coordnames",
 
 getSpatialLinesMidPoints = function(SL) {
 	ret = lapply(SL@lines,
-		function(x) sapply(x@Lines, 
+		function(x) sapply(x@Lines,
 			function(X) apply(X@coords, 2, mean)
 		)
 	)
@@ -195,13 +238,13 @@ SpatialLinesLengths = function(SL, longlat) {
 	sapply(SL@lines, LinesLength, longlat=longlat)
 }
 
-setAs("Lines", "SpatialPoints", function(from) { 
+setAs("Lines", "SpatialPoints", function(from) {
 		SpatialPoints(do.call("rbind", coordinates(from)))
 	}
 )
-setAs("SpatialLines", "SpatialPoints", function(from) { 
+setAs("SpatialLines", "SpatialPoints", function(from) {
 		SpatialPoints(
-			do.call("rbind", 
+			do.call("rbind",
 				lapply(from@lines, function(x) as(x, "SpatialPoints"))),
 			CRS(proj4string(from))
 		)
@@ -209,15 +252,38 @@ setAs("SpatialLines", "SpatialPoints", function(from) {
 )
 SpatialLines2SpatialPointsDataFrame = function(from) {
 	spp = as(as(from, "SpatialLines"), "SpatialPoints")
-	L = lapply(from@lines, function(x) {rep(1:length(x@Lines), 
+	L = lapply(from@lines, function(x) {rep(1:length(x@Lines),
 		times = sapply(x@Lines, function(x) nrow(x@coords)))})
 	IDs = sapply(from@lines, function(x) x@ID)
 	L2 = rep(IDs, times = sapply(L, length))
 	L3 = rep(1:length(from@lines), times = sapply(L, length))
 	L = unlist(L)
-	SpatialPointsDataFrame(spp, data.frame(Lines.NR = L3, Lines.ID=L2, Line.NR=L), 
+	SpatialPointsDataFrame(spp, data.frame(Lines.NR = L3, Lines.ID=L2, Line.NR=L),
 		proj4string=CRS(proj4string(from)))
 }
 setAs("SpatialLines", "SpatialPointsDataFrame", function(from)
 	SpatialLines2SpatialPointsDataFrame(from)
 )
+
+asWKTSpatialLines = function(x, digits = 6) {
+	ids = sapply(x@lines, function(x)slot(x,"ID"))
+	df = data.frame(geometry = paste("MULTILINESTRING((",
+		apply(
+		signif(sapply(coordinates(x), function(x) x[[1]][1,]),digits=digits),
+		2, paste, collapse=" ")," ...))",sep=""))
+	row.names(df) = ids
+	df
+}
+print.SpatialLines = function(x, ..., digits = 6, asWKT=FALSE) {
+	cat("SpatialLines:\n")
+	if (asWKT)
+		print(asWKTSpatialLines(x, digits))
+	else
+		show(x)
+	pst <- paste(strwrap(paste(
+		"Coordinate Reference System (CRS) arguments:",
+		proj4string(x))), collapse="\n")
+	cat(pst, "\n")
+}
+#setMethod("show", "SpatialLines", function(object) print.SpatialLines(object))
+length.SpatialLines = function(x) { length(x@lines) }

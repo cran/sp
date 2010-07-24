@@ -76,12 +76,14 @@ setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
 print.SpatialPointsDataFrame = function(x, ..., digits = 6, asWKT = .asWKT) {
 	#EJP, Fri May 21 12:40:59 CEST 2010
 	if (asWKT)
-		print(data.frame(asWKTSpatialPoints(x, digits), x@data), ...)
+		df = data.frame(asWKTSpatialPoints(x, digits), x@data)
 	else { # old style
 		cc = substring(paste(as.data.frame(
 			t(signif(coordinates(x), digits)))),2,999)
-		print(data.frame("coordinates" = cc, x@data), ...)
+		df = data.frame("coordinates" = cc, x@data)
 	}
+	row.names(df) = row.names(x@data)
+	print(df, ...)
 }
 
 dim.SpatialPointsDataFrame = function(x) dim(x@data)
