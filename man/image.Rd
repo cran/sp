@@ -15,7 +15,7 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 	col = heat.colors(12), red=NULL, green=NULL, blue=NULL,
         axes = FALSE, xlim = NULL,
 	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE,
-        interpolate = FALSE, angle = 0, useRasterImage=TRUE)
+        interpolate = FALSE, angle = 0, useRasterImage=!.isSDI())
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
 \method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
 	col = 1, add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE,
@@ -44,7 +44,7 @@ to the existing plot. }
 \item{...}{ arguments passed to \link{image}, see examples }
 \item{asp}{ aspect ratio to be used for plot }
 \item{setParUsrBB}{default FALSE, see \code{\link{Spatial-class}} for further details}
-\item{useRasterImage}{default TRUE, use \code{\link[graphics]{rasterImage}} to render the image if available; for legacy rendering set FALSE}
+\item{useRasterImage}{default \code{!.isSDI()} as a workaround for a problem with repeated use in Windows SDI installations; if TRUE, use \code{\link[graphics]{rasterImage}} to render the image if available; for legacy rendering set FALSE}
 \item{interpolate}{default FALSE, a logical vector (or scalar) indicating whether to apply linear interpolation to the image when drawing, see \code{\link[graphics]{rasterImage}}}
 \item{angle}{default 0, angle of rotation (in degrees, anti-clockwise from positive x-axis, about the bottom-left corner), see \code{\link[graphics]{rasterImage}}}
 \item{im}{list with components named x, y, and z, as used for \code{image}}
@@ -97,7 +97,13 @@ Rlogo <- SpatialGridDataFrame(grid = grid, data = df)
 summary(Rlogo)
 system.time(image(Rlogo, red="band1", green="band2", blue="band3"))
 system.time(image(Rlogo, red="band1", green="band2", blue="band3",
- useRasterImage=TRUE))
+ useRasterImage=FALSE))
+is.na(Rlogo$band1) <- Rlogo$band1 == 255
+is.na(Rlogo$band2) <- Rlogo$band2 == 255
+is.na(Rlogo$band3) <- Rlogo$band3 == 255
+Rlogo$i7 <- 7
+image(Rlogo, "i7")
+image(Rlogo, red="band1", green="band2", blue="band3", add=TRUE)
 }
 
 \keyword{spatial}

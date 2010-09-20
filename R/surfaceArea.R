@@ -8,10 +8,10 @@ surfaceArea.matrix <- function(m,cellx=1,celly=1,byCell=FALSE){
 
   m=cbind(m[,1],m,m[,ncol(m)])
   m=rbind(m[1,],m,m[nrow(m),])
-
+  storage.mode(m) <- "double"
   
   ret = .C("sarea",
-    as.double(m),
+    m,
     as.integer(nrow(m)),
     as.integer(ncol(m)),
     as.double(cellx),

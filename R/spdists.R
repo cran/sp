@@ -6,10 +6,12 @@ spDistsN1 <- function(pts, pt, longlat=FALSE) {
 	if (inherits(pt, "SpatialPoints")) pt <- coordinates(pt)
 	if (!is.numeric(pt)) stop("pt must be numeric")
 	if (length(pt) != 2) stop("pt must have length two")
-	x <- as.double(pts[,1])
-	y <- as.double(pts[,2])
-	xx <- as.double(pt[1])
-	yy <- as.double(pt[2])
+        storage.mode(pts) <- "double"
+        storage.mode(pt) <- "double"
+	x <- pts[,1]
+	y <- pts[,2]
+	xx <- pt[1]
+	yy <- pt[2]
 	n  <- as.integer(length(x))
 	dists <- vector(mode="double", length=n)
 	lonlat <- as.integer(longlat)

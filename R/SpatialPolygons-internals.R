@@ -195,8 +195,10 @@ bbox.R4 <- function(x) {
 .spFindCG <- function(xy) {
 	a <- xy[,1]
 	b <- xy[,2]
+        storage.mode(a) <- "double"
+        storage.mode(b) <- "double"
 	n <- nrow(xy)
-	res <- .C("spRFindCG", as.integer(n), as.double(a), as.double(b), 
+	res <- .C("spRFindCG", as.integer(n), a, b, 
 		as.double(0), as.double(0), as.double(0), PACKAGE="sp")
 
 	cents <- c(res[[4]], res[[5]])

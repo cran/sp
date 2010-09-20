@@ -93,7 +93,10 @@ subset.SpatialPoints <- function(x, subset, select, drop = FALSE, ...) {
 }
 
 row.names.SpatialPoints <- function(x) {
-    dimnames(slot(x, "coords"))[[1]]
+    ret = dimnames(slot(x, "coords"))[[1]]
+	if (is.null(ret))
+		ret = seq_len(nrow(slot(x, "coords")))
+	ret
 }
 
 "row.names<-.SpatialPoints" <- function(x, value) {

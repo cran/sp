@@ -26,14 +26,14 @@ a matrix with zero rows is returned if no such pairs are found. For
 \code{zerodist}, row number pairs refer to row pairs in \code{obj}. For
 \code{zerodist2}, row number pairs refer to rows in \code{obj} and
 \code{obj2}, respectively. \code{remove.duplicates} removes duplicate
-observations, or obj if none are present. }
+observations if present, and else returns \code{obj}. }
 
-\note{ When using kriging, duplicate observations sharing identical spatial 
-locations result in singular covariance matrices in kriging situations.
-This function may help identifying spatial duplications, so they
-can be removed.  The full matrix with all pair-wise distances is not stored;
-the double loop is done at the C level.
-}
+\note{ When using kriging, duplicate observations sharing identical
+spatial locations result in singular covariance matrices.
+This function may help identify and remove spatial duplices.
+The full matrix with all pair-wise distances is not stored; the
+double loop is done at the C level.  }
+
 \examples{
 data(meuse)
 summary(meuse)
