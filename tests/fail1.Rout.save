@@ -21,8 +21,8 @@ Type 'q()' to quit R.
 > 
 > coordinates(x) <- c("x", "y")
 > try(proj4string(x) <- 1.5)
-Error in `proj4string<-`(`*tmp*`, value = 1.5) : 
-  assigned value must be CRS object or character string
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "proj4string<-", for signature "SpatialPointsDataFrame", "numeric"
 > try(coordinates(a) <- cbind(1:10, 10:1))
 Error in coordinates(a) <- cbind(1:10, 10:1) : object 'a' not found
 > # fails because a is not found; passes if a assigned NULL, see pass1.R

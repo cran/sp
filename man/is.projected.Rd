@@ -2,18 +2,22 @@
 \alias{is.projected}
 \alias{proj4string}
 \alias{proj4string<-}
+\alias{is.projected,Spatial-method}
+\alias{proj4string,Spatial-method}
+\alias{proj4string<-,Spatial,CRS-method}
+\alias{proj4string<-,Spatial,character-method}
 
 \title{ Sets or retrieves projection attributes on classes extending
 SpatialData }
 \description{ Sets or retrieves projection attributes on classes extending
 SpatialData }
 \usage{
-is.projected(sd)
-proj4string(sd)
-proj4string(sd) <- value
+is.projected(obj)
+proj4string(obj)
+proj4string(obj) <- value
 }
 \arguments{
-  \item{sd}{An object of class or extending \link{Spatial-class}}
+  \item{obj}{An object of class or extending \link{Spatial-class}}
   \item{value}{ CRS object, containing a valid proj4 string; attempts to assign an object containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped }
 }
 

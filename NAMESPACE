@@ -7,11 +7,14 @@ import(utils) # stack, to be changed later (2.5.0?) into
 importFrom(lattice, levelplot, xyplot, trellis.par.set, 
 	panel.lines, panel.text, panel.points, panel.identify,
 	panel.levelplot, panel.superpose, panel.xyplot, trellis.par.get,
-	trellis.focus, trellis.unfocus, panel.number)
+	trellis.focus, trellis.unfocus, panel.number, lattice.options,
+        panel.levelplot.raster)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
 
-export(CRS, print.CRS, proj4string, "proj4string<-", is.projected)
+export(CRS, print.CRS)
+#, proj4string, "proj4string<-", is.projected)
+exportMethods(proj4string, "proj4string<-", is.projected)
 
 export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
@@ -156,9 +159,12 @@ S3method(names, SpatialPolygonsDataFrame)
 S3method(row.names, SpatialPoints)
 S3method(row.names, SpatialLines)
 S3method(row.names, SpatialPolygons)
+S3method(row.names, SpatialPixels)
+S3method(row.names, SpatialGrid)
 S3method(row.names, SpatialPointsDataFrame)
 S3method(row.names, SpatialLinesDataFrame)
 S3method(row.names, SpatialPolygonsDataFrame)
+S3method(row.names, SpatialGridDataFrame)
 
 S3method("row.names<-", SpatialPoints)
 S3method("row.names<-", SpatialPointsDataFrame)

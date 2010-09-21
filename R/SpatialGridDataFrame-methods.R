@@ -58,6 +58,11 @@ setMethod("coordinates", "SpatialPixelsDataFrame",
 setMethod("coordinates", "SpatialGridDataFrame", 
 	function(obj) coordinates(as(obj, "SpatialGrid")))
 
+row.names.SpatialGridDataFrame <- function(x) {
+	warning("row.names order might be wrong!")
+	1:prod(x@grid@cells.dim)
+}
+
 setIs("SpatialPixelsDataFrame", "SpatialPointsDataFrame",
 	coerce = function(from) {
 		# fullgrid(from) = FALSE ## not needed anymore

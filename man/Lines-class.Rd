@@ -14,7 +14,7 @@ Objects can be created by calls to the function \link{Line}
   \describe{
     \item{\code{Lines}:}{Object of class \code{"list"}, containing elements
 	of class \link{Line-class}}
-    \item{\code{ID}:}{Object of class \code{"character"}, unique identifier string}
+    \item{\code{ID}:}{\code{"character"} vector of lenght one, with unique identifier string}
   }
 }
 \section{Methods}{

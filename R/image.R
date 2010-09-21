@@ -7,27 +7,34 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL, 
 		ylim = NULL, add = FALSE, ..., asp = NA, 
 		setParUsrBB=FALSE, interpolate = FALSE, angle = 0,
-                useRasterImage=TRUE) {
+                useRasterImage=!.isSDI()) {
 
 	if (!add)
 		plot(as(x, "Spatial"),
 			xlim = xlim, ylim = ylim, axes = axes, asp = asp, ..., 
 			setParUsrBB=setParUsrBB)
         if (exists("rasterImage") && useRasterImage) {
+            if (.isSDI()) warning("Bug in SDI raster handling - your R graphics window may stop displaying output")
             bb <- bbox(x)
-            scl <- function(x) (x - min(x, na.rm  = TRUE)) /
-                diff(range(x, na.rm = TRUE))
+            scl <- function(x) {
+                dr <- diff(range(x, na.rm = TRUE))
+                mx <- min(x, na.rm  = TRUE)
+                if (abs(dr) < .Machine$double.eps)
+                    res <- ifelse(is.na(x), x, 0.5)
+                else res <- (x - mx) / dr
+                res
+            }
         }
 	if (is.null(red)) {
             if (exists("rasterImage") && useRasterImage) {
                 x <- x[attr]
-                NAs <- is.na(x[[1]])
+#                NAs <- is.na(x[[1]])
                 m <-  scl(t(matrix(x[[1]], x@grid@cells.dim[1],
                     x@grid@cells.dim[2])))
                 m <- matrix(col[as.vector(m) * (length(col)-1) + 1], 
                     nrow(m), ncol(m))
-                ## if missing, set to white
-                m[is.na(m)] <- rgb(1, 1, 1)
+                ## if missing, set to transparent
+#                m[is.na(m)] <- rgb(1, 1, 1, 0)
                 rasterImage(m, bb[1,1], bb[2,1], bb[1,2], bb[2,2],
                     interpolate = interpolate, angle = angle)
             } else {
@@ -130,4 +137,19 @@ image2Grid <- function (im, p4 = as.character(NA), digits=10)
         ncol(im$z):1])), proj4string = CRS(p4))
 }
 
+# copied from the svMisc package, copyright Philippe Grosjean,
+# Romain Francois & Kamil Barton
+".isSDI" <- function()
+{
+	# This function is specific to Windows, but it is defined everywhere
+	# so that we don't have to test the platform before use!
+	# Check if Rgui was started in SDI mode (needed by some GUI clients)
 
+	# 1) First is it Rgui?
+	if (!.Platform$GUI[1] == "Rgui")
+        return(FALSE)    # This is not Rgui
+
+        # RGui SDI mode: returns "R Console", in MDI mode: returns "RGui"
+        if (getIdentification() == "R Console") return(TRUE) else return(FALSE)
+
+}

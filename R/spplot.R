@@ -136,6 +136,11 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		zcol2 = "z"
 	} else
 		zcol2 = zcol
+    if (exists("panel.levelplot.raster")) {
+        opan <- lattice.options("panel.levelplot")[[1]]
+        lattice.options("panel.levelplot"="panel.levelplot.raster")
+#       cat("using raster panel\n")
+    }
 	scales = longlat.scales(obj, scales, xlim, ylim)
 	args = append(list(formula, data = as(sdf, "data.frame"), 
 		aspect = aspect, panel = panel, xlab = xlab, ylab = ylab, scales = scales,
@@ -157,7 +162,10 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		} else
 			args = append(args, colorkey.factor(obj[[zcol[1]]], ck, FALSE))
 	}
-	do.call("levelplot", args)
+	ret = do.call("levelplot", args)
+    if (exists("panel.levelplot.raster"))
+        lattice.options("panel.levelplot" = opan)
+	ret 
 }
 
 setMethod("spplot", signature("SpatialPixelsDataFrame"), spplot.grid)
