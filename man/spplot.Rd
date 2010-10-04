@@ -132,7 +132,7 @@ key location, or list: see argument key in the help for \link{xyplot} what
 the options are}
 \item{\code{legendEntries}}{ character; array with key legend (text) entries; 
 suitable defaults obtained from data }
-\item{\code{cuts}}{number of cuts or the actual cuts to use}
+\item{\code{cuts}}{number of cuts, or, for objects of class \link{SpatialPointsDataFrame} only, the actual cuts to use}
 \item{\code{do.log}}{logical; if TRUE use log-linear scale to divide range in equal cuts,
 else use a linear scale if \code{cuts} is only number of cuts }
 \item{\code{pch}}{ integer; plotting character to use; defaults to 16 if fill is TRUE, else 1 }
