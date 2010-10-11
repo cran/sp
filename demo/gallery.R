@@ -270,7 +270,8 @@ gridded(meuse.grid) = TRUE
 data(meuse)
 coordinates(meuse) = ~x+y
 data(meuse.riv)
-meuse.sl = SpatialLines(list(Lines(list(Line(meuse.riv)))))
+meuse.sl = SpatialLines(list(Lines(list(Line(meuse.riv)), "ID")))
+#meuse.sr = SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)),"meuse.riv")))
 
 ## image plot with points and lines
 image(meuse.grid["dist"], 
@@ -298,7 +299,7 @@ library(sp)
 library(maptools)
 nc2 <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 plot(nc2)
-invisible(text(coordinates(nc2), labels=as.character(nc2$NAME), cex=0.4))
+invisible(text(getSpPPolygonsLabptSlots(nc2), labels=as.character(nc2$NAME), cex=0.4))
 library(sp)
 
 ## plot of SpatialPolygonsDataFrame, using grey shades
@@ -409,9 +410,10 @@ library(maptools)
 
 nc <- readShapePoly(system.file("shapes/sids.shp", package="maptools")[1], proj4string=CRS("+proj=longlat +datum=NAD27"))
 names(nc)
-# create two dummy factor variables:
+# create two dummy factor variables, with equal labels:
+set.seed(31)
 nc$f = factor(sample(1:5,100,replace=T),labels=letters[1:5])
-nc$g = factor(sample(1:5,100,replace=T),labels=letters[6:10])
+nc$g = factor(sample(1:5,100,replace=T),labels=letters[1:5])
 library(RColorBrewer)
 ## Two (dummy) factor variables shown with qualitative colour ramp; degrees in axes
-spplot(nc, c("f","g"), col.regions=brewer.pal(10, "Set3"), scales=list(draw = TRUE))
+spplot(nc, c("f","g"), col.regions=brewer.pal(5, "Set3"), scales=list(draw = TRUE))

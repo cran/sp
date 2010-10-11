@@ -1,11 +1,11 @@
 Package: sp
-Version: 0.9-70
-Date: 2010-10-04
+Version: 0.9-71
+Date: 2010-10-11
 Title: classes and methods for spatial data
 Author: Edzer Pebesma <edzer.pebesma@uni-muenster.de>, Roger Bivand
         <Roger.Bivand@nhh.no> and others
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
-Depends: R (>= 2.11.0), methods
+Depends: R (>= 2.10.0), methods
 Suggests: lattice, RColorBrewer, rgdal
 Imports: utils, lattice, grid
 Description: A package that provides classes and methods for spatial
@@ -33,6 +33,6 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         gridded.R asciigrid.R spplot.R overlay.R spsample.R recenter.R
         dms.R gridlines.R spdists.R rbind.R flipSGDF.R chfids.R
         loadmeuse.R compassRose.R surfaceArea.R
-Packaged: 2010-10-04 18:20:35 UTC; edzer
+Packaged: 2010-10-11 08:44:01 UTC; edzer
 Repository: CRAN
-Date/Publication: 2010-10-04 19:18:06
+Date/Publication: 2010-10-11 10:00:44

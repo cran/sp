@@ -4,11 +4,12 @@ import(methods)
 importFrom(graphics, plot, hist)
 inportFrom(stats, kmeans)
 import(utils) # stack, to be changed later (2.5.0?) into
-importFrom(lattice, levelplot, xyplot, trellis.par.set, 
-	panel.lines, panel.text, panel.points, panel.identify,
-	panel.levelplot, panel.superpose, panel.xyplot, trellis.par.get,
-	trellis.focus, trellis.unfocus, panel.number, lattice.options,
-        panel.levelplot.raster)
+#importFrom(lattice, levelplot, xyplot, trellis.par.set, 
+#	panel.lines, panel.text, panel.points, panel.identify,
+#	panel.levelplot, panel.superpose, panel.xyplot, trellis.par.get,
+#	trellis.focus, trellis.unfocus, panel.number, lattice.options,
+#	panel.levelplot.raster)
+import(lattice)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
 
