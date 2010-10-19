@@ -45,12 +45,12 @@ spDists <- function(x, y = x, longlat = FALSE) {
         if (ncol(x) > 2)
 			for (i in 2:ncol(x))
            		d = d + outer(x[,i], y[,i], "-") ^ 2
-    	sqrt(d)
+    	matrix(sqrt(d), nrow(x), nrow(y))
 	} else {
 		spDiN1 = function(x, y, ll) spDistsN1(y, x, ll)
 		if (nrow(x) < nrow(y))
-			t(apply(x, 1, spDiN1, y = y, ll = longlat))
+			matrix(t(apply(x, 1, spDiN1, y = y, ll = longlat)), nrow(x), nrow(y))
 		else
-			apply(y, 1, spDiN1, y = x, ll = longlat)
+			matrix(apply(y, 1, spDiN1, y = x, ll = longlat), nrow(x), nrow(y))
 	}
 }

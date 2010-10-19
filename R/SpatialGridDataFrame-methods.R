@@ -177,7 +177,7 @@ subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 
 	if (missing.k) {
 		k = TRUE
-		if (missing.j && n.args != 3) { # not like : x[i,]
+		if (missing.j && n.args != 3) { # not like : x[i,], but x[i]
 			x@data = x@data[ , i, drop = FALSE]
 			return(x)
 		}
