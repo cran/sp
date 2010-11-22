@@ -30,7 +30,10 @@ SpatialLinesLengths(SL, longlat)
 \item{sl, SL}{ object of class \link{SpatialLines-class}}
 \item{data}{ object of class \code{data.frame}; the number of rows in \code{data}
 should equal the number of \code{Lines} elements in \code{sl}}
-\item{match.ID}{logical: (default TRUE): match SpatialLines member Lines ID slot values with data frame row names, and re-order the data frame rows if necessary}
+\item{match.ID}{logical: (default TRUE): match SpatialLines member
+Lines ID slot values with data.frame row names, and re-order the
+data frame rows if necessary; if character: indicates the column
+in \code{data} with Lines IDs to match}
 \item{SLDF}{SpatialLinesDataFrame object}
 \item{Ls}{Object of class \code{Lines}}
 \item{cc}{Object of class \code{Line}, or two-column matrix with points}

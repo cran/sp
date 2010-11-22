@@ -50,7 +50,7 @@ zerodist2 <- function (obj1, obj2, zero = 0) {
 	cc = rbind(cc1, cc2)
 	ret = matrix(.Call("sp_zerodist", as.vector(t(cc)), ncol(cc), zero), 
 		ncol = 2, byrow = TRUE) + 1
-	ret = ret[ret[,1] <= n & ret[,2] > n,]
+	ret = ret[ret[,1] <= n & ret[,2] > n, , drop=FALSE]
 	ret[,2] = ret[,2] - n
 	ret
 }

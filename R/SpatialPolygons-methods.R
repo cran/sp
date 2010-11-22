@@ -94,6 +94,8 @@ row.names.SpatialPolygons <- function(x) {
 
 
 setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
+	if (is(i, "Spatial"))
+		i = !is.na(over(x, i))
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)
 			i = 1:length(x@polygons)
@@ -101,7 +103,7 @@ setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 			i <- which(i)
 	} else if (is.character(i)) {
                 i <- match(i, row.names(x))
-        }
+        } 
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
 	if (length(unique(i)) != length(i))
@@ -174,3 +176,7 @@ as.SpatialLines.SpatialPolygons = function(from)
 setAs("SpatialPolygons", "SpatialLines", as.SpatialLines.SpatialPolygons)
 
 length.SpatialPolygons = function(x) { length(x@polygons) }
+
+names.SpatialPolygons = function(x) { 
+	unlist(lapply(x@polygons, function(X) X@ID)) 
+}

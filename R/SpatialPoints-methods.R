@@ -109,12 +109,17 @@ setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j))
 		warning("j index ignored")
 	drop = FALSE
+	if (is.character(i))
+		i <- match(i, row.names(x))
+	else if (is(i, "Spatial"))
+		i = !is.na(over(x, i))
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
 #	SpatialPoints(coords=x@coords[i, , drop=drop], 
 #		proj4string = CRS(proj4string(x)))
 	x@coords = x@coords[i, , drop = FALSE]
-	x@bbox = .bboxCoords(x@coords)
+	if (drop)
+		x@bbox = .bboxCoords(x@coords)
 	x
 })
 

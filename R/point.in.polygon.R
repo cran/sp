@@ -49,16 +49,17 @@ pointsInPolygons = function(pts, Polygons, #which = FALSE,
 	ret
 }
 
-#pointsInSpatialPolygons = function(pts, SpPolygons) {
-#	sr = slot(SpPolygons, "polygons")
-#	res = lapply(sr, function(x, pts) pointsInPolygons(pts, x), pts = pts)
-#	ret = rep(as.numeric(NA), nrow(coordinates(pts)))
-#	for (i in seq(along = res))
-#		ret[res[[i]] > 0] = i
-#	ret
-#}
+pointsInSpatialPolygons0 = function(pts, SpPolygons) {
+	sr = slot(SpPolygons, "polygons")
+	res = lapply(sr, function(x, pts) pointsInPolygons(pts, x), pts = pts)
+	#ret = rep(as.numeric(NA), nrow(coordinates(pts)))
+	#for (i in seq(along = res))
+	#	ret[res[[i]] > 0] = i
+	#apply(do.call(rbind, res), 2, which)
+	do.call(rbind, res)
+}
 
-pointsInSpatialPolygons = function(pts, SpPolygons) {
+pointsInSpatialPolygons = function(pts, SpPolygons, returnList = FALSE) {
     pls = slot(SpPolygons, "polygons")
     lb <- lapply(pls, function(x) as.double(bbox(x)))
     cpts <- coordinates(pts)
@@ -69,26 +70,34 @@ pointsInSpatialPolygons = function(pts, SpPolygons) {
     cand <- .Call("tList", cand0, as.integer(m), PACKAGE="sp")
     rm(cand0)
     gc(verbose=FALSE)
-    res <- pointsInPolys2(pls, cand, cpts, mode.checked=mode.checked)
+    res <- pointsInPolys2(pls, cand, cpts, mode.checked=mode.checked,
+		returnList = returnList)
     res
 }
 
-pointsInPolys2 <- function(pls, cand, pts, mode.checked=FALSE) {
+pointsInPolys2 <- function(pls, cand, pts, mode.checked=FALSE, 
+		returnList = FALSE) {
     n <- nrow(pts)
-    res <- rep(as.integer(NA), n)
+    if (returnList)
+		res = sapply(1:length(pls), function(x) integer(0))
+	else
+		res <- rep(as.integer(NA), n)
+	# print(cand)
     for (i in seq(along=cand)) {
         candi <- cand[[i]]
         if (length(candi) > 0) {
             ptsi <- pts[candi,,drop=FALSE]
             ret <- pointsInPolygons(ptsi, pls[[i]], mode.checked=mode.checked)
-            for (j in seq(along=candi)) {
-                jj <- candi[j]
-                if (is.na(res[jj])) res[jj] <- ifelse(ret[j], i,
-                    as.integer(NA))
-            }
+            #for (j in seq(along=candi)) {
+            #    jj <- candi[j]
+            #    if (is.na(res[jj]))
+			#		res[jj] <- ifelse(ret[j], i, as.integer(NA))
+            #}
+			if (returnList)
+				res[[i]] = candi[ret]
+			else
+				res[candi[ret]] = i 
         }
     }
     res
 }
-
-

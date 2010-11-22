@@ -102,7 +102,8 @@ set.seed(1)
 meuse.grid$x <- meuse.grid$x + rnorm(length(meuse.grid$x), 0, 0.002)
 meuse.grid$y <- meuse.grid$y + rnorm(length(meuse.grid$y), 0, 0.002)
 coordinates(meuse.grid) <- c("x", "y")
-points2grid(meuse.grid, tolerance=0.76, round=1)
+#EJP
+# points2grid(meuse.grid, tolerance=0.76, round=1)
 data(meuse.grid)
 a <- which(meuse.grid$x == 180140)
 b <- which(meuse.grid$x == 180180)
@@ -119,7 +120,8 @@ meuse.grid$x <- meuse.grid$x + rnorm(length(meuse.grid$x), 0, 0.002)
 meuse.grid$y <- meuse.grid$y + rnorm(length(meuse.grid$y), 0, 0.002)
 meuse.grid <- meuse.grid[-c(a, b, c, d, e, f),]
 coordinates(meuse.grid) <- c("x", "y")
-points2grid(meuse.grid, tolerance=0.69, round=1)
+# EJP
+# points2grid(meuse.grid, tolerance=0.69, round=1)
 }
 
 \keyword{spatial}

@@ -10,8 +10,22 @@ SpatialPixelsDataFrame = function(points, data,
 	new("SpatialPixelsDataFrame", points, data = data)
 }
 
-SpatialGridDataFrame = function(grid, data, proj4string = CRS(as.character(NA)))
-	new("SpatialGridDataFrame", SpatialGrid(grid, proj4string), data = data)
+SpatialGridDataFrame = function(grid, data, 
+		proj4string = CRS(as.character(NA))) {
+	if (!is(grid, "SpatialGrid"))
+		grid = SpatialGrid(grid, proj4string)
+	new("SpatialGridDataFrame", grid, data = data)
+}
+
+setMethod("addAttrToGeom", signature(x = "SpatialPixels", y = "data.frame"),
+	function(x, y, match.ID, ...)
+		SpatialPixelsDataFrame(x, y, ...)
+)
+
+setMethod("addAttrToGeom", signature(x = "SpatialGrid", y = "data.frame"),
+	function(x, y, match.ID, ...)
+		SpatialGridDataFrame(x, y, ...)
+)
 
 as.SPixDF.SGDF = function(from) {
    	data = list()
@@ -143,6 +157,8 @@ setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
+	if (is(i, "Spatial"))
+		i = !is.na(overlay(x, i))
 	coords.nrs = x@coords.nrs
 	if (!isTRUE(j)) # i.e., we do some sort of column selection
 		coords.nrs = numeric(0) # will move coordinate colums last
@@ -177,7 +193,7 @@ subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 
 	if (missing.k) {
 		k = TRUE
-		if (missing.j && n.args != 3) { # not like : x[i,], but x[i]
+		if (missing.j && n.args != 3) { # not like : x[i,] but x[i]
 			x@data = x@data[ , i, drop = FALSE]
 			return(x)
 		}
@@ -187,8 +203,30 @@ subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 	} 
 	if (missing.i)
 		rows = 1:grd@cells.dim[2]
-	else
+	else { # we have an i
+		if (is(i, "Spatial"))
+			i = !is.na(overlay(x, i))
+		if (is.integer(i)) {
+			if ((length(i) > grd@cells.dim[2] && length(i) < nrow(x@data))
+					|| max(i) > grd@cells.dim[2]) {
+				if (all(i < 0)) {
+					i = -i
+					negate = TRUE
+				} else
+					negate = FALSE
+				i = (1:nrow(x@data)) %in% i
+				if (negate)
+					i = !i
+			}
+		}
+		if (length(i) == nrow(x@data)) {
+			if (!missing.j)
+				x@data = x@data[j]
+			x@data = data.frame(lapply(x@data, function(C) { C[!i] = NA; C }))
+			return(x)
+		}
 		rows = i
+	}
 	if (missing.j)
 		cols = 1:grd@cells.dim[1]
 	else
@@ -266,3 +304,9 @@ dim.SpatialPixelsDataFrame = function(x) dim(x@data)
 dim.SpatialGridDataFrame = function(x) dim(x@data)
 
 setMethod("split", "SpatialPixelsDataFrame", split.data.frame)
+
+setMethod("geometry", "SpatialGridDataFrame",
+	function(obj) as(obj, "SpatialGrid"))
+
+setMethod("geometry", "SpatialPixelsDataFrame",
+	function(obj) as(obj, "SpatialPixels"))

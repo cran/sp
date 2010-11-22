@@ -73,7 +73,7 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps), round=NULL, 
     		if (err1 > tolerance) { 
 			xx = ru.difx / min(ru.difx)
 			err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
-			if (err2 > tolerance) {
+			if (err2 > tolerance && !isTRUE(all.equal(err2, 1))) {
 			  cat(paste("suggested tolerance minimum:", err2, "\n"))
        			stop(paste("dimension", i,": coordinate intervals are not constant"))
 			} else if (fuzz) {

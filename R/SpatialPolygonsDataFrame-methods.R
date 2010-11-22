@@ -1,4 +1,8 @@
 SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
+	if (is.character(match.ID)) {
+		row.names(data) = data[match.ID[1]]
+		match.ID = TRUE
+	}
 	if (match.ID) {
 #		Sr_IDs <- sapply(slot(Sr, "polygons"),
 #                    function(i) slot(i, "ID"))
@@ -28,6 +32,11 @@ setReplaceMethod("polygons", signature(object = "data.frame", value = "SpatialPo
 
 setMethod("polygons", signature(obj = "SpatialPolygons"),
 	function(obj) as(obj, "SpatialPolygons"))
+
+setMethod("addAttrToGeom", signature(x = "SpatialPolygons", y = "data.frame"),
+	function(x, y, match.ID, ...) 
+		SpatialPolygonsDataFrame(x, y, match.ID = match.ID, ...)
+)
 
 names.SpatialPolygonsDataFrame = function(x) names(x@data)
 "names<-.SpatialPolygonsDataFrame" = function(x,value) { names(x@data) = value; x }
@@ -63,6 +72,8 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
         i = TRUE 
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialPolygonsDataFrame selection")
+	if (is(i, "Spatial"))
+		i = !is.na(over(x, i))
     if (any(is.na(i))) stop("NAs not permitted in row index")
     #SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
     #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)
@@ -107,3 +118,6 @@ setAs("SpatialPolygonsDataFrame", "SpatialLinesDataFrame",
 dim.SpatialPolygonsDataFrame = function(x) dim(x@data)
 
 setMethod("split", "SpatialPolygonsDataFrame", split.data.frame)
+
+setMethod("geometry", "SpatialPolygonsDataFrame",
+	function(obj) as(obj, "SpatialPolygons"))

@@ -77,7 +77,8 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		cv <- coordinatevalues(getGridTopology(x))
 		m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
 			x@grid@cells.dim[2], byrow=FALSE)
-		res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), z=m[,ncol(m):1])
+		res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), 
+			z=m[,ncol(m):1,drop=FALSE])
 		image(res, col=levels(fcols), add = TRUE, ...)
             }
 	}
@@ -100,7 +101,7 @@ contour.SpatialPixelsDataFrame = function(x, ...)
 as.image.SpatialGridDataFrame = function(x, xcol = 1, ycol = 2, attr = 1) {
 	cv = coordinatevalues(getGridTopology(x))
 	m = as(x[attr], "matrix")
-	list(x = cv[[xcol]], y = sort(cv[[ycol]]), z = m[,ncol(m):1])
+	list(x = cv[[xcol]], y = sort(cv[[ycol]]), z = m[,ncol(m):1,drop=FALSE])
 }
 
 # contributed by Michael Sumner 24 Oct 2007
