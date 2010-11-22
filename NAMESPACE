@@ -17,9 +17,11 @@ export(CRS, print.CRS)
 #, proj4string, "proj4string<-", is.projected)
 exportMethods(proj4string, "proj4string<-", is.projected)
 
+exportMethods(addAttrToGeom)
+
 export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
-	remove.duplicates, degAxis)
+	remove.duplicates, degAxis, "%over%")
 
 export(coordinatevalues)
 
@@ -109,9 +111,9 @@ exportClasses(Polygon, Polygons, SpatialPolygons, SpatialPolygonsDataFrame)
 exportClasses(DMS)
 
 exportMethods(show, bbox, coordinates, "coordinates<-",
-	coordnames, "coordnames<-", gridded, polygons, "polygons<-",
-	dimensions, coerce, "[", "[[", "$", "$<-", overlay, plot, recenter,
-	spplot, spsample, summary, surfaceArea, split)
+	coordnames, "coordnames<-", geometry, gridded, polygons, "polygons<-",
+	dimensions, coerce, "[", "[[", "$", "$<-", over, overlay, 
+	plot, recenter, spplot, spsample, summary, surfaceArea, split)
 
 S3method(as.data.frame, SpatialPoints)
 S3method(as.data.frame, SpatialPixels)
@@ -156,6 +158,8 @@ S3method(names, SpatialPixelsDataFrame)
 S3method(names, SpatialGridDataFrame)
 S3method(names, SpatialLinesDataFrame)
 S3method(names, SpatialPolygonsDataFrame)
+S3method(names, SpatialLines)
+S3method(names, SpatialPolygons)
 
 S3method(row.names, SpatialPoints)
 S3method(row.names, SpatialLines)

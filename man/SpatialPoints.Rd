@@ -27,7 +27,9 @@ row.names (i.e. is a data.frame), then the \code{SpatialPointsDataFrame}
 object is formed by matching the row names of both components, leaving
 the order of the coordinates in tact. Checks are done to see whether
 both row names are sufficiently unique, and all data are matched.
-If FALSE, coordinates and data are simply "glued" together. }
+If FALSE, coordinates and data are simply "glued" together. If
+character: indicates the column in \code{data} with coordinates IDs
+to match}
 }
 \value{
 \code{SpatialPoints} returns an object of class \code{SpatialPoints};

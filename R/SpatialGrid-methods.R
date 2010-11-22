@@ -24,7 +24,7 @@ row.names.SpatialPixels <- function(x) {
 }
 
 row.names.SpatialGrid <- function(x) {
-	warning("row.names order might not reflect grid sequence!")
+	#warning("row.names order might not reflect grid sequence!")
 	1:prod(x@grid@cells.dim)
 }
 
@@ -139,6 +139,8 @@ setMethod("[", "SpatialPixels",
 			stop("can only select pixels with a single index")
 		if (missing(i))
 			return(x)
+		if (is(i, "Spatial"))
+			i = !is.na(overlay(x, i))
 		if (drop) { # default: adjust bbox and grid
 			res = as(x, "SpatialPoints")[i]
 			tolerance = list(...)$tolerance
@@ -147,7 +149,8 @@ setMethod("[", "SpatialPixels",
 			else
 				gridded(res) = TRUE
 		} else {
-			res = new("SpatialPixels", bbox = x@bbox, proj4string = x@proj4string,	
+			res = new("SpatialPixels", bbox = x@bbox, 
+				proj4string = x@proj4string,	
 				coords = x@coords[i, , drop = FALSE], grid = x@grid, 
 				grid.index = x@grid.index[i])
 			#x@coords = x@coords[i, , drop = FALSE]
@@ -167,8 +170,11 @@ setMethod("[", "SpatialGrid",
 		gr = x@grid
 		if (missing(i))
 			rows = 1:gr@cells.dim[2]
-		else
+		else {
+			if (is(i, "Spatial"))
+				stop("area selection only makes sense for objects of class SpatialPixels or SpatialGridDataFrame; for object of class SpatialGrid you can only select x[rows,cols]")
 			rows = i
+		}
 		if (missing(j))
 			cols = 1:gr@cells.dim[1]
 		else

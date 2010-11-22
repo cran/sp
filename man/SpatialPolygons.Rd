@@ -26,7 +26,10 @@ equal last coordinates (row); if the hole argument is not given, the status of t
 \item{pO}{ integer vector; plotting order; if missing in reverse order of Polygons area }
 \item{Sr}{ object of class \link{SpatialPolygons-class}}
 \item{data}{ object of class \code{data.frame}; the number of rows in \code{data} should equal the number of \link{Polygons-class} objects in \code{Sr}}
-\item{match.ID}{logical: (default TRUE): match SpatialPolygons member Polygons ID slot values with data frame row names, and re-order the data frame rows if necessary}
+\item{match.ID}{logical: (default TRUE): match SpatialPolygons
+member Polygons ID slot values with data frame row names, and
+re-order the data frame rows if necessary. If character: indicates
+the column in \code{data} with Polygons IDs to match}
 \item{SP}{object of class \link{SpatialPolygons-class}}
 } 
 

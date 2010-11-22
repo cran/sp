@@ -2,6 +2,9 @@ Spatial <- function(bbox, proj4string = CRS(as.character(NA))) {
         new("Spatial", bbox=bbox, proj4string=proj4string)
 }
 
+if (!isGeneric("addAttrToGeom"))
+	setGeneric("addAttrToGeom", function(x, y, match.ID, ...)
+		standardGeneric("addAttrToGeom"))
 if (!isGeneric("bbox"))
 	setGeneric("bbox", function(obj)
 		standardGeneric("bbox"))
@@ -20,6 +23,9 @@ if (!isGeneric("coordnames<-"))
 if (!isGeneric("dimensions"))
 	setGeneric("dimensions", function(obj)
 		standardGeneric("dimensions"))
+if (!isGeneric("geometry"))
+	setGeneric("geometry", function(obj)
+		standardGeneric("geometry"))
 if (!isGeneric("gridded"))
 	setGeneric("gridded", function(obj)
 		standardGeneric("gridded"))
@@ -29,6 +35,9 @@ if (!isGeneric("is.projected"))
 if (!isGeneric("overlay"))
 	setGeneric("overlay", function(x, y, ...)
 		standardGeneric("overlay"))
+if (!isGeneric("over"))
+	setGeneric("over", function(x, y, returnList = FALSE, fn = NULL)
+		standardGeneric("over"))
 if (!isGeneric("plot"))
 	setGeneric("plot", function(x, y, ...)
 		standardGeneric("plot"))
@@ -242,5 +251,13 @@ setReplaceMethod("$", "Spatial",
 			stop("no $<- method for object without attributes")
 		x@data[[name]] = value 
 		x 
+	}
+)
+
+setMethod("geometry", "Spatial",
+	function(obj) { 
+		if ("data" %in% slotNames(obj))
+			stop(paste("geometry method missing for class",class(obj)))
+		obj 
 	}
 )

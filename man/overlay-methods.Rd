@@ -3,6 +3,7 @@
 \alias{overlay-methods}
 \alias{overlay,SpatialPointsDataFrame,SpatialPolygons-method}
 \alias{overlay,SpatialPoints,SpatialPolygons-method}
+\alias{overlay,SpatialPoints,SpatialPolygonsDataFrame-method}
 \alias{overlay,SpatialPolygons,SpatialPoints-method}
 \alias{overlay,SpatialGridDataFrame,SpatialPoints-method}
 \alias{overlay,SpatialGrid,SpatialPoints-method}
@@ -23,6 +24,8 @@ falls in multiple polygons, the last polygon is recorded.  }
 except that an argument \code{fn=xxx} is allowed, e.g. \code{fn = mean} which will 
 then report a data.frame with the mean values of the \code{x} points falling in each
 polygon (set) of \code{y} }
+\item{x = "SpatialPoints", y = "SpatialPolygonsDataFrame"}{ returns a data.frame of the
+second argument with row entries corresponding to the first argument }
 \item{x = "SpatialPolygons", y = "SpatialPoints"}{ returns the polygon index of points in \code{y};
 if \code{x} is a \code{SpatialPolygonsDataFrame}, a data.frame with rows from \code{x}
 corresponding to points in \code{y} is returned.}

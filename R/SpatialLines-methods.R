@@ -287,3 +287,7 @@ print.SpatialLines = function(x, ..., digits = 6, asWKT=FALSE) {
 }
 #setMethod("show", "SpatialLines", function(object) print.SpatialLines(object))
 length.SpatialLines = function(x) { length(x@lines) }
+
+names.SpatialLines = function(x) { 
+	unlist(lapply(x@lines, function(X) X@ID)) 
+}

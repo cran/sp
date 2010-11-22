@@ -1,11 +1,15 @@
 "SpatialPointsDataFrame" = function(coords, data, coords.nrs = numeric(0), 
 		proj4string = CRS(as.character(NA)), match.ID = TRUE,
                 bbox=NULL) {
+    if (is.character(match.ID)) {
+        row.names(data) = data[match.ID[1]]
+        match.ID = TRUE
+    }
 	if (!is(coords, "SpatialPoints"))
 		coords = coordinates(coords)
 	if (match.ID && is.matrix(coords)) {
 		cc.ID = dimnames(coords)[[1]]
-		if (!is.null(cc.ID) && is(data, "data.frame")) {
+		if (!is.null(cc.ID) && is(data, "data.frame")) { # match ID:
 			n = nrow(data)
 			if (length(unique(cc.ID)) != n)
 				stop(
@@ -26,6 +30,10 @@
 }
 
 setMethod("coordinates", "SpatialPointsDataFrame", function(obj) obj@coords)
+setMethod("addAttrToGeom", signature(x = "SpatialPoints", y = "data.frame"),
+	function(x, y, match.ID, ...) 
+		SpatialPointsDataFrame(x, y, match.ID = match.ID, ...)
+)
 
 #setReplaceMethod("coordinates", signature(object = "data.frame", value = "numeric"),
 #	coordinates.num)
@@ -111,7 +119,10 @@ setAs("SpatialPointsDataFrame", "data.frame", function(from)
 #setAs("SpatialPointsDataFrame", "AttributeList", function(from) from@data)
 
 names.SpatialPointsDataFrame <- function(x) names(x@data)
-"names<-.SpatialPointsDataFrame" <- function(x, value) { names(x@data) = value; x }
+"names<-.SpatialPointsDataFrame" <- function(x, value) { 
+	names(x@data) = value; 
+	x 
+}
 
 #"coordnames<-.SpatialPointsDataFrame" <- function(x, value)
 
@@ -175,6 +186,8 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		i = TRUE
 	if (is.matrix(i))
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
+	if (is(i, "Spatial"))
+		i = !is.na(over(x, i))
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
 	#coords.nrs = x@coords.nrs
@@ -192,3 +205,6 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 })
 
 setMethod("split", "SpatialPointsDataFrame", split.data.frame)
+
+setMethod("geometry", "SpatialPointsDataFrame",
+	function(obj) as(obj, "SpatialPoints"))
