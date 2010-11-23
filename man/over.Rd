@@ -4,6 +4,7 @@
 \alias{\%over\%}
 \alias{over-methods}
 \alias{over,SpatialPoints,SpatialPoints-method}
+\alias{over,SpatialPoints,SpatialPointsDataFrame-method}
 \alias{over,SpatialPoints,SpatialPolygons-method}
 \alias{over,SpatialPoints,SpatialPolygonsDataFrame-method}
 \alias{over,SpatialGridDataFrame,SpatialPolygonsDataFrame-method}
@@ -18,19 +19,24 @@
 \alias{over,SpatialPoints,SpatialPixels-method}
 \alias{over,SpatialPoints,SpatialPixelsDataFrame-method}
 \alias{over,SpatialPolygons,SpatialGridDataFrame-method}
+\alias{aggregate.Spatial}
 \title{ consistent spatial overlay for points, grids and polygons }
 \description{ consistent spatial overlay for points, grids and polygons:
 retrieves the indexes or attributes from one geometry at the spatial
 locations of another }
 \usage{
-over(x, y, returnList = FALSE, fn = NULL)
+over(x, y, returnList = FALSE, fn = NULL, ...)
 x %over% y
+aggregate.Spatial(x, by, FUN = mean, ...)
 }
 \arguments{
 \item{x}{geometry (locations) of the queries}
 \item{y}{layer from which the geometries or attributes are queried}
 \item{returnList}{ logical; see value }
 \item{fn}{(optional) a function; see value }
+\item{by}{ geometry over which attributes in \code{x} are aggregated }
+\item{FUN}{aggregation function }
+\item{...}{arguments passed on to function fn or FUN}
 }
 \value{ 
 an object of length \code{length(x)}, or a data.frame with number
@@ -40,6 +46,10 @@ cell centre, polygon or lines) in \code{x}.  if \code{returnList} is
 TRUE, a list of length \code{length(x)}, with list element \code{i}
 the vector of indices of the geometries in \code{y} that correspond
 to the $i$-th geometry in \code{x}.
+
+Function aggregate.Spatial aggregates the attribute values
+of \code{x} over the geometry of \code{by}, using aggregation
+function FUN.
 }
 
 \section{Methods}{

@@ -9,6 +9,7 @@
 \alias{print.summary.SpatialGridDataFrame}
 \alias{coerce,SpatialGridDataFrame,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,SpatialPixelsDataFrame-method}
+\alias{coerce,SpatialGridDataFrame,SpatialPolygonsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,data.frame-method}
 \alias{coerce,SpatialGridDataFrame,matrix-method}
 \alias{as.data.frame.SpatialGridDataFrame}
