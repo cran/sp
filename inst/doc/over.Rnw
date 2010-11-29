@@ -1,0 +1,277 @@
+% dimensions(x) returns number of spatial dimensions
+% y = transform(x, "proj4string")
+% bbox(x)
+% coordinates(x) ; <-
+% rings(x) ; <-
+% method to retrieve lines? --> Lines()?
+% gridded(x)  ; <-
+% 
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+% \VignetteIndexEntry{ sp: overlay and aggregation }
+
+\usepackage{color}
+
+\usepackage{Sweave}
+\newcommand{\strong}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\code}[1]{{\tt #1}}
+\let\pkg=\strong
+
+\title{\bf Map overlay and \\ spatial aggregation in {\tt sp}}
+\author{Edzer Pebesma\footnote{Institute for Geoinformatics,
+University of Muenster, Weseler Strasse 253, 48151 M\"{u}nster, Germany.
+{\tt edzer.pebesma@uni-muenster.de}}}
+\date{Nov 2010}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+According to the free e-book
+\href{http://www.map-reading.com/}{Reading topographic maps} by
+Robert Davidson, 
+\begin{quotation} 
+{\em An overlay is a clear sheet of plastic or semi-transparent paper. It
+is used to display supplemental map and tactical information related
+to military operations. It is often used as a supplement to orders
+given in the field. Information is plotted on the overlay at the
+same scale as on the map, aerial photograph, or other graphic being
+used. When the overlay is placed over the graphic, the details
+plotted on the overlay are shown in their true position. }
+\end{quotation}
+This suggests that {\em map overlay} is concerned with combining
+two, or possibly more, map layers by putting them on top of each
+other. This kind of overlay can be obtained in R e.g. by plotting
+one map layer, and plotting a second map layer on top of it. If the
+second one contains polygons, transparent colours can be used to
+avoid hiding of the first layer. When using the {\tt spplot} command,
+the {\tt sp.layout} argument can be used to combine multiple layers.
+
+O'Sullivan and Unwin (2003) argue in chapter 10 (Putting maps
+together: map overlay) that map overlay has to do with the
+combination of two (or more) maps. They mainly focus on the
+combination of the selection criteria stemming from several map
+layers, e.g. finding the deciduous forest area that is less than
+5 km from the nearest road. They call this {\em boolean overlays}.
+
+One could look at this problem as a polygon-polygon overlay, where we
+are looking for the intersection of the polygons with the deciduous
+forest with the polygons delineating the area less than 5 km from
+a road. Other possibilities are to represent one or both coverages
+as grid maps, and find the grid cells for which both criteria are
+valid (grid-grid overlay). A third possibility would be that one
+of the criteria is represented by a polygon, and the other by a
+grid (polygon-grid overlay, or grid-polygon overlay). In the end, as
+O'Sullivan and Unwin argue, we can overlay any spatial type (points,
+lines, polygons, pixels/grids) with any other. In addition, we can
+address spatial attributes (as the case of grid data), or only the
+geometry (as in the case of the polygon-polygon intersection).
+
+This vignette will explain how the {\tt over} method in package
+{\tt sp} can be used to compute map overlays, meaning that instead
+of to overlaying maps visually, the the information that comes from
+combining two map layers is retrieved.
+
+\section{Geometry overlays}
+We will use the word {\em geometry} to denote the purely spatial
+characteristics, meaning that attributes (properties of a particular
+geometry) are ignored. With {\em location} we denote a point, line,
+polygon or grid cell.
+
+Given two geometries, {\tt A} and {\tt B}, the following equivalent
+commands
+<<eval=FALSE>>=
+A %over% B
+over(A, B)
+@
+will retrieve the geometry (location) indexes of B at the locations
+of A. More in particular, it returns an integer vector of length
+{\tt length(A)} that has {\tt NA} values for locations in {\tt A}
+not matching with locations in {\tt B} (e.g. those points outside
+a set of polygons). Selecting points {\em inside} some geometry {\tt B} 
+is done by
+<<eval=FALSE>>=
+A[B]
+@
+which is equivalent to
+<<eval=FALSE>>=
+A[!is.na(over(A,B))]
+@
+We will now illustrate this with toy data created by
+<<keep.source=TRUE>>=
+library(sp)
+x = c(0.5, 0.5, 1.2, 1.5)
+y = c(1.5, 0.5, 0.5, 0.5)
+xy = cbind(x,y)
+dimnames(xy)[[1]] = c("a", "b", "c", "d")
+pts = SpatialPoints(xy)
+
+xpol = c(0,1,1,0,0)
+ypol = c(0,0,1,1,0)
+pol = SpatialPolygons(list(
+	Polygons(list(Polygon(cbind(xpol-1.05,ypol))), ID="x1"),
+	Polygons(list(Polygon(cbind(xpol,ypol))), ID="x2"),
+	Polygons(list(Polygon(cbind(xpol,ypol-1.05))), ID="x3"),
+	Polygons(list(Polygon(cbind(xpol+1.05,ypol))), ID="x4"),
+	Polygons(list(Polygon(cbind(xpol+.4, ypol+.1))), ID="x5")
+	))
+@
+and shown in figure \ref{fig:toy}.
+\begin{figure}
+<<fig=TRUE>>=
+plot(pol, xlim = c(-1.1, 2.1), ylim = c(-1.1, 1.6), border=2:6, axes=TRUE)
+points(pts, col='red')
+text(c(-1,0.1,0.1,1.1,0.45), c(0,0,-1,0,0.1), c("x1", "x2", "x3", "x4", "x5"))
+text(coordinates(pts), pos=1, row.names(pts))
+@
+\caption{ Toy data: points (a-d), and (overlapping) polygons (x1-x5) }
+\label{fig:toy}
+\end{figure}
+
+<<>>=
+over(pts, pol)
+over(pts, pol, returnList = TRUE)
+pts[pol]
+
+over(pol, pts)
+over(pol, pts, returnList = TRUE)
+@
+
+\section{Extraction, aggregation of attributes}
+
+This section will demonstrate how, using \code{over}, attribute
+values of argument \code{y} at locations of \code{x} can be
+extracted, and either aggregated to a data frame, or reported as
+a list.
+
+\subsection{Extracting attribute values}
+This example creates a \code{SpatialPointsDataFrame} and a
+\code{SpatialPolygonsDataFrame} for the toy data created earlier:
+<<>>=
+zdf = data.frame(z1 = 1:4, z2=4:1, f = c("a", "a", "b", "b"),
+	row.names = c("a", "b", "c", "d"))
+zdf
+ptsdf = SpatialPointsDataFrame(pts, zdf)
+
+zpl = data.frame(z = c(10, 15, 25, 3, 0), zz=1:5, 
+	f = c("z", "q", "r", "z", "q"), row.names = c("x1", "x2", "x3", "x4", "x5"))
+zpl
+poldf = SpatialPolygonsDataFrame(pol, zpl)
+@
+
+The first example creates a data.frame, where for each element in \code{pts}
+the {\em first} element of the corresponding attribute table record of the
+second argument is taken:
+<<>>=
+over(pts, poldf)
+@
+
+As an alternative, we can pass a user-defined function to process the table:
+<<>>=
+over(pts, poldf[1:2], fn = mean)
+@
+
+To obtain the list of table entries for each point, use the
+\code{returnList} argument:
+<<>>=
+over(pts, poldf, returnList = TRUE)
+@
+
+The same actions can be done when the arguments are reversed:
+<<>>=
+over(pol, ptsdf)
+over(pol, ptsdf[1:2], fn = mean)
+@
+
+\subsection{Aggregation}
+
+\begin{figure}
+<<fig=TRUE>>=
+data(meuse.grid)
+gridded(meuse.grid) = ~x+y
+gt = GridTopology(gridparameters(meuse.grid)$cellcentre.offset, c(400,400), c(8,11))
+SG = SpatialGrid(gt)
+image(aggregate(meuse.grid[3], SG))
+@
+\caption{ aggregation over meuse.grid distance values}
+\end{figure}
+
+\section{More tests, and their output}
+<<>>=
+gt = GridTopology(c(.5,.5), c(1,1), c(3,2))
+sg = SpatialGrid(gt)
+df6 = data.frame(z = 6:1, f = c("a", "a", "b", "b", "c", "c"))
+sgdf = SpatialGridDataFrame(gt, df6)
+over(sg, pol)
+over(sg, poldf)
+over(sg, poldf[1:2])
+
+spix = as(sg, "SpatialPixels")
+spixdf = as(sgdf, "SpatialPixelsDataFrame")
+over(spix, pol)
+over(spix, poldf)
+over(spix, poldf[1:2])
+
+over(pol, sg)
+over(pol, sgdf)
+over(pol, sgdf[1], fn = mean)
+
+over(pol, spix)
+over(pol, spixdf)
+over(pol, spixdf[1], fn = mean)
+
+over(pts, sg)
+over(pts, spix)
+over(pts, sgdf)
+over(pts, spixdf)
+
+over(pts, sg, returnList=TRUE)
+over(pts, spix, returnList=TRUE)
+over(pts, sgdf, returnList=TRUE)
+over(pts, spixdf, returnList=TRUE)
+
+over(sg, sg)
+over(sg, spix)
+over(sg, sgdf)
+over(sg, spixdf)
+
+over(sg, sg, returnList=TRUE)
+over(sg, spix, returnList=TRUE)
+over(sg, sgdf, returnList=TRUE)
+over(sg, spixdf, returnList=TRUE)
+
+over(spix, sg)
+over(spix, spix)
+over(spix, sgdf)
+over(spix, spixdf)
+
+over(spix, sg, returnList=TRUE)
+over(spix, spix, returnList=TRUE)
+over(spix, sgdf, returnList=TRUE)
+over(spix, spixdf, returnList=TRUE)
+@
+
+\section*{References}
+\begin{itemize}
+\item O'Sullivan, D., Unwin, D. (2003) Geographical Information
+Analysis. Wiley, NJ.
+\end{itemize}
+
+\end{document}
+
+\begin{table}
+\begin{tabular}{|l|cccc|} \hline 
+              & y: points & y: lines & y: polygons & y: pixels/grids \\ \hline
+x: points        &   x    &          &      x      &      x       \\
+x: lines         &        &          &             &              \\
+x: polygons      &   x    &          &             &      x       \\
+x: pixels/grids  &   x    &          &      x      &      x       \\ \hline
+\end{tabular}
+\caption{ \code{over} methods implemented for different \code{x} 
+and \code{y} arguments.  }
+\end{table}

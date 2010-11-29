@@ -8,6 +8,7 @@
 \alias{coerce,SpatialGrid,data.frame-method}
 \alias{coerce,SpatialGrid,SpatialPixels-method}
 \alias{coerce,SpatialGrid,SpatialPoints-method}
+\alias{coerce,SpatialGrid,SpatialPolygons-method}
 \alias{show,SpatialGrid-method}
 
 \title{Class "SpatialGrid" ~~~ }

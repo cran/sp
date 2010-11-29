@@ -2,7 +2,7 @@ useDynLib(sp)
 
 import(methods)
 importFrom(graphics, plot, hist)
-inportFrom(stats, kmeans)
+importFrom(stats, kmeans)
 import(utils) # stack, to be changed later (2.5.0?) into
 #importFrom(lattice, levelplot, xyplot, trellis.par.set, 
 #	panel.lines, panel.text, panel.points, panel.identify,
@@ -24,6 +24,8 @@ export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	remove.duplicates, degAxis, "%over%")
 
 export(coordinatevalues)
+
+export(aggregate.Spatial)
 
 export(dimensions)
 

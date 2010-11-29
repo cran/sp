@@ -310,3 +310,10 @@ setMethod("geometry", "SpatialGridDataFrame",
 
 setMethod("geometry", "SpatialPixelsDataFrame",
 	function(obj) as(obj, "SpatialPixels"))
+
+setAs("SpatialGridDataFrame", "SpatialPolygonsDataFrame",
+	function(from) {
+		fullgrid(from) = FALSE
+		as(from, "SpatialPolygonsDataFrame")
+	}
+)
