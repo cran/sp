@@ -140,7 +140,7 @@ setMethod("[", "SpatialPixels",
 		if (missing(i))
 			return(x)
 		if (is(i, "Spatial"))
-			i = !is.na(overlay(x, i))
+			i = !is.na(overlay(x, geometry(i)))
 		if (drop) { # default: adjust bbox and grid
 			res = as(x, "SpatialPoints")[i]
 			tolerance = list(...)$tolerance

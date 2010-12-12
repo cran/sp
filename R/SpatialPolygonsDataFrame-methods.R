@@ -73,12 +73,12 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialPolygonsDataFrame selection")
 	if (is(i, "Spatial"))
-		i = !is.na(over(x, i))
+		i = !is.na(over(x, geometry(i)))
     if (any(is.na(i))) stop("NAs not permitted in row index")
     #SpatialPolygonsDataFrame(as(x, "SpatialPolygons")[i, , drop = FALSE],
     #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)
         y <- new("SpatialPolygonsDataFrame")
-        y@proj4string <- x@proj4string
+	y@proj4string <- x@proj4string
 	y@data = x@data[i, j, ..., drop = FALSE]
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)

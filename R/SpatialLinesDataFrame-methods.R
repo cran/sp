@@ -55,8 +55,11 @@ setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... ,
         }
     } else if (missing.i && !missing.j)
         i = TRUE
+	
     if (is.matrix(i))
         stop("matrix argument not supported in SpatialLinesDataFrame selection")
+	if (is(i, "Spatial"))
+		i = !is.na(over(x, geometry(i)))
     if (is.logical(i)) {
 	if (length(i) == 1 && i)
 	    i = 1:length(x@lines)

@@ -27,7 +27,7 @@ locations of another }
 \usage{
 over(x, y, returnList = FALSE, fn = NULL, ...)
 x %over% y
-aggregate.Spatial(x, by, FUN = mean, ...)
+\method{aggregate}{Spatial}(x, by, FUN = mean, \dots)
 }
 \arguments{
 \item{x}{geometry (locations) of the queries}

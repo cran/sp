@@ -230,30 +230,30 @@ over(pts, spix)
 over(pts, sgdf)
 over(pts, spixdf)
 
-over(pts, sg, returnList=TRUE)
-over(pts, spix, returnList=TRUE)
-over(pts, sgdf, returnList=TRUE)
-over(pts, spixdf, returnList=TRUE)
+#over(pts, sg, returnList=TRUE)
+#over(pts, spix, returnList=TRUE)
+#over(pts, sgdf, returnList=TRUE)
+#over(pts, spixdf, returnList=TRUE)
 
 over(sg, sg)
 over(sg, spix)
 over(sg, sgdf)
 over(sg, spixdf)
 
-over(sg, sg, returnList=TRUE)
-over(sg, spix, returnList=TRUE)
-over(sg, sgdf, returnList=TRUE)
-over(sg, spixdf, returnList=TRUE)
+#over(sg, sg, returnList=TRUE)
+#over(sg, spix, returnList=TRUE)
+#over(sg, sgdf, returnList=TRUE)
+#over(sg, spixdf, returnList=TRUE)
 
 over(spix, sg)
 over(spix, spix)
 over(spix, sgdf)
 over(spix, spixdf)
 
-over(spix, sg, returnList=TRUE)
-over(spix, spix, returnList=TRUE)
-over(spix, sgdf, returnList=TRUE)
-over(spix, spixdf, returnList=TRUE)
+#over(spix, sg, returnList=TRUE)
+#over(spix, spix, returnList=TRUE)
+#over(spix, sgdf, returnList=TRUE)
+#over(spix, spixdf, returnList=TRUE)
 @
 
 \section*{References}

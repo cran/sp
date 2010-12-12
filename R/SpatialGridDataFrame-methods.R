@@ -158,7 +158,7 @@ setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
 	if (is(i, "Spatial"))
-		i = !is.na(overlay(x, i))
+		i = !is.na(overlay(x, geometry(i)))
 	coords.nrs = x@coords.nrs
 	if (!isTRUE(j)) # i.e., we do some sort of column selection
 		coords.nrs = numeric(0) # will move coordinate colums last
@@ -205,7 +205,7 @@ subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 		rows = 1:grd@cells.dim[2]
 	else { # we have an i
 		if (is(i, "Spatial"))
-			i = !is.na(overlay(x, i))
+			i = !is.na(overlay(x, geometry(i)))
 		if (is.integer(i)) {
 			if ((length(i) > grd@cells.dim[2] && length(i) < nrow(x@data))
 					|| max(i) > grd@cells.dim[2]) {
