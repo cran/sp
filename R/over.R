@@ -111,6 +111,7 @@ setMethod("over",
 setMethod("over", signature("SpatialPoints", "SpatialGrid"), 
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identical(proj4string(x),proj4string(y)))
+		stopifnot(returnList == FALSE)
 		getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
 	}
 )
@@ -118,6 +119,7 @@ setMethod("over", signature("SpatialPoints", "SpatialGrid"),
 setMethod("over", signature("SpatialPoints", "SpatialGridDataFrame"), 
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identical(proj4string(x),proj4string(y)))
+		stopifnot(returnList == FALSE)
 		idx = over(x, geometry(y))
 		ret = y@data[idx,,drop=FALSE]
 		row.names(ret) = row.names(x)
@@ -128,6 +130,7 @@ setMethod("over", signature("SpatialPoints", "SpatialGridDataFrame"),
 setMethod("over", signature("SpatialPoints", "SpatialPixels"), 
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identical(proj4string(x),proj4string(y)))
+		stopifnot(returnList == FALSE)
 		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
 		idx = match(idx, y@grid.index)
 		idx
@@ -137,6 +140,7 @@ setMethod("over", signature("SpatialPoints", "SpatialPixels"),
 setMethod("over", signature("SpatialPoints", "SpatialPixelsDataFrame"), 
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identical(proj4string(x),proj4string(y)))
+		stopifnot(returnList == FALSE)
 		idx = over(x, geometry(y))
 		ret = y@data[idx,,drop=FALSE]
 		row.names(ret) = row.names(x)

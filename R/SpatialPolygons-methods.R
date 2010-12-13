@@ -95,7 +95,7 @@ row.names.SpatialPolygons <- function(x) {
 
 setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 	if (is(i, "Spatial"))
-		i = !is.na(over(x, i))
+		i = !is.na(over(x, geometry(i)))
 	if (is.logical(i)) {
 		if (length(i) == 1 && i)
 			i = 1:length(x@polygons)

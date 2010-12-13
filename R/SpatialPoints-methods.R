@@ -112,7 +112,7 @@ setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	if (is.character(i))
 		i <- match(i, row.names(x))
 	else if (is(i, "Spatial"))
-		i = !is.na(over(x, i))
+		i = !is.na(over(x, geometry(i)))
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
 #	SpatialPoints(coords=x@coords[i, , drop=drop], 

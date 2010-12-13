@@ -186,22 +186,8 @@ c 3 b
 d 2 c
 e 2 c
 > 
-> over(pts, sg, returnList=TRUE)
-[1] 1 2 4 5 5
-> over(pts, spix, returnList=TRUE)
-[1] 1 2 4 5 5
-> over(pts, sgdf, returnList=TRUE)
-  z f
-a 6 a
-b 5 a
-c 3 b
-d 2 c
-e 2 c
-> over(pts, spixdf, returnList=TRUE)
-  z f
-a 6 a
-b 5 a
-c 3 b
-d 2 c
-e 2 c
+> #over(pts, sg, returnList=TRUE)
+> #over(pts, spix, returnList=TRUE)
+> #over(pts, sgdf, returnList=TRUE)
+> #over(pts, spixdf, returnList=TRUE)
 > 
