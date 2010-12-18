@@ -96,10 +96,7 @@ points outside the grid }
 \note{points on a polygon boundary and points corresponding to a
 polygon vertex are considered to be inside the polygon.
 
-These methods assume that pixels and polygons are never overlapping;
-if they are (and a point falls in more than one pixel/polygon),
-only one of the geometries concerned is addressed.
-
-}
+These methods assume that pixels and grid cells are never
+overlapping.  }
 \seealso{\link{overlay}, \link{point.in.polygon}}
 \keyword{methods}

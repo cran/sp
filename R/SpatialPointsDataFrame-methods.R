@@ -208,3 +208,5 @@ setMethod("split", "SpatialPointsDataFrame", split.data.frame)
 
 setMethod("geometry", "SpatialPointsDataFrame",
 	function(obj) as(obj, "SpatialPoints"))
+
+length.SpatialPointsDataFrame = function(x) { nrow(x@coords) }

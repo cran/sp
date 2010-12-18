@@ -1,6 +1,217 @@
+2010-12-18 17:19  edzer
+
+	* inst/doc/over.Rnw: made over pass R < 2.12
+
+2010-12-18 17:06  edzer
+
+	* DESCRIPTION: version bump
+
+2010-12-18 17:06  edzer
+
+	* NAMESPACE, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R: added length method for
+	  Spatial*DataFrame objects
+
+2010-12-18 16:51  edzer
+
+	* R/image.R: changed max = 255 into maxColorValue = 255, avoiding
+	  partial argument matching
+
+2010-12-15 18:10  edzer
+
+	* R/spplot.R: patch to r-sig-geo of Dylan Beaudette, 15 dec 2011
+
+2010-12-13 22:09  edzer
+
+	* man/over.Rd: removed restriction to non-overlapping polygons from
+	  docs.
+
+2010-12-12 22:52  edzer
+
+	* DESCRIPTION, NAMESPACE, R/SpatialGrid-methods.R,
+	  R/SpatialGridDataFrame-methods.R, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/over.R,
+	  inst/doc/over.Rnw, man/over.Rd, tests/sel.R, tests/sel.Rout.save:
+	  version update; take aggregate from stats namespace; spatial
+	  objects in selections like points[polygon,] now also work for
+	  Spatial*DataFrame as selection criterion (taking the geometry of
+	  it); removed the returnList=TRUE option for those "over" methods
+	  that do not (yet) support it (triggers error).  Changed vignette
+	  and tests accordingly.
+
+2010-11-29 20:11  edzer
+
+	* NAMESPACE: corrected inportFrom into importFrom
+
+2010-11-22 21:47  edzer
+
+	* R/over.R, man/SpatialGrid-class.Rd,
+	  man/SpatialGridDataFrame-class.Rd, man/over.Rd: small mistakes in
+	  code/docs to make sp pass check;
+
+2010-11-22 21:23  edzer
+
+	* DESCRIPTION, NAMESPACE, R/Spatial-methods.R,
+	  R/SpatialGrid-methods.R, R/SpatialGridDataFrame-methods.R,
+	  R/over.R, inst/doc/over.Rnw: added aggregate method; added
+	  coercion from SpatialGrid* to SpatialPolygon*; version bump;
+	  added second vignette
+
+2010-11-22 12:38  edzer
+
+	* DESCRIPTION, NAMESPACE, R/Spatial-methods.R,
+	  R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/zerodist.R,
+	  man/addattr.Rd, man/over.Rd, tests/sel.R, tests/sel.Rout.save:
+	  added addAttrToGeom method to create a SpatialXxxDataFrame from a
+	  SpatialXxx object and a data.frame, with instances for each
+	  SpatialXxx.
+
+2010-11-18 22:36  edzer
+
+	* R/over.R: removed the full matrix need in .invert
+
+2010-11-15 23:53  edzer
+
+	* R/: over.R, point.in.polygon.R: modified some of the over and
+	  pointInPol functions to catch the case where more than one
+	  polygon coves a point (think package cshapes)
+
+2010-11-13 20:43  edzer
+
+	* man/geometry-methods.Rd: forgot to add & commit the docs for the
+	  geometry method, mentioned in the previous commit.
+
+2010-11-13 20:37  edzer
+
+	* DESCRIPTION, NAMESPACE, R/Spatial-methods.R,
+	  R/SpatialGrid-methods.R, R/SpatialLines-methods.R,
+	  R/SpatialLinesDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/over.R,
+	  man/SpatialLines.Rd, man/SpatialPoints.Rd,
+	  man/SpatialPolygons.Rd, man/over.Rd, tests/sel.R,
+	  tests/sel.Rout.save: match.ID in SpatialXxxDataFrame() now can be
+	  character, in which case the corresponding column in the
+	  data.frame is used;
+
+	  A generic geometry() converts a SpatialXxxDataFrame into a
+	  SpatialXxx.
+
+	  A generic over() provides a better overlay then overlay -- it is
+	  consistent in that over(x,y) provides characteristics of y on
+	  spatial locations of x -- I didn't modify overlay() as too many
+	  instances (including the book) rely on its inconsistency.
+
+	  Selection of objects can now be done by spatial objects: x[y]
+	  returns the polygons x covered by points y, or the points x
+	  inside polygons y, etc.
+
+	  Related to this: x[x$dist < 30,] would work for
+	  SpatialPixelsDataFrame but fail for SpatialGridDataFrame -- it
+	  now works; any i-selector (first, with ,) longer than the number
+	  of rows selects the cells. Selecting cells means essentially that
+	  de-selected cells get assigned NA (!).
+
+	  a names methods for SpatialPolygons was added.
+
+2010-11-08 22:26  edzer
+
+	* R/overlay.R: reverted overlay changes back to 0.9-72 state.
+
+2010-11-08 18:27  edzer
+
+	* NAMESPACE, R/Spatial-methods.R, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R: added a geometry generic
+	  and method, that returns the coercion to a Spatial* object from a
+	  Spatial*DataFrame object.
+
+2010-11-08 13:56  edzer
+
+	* man/overlay-methods.Rd: docs pass check
+
+2010-11-08 13:34  edzer
+
+	* R/: SpatialPoints-methods.R, SpatialPolygons-methods.R,
+	  overlay.R: modified (corrected?) overlay methods; see post on
+	  r-spatial-devel; added selection with Spatial object to
+	  SpatialPolygons objects.
+
+2010-11-06 11:40  edzer
+
+	* DESCRIPTION, R/SpatialGrid-methods.R,
+	  R/SpatialGridDataFrame-methods.R, R/SpatialPoints-methods.R,
+	  R/SpatialPointsDataFrame-methods.R, man/SpatialGrid.Rd: extended
+	  "[" method for these classes to allow the first argument that is
+	  of class "Spatial"; in that case, the selection will be those
+	  items that do not result in an NA when overlaied with the object.
+
+	  for SpatialGridDataFrame, I now allow the first index to be of
+	  length nrow(x@data), meaning that cell-by-cell selection takes
+	  place instead of row-based.
+
+2010-10-31 14:01  edzer
+
+	* R/image.R: added ,drop=FALSE to as.image function, for the case
+	  of single row or col grids
+
+2010-10-25 20:29  rsbivand
+
+	* DESCRIPTION, R/GridTopology-methods.R: added extra check to
+	  points2grid
+
+2010-10-19 12:08  edzer
+
+	* DESCRIPTION: version update; changed comment
+
+2010-10-15 20:25  edzer
+
+	* R/spdists.R: spDists now returns always matrix, also in case of
+	  dim 1 x 1
+
+2010-10-11 10:46  edzer
+
+	* DESCRIPTION, NAMESPACE: version update; added import(lattice) to
+	  decrease R version depency to 2.10.0
+
+2010-10-11 10:37  edzer
+
+	* DESCRIPTION, demo/gallery.R: version update; gallery update
+
+2010-10-08 17:09  edzer
+
+	* R/spplot.R: update sp.layout in spplot of polygons, to work just
+	  as with grids.
+
+2010-10-04 20:21  edzer
+
+	* DESCRIPTION: version update; expanded Suggest: field with rgdal
+	  and lattice
+
+2010-09-28 21:29  edzer
+
+	* man/spplot.Rd: corrected help for cuts argument
+
+2010-09-20 16:12  edzer
+
+	* DESCRIPTION: updated version
+
+2010-09-20 16:12  edzer
+
+	* DESCRIPTION: updated date
+
 2010-09-20 08:22  rsbivand
 
-	* ChangeLog, NAMESPACE, tests/fail1.Rout.save: test save
+	* ChangeLog, NAMESPACE, tests/fail1.Rout.save, inst/ChangeLog: test
+	  save
 
 2010-09-19 21:16  edzer
 

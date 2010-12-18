@@ -196,7 +196,11 @@ data(meuse.grid)
 gridded(meuse.grid) = ~x+y
 gt = GridTopology(gridparameters(meuse.grid)$cellcentre.offset, c(400,400), c(8,11))
 SG = SpatialGrid(gt)
-image(aggregate(meuse.grid[3], SG))
+if (as.numeric(version$minor)<12) {
+  image(sp:::aggregate.Spatial(meuse.grid[3], SG))
+} else {
+  image(aggregate(meuse.grid[3], SG))
+ }
 @
 \caption{ aggregation over meuse.grid distance values}
 \end{figure}
