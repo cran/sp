@@ -52,7 +52,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
                 if (any(NAs))
                     xd <- xd[!NAs, ]
                 ## create RGBs (using alpha=1 by default)
-                RGBs <- rgb(xd, max = 255)
+                RGBs <- rgb(xd, maxColorValue = 255)
                 if (any(NAs)) {
                     z <- rep(NA, length(NAs))
                     z[!NAs] <- RGBs
@@ -67,7 +67,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		xd <- x@data[,c(red, green, blue)]
 		NAs <- is.na(xd[,1]) | is.na(xd[,2]) | is.na(xd[,3])
 		if (any(NAs)) xd <- xd[!NAs,]
-		RGBs <- rgb(xd, max=255)
+		RGBs <- rgb(xd, maxColorValue = 255)
 		if (any(NAs)) {
 		    z <- rep(NA, length(NAs))
 		    z[!NAs] <- RGBs

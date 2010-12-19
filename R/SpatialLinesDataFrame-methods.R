@@ -98,3 +98,5 @@ print.SpatialLinesDataFrame = function(x, ..., digits = 6, asWKT = .asWKT)
 
 setMethod("geometry", "SpatialLinesDataFrame",
 	function(obj) as(obj, "SpatialLines"))
+
+length.SpatialLinesDataFrame = function(x) { length(x@lines) }

@@ -317,3 +317,6 @@ setAs("SpatialGridDataFrame", "SpatialPolygonsDataFrame",
 		as(from, "SpatialPolygonsDataFrame")
 	}
 )
+
+length.SpatialPixelsDataFrame = function(x) { nrow(x@coords) }
+length.SpatialGridDataFrame = function(x) { .NumberOfCells(x@grid) }

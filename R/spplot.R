@@ -54,7 +54,7 @@ sp.grid = function(obj, col = 1, alpha = 1, ...) {
 	gt = as(getGridTopology(obj), "data.frame")
 	grid.rect(x = xy[,1], y = xy[,2], width = gt$cellsize[1],
 		height = gt$cellsize[2], default.units = "native",
-		gp = gpar(fill = col, col = NULL, alpha = alpha))
+		gp = gpar(fill = col, col = NA, alpha = alpha))
 }
 
 sp.text = function(loc, txt, ...) {

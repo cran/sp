@@ -121,3 +121,5 @@ setMethod("split", "SpatialPolygonsDataFrame", split.data.frame)
 
 setMethod("geometry", "SpatialPolygonsDataFrame",
 	function(obj) as(obj, "SpatialPolygons"))
+
+length.SpatialPolygonsDataFrame = function(x) { length(x@polygons) }
