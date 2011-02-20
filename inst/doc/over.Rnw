@@ -140,6 +140,7 @@ pts[pol]
 
 over(pol, pts)
 over(pol, pts, returnList = TRUE)
+row.names(pol[pts])
 @
 
 \section{Extraction, aggregation of attributes}

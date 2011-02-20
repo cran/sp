@@ -56,13 +56,13 @@ zerodist2 <- function (obj1, obj2, zero = 0) {
 }
 
 remove.duplicates <- function(obj, zero = 0.0, remove.second = TRUE) {
+	if (remove.second) 
+		idx = 2
+	else
+		idx = 1
 	zd = zerodist(obj, zero)
-	if (nrow(zd) > 0) {
-		if (remove.second) 
-			idx = 2
-		else
-			idx = 1
+	if (nrow(zd) > 0)
 		obj[-zd[,idx], ]
-	} else
+	else
 		obj
 }

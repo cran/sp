@@ -26,7 +26,7 @@ retrieves the indexes or attributes from one geometry at the spatial
 locations of another }
 \usage{
 over(x, y, returnList = FALSE, fn = NULL, ...)
-x %over% y
+x \%over\% y
 \method{aggregate}{Spatial}(x, by, FUN = mean, \dots)
 }
 \arguments{

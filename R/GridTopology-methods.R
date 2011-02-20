@@ -51,7 +51,8 @@ coordinatevalues = function(obj) {
 	ret
 }
 
-points2grid = function(points, tolerance=sqrt(.Machine$double.eps), round=NULL, fuzz.tol=3) {
+points2grid = function(points, tolerance=sqrt(.Machine$double.eps), 
+		round = NULL, fuzz.tol = 3) {
 	# work out grid topology from points
 	n = dimensions(points)
 	ret = new("GridTopology", 
@@ -73,28 +74,9 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps), round=NULL, 
     		if (err1 > tolerance) { 
 			xx = ru.difx / min(ru.difx)
 			err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
-			if (err2 > tolerance && !isTRUE(all.equal(err2, 1))) {
-			  cat(paste("suggested tolerance minimum:", err2, "\n"))
-       			stop(paste("dimension", i,": coordinate intervals are not constant"))
-			} else if (fuzz) {
-				o <- kmeans(difx, 2)
-				mdx <- which.max(o$centers)
-				difx_in <- difx[o$cluster == mdx]
-				dxsd <- sd(difx_in)
-				if (dxsd > tolerance) {
-				    warning(paste("grid has empty column/rows in dimension", i))
-				    hh <- hist(difx_in, plot=FALSE)
-				    hh1 <- which.max(hh$counts)
-				    if (hh$counts[hh1] < sum(hh$counts)/2)
-				     stop(paste("dimension", i,
-				     ": coordinate intervals are not constant",
-				     "after allowing for numeric fuzz"))
-				    hh1a <- difx_in >= hh$breaks[hh1]
-				    hh1b <- difx_in <= hh$breaks[(hh1+1)]
-				    difx <- mean(difx_in[hh1a & hh1b])
-				} else difx <- max(o$centers)
-				if (!is.null(round))
-				    difx <- round(difx, digits=round)
+			if (err2 > tolerance) {
+				cat(paste("suggested tolerance minimum:", err2, "\n"))
+       				stop(paste("dimension", i,": coordinate intervals are not constant"))
 			} else {
 			    difx = difx[difx < ru.difx[1] + tolerance]
 			    warning(paste("grid has empty column/rows in dimension", i))
