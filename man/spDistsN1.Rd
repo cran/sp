@@ -4,7 +4,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Euclidean or Great Circle distance between points}
 \description{
-  The function returns a vector of distances between a matrix of 2D points and a single 2D point, using Euclidean or Great Circle distance (WGS84 ellipsoid) methods.
+  The function returns a vector of distances between a matrix of 2D points, first column longitude, second column latitude, and a single 2D point, using Euclidean or Great Circle distance (WGS84 ellipsoid) methods.
 }
 \usage{
 spDistsN1(pts, pt, longlat = FALSE)
@@ -12,10 +12,10 @@ spDists(x, y = x, longlat = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{pts}{A matrix of 2D points, or a SpatialPoints or SpatialPointsDataFrame object}
-  \item{pt}{A single 2D point, or a SpatialPoints or SpatialPointsDataFrame object with one point only}
-  \item{x}{A matrix of n-D points with row denoting points, or a Spatial object that has a coordinates method}
-  \item{y}{A matrix of n-D points with row denoting points, or a Spatial object that has a coordinates method}
+  \item{pts}{A matrix of 2D points, first column x/longitude, second column y/latitude, or a SpatialPoints or SpatialPointsDataFrame object}
+  \item{pt}{A single 2D point, first value x/longitude, second value y/latitude, or a SpatialPoints or SpatialPointsDataFrame object with one point only}
+  \item{x}{A matrix of n-D points with row denoting points, first column x/longitude, second column y/latitude, or a Spatial object that has a coordinates method}
+  \item{y}{A matrix of n-D points with row denoting points, first column x/longitude, second column y/latitude, or a Spatial object that has a coordinates method}
   \item{longlat}{if FALSE, Euclidean distance, if TRUE Great Circle distance}
 }
 
