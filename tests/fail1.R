@@ -106,7 +106,7 @@ meuse.grid$y <- meuse.grid$y + rnorm(length(meuse.grid$y), 0, 0.0002)
 coordinates(meuse.grid) <- c("x", "y")
 try(gridded(meuse.grid) <- TRUE)
 try(meuse.grid <- SpatialPixelsDataFrame(as(meuse.grid, "SpatialPoints"),
-  data=as(meuse.grid, "data.frame"), tolerance=0.5, round=1))
+  data=as(meuse.grid, "data.frame"), tolerance=0.077))
 gridparameters(meuse.grid)
 
 data(meuse.grid_ll)

@@ -7,7 +7,7 @@
 \alias{show,summary.GridTopology-method}
 \alias{coerce,GridTopology,data.frame-method}
 
-\title{Class "GridTopology" ~~~ }
+\title{Class "GridTopology" }
 \description{ class for defining a rectangular grid of
 arbitrary dimension }
 \section{Objects from the Class}{

@@ -10,7 +10,7 @@
 \alias{show,SpatialPixels-method}
 \alias{rbind.SpatialPixels}
 
-\title{Class "SpatialPixels" ~~~ }
+\title{Class "SpatialPixels" }
 \description{ class for defining a pixels, forming a
 possibly incomplete rectangular grid of arbitrary dimension }
 \section{Objects from the Class}{

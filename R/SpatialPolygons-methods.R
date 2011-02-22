@@ -175,6 +175,15 @@ as.SpatialLines.SpatialPolygons = function(from)
 
 setAs("SpatialPolygons", "SpatialLines", as.SpatialLines.SpatialPolygons)
 
+as.SpatialPolygonsDataFrame.SpatialPolygons = function(from) {
+	IDs <- sapply(slot(from, "polygons"), function(x) slot(x, "ID"))
+	df <- data.frame(dummy = rep(0, length(IDs)), row.names=IDs)
+	SpatialPolygonsDataFrame(from, df)
+}
+
+setAs("SpatialPolygons", "SpatialPolygonsDataFrame", 
+	as.SpatialPolygonsDataFrame.SpatialPolygons)
+
 length.SpatialPolygons = function(x) { length(x@polygons) }
 
 names.SpatialPolygons = function(x) { 

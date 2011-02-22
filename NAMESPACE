@@ -64,7 +64,7 @@ export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
 	getSpPnParts, getSpPnHoles, getSpatialPolygonsLabelPoints)
 
 export(as.SpatialPolygons.PolygonsList, Polygons, Polygon, SpatialPolygons,
-	SpatialPolygonsDataFrame)
+       as.SpatialPolygonsDataFrame.SpatialPolygons, SpatialPolygonsDataFrame)
 
 export(ShowSpatialPointsDataFrame)
 
