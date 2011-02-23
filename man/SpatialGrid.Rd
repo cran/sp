@@ -16,10 +16,10 @@ defines spatial grid by offset, cell size and dimensions
 \usage{
 GridTopology(cellcentre.offset, cellsize, cells.dim)
 SpatialPixels(points, tolerance = sqrt(.Machine$double.eps),
-		proj4string = CRS(as.character(NA)), round=NULL, fuzz.tol=3)
+		proj4string = CRS(as.character(NA)), round=NULL)
 SpatialGrid(grid, proj4string = CRS(as.character(NA)))
 coordinatevalues(obj)
-points2grid(points, tolerance = sqrt(.Machine$double.eps), round=NULL, fuzz.tol=3)
+points2grid(points, tolerance = sqrt(.Machine$double.eps), round=NULL)
 getGridIndex(cc, grid, all.inside = TRUE)
 getGridTopology(obj)
 areaSpatialGrid(obj)
@@ -34,7 +34,6 @@ areaSpatialGrid(obj)
 	\item{tolerance}{ precision, used to which extent points are exactly on
 	a grid}
         \item{round}{default NULL, otherwise a value passed to as the digits argument to \code{round} for setting cell size}
-        \item{fuzz.tol}{default 3 - a tuning argument to attempt to detect fuzz - the ratio of row/col coordinates to unique row/col coordinates}
 	\item{proj4string}{ object of class \link{CRS-class}}
 	\item{obj}{object of class or deriving from \link{SpatialGrid-class}}
 	\item{cc}{ numeric matrix with coordinates }

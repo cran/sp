@@ -15,7 +15,7 @@
 \alias{rbind.SpatialPixelsDataFrame}
 \alias{dim.SpatialPixelsDataFrame}
 
-\title{Class "SpatialPixelsDataFrame" ~~~ }
+\title{Class "SpatialPixelsDataFrame" }
 \description{  Class for spatial attributes that have spatial locations
 on a regular grid. }
 \section{Objects from the Class}{

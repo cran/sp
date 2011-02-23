@@ -1,12 +1,11 @@
 SpatialPixelsDataFrame = function(points, data, 
 		tolerance = sqrt(.Machine$double.eps), 
-		proj4string = CRS(as.character(NA)), round=NULL, fuzz.tol=3) {
+		proj4string = CRS(as.character(NA)), round=NULL) {
 	if (is.null(points))
 		stop("points argument is NULL")
 	if (!is(points, "SpatialPoints"))
 		points = SpatialPoints(points, proj4string = proj4string)
-	points = SpatialPixels(points, tolerance=tolerance, round=round, 
-		fuzz.tol=fuzz.tol)
+	points = SpatialPixels(points, tolerance=tolerance, round=round)
 	new("SpatialPixelsDataFrame", points, data = data)
 }
 

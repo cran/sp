@@ -21,7 +21,7 @@
 \alias{$<-,SpatialPoints,character-method}
 \alias{row.names.SpatialPoints}
 
-\title{Class "SpatialPoints" ~~~ }
+\title{Class "SpatialPoints" }
 \description{  Class for (irregularly spaced) points }
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{SpatialPoints(x)}.

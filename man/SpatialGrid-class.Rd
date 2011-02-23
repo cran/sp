@@ -11,7 +11,7 @@
 \alias{coerce,SpatialGrid,SpatialPolygons-method}
 \alias{show,SpatialGrid-method}
 
-\title{Class "SpatialGrid" ~~~ }
+\title{Class "SpatialGrid" }
 \description{ class for defining a full, rectangular grid of
 arbitrary dimension }
 \section{Objects from the Class}{

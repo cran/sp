@@ -3,6 +3,8 @@
 \alias{SpatialPolygons-class}
 \alias{[,SpatialPolygons-method}
 \alias{as.data.frame.SpatialPolygons}
+\alias{as.SpatialPolygonsDataFrame.SpatialPolygons}
+\alias{coerce,SpatialPolygons,SpatialPolygonsDataFrame-method}
 \alias{plot,SpatialPolygons,missing-method}
 \alias{summary,SpatialPolygons-method}
 \alias{rbind.SpatialPolygons}

@@ -52,7 +52,7 @@ coordinatevalues = function(obj) {
 }
 
 points2grid = function(points, tolerance=sqrt(.Machine$double.eps), 
-		round = NULL, fuzz.tol = 3) {
+		round = NULL) {
 	# work out grid topology from points
 	n = dimensions(points)
 	ret = new("GridTopology", 
@@ -64,8 +64,7 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps),
 	for (i in 1:n) { # loop over x, y, and possibly z
 		x = cc[, i]
     		sux = sort(unique(x))
-		fuzz <- nr/length(sux) < fuzz.tol
-    		difx = diff(sux)
+    	difx = diff(sux)
 		if (length(difx) == 0)
 			stop(paste("cannot determine cell size from constant coordinate", i))
 		#ru.difx = range(unique(difx))

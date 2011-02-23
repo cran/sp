@@ -1,7 +1,8 @@
 
-R version 2.10.1 (2009-12-14)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.12.1 (2010-12-16)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: i486-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -169,29 +170,30 @@ y            329620       40       104
 > coordinates(meuse.grid) <- c("x", "y")
 > try(gridded(meuse.grid) <- TRUE)
 suggested tolerance minimum: 0.0769195556640625 
-Error in points2grid(points, tolerance, round, fuzz.tol) : 
+Error in points2grid(points, tolerance, round) : 
   dimension 1 : coordinate intervals are not constant
 > try(meuse.grid <- SpatialPixelsDataFrame(as(meuse.grid, "SpatialPoints"),
-+   data=as(meuse.grid, "data.frame"), tolerance=0.5, round=1))
++   data=as(meuse.grid, "data.frame"), tolerance=0.077))
+suggested tolerance minimum: 0.5 
+Error in points2grid(points, tolerance, round) : 
+  dimension 2 : coordinate intervals are not constant
+In addition: Warning messages:
+1: In points2grid(points, tolerance, round) :
+  grid has empty column/rows in dimension 1
+2: In points2grid(points, tolerance, round) :
+  grid topology may be corrupt in dimension 1
 > gridparameters(meuse.grid)
-  cellcentre.offset cellsize cells.dim
-x            178460       40        78
-y            329620       40       104
+numeric(0)
 > 
 > data(meuse.grid_ll)
 > try(gridded(meuse.grid_ll) <- TRUE)
 suggested tolerance minimum: 0.81832277783954 
-Error in points2grid(points, tolerance, round, fuzz.tol) : 
+Error in points2grid(points, tolerance, round) : 
   dimension 1 : coordinate intervals are not constant
 > try(meuse.grid_ll <- SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data=as(meuse.grid_ll, "data.frame"), tolerance=0.9, fuzz.tol=2))
-Warning messages:
-1: In points2grid(points, tolerance, round, fuzz.tol) :
-  grid topology may be corrupt in dimension 1
-2: In points2grid(points, tolerance, round, fuzz.tol) :
-  grid topology may be corrupt in dimension 2
+Error in SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data = as(meuse.grid_ll,  : 
+  unused argument(s) (fuzz.tol = 2)
 > gridparameters(meuse.grid_ll)
-  cellcentre.offset     cellsize cells.dim
-x          5.721109 1.420405e-05      3103
-y         50.955770 1.191063e-05      3103
+numeric(0)
 > 
 > 
