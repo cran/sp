@@ -21,7 +21,13 @@ Objects can be created by calls of the form \code{CRS("projargs")}, where "proja
     \item{show}{\code{signature(object = "CRS")}: print projection arguments in object }
   }
 }
-\references{\url{http://proj.maptools.org/}}
+\usage{
+CRS(projargs)
+}
+\arguments{
+\item{projargs}{A character string of projection arguments; the arguments must be entered exactly as in the PROJ.4 documentation; if the projection is unknown, use \code{as.character(NA)}, it may be missing or an empty string of zero length and will then set to the missing value.}
+}
+\references{\url{http://trac.osgeo.org/proj/}}
 \author{Roger Bivand \email{Roger.Bivand@nhh.no}}
 
 \note{
@@ -29,6 +35,10 @@ Lists of projections may be seen by using the programs installed with the PROJ.4
 
 
 \examples{
+CRS()
+CRS("")
+CRS(as.character(NA))
+CRS("+proj=longlat +datum=WGS84")
 if (require(rgdal)) {
   print(CRSargs(CRS("+proj=longlat +datum=NAD27")))
   print(CRSargs(CRS("+init=epsg:4267")))

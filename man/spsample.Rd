@@ -92,12 +92,12 @@ of grid points requested (approximating the number of cells).
 \describe{
 \item{x = "Spatial"}{ sample in the bbox of \code{x} }
 \item{x = "Line"}{ sample on a line }
-\item{x = "Polygon"}{ sample in an Polygon }
-\item{x = "Polygons"}{ sample in an Polygons object, consisting of possibly
-multiple Polygon objects (and holes!) }
+\item{x = "Polygon"}{ sample in a Polygon }
+\item{x = "Polygons"}{ sample in a Polygons object, consisting of possibly
+multiple Polygon objects (holes must be correctly defined, use \code{checkPolygonsHoles} if need be) }
 \item{x = "SpatialPolygons"}{ sample in an SpatialPolygons object; sampling
 takes place over all Polygons objects present, use subsetting to vary
-sampling intensity (density) }
+sampling intensity (density); holes must be correctly defined, use \code{checkPolygonsHoles} if need be }
 \item{x = "SpatialGrid"}{ sample in an SpatialGrid object }
 \item{x = "SpatialPixels"}{ sample in an SpatialPixels object }
 }}

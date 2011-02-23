@@ -9,7 +9,13 @@ if (!is.R()) {
 }
 
 "CRS" <- function(projargs) {
+    if (missing(projargs)) projargs <- as.character(NA)
     if (nchar(projargs) == 0) projargs <- as.character(NA)
+    if (!is.na(projargs)) {
+        if (length(grep("^[ ]*\\+", projargs)) == 0)
+            stop(paste("PROJ4 argument-value pairs must begin with +:", 
+	        projargs))
+    }
     if (is.na(projargs)) uprojargs <- projargs
     else uprojargs <- paste(unique(unlist(strsplit(projargs, " "))), 
 	collapse=" ")

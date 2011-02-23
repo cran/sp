@@ -8,7 +8,7 @@
 #else
 # include <math.h>
 # define POWDI(x,i) pow(x,i)
-# define pythag(a,b) sqrt(a*a+b*b)
+/*# define pythag(a,b) sqrt(a*a+b*b)*/
 #endif
 
 void sp_dists(double *u, double *v, double *uout, double *vout, 
@@ -19,7 +19,7 @@ void sp_dists(double *u, double *v, double *uout, double *vout,
 		
 	if (lonlat[0] == 0) {
 		for (j=0; j<N; j++) 
-			dists[j] = pythag((u[j]-uout[0]), (v[j]-vout[0]));
+			dists[j] = hypot((u[j]-uout[0]), (v[j]-vout[0]));
 	} else {
 		for (j=0; j<N; j++) {
 			sp_gcdist(u+j, uout, v+j, vout, gc);
@@ -36,7 +36,7 @@ void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat)
 		
 	if (lonlat[0] == 0) {
 		for (j=0; j<(N-1); j++) 
-			lengths[j] = pythag((u[j]-u[(j+1)]), (v[j]-v[(j+1)]));
+			lengths[j] = hypot((u[j]-u[(j+1)]), (v[j]-v[(j+1)]));
 	} else {
 		for (j=0; j<(N-1); j++) {
 			sp_gcdist(u+j, u+(j+1), v+j, v+(j+1), gc);

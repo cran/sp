@@ -1,3 +1,76 @@
+2011-03-14 08:48  rsbivand
+
+	* man/gridded-methods.Rd: TRUE to value in usage in
+	  gridded-methods.Rd
+
+2011-03-13 20:10  rsbivand
+
+	* INDEX: remove INDEX
+
+2011-03-13 20:03  rsbivand
+
+	* ChangeLog, inst/ChangeLog: hypot for pythag in C code
+
+2011-03-13 20:01  rsbivand
+
+	* src/gcdist.c: hypot for pythag in C code
+
+2011-03-08 13:40  rsbivand
+
+	* R/spsample.R, man/spsample.Rd: sample.Polygons index fix - hole
+	  heuristic removed - holes must be correctly defined if need be
+
+2011-03-07 20:52  rsbivand
+
+	* R/spsample.R: sample.Polygons index fix
+
+2011-02-28 20:21  rsbivand
+
+	* R/SpatialPoints-methods.R: SpatialPoints [ bounding box bug
+	  (since 993)
+
+2011-02-28 10:21  edzer
+
+	* NAMESPACE, R/over.R, inst/doc/over.Rnw: improved aggregate
+	  examples in "over" vignette.
+
+2011-02-23 18:41  edzer
+
+	* DESCRIPTION: version number increase
+
+2011-02-23 18:24  rsbivand
+
+	* R/CRS-methods.R, man/CRS-class.Rd: adding checks in CRS() and
+	  details in help page
+
+2011-02-23 07:08  edzer
+
+	* man/CRS-class.Rd: updated URL of proj
+
+2011-02-22 20:35  edzer
+
+	* DESCRIPTION, NAMESPACE, R/GridTopology-methods.R,
+	  R/SpatialGrid-methods.R, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialPolygons-methods.R, man/SpatialGrid.Rd,
+	  man/SpatialGridDataFrame.Rd, man/SpatialPolygons-class.Rd,
+	  tests/fail1.R, tests/fail1.Rout.save, tests/grid.Rout.save,
+	  tests/spplot.Rout.save: version update; added patch coerce from
+	  SpatialPolygons to
+	  SpatialPolygonsDataFrame (with dummy data.frame, to allow export
+	  to shapefile), removed fuzz.tol argument and code that guessed
+	  grid
+	  layouts, modified tests accordingly.
+
+2011-02-22 17:55  edzer
+
+	* man/GridTopology-class.Rd, man/SpatialGrid-class.Rd,
+	  man/SpatialPixels-class.Rd, man/SpatialPixelsDataFrame-class.Rd,
+	  man/SpatialPoints-class.Rd: removed the ~~~ from doc files
+
+2011-02-22 16:37  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
 2011-02-22 16:24  rsbivand
 
 	* oChangeLog, svn2cl.xsl: tidy

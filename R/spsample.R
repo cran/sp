@@ -208,15 +208,18 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 	pls <- slot(x, "Polygons")
 	smple <- rep(TRUE, length(pls))
 	if (length(pls) > 1) {
-	    for (i in seq(along=pls)) {
-		bbi <- .bbox2SPts(bbox(pls[[i]]), proj4string=proj4string)
-		bb_in <- lapply(pls[-i], function(x, pts) 
-			pointsInPolygon(pts, x), pts = bbi)
+#	    for (i in seq(along=pls)) {
+#		bbi <- .bbox2SPts(bbox(pls[[i]]), proj4string=proj4string)
+#		bb_in <- lapply(pls[-i], function(x, pts) 
+#			pointsInPolygon(pts, x), pts = bbi)
 # added condition 100716
-                zzz <- do.call("rbind", bb_in)
-		if (holes[i] || (any(unlist(bb_in) == 1) &&
-                    !(sum(zzz[,i]) %% 2) == 0)) smple[i] <- FALSE
-	    }
+#                zzz <- do.call("rbind", bb_in)
+#		if (holes[i] || (any(unlist(bb_in) == 1) &&
+#                    !(sum(zzz[i,]) %% 2) == 0)) smple[i] <- FALSE
+# was [,i], changed to [i,] 110307 Aman Verma
+#	    }
+            smple <- !holes
+# all heuristics removed, hole slots must be correctly defined 110308
 	}
 	sum_area <- sum(area[smple])
 	while (is.null(res) && its < iter) {

@@ -25,7 +25,7 @@ export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 
 export(coordinatevalues)
 
-# export(aggregate.Spatial)
+export(aggregate.Spatial)
 
 export(dimensions)
 
