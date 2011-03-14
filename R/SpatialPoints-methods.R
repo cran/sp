@@ -108,7 +108,7 @@ row.names.SpatialPoints <- function(x) {
 setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j))
 		warning("j index ignored")
-	drop = FALSE
+#	drop = FALSE
 	if (is.character(i))
 		i <- match(i, row.names(x))
 	else if (is(i, "Spatial"))
@@ -118,8 +118,11 @@ setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 #	SpatialPoints(coords=x@coords[i, , drop=drop], 
 #		proj4string = CRS(proj4string(x)))
 	x@coords = x@coords[i, , drop = FALSE]
-	if (drop)
-		x@bbox = .bboxCoords(x@coords)
+#	print(drop)
+       if (drop) {
+            x@bbox = .bboxCoords(x@coords)
+#            print(bbox(x))
+        }
 	x
 })
 

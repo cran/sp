@@ -12,6 +12,12 @@
 	ret
 }
 
+# we need to invert a list of indexes, i.e.
+# list(c(1,4), c(2,4,5))
+# needs to become
+# list(c(1), c(2), integer(0), c(1,2), c(2))
+# the expensive way is to form the full matrix, as in:
+#
 #.invert = function(lst, nr, nc) {
 #	stopifnot(nr == length(lst))
 #	m = matrix(FALSE, nr, nc)
@@ -19,11 +25,13 @@
 #		m[i,lst[[i]]] = TRUE
 #	lapply(1:nc, function(x) which(m[,x]))
 #}
+# but the following does this more efficient:
 
 .invert = function(x, nr, nc) { 
 	stopifnot(nr == length(x)) # obsolete argument!
 	ret = cbind(rep(1:nr, times = sapply(x, length)), unlist(x))
 	ret = split(ret[,1], ret[,2])
+	# initialize return list with empty cells:
 	lst = lapply(1:nc, function(x) integer(0))
 	idx = as.integer(names(ret))
 	lst[idx] = ret

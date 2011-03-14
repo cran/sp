@@ -190,20 +190,27 @@ over(pol, ptsdf[1:2], fn = mean)
 @
 
 \subsection{Aggregation}
-
-\begin{figure}
-<<fig=TRUE>>=
+In the following example, the values of a fine grid with 40 m x 40
+m cells are aggregated to a course grid with 400 m x 400 m cells.
+<<>>=
 data(meuse.grid)
 gridded(meuse.grid) = ~x+y
-gt = GridTopology(gridparameters(meuse.grid)$cellcentre.offset, c(400,400), c(8,11))
+off = gridparameters(meuse.grid)$cellcentre.offset + 20
+gt = GridTopology(off, c(400,400), c(8,11))
 SG = SpatialGrid(gt)
-if (as.numeric(version$minor)<12) {
-  image(sp:::aggregate.Spatial(meuse.grid[3], SG))
-} else {
-  image(aggregate(meuse.grid[3], SG))
- }
+agg = aggregate(meuse.grid[3], SG)
 @
-\caption{ aggregation over meuse.grid distance values}
+Figure \ref{fig:agg} shows the result of this aggregation (colors)
+and the points (+) of the original grid. 
+
+\begin{figure}[htb]
+<<fig=TRUE,echo=FALSE>>=
+image(agg)
+points(meuse.grid, pch = 3, cex=.2, col = "#80808080")
+@
+\caption{ aggregation over meuse.grid distance values to a 400 m
+x 400 m grid}
+\label{fig:agg}
 \end{figure}
 
 \section{More tests, and their output}

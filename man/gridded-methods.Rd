@@ -3,10 +3,13 @@
 \alias{gridded-methods}
 \alias{gridded,Spatial-method}
 \alias{gridparameters}
-\alias{gridded<-}
+\alias{gridded<-,Spatial,logical-method}
+\alias{fullgrid<-,Spatial,logical-method}
+\alias{fullgrid,Spatial-method}
+\alias{fullgrid}
 \alias{gridded}
 \alias{fullgrid<-}
-\alias{fullgrid}
+\alias{gridded<-}
 \title{ specify spatial data as being gridded, or find out whether they are }
 \description{
 returns logical (TRUE or FALSE) telling whether the object is gridded
@@ -15,14 +18,15 @@ one, or demotes a gridded structure back to a non-structured one.
 }
 \usage{
 	gridded(obj)
-	gridded(obj) <- TRUE
+	gridded(obj) <- value
 	fullgrid(obj)
-	fullgrid(obj) <- TRUE
+	fullgrid(obj) <- value
 	gridparameters(obj)
 }
 \arguments{
 \item{obj}{ object deriviving from class "Spatial" (for gridded), or
 object of class \link{SpatialGridDataFrame-class} (for fullgrid and gridparameters) }
+\item{value}{logical replacement values, TRUE or FALSE}
 }
 \section{Methods}{
 \describe{
