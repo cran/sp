@@ -162,6 +162,7 @@ row.names.SpatialPointsDataFrame <- function(x) {
 
 "row.names<-.SpatialPointsDataFrame" <- function(x, value) {
     dimnames(slot(x, "coords"))[[1]] <- value
+	rownames(slot(x, "data")) <- value
     #coords = (slot(x, "coords"))
     #dimnames(coords)[[1]] <- value
 	#x@coords = coords
