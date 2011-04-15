@@ -74,8 +74,9 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps),
 			xx = ru.difx / min(ru.difx)
 			err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
 			if (err2 > tolerance) {
-				cat(paste("suggested tolerance minimum:", err2, "\n"))
-       				stop(paste("dimension", i,": coordinate intervals are not constant"))
+				cat(paste("suggested tolerance minimum:", signif(err2, 6), 
+					"\n"))
+				stop(paste("dimension", i,": coordinate intervals are not constant"))
 			} else {
 			    difx = difx[difx < ru.difx[1] + tolerance]
 			    warning(paste("grid has empty column/rows in dimension", i))

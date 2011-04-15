@@ -47,6 +47,7 @@ setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPixDF.SGDF)
 as.SGDF.SPixDF = function(from) { 
 	# find rows with only NA's in attribute table:
 	sel = apply(sapply(from@data, is.na), 1, function(x) !all(x))
+	#sel = TRUE
 	if (!any(sel)) {
 		warning("complete map seems to be NA's -- no selection was made")
 		sel = rep(TRUE, length(sel))

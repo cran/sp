@@ -1,6 +1,6 @@
 
-R version 2.12.1 (2010-12-16)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.12.2 (2011-02-25)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i486-pc-linux-gnu (32-bit)
 
@@ -169,7 +169,7 @@ y            329620       40       104
 > meuse.grid$y <- meuse.grid$y + rnorm(length(meuse.grid$y), 0, 0.0002)
 > coordinates(meuse.grid) <- c("x", "y")
 > try(gridded(meuse.grid) <- TRUE)
-suggested tolerance minimum: 0.0769195556640625 
+suggested tolerance minimum: 0.0769196 
 Error in points2grid(points, tolerance, round) : 
   dimension 1 : coordinate intervals are not constant
 > try(meuse.grid <- SpatialPixelsDataFrame(as(meuse.grid, "SpatialPoints"),
@@ -187,7 +187,7 @@ numeric(0)
 > 
 > data(meuse.grid_ll)
 > try(gridded(meuse.grid_ll) <- TRUE)
-suggested tolerance minimum: 0.81832277783954 
+suggested tolerance minimum: 0.818323 
 Error in points2grid(points, tolerance, round) : 
   dimension 1 : coordinate intervals are not constant
 > try(meuse.grid_ll <- SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data=as(meuse.grid_ll, "data.frame"), tolerance=0.9, fuzz.tol=2))

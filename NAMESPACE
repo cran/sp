@@ -66,6 +66,8 @@ export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
 export(as.SpatialPolygons.PolygonsList, Polygons, Polygon, SpatialPolygons,
        as.SpatialPolygonsDataFrame.SpatialPolygons, SpatialPolygonsDataFrame)
 
+# export(as.SGDF.SPixDF)
+
 export(ShowSpatialPointsDataFrame)
 
 export(select.spatial)
