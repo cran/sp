@@ -61,7 +61,8 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 			for (j in 1:ncol(xy))
 				xy[,j] = xy[,j] + (runif(n) - 0.5) * cellsize[j]
 		} else if (type == "clustered") {
-			clus = rep(sample(1:nrow(xy), nclusters, replace = FALSE), length = n)
+			n = nrow(xy) # BG, Mon May  9 14:58:18 CEST 2011
+			clus = rep(sample(1:n, nclusters, replace = FALSE), length = n)
 			for (j in 1:ncol(xy))
 				xy[,j] = xy[clus,j] + (runif(n) - 0.5) * cellsize[j]
 		} else if (type == "nonaligned") {
