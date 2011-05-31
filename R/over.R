@@ -5,7 +5,7 @@
 			fn = function(x, ...) { x[1,,drop=FALSE] }
 		ret = do.call(rbind, lapply(ret, fn, ...))
 		# ret[match(1:n, ix),,drop=FALSE]
-		ret[is.nan(ret)] = NA
+		ret[is.na(ret)] = NA
 		ret = as.data.frame(ret)
 	} else
 		stopifnot(is.null(fn))
