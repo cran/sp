@@ -63,31 +63,43 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps),
 	nr <- nrow(cc)
 	for (i in 1:n) { # loop over x, y, and possibly z
 		x = cc[, i]
-    		sux = sort(unique(x))
+		sux = sort(unique(x))
     	difx = diff(sux)
-		if (length(difx) == 0)
-			stop(paste("cannot determine cell size from constant coordinate", i))
-		#ru.difx = range(unique(difx))
-		ru.difx = range(unique(difx)) # min to max x coord leaps
-    		err1 = diff(ru.difx) #?? /max(range(abs(sux))) # (max-min)/max(abs(x))
-    		if (err1 > tolerance) { 
-			xx = ru.difx / min(ru.difx)
-			err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
-			if (err2 > tolerance) {
-				cat(paste("suggested tolerance minimum:", signif(err2, 6), 
-					"\n"))
-				stop(paste("dimension", i,": coordinate intervals are not constant"))
-			} else {
-			    difx = difx[difx < ru.difx[1] + tolerance]
-			    warning(paste("grid has empty column/rows in dimension", i))
+		if (length(difx) == 0) {
+			warning(paste("cell size from constant coordinate", i,
+				"possibly taken from other coordinate"))
+			ret@cellsize[i] = NA
+			ret@cellcentre.offset[i] = min(sux)
+    		ret@cells.dim[i] = as.integer(1)
+		} else {
+			#ru.difx = range(unique(difx))
+			ru.difx = range(unique(difx)) # min to max x coord leaps
+			err1 = diff(ru.difx) #?? /max(range(abs(sux))) # (max-min)/max(abs(x))
+			if (err1 > tolerance) { 
+				xx = ru.difx / min(ru.difx)
+				err2 = max(abs(floor(xx) - xx)) # is it an integer multiple?
+				if (err2 > tolerance) {
+					cat(paste("suggested tolerance minimum:", signif(err2, 6), 
+						"\n"))
+					stop(paste("dimension", i,": coordinate intervals are not constant"))
+				} else {
+			    	difx = difx[difx < ru.difx[1] + tolerance]
+			    	warning(paste("grid has empty column/rows in dimension", i))
+				}
 			}
-		}
-		ret@cellsize[i] = mean(difx)
-		ret@cellcentre.offset[i] = min(sux)
+			ret@cellsize[i] = mean(difx)
+			ret@cellcentre.offset[i] = min(sux)
     		ret@cells.dim[i] = as.integer(round(diff(range(sux))/ret@cellsize[i]) + 1) 
-			#was: length(sux), but this will not cope with empty rows.
-		if (ret@cells.dim[i] > nr/2) 
-			warning(paste("grid topology may be corrupt in dimension", i))
+				#was: length(sux), but this will not cope with empty rows.
+			if (ret@cells.dim[i] > nr) 
+				warning(paste("grid topology may be corrupt in dimension", i))
+		}
+	}
+	cs = ret@cellsize
+	if (any(is.na(cs))) {
+		if (all(is.na(cs)))
+			stop("cannot derive grid parameters from a single point!")
+		ret@cellsize[is.na(cs)] = cs[!is.na(cs)][1]
 	}
 	nm = dimnames(cc)[[2]]
 	names(ret@cellsize) = nm

@@ -21,10 +21,9 @@ point.in.polygon(point.x, point.y, pol.x, pol.y, mode.checked=FALSE)
 3: point is a vertex of pol.
 }
 \references{ 
-Uses the C function InPoly(), in gstat file polygon.c;
-InPoly is Copyright (c) 1998 by Joseph O'Rourke.  It may be freely
-redistributed in its entirety provided that this copyright notice is
-not removed.
+Uses the C function InPoly().  InPoly is Copyright (c) 1998 by
+Joseph O'Rourke.  It may be freely redistributed in its entirety
+provided that this copyright notice is not removed.
 }
 \examples{
 # open polygon:

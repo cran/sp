@@ -1,6 +1,6 @@
 
-R version 2.12.1 (2010-12-16)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.0 (2011-04-13)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i486-pc-linux-gnu (32-bit)
 
@@ -263,7 +263,4 @@ SpatialPoints:
 [3,] 2.999472 3.0
 [4,] 1.000433 1.5
 Coordinate Reference System (CRS) arguments: NA 
-Warning message:
-In points2grid(points, tolerance, round) :
-  grid topology may be corrupt in dimension 1
 > 

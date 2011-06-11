@@ -16,7 +16,7 @@ defines spatial grid by offset, cell size and dimensions
 \usage{
 GridTopology(cellcentre.offset, cellsize, cells.dim)
 SpatialPixels(points, tolerance = sqrt(.Machine$double.eps),
-		proj4string = CRS(as.character(NA)), round=NULL)
+		proj4string = CRS(as.character(NA)), round = NULL, grid = NULL)
 SpatialGrid(grid, proj4string = CRS(as.character(NA)))
 coordinatevalues(obj)
 points2grid(points, tolerance = sqrt(.Machine$double.eps), round=NULL)
@@ -30,7 +30,9 @@ areaSpatialGrid(obj)
     \item{cellsize}{numeric; vector with the cell size in each dimension}
     \item{cells.dim}{integer; vector with number of cells in each dimension}
 	\item{points}{ coordinates, object of class \link{SpatialPoints-class} }
-	\item{grid}{ grid topology; object of class \link{GridTopology-class}}
+	\item{grid}{ grid topology; object of class \link{GridTopology-class};
+	for calls to \code{SpatialPixels}, a value of NULL implies that this will 
+	be derived from the point coordinates }
 	\item{tolerance}{ precision, used to which extent points are exactly on
 	a grid}
         \item{round}{default NULL, otherwise a value passed to as the digits argument to \code{round} for setting cell size}

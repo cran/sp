@@ -55,7 +55,7 @@ suitable values if the data are e.g. if coordinates are latitude/longitude }
 \item{panel}{ depending on the class of obj, \link{panel.polygonsplot} (for
 polygons or lines), \link{panel.gridplot} (grids) or \link{panel.pointsplot}
 (points) is used; for further control custom panel functions can be
-supplied that call one of these panel functions, but do read how the
+supplied that call one of these panel functions, but do read below how the
 argument \code{sp.layout} may help }
 \item{sp.layout}{NULL or list; see notes below}
 \item{identify}{ if not FALSE, identify plotted objects (currently only working
@@ -144,29 +144,35 @@ else use a linear scale if \code{cuts} is only number of cuts }
 to set a north arrow or scale bar.
 
 The \code{sp.layout} argument is either a single layout item, or a list
-with a layout items. A layout item is a list with its first argument
+with one or more layout items. A layout item is a list with its first argument
 the name of the layout function to be called: \code{sp.points} for
 SpatialPoints, \code{sp.polygons} for SpatialPolygons object, \code{sp.lines}
 for a SpatialLines object, and \code{sp.text} for text to place. The
 second argument contains the object (or text) to be plotted; remaining
 arguments are passed to the corresponding \code{panel.*} functions.
 
-A special layout list item is \code{which} (integer), to control to which
-panel a layout item should be added. If \code{which} is present in the
-main, top-level list it applies for all layout items; in sub-lists with
-layout items it denotes the (set of) panels in which the layout item
-should be drawn.  Without a \code{which} item, layout items are drawn
-in each panel.
-
 The order of items in \code{sp.layout} matters; objects are drawn in
 the order they appear. Plot order and prevalence of sp.layout items:
 for points and lines, sp.layout items are drawn before the points
 (to allow for grids and polygons); for grids and polygons sp.layout
 is drawn afterwards (so the item will not be overdrawn by the grid
-and/or polygon). Although a matter of taste, transparency may help when
-combining things.
+and/or polygon). Transparency may further help when combining things.
 
-\code{sp.theme} returns a lattice theme; use \code{trellis.par.set(sp.theme())}
+Items of the \code{sp.layout} list, or its elements, can be:
+\describe{
+\item{\code{which}}{integer; controls to which panel a layout
+item should be added. If \code{which} is present in the main,
+top-level list it applies to all layout items; in sub-lists with
+layout items it denotes the (set of) panels in which the layout
+item should be drawn.  Without a \code{which} item, layout items
+are drawn in each panel.}
+\item{\code{first}}{logical; should the layout item be drawn before
+the main spplot object (TRUE), or after (FALSE)? This overrides
+the default order.}
+}
+
+\code{sp.theme} returns a lattice theme; use, after loading package
+\code{lattice}, the command \code{trellis.par.set(sp.theme())}
 after a device is opened or changed to make this work. Currently, this only
 sets the colors to \link{bpy.colors}.
 

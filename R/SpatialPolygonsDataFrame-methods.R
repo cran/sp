@@ -1,4 +1,6 @@
 SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
+# Barry comment 110610
+        stopifnot(length(Sr@polygons) == nrow(data))
 	if (is.character(match.ID)) {
 		row.names(data) = data[match.ID[1]]
 		match.ID = TRUE

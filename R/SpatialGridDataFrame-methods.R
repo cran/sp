@@ -1,11 +1,12 @@
 SpatialPixelsDataFrame = function(points, data, 
 		tolerance = sqrt(.Machine$double.eps), 
-		proj4string = CRS(as.character(NA)), round=NULL) {
+		proj4string = CRS(as.character(NA)), round = NULL, grid = NULL) {
 	if (is.null(points))
 		stop("points argument is NULL")
 	if (!is(points, "SpatialPoints"))
 		points = SpatialPoints(points, proj4string = proj4string)
-	points = SpatialPixels(points, tolerance=tolerance, round=round)
+	points = SpatialPixels(points, tolerance = tolerance, round = round,	
+		grid = grid)
 	new("SpatialPixelsDataFrame", points, data = data)
 }
 
@@ -137,6 +138,7 @@ subset.SpatialPixelsDataFrame <- function(x, subset, select, drop = FALSE, ...) 
 }
 
 setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
+	grid = x@grid
 	x = as(x, "SpatialPointsDataFrame")
 	missing.i = missing(i)
 	missing.j = missing(j)
@@ -159,18 +161,13 @@ setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
 		stop("NAs not permitted in row index")
 	if (is(i, "Spatial"))
 		i = !is.na(over(x, geometry(i)))
-	coords.nrs = x@coords.nrs
-	if (!isTRUE(j)) # i.e., we do some sort of column selection
-		coords.nrs = numeric(0) # will move coordinate colums last
-#	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
-#		data = x@data[i, j, drop = FALSE], 
-#		coords.nrs = coords.nrs, 
-#		proj4string = CRS(proj4string(x)), 
-#		match.ID = FALSE)
 	x@coords = x@coords[i, , drop = FALSE]
 	x@bbox = .bboxCoords(x@coords)
 	x@data = x@data[i, j, ..., drop = FALSE]
-	gridded(x) = TRUE
+	if (drop)
+		gridded(x) = TRUE
+	else
+		gridded(x) = list(TRUE, grid)
 	x
 })
 #setMethod("[", "SpatialPixelsDataFrame", subs.SpatialPixelsDataFrame)

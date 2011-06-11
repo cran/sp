@@ -6,13 +6,15 @@
 \description{ defines spatial grid by offset, cell size and dimensions }
 \usage{
 SpatialPixelsDataFrame(points, data, tolerance = sqrt(.Machine$double.eps), 
-		proj4string = CRS(as.character(NA)), round=NULL)
+		proj4string = CRS(as.character(NA)), round = NULL, grid = NULL)
 SpatialGridDataFrame(grid, data, proj4string = CRS(as.character(NA)))
 }
 \arguments{
 	\item{points}{ coordinates, either as numeric matrix or as object of class
 		\link{SpatialPoints-class} }
-	\item{grid}{ grid topology; object of class \link{GridTopology-class} }
+	\item{grid}{ grid topology; object of class \link{GridTopology-class}; for
+	calls to \code{SpatialPixelsDataFrame} a value of NULL implies that this will 
+	be derived from the point coordinates }
 	\item{data}{ data.frame; contains the attribute (actual grid) data }
 	\item{tolerance}{ precision up to which extent points should be 
 	exactly on a grid }
