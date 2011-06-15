@@ -91,7 +91,7 @@ void    SP_PREFIX(FindCG)( int n, tPointd *P, tPointd CG, double *Areasum2 );
 void    SP_PREFIX(Centroid3)( tPointd p1, tPointd p2, tPointd p3, tPointd c );
 void SP_PREFIX(spRFindCG_c)( SEXP n, SEXP coords, double *xc, double *yc, 
 		double *area );
-void SP_PREFIX(comm2comment)(char *buf, int *comm, int nps);
+void SP_PREFIX(comm2comment)(char *buf, int bufsiz, int *comm, int nps);
 
 SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP hole);
 SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID);

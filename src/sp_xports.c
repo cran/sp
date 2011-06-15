@@ -463,8 +463,8 @@ double     SP_PREFIX(Area2)( tPointd a, tPointd b, tPointd c )
 
 SEXP SP_PREFIX(comment2comm)(SEXP obj) {
     SEXP ans, comment;
-    int pc=0, ns, i, j, jj, k;
-    char buf[BUFSIZE], s[15];
+    int pc=0, ns, i, j, jj, k, nc;
+    char s[15], *buf;
     int *c, *nss, *co, *coo;
 
     PROTECT(comment = getAttrib(obj, install("comment"))); pc++;
@@ -472,6 +472,10 @@ SEXP SP_PREFIX(comment2comm)(SEXP obj) {
         UNPROTECT(pc);
         return(R_NilValue);
     }
+
+    nc = length(STRING_ELT(comment, 0));
+    buf = (char *) R_alloc((size_t) (nc+1), sizeof(char));
+
     strcpy(buf, CHAR(STRING_ELT(comment, 0)));
 
     i = 0;
@@ -539,9 +543,11 @@ SEXP SP_PREFIX(comment2comm)(SEXP obj) {
     return(ans);
 }
 
-void SP_PREFIX(comm2comment)(char *buf, int *comm, int nps) {
+void SP_PREFIX(comm2comment)(char *buf, int bufsiz, int *comm, int nps) {
     char cbuf[15];
     int i;
+
+    if (bufsiz < 2*nps) error("comm2comment: buffer overflow");
 
     sprintf(buf, "%d", comm[0]);
     for (i=1; i<nps; i++) {

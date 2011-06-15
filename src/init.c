@@ -16,7 +16,7 @@ static const R_CMethodDef CEntries[]  = {
     {"sp_lengths", (DL_FUNC) &sp_lengths, 5},
 /* RSB 091203 */
     {"spRFindCG_c", (DL_FUNC) &spRFindCG_c, 5},
-    {"comm2comment", (DL_FUNC) &comm2comment, 3},
+    {"comm2comment", (DL_FUNC) &comm2comment, 4},
     {NULL, NULL, 0}
 };
 

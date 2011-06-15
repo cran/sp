@@ -3,6 +3,12 @@
 		p4s = proj4string(obj)
 	else
 		p4s = as.character(NA)
+
+	if (is.list(value)) {
+		grid = value[[2]]
+		value = value[[1]] # logical
+	} else
+		grid = NULL
 	if (is.logical(value)) {
 		if (is(obj, "SpatialPixelsDataFrame") || is(obj, "SpatialGridDataFrame")) {
 			if (!value)
@@ -12,11 +18,11 @@
 				obj = as(obj, "SpatialPoints")
 		} else if (is(obj, "SpatialPointsDataFrame")) {
 			if (value)
-				obj = SpatialPixelsDataFrame(obj, obj@data)
+				obj = SpatialPixelsDataFrame(obj, obj@data, grid = grid)
 		} else if (is(obj, "SpatialPoints")) {
 			if (value)
 				#obj = as(obj, "SpatialGrid")
-				obj = SpatialPixels(obj)
+				obj = SpatialPixels(obj, grid = grid)
 		} else
 			stop("gridded<- only works for SpatialPoints[DataFrame] or SpatialGrid[DataFrame]")
 	} else {

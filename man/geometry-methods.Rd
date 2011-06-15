@@ -14,7 +14,8 @@
 \item{obj}{object of class Spatial}
 }
 \description{
-geometry retrieves the Spatial* object from a Spatial*DataFrame object
+geometry retrieves the SpatialXxx object from a SpatialXxxDataFrame object,
+with Xxx Lines, Points, Polygons, Grid, or Pixels.
 }
 \section{Methods}{
 \describe{
