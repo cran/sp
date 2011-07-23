@@ -22,11 +22,6 @@ Type 'q()' to quit R.
 > gridded(xy.sp) = T
 > # deselect 1 row and 2 col:
 > tst = xy.sp[-c(2,6,10,14,9,11,12)]
-Warning messages:
-1: In points2grid(points, tolerance, round) :
-  grid has empty column/rows in dimension 1
-2: In points2grid(points, tolerance, round) :
-  grid has empty column/rows in dimension 2
 > tst
 Object of class SpatialPixels
 Grid topology:

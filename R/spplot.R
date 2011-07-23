@@ -392,8 +392,8 @@ fill.call.groups = function(lst, z, ..., cuts,
 {
 	# always:
 	dots = list(...)
-    if (missing(pch)) 
-        lst$pch = ifelse(fill, 16, 1)
+	if (missing(pch)) 
+		lst$pch = ifelse(fill, 16, 1)
 	else
 		lst$pch = pch
 	if (!missing(cex))
@@ -445,8 +445,8 @@ fill.call.groups = function(lst, z, ..., cuts,
 		legendEntries = levels(lst$groups)
 	n = nlevels(lst$groups)
 
-        if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && 
-          dots$auto.key)) {
+	if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && 
+          identical(dots$auto.key, TRUE))) {
 	  if (!is.null(dots$key))
 		lst$key = dots$key
 	  else

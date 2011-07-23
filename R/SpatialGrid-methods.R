@@ -125,6 +125,28 @@ getGridIndex = function(cc, grid, all.inside = TRUE) {
 	as.integer(round(idx))
 }
 
+rcFromGridIndex = function(obj) {
+	obj = as(obj, "SpatialPixels")
+	gi = obj@grid.index
+	grid = obj@grid
+	stopifnot(ncol(coordinates(obj)) == 2)
+	xi = (gi %% grid@cells.dim[1]) + 1
+	yi = grid@cells.dim[2] - ((gi - 1) %/% grid@cells.dim[1])
+	cbind(xi,yi)
+}
+
+gridIndex2nb = function(obj, maxdist = 1) {
+	xy = rcFromGridIndex(obj)
+	n = nrow(xy)
+	dst = function(X, Xi) apply(X, 1, function(Y) max(abs(Y-Xi)))
+	lst = vector(mode = "list", length = n)
+	for (i in 1:n) { # avoid the n x n matrix construction:
+		d = dst(xy, xy[i,])
+		lst[[i]] = which(d > 0 & d <= maxdist)
+	}
+	lst
+}
+
 subset.SpatialPixels <- function(x, subset, select, drop = FALSE, ...) {
 	xSP <- as(x, "SpatialPoints")
 	if (missing(select)) select <- colnames(coordinates(xSP))
@@ -218,6 +240,14 @@ setAs("SpatialGrid", "SpatialPixels", function(from)
 ## outcommented 100607 as it breaks the ASDAR scripts in csdacm.R
 #setAs("SpatialGrid", "SpatialPoints", function(from)
 #	SpatialPoints(coordinates(from), from@proj4string)
+#)
+#xxxx
+setAs("SpatialGrid", "SpatialPoints", function(from)
+	as(as(from, "SpatialPixels"), "SpatialPoints")
+)
+#setIs("SpatialGrid", "SpatialPoints", coerce = function(from)
+#	as(as(from, "SpatialPixels"), "SpatialPoints"), 
+#	replace = function(obj, value) stop("no replace function for this coercion")
 #)
 
 print.SpatialPixels = function(x, ...) {

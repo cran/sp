@@ -3,32 +3,23 @@ setMethod("proj4string", signature(obj = "Spatial"),
 		as.character(obj@proj4string@projargs)
 )
 
-setReplaceMethod("proj4string", signature(obj = "Spatial", value = "CRS"),
-	function(obj, value) {
-		p4str <- value@projargs
-		ll <- FALSE
-		if (!is.na(p4str)) {
-			res <- grep("longlat", p4str, fixed=TRUE)
-			if (length(res) != 0) ll <- TRUE
-		}
-		if (ll) {
-			bb <- bbox(obj)
-			if (!.ll_sanity(bb))
-				stop("Geographical CRS given to non-conformant data")
-		}
-		obj@proj4string = value;
-		obj
-	}
-)
-
-setReplaceMethod("proj4string", signature(obj = "Spatial", value = "character"),
-	function(obj, value) {
+"proj4string<-" = function(obj, value) {
+	if (is.character(value))
 		value = CRS(value)
-		proj4string(obj) = value
-		obj
+	p4str <- value@projargs
+	ll <- FALSE
+	if (!is.na(p4str)) {
+		res <- grep("longlat", p4str, fixed=TRUE)
+		if (length(res) != 0) ll <- TRUE
 	}
-)
-
+	if (ll) {
+		bb <- bbox(obj)
+		if (!.ll_sanity(bb))
+			stop("Geographical CRS given to non-conformant data")
+	}
+	obj@proj4string = value;
+	obj
+}
 
 # split out from proj4string<- and Spatial validity to cover numerical fuzz
 # RSB 070216

@@ -3,7 +3,7 @@
 \title{ spatial overlay for points, grids and polygons }
 \description{
 overlay combines points (or grids) and polygons by performing point-in-polygon
-operation on all point-polygons combinations
+operation on all point-polygons combinations (deprecated; see note).
 }
 \usage{
 overlay(x, y, ...)
@@ -19,7 +19,8 @@ a data.frame with (possibly aggregate) properties of \code{x} in units
 of \code{y}.
 }
 \note{points on a polygon boundary and points corresponding to a polygon vertex are
-considered to be inside the polygon}
+considered to be inside the polygon. This function is deprecated, as it has some
+inconsistences. A better implementation is found in the \link{over} method. }
 \seealso{\link{overlay-methods}, \link{point.in.polygon}}
 \examples{
 r1 = cbind(c(180114, 180553, 181127, 181477, 181294, 181007, 180409, 
