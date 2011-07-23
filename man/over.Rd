@@ -39,13 +39,13 @@ x \%over\% y
 \item{...}{arguments passed on to function fn or FUN}
 }
 \value{ 
-an object of length \code{length(x)}, or a data.frame with number
-of rows equal to \code{length(x)}. If \code{returnList} is FALSE,
-a vector with indices of \code{y} for each geometry (point, grid
-cell centre, polygon or lines) in \code{x}.  if \code{returnList} is
-TRUE, a list of length \code{length(x)}, with list element \code{i}
-the vector of indices of the geometries in \code{y} that correspond
-to the $i$-th geometry in \code{x}.
+an object of length \code{length(x)}, or a data.frame with
+number of rows equal to \code{length(x)}. If \code{returnList}
+is FALSE, a vector with the (first) index of \code{y} for each
+geometry (point, grid cell centre, polygon or lines) in \code{x}.
+if \code{returnList} is TRUE, a list of length \code{length(x)}, with
+list element \code{i} the vector of all indices of the geometries
+in \code{y} that correspond to the $i$-th geometry in \code{x}.
 
 Function aggregate.Spatial aggregates the attribute values
 of \code{x} over the geometry of \code{by}, using aggregation
@@ -97,6 +97,58 @@ points outside the grid }
 polygon vertex are considered to be inside the polygon.
 
 These methods assume that pixels and grid cells are never
-overlapping.  }
+overlapping.  
+
+Methods that involve \code{SpatialLines} objects, or pairs of
+\code{SpatialPolygons} require, and are implemented in, package
+rgeos.}
+
 \seealso{\link{overlay}, \link{point.in.polygon}}
+\examples{
+r1 = cbind(c(180114, 180553, 181127, 181477, 181294, 181007, 180409, 
+180162, 180114), c(332349, 332057, 332342, 333250, 333558, 333676, 
+332618, 332413, 332349))
+r2 = cbind(c(180042, 180545, 180553, 180314, 179955, 179142, 179437, 
+179524, 179979, 180042), c(332373, 332026, 331426, 330889, 330683, 
+331133, 331623, 332152, 332357, 332373))
+r3 = cbind(c(179110, 179907, 180433, 180712, 180752, 180329, 179875, 
+179668, 179572, 179269, 178879, 178600, 178544, 179046, 179110),
+c(331086, 330620, 330494, 330265, 330075, 330233, 330336, 330004, 
+329783, 329665, 329720, 329933, 330478, 331062, 331086))
+
+sr1=Polygons(list(Polygon(r1)),"r1")
+sr2=Polygons(list(Polygon(r2)),"r2")
+sr3=Polygons(list(Polygon(r3)),"r3")
+sr=SpatialPolygons(list(sr1,sr2,sr3))
+srdf=SpatialPolygonsDataFrame(sr, data.frame(cbind(1:3,5:3), row.names=c("r1","r2","r3")))
+
+data(meuse)
+coordinates(meuse) = ~x+y
+data(meuse.grid)
+coordinates(meuse.grid) = ~x+y
+gridded(meuse.grid) = TRUE
+
+plot(meuse)
+polygon(r1)
+polygon(r2)
+polygon(r3)
+
+over(sr, geometry(meuse))
+over(sr, meuse)
+over(sr, geometry(meuse), returnList = TRUE)
+over(sr, meuse, returnList = TRUE)
+
+over(meuse, sr)
+over(meuse, srdf)
+
+# same thing, with grid:
+over(sr, meuse.grid)
+over(sr, meuse.grid, fn = mean)
+over(sr, meuse.grid, returnList = TRUE)
+
+over(meuse.grid, sr)
+over(meuse.grid, srdf, fn = mean)
+over(as(meuse.grid, "SpatialPoints"), sr)
+over(as(meuse.grid, "SpatialPoints"), srdf)
+}
 \keyword{methods}

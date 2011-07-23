@@ -13,9 +13,11 @@ import(lattice)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
 
+export(CRS, print.CRS, "proj4string<-")
 export(CRS, print.CRS)
 #, proj4string, "proj4string<-", is.projected)
-exportMethods(proj4string, "proj4string<-", is.projected)
+#exportMethods(proj4string, "proj4string<-", is.projected)
+exportMethods(proj4string, is.projected)
 
 exportMethods(addAttrToGeom)
 
@@ -115,7 +117,7 @@ exportClasses(Polygon, Polygons, SpatialPolygons, SpatialPolygonsDataFrame)
 exportClasses(DMS)
 
 exportMethods(show, bbox, coordinates, "coordinates<-",
-	coordnames, "coordnames<-", geometry, gridded, polygons, "polygons<-",
+	coordnames, "coordnames<-", geometry, polygons, "polygons<-",
 	dimensions, coerce, "[", "[[", "$", "$<-", over, overlay, 
 	plot, recenter, spplot, spsample, summary, surfaceArea, split)
 

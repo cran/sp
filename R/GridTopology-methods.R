@@ -72,8 +72,13 @@ points2grid = function(points, tolerance=sqrt(.Machine$double.eps),
 			ret@cellcentre.offset[i] = min(sux)
     		ret@cells.dim[i] = as.integer(1)
 		} else {
-			#ru.difx = range(unique(difx))
 			ru.difx = range(unique(difx)) # min to max x coord leaps
+			# next, find cases where some of the differences are
+			# VERY close to zero, and remove these:
+			if (ru.difx[1] / ru.difx[2] < tolerance) {
+				difx = difx[difx > ru.difx[2] * tolerance]
+				ru.difx = range(unique(difx)) # reset
+			}
 			err1 = diff(ru.difx) #?? /max(range(abs(sux))) # (max-min)/max(abs(x))
 			if (err1 > tolerance) { 
 				xx = ru.difx / min(ru.difx)
