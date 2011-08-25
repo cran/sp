@@ -1,10 +1,10 @@
 Package: sp
-Version: 0.9-84
-Date: 2011-07-23
+Version: 0.9-85
+Date: 2011-08-25
 Title: classes and methods for spatial data
 Author: Edzer Pebesma <edzer.pebesma@uni-muenster.de>, Roger Bivand
         <Roger.Bivand@nhh.no> and others
-Author@R: c(person("Edzer", "Pebesma", email =
+Authors@R: c(person("Edzer", "Pebesma", email =
         "edzer.pebesma@uni-muenster.de"), person("Roger", "Bivand",
         email = "Roger.Bivand@nhh.no"))
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
@@ -36,6 +36,6 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         gridded.R asciigrid.R spplot.R over.R overlay.R spsample.R
         recenter.R dms.R gridlines.R spdists.R rbind.R flipSGDF.R
         chfids.R loadmeuse.R compassRose.R surfaceArea.R
-Packaged: 2011-07-23 15:09:09 UTC; edzer
+Packaged: 2011-08-25 11:03:30 UTC; edzer
 Repository: CRAN
-Date/Publication: 2011-07-23 15:55:33
+Date/Publication: 2011-08-25 12:16:54
