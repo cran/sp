@@ -2,7 +2,7 @@
 		proj4string = CRS(as.character(NA)), match.ID = TRUE,
                 bbox=NULL) {
     if (is.character(match.ID)) {
-        row.names(data) = data[match.ID[1]]
+        row.names(data) = data[, match.ID[1]]
         match.ID = TRUE
     }
 	if (!is(coords, "SpatialPoints"))
