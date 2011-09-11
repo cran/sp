@@ -15,7 +15,7 @@ Objects can be created by calls to the function \code{Polygons}
 	the Polygon objects should be plotted, currently by order of decreasing size }
     \item{\code{labpt}:}{Object of class \code{"numeric"}; pair of x, y coordinates giving a label point, the label point of the largest polygon component  }
     \item{\code{ID}:}{Object of class \code{"character"}; unique identifier string  }
-    \item{\code{area}:}{Object of class \code{"numeric"}; the gross total area of the Polygon list but not double-counting holes (changed from 0.9-58 - islands are summed, holes are ignored rather than subtracted); these values are used to make sure that polygons of a smaller area are plotted after polygons of a larger area }
+    \item{\code{area}:}{Object of class \code{"numeric"}; the gross total planar area of the Polygon list but not double-counting holes (changed from 0.9-58 - islands are summed, holes are ignored rather than subtracted); these values are used to make sure that polygons of a smaller area are plotted after polygons of a larger area, does not respect projection as objects of this class have no projection defined }
   }
 }
 \section{Methods}{

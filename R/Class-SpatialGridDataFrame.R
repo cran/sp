@@ -1,5 +1,6 @@
 setClass("SpatialPixelsDataFrame",
 	representation("SpatialPixels", data = "data.frame", coords.nrs = "numeric"),
+	contains = "SpatialPointsDataFrame",
 	validity = function(object) {
 		if (length(object@grid.index) == 0)
 			stop("grid.index should not have length zero")
