@@ -14,7 +14,6 @@ importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
 
 export(CRS, print.CRS, "proj4string<-")
-export(CRS, print.CRS)
 #, proj4string, "proj4string<-", is.projected)
 #exportMethods(proj4string, "proj4string<-", is.projected)
 exportMethods(proj4string, is.projected)

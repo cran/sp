@@ -78,13 +78,17 @@ row.names.SpatialGridDataFrame <- function(x) {
 	1:prod(x@grid@cells.dim)
 }
 
-setIs("SpatialPixelsDataFrame", "SpatialPointsDataFrame",
-	coerce = function(from) {
-		# fullgrid(from) = FALSE ## not needed anymore
-		new("SpatialPointsDataFrame",
-			as(from, "SpatialPoints"), data = from@data, coords.nrs = from@coords.nrs)
-	}, replace = function(obj, value) stop("no replace function for this coercion")
-)
+#setIs("SpatialPixelsDataFrame", "SpatialPointsDataFrame",
+#	coerce = function(from) {
+#		# fullgrid(from) = FALSE ## not needed anymore
+#		new("SpatialPointsDataFrame",
+#			as(from, "SpatialPoints"), data = from@data, coords.nrs = from@coords.nrs)
+#	}, replace = function(obj, value) stop("no replace function for this coercion")
+#)
+as.SpPixDF.SpPoiDF = function(from)
+	new("SpatialPointsDataFrame", as(from, "SpatialPoints"), 
+		data = from@data, coords.nrs = from@coords.nrs)
+setAs("SpatialPixelsDataFrame", "SpatialPointsDataFrame", as.SpPixDF.SpPoiDF)
 
 as.SpatialPolygonsDataFrame.SpatialPixelsDataFrame = function(from) {
         df <- from@data

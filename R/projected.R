@@ -3,7 +3,8 @@ setMethod("proj4string", signature(obj = "Spatial"),
 		as.character(obj@proj4string@projargs)
 )
 
-"proj4string<-" = function(obj, value) {
+#"proj4string<-" = function(obj, value) {
+ReplProj4string = function(obj, value) {
 	if (is.character(value))
 		value = CRS(value)
 	p4str <- value@projargs
@@ -20,6 +21,8 @@ setMethod("proj4string", signature(obj = "Spatial"),
 	obj@proj4string = value;
 	obj
 }
+setReplaceMethod("proj4string", c("Spatial", "character"), ReplProj4string)
+setReplaceMethod("proj4string", c("Spatial", "CRS"), ReplProj4string)
 
 # split out from proj4string<- and Spatial validity to cover numerical fuzz
 # RSB 070216

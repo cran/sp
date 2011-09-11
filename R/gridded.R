@@ -55,11 +55,15 @@ setAs("SpatialPointsDataFrame", "SpatialPixelsDataFrame", function(from) {
 setMethod("gridded", "Spatial", function(obj) is(obj, "SpatialPixels"))
 
 fullgrid = function(obj) return(is(obj, "SpatialGrid"))
+#setMethod("fullgrid", c("Spatial"),
+#	function(obj) return(is(obj, "SpatialGrid")))
 
+#ReplaceFullgrid = function(obj, value) {
 "fullgrid<-" = function(obj, value) {
-	p4s = proj4string(obj)
-	if (!is(obj, "SpatialPixels"))
-		stop("fullgrid<- only works on objects of class or extending SpatialPixels")
+	#print(class(obj))
+	#p4s = proj4string(obj)
+	if (!(is(obj, "SpatialPixels") || is(obj, "SpatialGrid")))
+		stop("fullgrid<- only works on objects of class or extending SpatialPixels or SpatialGrid")
 	if (fullgrid(obj) != value) { # convert:
 		if (value) { # convert to full grid
 			if (is(obj, "SpatialPixelsDataFrame"))
@@ -73,6 +77,7 @@ fullgrid = function(obj) return(is(obj, "SpatialGrid"))
 				obj = as(obj, "SpatialPixels")
 		}
 	}
-	proj4string(obj) = CRS(p4s)
+	#proj4string(obj) = CRS(p4s)
 	obj
 }
+#setReplaceMethod("fullgrid", c("Spatial", "logical"), ReplaceFullgrid)
