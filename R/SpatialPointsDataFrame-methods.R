@@ -157,7 +157,10 @@ subset.SpatialPointsDataFrame <- function(x, subset, select,
 }
 
 row.names.SpatialPointsDataFrame <- function(x) {
-    dimnames(slot(x, "coords"))[[1]]
+    ret = dimnames(slot(x, "coords"))[[1]]
+	if (is.null(ret))
+		ret = row.names(x@data)
+	ret
 }
 
 "row.names<-.SpatialPointsDataFrame" <- function(x, value) {
