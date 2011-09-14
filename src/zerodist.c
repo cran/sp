@@ -48,9 +48,9 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
 	PROTECT(ret = NEW_INTEGER(nzero));
 	for (i = 0; i < nzero; i++)
 		INTEGER_POINTER(ret)[i] = which[i];
-	UNPROTECT(1);
 	if (which != NULL)
 		free(which);
+	UNPROTECT(1);
 	return(ret);
 }
 

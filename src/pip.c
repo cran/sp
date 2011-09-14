@@ -31,7 +31,7 @@ SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly) {
 			pol.p[0].y == pol.p[pol.lines - 1].y);
 	setup_poly_minmax(&pol);
 
-	ret = NEW_INTEGER(LENGTH(px));
+	PROTECT(ret = NEW_INTEGER(LENGTH(px)));
 	for (i = 0; i < LENGTH(px); i++) {
 		p.x = NUMERIC_POINTER(px)[i];
 		p.y = NUMERIC_POINTER(py)[i];
@@ -51,6 +51,7 @@ For each query point q, InPoly returns one of four char's:
 		}
 	}
 	Free(pol.p);
+	UNPROTECT(1);
 	return(ret);
 }
 
