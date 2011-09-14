@@ -1,5 +1,5 @@
 3d0cef0e4f79a81352ec16a8304cfe03 *ChangeLog
-5619a1c24ee5098281cceb20dfaab855 *DESCRIPTION
+819f6716d667723d603a1d4d3bc667cb *DESCRIPTION
 339f8675d2ab9eb0be00f8f6adb44972 *NAMESPACE
 b072e44334466b82b600e60b567ea1a6 *R/AAA.R
 2d228ef3aa236008897b905437cf62e0 *R/CRS-methods.R
@@ -63,9 +63,9 @@ c9f7f40916232c2682ec1c68962246da *demo/gallery.R
 e59129b3ce3d1e02a2d8d21c2e24778f *inst/CITATION
 3d0cef0e4f79a81352ec16a8304cfe03 *inst/ChangeLog
 5eb7eabc6a0b4b0b6af01df4b35d9c5c *inst/doc/over.Rnw
-b6e6ac3f748988a5951e0fe0b49a04f1 *inst/doc/over.pdf
+5b9c044ed10c93a5d3e6386ab18991f2 *inst/doc/over.pdf
 8e6dac63776b20bab0c2d0ca23ca38d0 *inst/doc/sp.Rnw
-70b042f13084af97b812a1c66432c0e3 *inst/doc/sp.pdf
+82dea314a52314ac8d7f30bc5fef58d1 *inst/doc/sp.pdf
 ef247b6c335e75e48f81da7ef7554fa6 *inst/external/simple.ag
 15c2101eb916ea116f400d560f73dd7c *inst/external/test.ag
 5d456e44b76a8ffe04cc5d13a871cee2 *inst/include/sp.h
@@ -143,12 +143,12 @@ b0a89e8c8f714d9c3be05773e23f4f5d *man/stack.Rd
 dff9b418e730e1bcd1d715d89feed264 *src/Rcentroid.c
 7bc0d44b1eca5f496a7265f01e9deed1 *src/gcdist.c
 875703dd5c8fac2d7278ac19bc2458aa *src/init.c
-d72245f7682e5da22601d15abbcf55ee *src/pip.c
+f9f5733000c425e6a3672f6e4d206470 *src/pip.c
 ee226452c20017936970aafc2797adac *src/pip2.c
 5d456e44b76a8ffe04cc5d13a871cee2 *src/sp.h
 66fea40eed119fcdb1cb78bfa5ff9ec7 *src/sp_xports.c
 69af476fca6ecdc9d23bd31caa086283 *src/surfaceArea.c
-51022b7e8833956f09d2ff2ed741d9b5 *src/zerodist.c
+09b1965a00a61ee72c7903a8d32263a8 *src/zerodist.c
 3ae970fc8e326a89be4c50bb56d5f401 *svn2cl.xsl
 fa6535954c1aae80289ee005a440e287 *tests/base.R
 6e8e8a677eb7c18b602b8fe588053817 *tests/base.Rout.save
