@@ -1,6 +1,6 @@
 3d0cef0e4f79a81352ec16a8304cfe03 *ChangeLog
-75c054c5ccec5f27aa6584a735985b7c *DESCRIPTION
-e7ce5afd0b4472498ddeeebfe99750d7 *NAMESPACE
+5619a1c24ee5098281cceb20dfaab855 *DESCRIPTION
+339f8675d2ab9eb0be00f8f6adb44972 *NAMESPACE
 b072e44334466b82b600e60b567ea1a6 *R/AAA.R
 2d228ef3aa236008897b905437cf62e0 *R/CRS-methods.R
 b7fa747a8c6c3ad057c201f09d7c1088 *R/Class-CRS.R
@@ -15,13 +15,13 @@ eb6a51169438e9cb4e408efa27254254 *R/Class-SpatialLinesDataFrame.R
 e49bdf0d8711786747581e38d47036ea *R/Class-SpatialPolygons.R
 479c369c9ad185c951578173ff7dd643 *R/Class-SpatialPolygonsDataFrame.R
 4cc16e94ce7dd6cbf1f4303abc0710b7 *R/GridTopology-methods.R
-185c0631ab1f7e6ae9d14510fc99f154 *R/Spatial-methods.R
+38956a4e1a431b46caa1f292fd7ca1cc *R/Spatial-methods.R
 299b37525cf297d553e212d58cc10d8b *R/SpatialGrid-methods.R
 612f89b3955e6269b425d60c2720cea1 *R/SpatialGridDataFrame-methods.R
 886be79112f0ec90ac86a2d6fc13d45c *R/SpatialLines-methods.R
 882bd73305eaa52c9bf81ab60c42296c *R/SpatialLinesDataFrame-methods.R
 ef6026d2f995bb6138a8ade3ead74b24 *R/SpatialPoints-methods.R
-71cb78fcbf62847e139517df6db04397 *R/SpatialPointsDataFrame-methods.R
+4d3eb711b645f57d90e25f1d600973f9 *R/SpatialPointsDataFrame-methods.R
 c249cca3222e48b7ea7b07c9282e8313 *R/SpatialPolygons-displayMethods.R
 0d9a5bd10833af81e4532b1dd6be6f50 *R/SpatialPolygons-internals.R
 4e4a355242b8571e61ed46f94297eb72 *R/SpatialPolygons-methods.R
@@ -33,7 +33,7 @@ bde15617ef63b08ac721f7f9d869f614 *R/asciigrid.R
 65a220347a38a916e839be41c7b11de0 *R/compassRose.R
 d886fa8e9df4c134e940c13ebb5e88eb *R/dms.R
 c163efc7b315617fb5770003efd42ab4 *R/flipSGDF.R
-4036bf8a5cb82df2b9c35cbf992a47d0 *R/gridded.R
+604603f700a599e563f61f182d5f6ae4 *R/gridded.R
 0d49c5489a945b19b18eb5063dd49e6d *R/gridlines.R
 6a4be6fb5441be1f7f109bd36fbf9be8 *R/image.R
 ae5f1099bd4cefd78cf3708a498ddbca *R/loadmeuse.R
@@ -41,7 +41,7 @@ ae5f1099bd4cefd78cf3708a498ddbca *R/loadmeuse.R
 56028f6537dbc527d82a9d943a7cfbca *R/over.R
 e34e433147b7064e8aeb4d900b409efc *R/overlay.R
 3c21e289b54a682d34a371f86bbfec84 *R/point.in.polygon.R
-d49394699664c6611dd2b16ee36da076 *R/projected.R
+8cd8eff5078fbede655b8e2673e2f676 *R/projected.R
 478160dc971cf7af6fc9948c3aa3bc67 *R/rbind.R
 059f2337b83c1ce6f2e5f0708511f235 *R/recenter.R
 d87dfe785fe09899b2e69a68da95e786 *R/select.spatial.R
@@ -63,9 +63,9 @@ c9f7f40916232c2682ec1c68962246da *demo/gallery.R
 e59129b3ce3d1e02a2d8d21c2e24778f *inst/CITATION
 3d0cef0e4f79a81352ec16a8304cfe03 *inst/ChangeLog
 5eb7eabc6a0b4b0b6af01df4b35d9c5c *inst/doc/over.Rnw
-22acd0ce85741393f2bdbfa28039f8e0 *inst/doc/over.pdf
+b6e6ac3f748988a5951e0fe0b49a04f1 *inst/doc/over.pdf
 8e6dac63776b20bab0c2d0ca23ca38d0 *inst/doc/sp.Rnw
-a1f9a9d9676dbd31e092a55b1bedcdd4 *inst/doc/sp.pdf
+70b042f13084af97b812a1c66432c0e3 *inst/doc/sp.pdf
 ef247b6c335e75e48f81da7ef7554fa6 *inst/external/simple.ag
 15c2101eb916ea116f400d560f73dd7c *inst/external/test.ag
 5d456e44b76a8ffe04cc5d13a871cee2 *inst/include/sp.h
