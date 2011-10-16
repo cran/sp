@@ -1,14 +1,9 @@
-#setMethod("proj4string", signature(obj = "Spatial"),
-#	function(obj) 
-#		as.character(obj@proj4string@projargs)
-#)
+setMethod("proj4string", signature(obj = "Spatial"),
+	function(obj) 
+		as.character(obj@proj4string@projargs)
+)
 
-proj4string = function(obj) as.character(obj@proj4string@projargs)
-
-#"proj4string<-" = function(obj, value) {
 ReplProj4string = function(obj, value) {
-	if (is.character(value))
-		value = CRS(value)
 	p4str <- value@projargs
 	ll <- FALSE
 	if (!is.na(p4str)) {
@@ -23,9 +18,9 @@ ReplProj4string = function(obj, value) {
 	obj@proj4string = value;
 	obj
 }
-#setReplaceMethod("proj4string", c("Spatial", "character"), ReplProj4string)
-#setReplaceMethod("proj4string", c("Spatial", "CRS"), ReplProj4string)
-"proj4string<-" = ReplProj4string
+setReplaceMethod("proj4string", c("Spatial", "character"), 
+	function(obj, value) ReplProj4string(obj, CRS(value)))
+setReplaceMethod("proj4string", c("Spatial", "CRS"), ReplProj4string)
 
 # split out from proj4string<- and Spatial validity to cover numerical fuzz
 # RSB 070216
@@ -42,8 +37,7 @@ ReplProj4string = function(obj, value) {
 	return(!(any(W || E || S || N))) 
 }
 
-#setMethod("is.projected", signature(obj = "Spatial"),
-is.projected =
+setMethod("is.projected", signature(obj = "Spatial"),
 	function(obj) {
 		p4str <- proj4string(obj)
 #ifdef R
@@ -64,8 +58,4 @@ is.projected =
 				return(FALSE)
 		}
 	}
-#)
-
-#is.projected = function(obj) {
-#	if (!extends(class(obj), "Spatial"))
-#		stop("is.projected only works for class(es extending) Spatial")
+)

@@ -48,7 +48,4 @@ Warning messages:
 2: In points2grid(points, tolerance, round) :
   grid has empty column/rows in dimension 2
 > spplot(tst["xx"], main = "empty row + col")
-Warning message:
-In data.row.names(row.names, rowsi, i) :
-  some row.names duplicated: 2,3,4,5,6,7,8,9,11 --> row.names NOT used
 > 

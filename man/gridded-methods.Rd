@@ -1,15 +1,30 @@
 \name{gridded-methods}
 \docType{methods}
 \alias{gridded-methods}
-\alias{gridded,Spatial-method}
 \alias{gridparameters}
-\alias{gridded<-,Spatial,logical-method}
-\alias{fullgrid<-,Spatial,logical-method}
-\alias{fullgrid,Spatial-method}
 \alias{fullgrid}
+\alias{fullgrid,Spatial-method}
 \alias{gridded}
+\alias{gridded,Spatial-method}
 \alias{fullgrid<-}
 \alias{gridded<-}
+\alias{fullgrid<-,Spatial,ANY-method}
+\alias{fullgrid<-,SpatialGrid,logical-method}
+\alias{fullgrid<-,SpatialGridDataFrame,logical-method}
+\alias{fullgrid<-,SpatialPixels,logical-method}
+\alias{fullgrid<-,SpatialPixelsDataFrame,logical-method}
+\alias{gridded<-,SpatialGrid,logical-method}
+\alias{gridded<-,SpatialGridDataFrame,logical-method}
+\alias{gridded<-,SpatialPixels,logical-method}
+\alias{gridded<-,SpatialPixelsDataFrame,logical-method}
+\alias{gridded<-,SpatialPoints,list-method}
+\alias{gridded<-,SpatialPoints,logical-method}
+\alias{gridded<-,SpatialPointsDataFrame,list-method}
+\alias{gridded<-,SpatialPointsDataFrame,logical-method}
+\alias{gridded<-,data.frame,GridTopology-method}
+\alias{gridded<-,data.frame,character-method}
+\alias{gridded<-,data.frame,formula-method}
+
 \title{ specify spatial data as being gridded, or find out whether they are }
 \description{
 returns logical (TRUE or FALSE) telling whether the object is gridded

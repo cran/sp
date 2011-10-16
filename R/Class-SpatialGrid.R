@@ -11,7 +11,8 @@ setClass("SpatialPixels",
 )
 
 setClass("SpatialGrid",
-	representation("SpatialPixels"),
+	#representation("SpatialPixels"),
+	representation("Spatial", coords = "matrix", grid = "GridTopology", grid.index = "integer"),
 	validity = function(object) {
 # print("Entering validation: SpatialGrid")
 		# check that dimensions, proj4string and bbox do not conflict
@@ -22,3 +23,10 @@ setClass("SpatialGrid",
 		return(TRUE)
 	}
 )
+setIs("SpatialGrid", "SpatialPixels", 
+	coerce = function(from) SpatialPixels(SpatialPoints(coordinates(from), from@proj4string),
+		grid = from@grid),
+	replace = function(from, value) stop("replace-coercion not allowed")
+)
+setAs("SpatialGrid", "SpatialPoints", 
+	function(from) SpatialPoints(coordinates(from), from@proj4string))

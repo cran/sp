@@ -63,4 +63,5 @@ set.seed(133331)
 df$xc = df$xc + rep(.001*rnorm(3), 3)[1:8]
 df.sp = SpatialPoints(df[c("xc", "yc")])
 df.grd = SpatialPixels(df.sp, tolerance = .01)
+df.grd[1:4,,tolerance=.01,drop=TRUE]
 df.grd[1:4,,tolerance=.01]

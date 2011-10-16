@@ -2,6 +2,12 @@
 image.SpatialPixelsDataFrame = function(x, ...)
 	image(as(x, "SpatialGridDataFrame"), ...)
 
+image.SpatialPixels = function(x, ...) {
+        x <- SpatialPixelsDataFrame(x, data=data.frame(rep(1,
+            dim(coordinates(x))[1])))
+        image(x, ...)
+}
+
 image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
                 col = heat.colors(12), 
 		red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL, 
@@ -9,10 +15,11 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		setParUsrBB=FALSE, interpolate = FALSE, angle = 0,
                 useRasterImage=!.isSDI()) {
 
-	if (!add)
-		plot(as(x, "Spatial"),
+	if (!add) 
+		suppressWarnings(plot(as(x, "Spatial"),
 			xlim = xlim, ylim = ylim, axes = axes, asp = asp, ..., 
-			setParUsrBB=setParUsrBB)
+			setParUsrBB=setParUsrBB))
+
         if (exists("rasterImage") && useRasterImage) {
             if (.isSDI()) warning("Bug in SDI raster handling - your R graphics window may stop displaying output")
             bb <- bbox(x)

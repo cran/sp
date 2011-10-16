@@ -55,7 +55,7 @@ Spatial(bbox, proj4string = CRS(as.character(NA)))
 }
 
 \author{ r-spatial team; Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}
-Roger Bivand, Barry Rowlinson, Virgilio G\'omez-Rubio
+Roger Bivand, Barry Rowlingson, Virgilio G\'omez-Rubio
 }
 \note{  
 	The default aspect for map plots is 1; if however data are not

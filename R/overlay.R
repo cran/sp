@@ -2,10 +2,12 @@ overlayPointsWithPolygons = function(x, y, fn = NULL) {
 	# x = pts, y = rings, return ring with f(grid) items
 	y = as(y, "SpatialPolygons")
 	id = pointsInSpatialPolygons(x, y)
-	if (!is.null(fn)) {
-		df = x@data
-		data.frame(t(data.frame(lapply(split(df, id), fn))))
-	} else
+	if (!is.null(fn))
+		## WAS: data.frame(t(data.frame(lapply(split(df, id), fn))))
+		## calls fn on complete data.frame; the following calls fn
+		## on each column:
+		do.call(rbind, lapply(split(x@data, id), function(x) sapply(x, fn)))
+	else
 		id
 }
 
