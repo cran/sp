@@ -1,6 +1,7 @@
 \name{image.SpatialGridDataFrame}
 \alias{image.SpatialGridDataFrame}
 \alias{image.SpatialPixelsDataFrame}
+\alias{image.SpatialPixels}
 \alias{contour.SpatialGridDataFrame}
 \alias{contour.SpatialPixelsDataFrame}
 \alias{as.image.SpatialGridDataFrame}
@@ -17,6 +18,7 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE,
         interpolate = FALSE, angle = 0, useRasterImage=!.isSDI())
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
+\method{image}{SpatialPixels}(x, ...) 
 \method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
 	col = 1, add = FALSE, xlim = NULL, ylim = NULL, axes = FALSE,
          ..., setParUsrBB = FALSE)

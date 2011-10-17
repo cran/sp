@@ -662,6 +662,7 @@ addNAemptyRowsCols = function(obj) {
 		if (length(missing.y) > 0)
 			xy = rbind(xy, cbind(rep(xy[1,1], length(missing.y)), missing.y))
 		newatt = data.frame(lapply(obj@data, function(x) c(x, rep(NA, n))))
+		row.names(xy) = seq_len(nrow(xy)) 
 		obj = SpatialPointsDataFrame(xy, newatt, obj@coords.nrs, obj@proj4string, FALSE)
 	} else
 		obj = as(obj, "SpatialPointsDataFrame")

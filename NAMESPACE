@@ -13,12 +13,7 @@ import(lattice)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
 
-export(CRS, print.CRS, "proj4string<-", proj4string, is.projected)
-#, proj4string, "proj4string<-", is.projected)
-#exportMethods(proj4string, "proj4string<-", is.projected)
-#exportMethods(proj4string, is.projected)
-
-exportMethods(addAttrToGeom)
+export(CRS, print.CRS)
 
 export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
@@ -37,7 +32,6 @@ export(SpatialPoints, SpatialPointsDataFrame)
 export(Line, Lines, SpatialLines, SpatialLinesDataFrame, as.SpatialLines.SLDF,
 	gridat, LineLength, LinesLength, SpatialLinesLengths)
 
-
 export(layout.scale.bar, layout.north.arrow, sp.theme,
 	mapLegendGrob, spplot.key, panel.gridplot, panel.polygonsplot,
 	panel.pointsplot, sp.polygons, sp.text, sp.points, sp.lines,
@@ -46,17 +40,14 @@ export(layout.scale.bar, layout.north.arrow, sp.theme,
 
 export(as.image.SpatialGridDataFrame, image2Grid)
 
-export(gridparameters, "gridded<-", gridded, fullgrid, "fullgrid<-",
-	SpatialPixels, SpatialPixelsDataFrame, SpatialGrid,
-	SpatialGridDataFrame, GridTopology, getGridTopology,
+export(gridparameters, SpatialPixels, SpatialPixelsDataFrame,
+	SpatialGrid, SpatialGridDataFrame, GridTopology, getGridTopology,
 	areaSpatialGrid, gridlines, gridat)
 
 export(getSLlinesSlot, getLinesLinesSlot, 
 	getLinesIDSlot, getSLLinesIDSlots)
-export(nowrapSpatialLines, getSpatialLinesMidPoints)
 
-export(spChFIDs)
-exportMethods(spChFIDs)
+export(nowrapSpatialLines, getSpatialLinesMidPoints)
 
 export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
 	getPolygonHoleSlot, getPolygonsPolygonsSlot, getPolygonsplotOrderSlot,
@@ -87,8 +78,7 @@ export(spDistsN1, spDists)
 
 export(flipHorizontal, flipVertical, loadMeuse)
 
-export(
-	rbind.SpatialPoints,
+export(rbind.SpatialPoints,
 	rbind.SpatialPointsDataFrame, 
 	rbind.SpatialPixels,
 	rbind.SpatialPixelsDataFrame,
@@ -97,7 +87,9 @@ export(
 	rbind.SpatialLines,
 	rbind.SpatialLinesDataFrame)
 
-exportClasses(CRS, 
+exportClasses(
+	DMS,
+	CRS, 
 	Spatial, 
 	SpatialPoints, 
 	GridTopology,
@@ -109,16 +101,19 @@ exportClasses(CRS,
  	SpatialPointsDataFrame, 
 	SpatialPixelsDataFrame,
 	SpatialGridDataFrame,
-	SpatialLinesDataFrame)
-
-exportClasses(Polygon, Polygons, SpatialPolygons, SpatialPolygonsDataFrame)
-
-exportClasses(DMS)
+	SpatialLinesDataFrame,
+	Polygon, 
+	Polygons, 
+	SpatialPolygons, 
+	SpatialPolygonsDataFrame)
 
 exportMethods(show, bbox, coordinates, "coordinates<-",
 	coordnames, "coordnames<-", geometry, polygons, "polygons<-",
 	dimensions, coerce, "[", "[[", "$", "$<-", over, overlay, 
-	plot, recenter, spplot, spsample, summary, surfaceArea, split)
+	plot, recenter, spplot, spsample, summary, surfaceArea, split,
+	spChFIDs, "gridded<-", gridded, fullgrid, "fullgrid<-",
+	proj4string, "proj4string<-", is.projected,
+	addAttrToGeom)
 
 S3method(as.data.frame, SpatialPoints)
 S3method(as.data.frame, SpatialPixels)
@@ -145,6 +140,7 @@ S3method(dim, SpatialPixelsDataFrame)
 S3method(dim, SpatialGridDataFrame)
 
 S3method(image, SpatialPixelsDataFrame)
+S3method(image, SpatialPixels)
 S3method(image, SpatialGridDataFrame)
 
 S3method(length, SpatialGrid)

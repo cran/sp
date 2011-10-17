@@ -65,11 +65,11 @@ pointsInSpatialPolygons = function(pts, SpPolygons, returnList = FALSE) {
     cpts <- coordinates(pts)
     storage.mode(cpts) <- "double"
     mode.checked <- storage.mode(cpts) == "double"
-    cand0 <- .Call("pointsInBox", lb, cpts[,1], cpts[,2], PACKAGE="sp")
-    m <- length(pls)
-    cand <- .Call("tList", cand0, as.integer(m), PACKAGE="sp")
-    rm(cand0)
-    gc(verbose=FALSE)
+    cand <- .Call("tList", 
+    	.Call("pointsInBox", lb, cpts[,1], cpts[,2], PACKAGE="sp"), 
+		as.integer(length(pls)), PACKAGE="sp")
+    # rm(cand0)
+    # gc(verbose=FALSE)
     res <- pointsInPolys2(pls, cand, cpts, mode.checked=mode.checked,
 		returnList = returnList)
     res

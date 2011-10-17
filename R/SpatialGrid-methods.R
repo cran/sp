@@ -34,23 +34,8 @@ SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	pts = boguspoints(grid)
 	pts@bbox[,1] = pts@bbox[,1] - 0.5 * grid@cellsize
 	pts@bbox[,2] = pts@bbox[,2] + 0.5 * grid@cellsize
-	proj4string(pts) = proj4string
-# RSB
-#	new("SpatialGrid", pts, grid = grid, grid.index = integer(0))
-#	res <- new("SpatialGrid", new("SpatialPixels", pts, grid = grid, 
-#		grid.index = integer(0)))
-# very odd long initiation times 071006 RSB
-
-	SPix <- new("SpatialPixels", pts, grid = grid, grid.index = integer(0))
-	res <- new("SpatialGrid")
-	slot(res, "grid") <- slot(SPix, "grid")
-	slot(res, "grid.index") <- slot(SPix, "grid.index")
-	slot(res, "coords") <- slot(SPix, "coords")
-	slot(res, "bbox") <- slot(SPix, "bbox")
-	slot(res, "proj4string") <- slot(SPix, "proj4string")
-	res
-# avoids recursive validation in new("SpatialGrid", ...)
-# representation of SG is Spix
+	new("SpatialGrid", grid = grid, coords = pts@coords, bbox = pts@bbox, grid.index = integer(0),
+		proj4string = proj4string)
 }
 
 setMethod("coordinates", "SpatialGrid", function(obj) coordinates(obj@grid))
@@ -233,18 +218,18 @@ setAs("SpatialGrid", "data.frame",
 	function(from) as.data.frame.SpatialGrid(from))
 
 # uncommented 070122 RSB
-setAs("SpatialGrid", "SpatialPixels", function(from)
-	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
-)
+#setAs("SpatialGrid", "SpatialPixels", function(from)
+#	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
+#)
 # added EJP, 100521
 ## outcommented 100607 as it breaks the ASDAR scripts in csdacm.R
 #setAs("SpatialGrid", "SpatialPoints", function(from)
 #	SpatialPoints(coordinates(from), from@proj4string)
 #)
 #xxxx
-setAs("SpatialGrid", "SpatialPoints", function(from)
-	as(as(from, "SpatialPixels"), "SpatialPoints")
-)
+#setAs("SpatialGrid", "SpatialPoints", function(from)
+#	as(as(from, "SpatialPixels"), "SpatialPoints")
+#)
 #setIs("SpatialGrid", "SpatialPoints", coerce = function(from)
 #	as(as(from, "SpatialPixels"), "SpatialPoints"), 
 #	replace = function(obj, value) stop("no replace function for this coercion")

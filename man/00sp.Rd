@@ -96,7 +96,7 @@ GDAL and OGR: \url{http://www.remotesensing.org/gdal/}.
 
 \section{Authors}{
 sp is a collaborative effort of Edzer Pebesma, Roger Bivand, Barry
-Rowlinson and Virgilo G\'omez-Rubio.
+Rowlingson and Virgilo G\'omez-Rubio.
 }
 
 \keyword{spatial}

@@ -1,10 +1,10 @@
 .overDF = function(r, data, n, returnList, fn, ...) {
-	ret = lapply(1:n, function(x) data[r[[x]],,drop=FALSE])
+	ret = lapply(1:n, function(x) data[r[[x]],,drop=FALSE]) # splits ret
 	if (!returnList) {
 		if (is.null(fn))
-			fn = function(x, ...) { x[1,,drop=FALSE] }
-		ret = do.call(rbind, lapply(ret, fn, ...))
-		# ret[match(1:n, ix),,drop=FALSE]
+			fn = function(x, ...) x[1]
+		ret = do.call(rbind, lapply(ret, 
+			function(x) data.frame(lapply(x, fn, ...))))
 		ret[is.na(ret)] = NA # removes NaN's
 		ret = as.data.frame(ret)
 	} else
