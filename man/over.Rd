@@ -62,8 +62,8 @@ in multiple polygons, the last polygon is recorded.  }
 \item{x = "SpatialPointsDataFrame", y = "SpatialPolygons"}{ equal
 to the previous method, except that an argument \code{fn=xxx} is
 allowed, e.g. \code{fn = mean} which will then report a data.frame
-with the mean values of the \code{x} points falling in each polygon
-(set) of \code{y} }
+with the mean attribute values of the \code{x} points falling 
+in each polygon (set) of \code{y} }
 \item{x = "SpatialPoints", y = "SpatialPolygonsDataFrame"}{ returns
 a data.frame of the second argument with row entries corresponding
 to the first argument }
@@ -115,23 +115,33 @@ r3 = cbind(c(179110, 179907, 180433, 180712, 180752, 180329, 179875,
 179668, 179572, 179269, 178879, 178600, 178544, 179046, 179110),
 c(331086, 330620, 330494, 330265, 330075, 330233, 330336, 330004, 
 329783, 329665, 329720, 329933, 330478, 331062, 331086))
+r4 = cbind(c(180304, 180403,179632,179420,180304),
+c(332791, 333204, 333635, 333058, 332791))
 
 sr1=Polygons(list(Polygon(r1)),"r1")
 sr2=Polygons(list(Polygon(r2)),"r2")
 sr3=Polygons(list(Polygon(r3)),"r3")
-sr=SpatialPolygons(list(sr1,sr2,sr3))
-srdf=SpatialPolygonsDataFrame(sr, data.frame(cbind(1:3,5:3), row.names=c("r1","r2","r3")))
+sr4=Polygons(list(Polygon(r4)),"r4")
+sr=SpatialPolygons(list(sr1,sr2,sr3,sr4))
+srdf=SpatialPolygonsDataFrame(sr, data.frame(cbind(1:4,5:2), row.names=c("r1","r2","r3","r4")))
 
 data(meuse)
 coordinates(meuse) = ~x+y
-data(meuse.grid)
-coordinates(meuse.grid) = ~x+y
-gridded(meuse.grid) = TRUE
 
 plot(meuse)
 polygon(r1)
 polygon(r2)
 polygon(r3)
+polygon(r4)
+# retrieve mean heavy metal concentrations per polygon:
+over(sr, meuse[,1:4], fn = mean)
+
+# return the number of points in each polygon:
+sapply(over(sr, geometry(meuse), returnList = TRUE), length)
+
+data(meuse.grid)
+coordinates(meuse.grid) = ~x+y
+gridded(meuse.grid) = TRUE
 
 over(sr, geometry(meuse))
 over(sr, meuse)
