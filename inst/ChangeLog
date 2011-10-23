@@ -1,3 +1,73 @@
+2011-10-19 19:21  rsbivand
+
+	* inst/include/sp_xports.c, src/sp_xports.c: add space character
+	  for safety in comment
+
+2011-10-19 18:47  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2011-10-19 18:46  rsbivand
+
+	* inst/include/sp_xports.c, src/sp_xports.c: fix comment string
+	  length
+
+2011-10-19 18:01  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2011-10-19 18:00  rsbivand
+
+	* inst/include/sp_xports.c, src/sp_xports.c: add \0 to comment
+	  string
+
+2011-10-18 19:30  edzer
+
+	* DESCRIPTION, man/over.Rd: extended over examples, after email on
+	  r-sig-geo; version update
+
+2011-10-17 13:19  edzer
+
+	* DESCRIPTION, R/over.R, R/overlay.R: version update; functions are
+	  now applied column-wise to data.frame
+	  attribute tables in overlay() and over()
+
+2011-10-07 16:25  edzer
+
+	* tests/spplot.Rout.save: updated test, now without warning
+
+2011-10-07 16:24  edzer
+
+	* R/spplot.R: added row.names to xy, to avoid warning from
+	  addNAemptyRowsCols.
+
+2011-10-07 12:04  barryrowlingson
+
+	* man/00sp.Rd, man/Spatial-class.Rd: Corrected spelling of
+	  Rowlingson
+
+2011-09-30 07:29  edzer
+
+	* R/point.in.polygon.R: removed gc() call, and the need for a
+	  temporary object, because it
+	  resulted in a large performance overhead.
+
+2011-09-24 15:50  edzer
+
+	* R/image.R: meuse.grid -> x in image.SpatialPixels
+
+2011-09-24 15:44  edzer
+
+	* R/SpatialGridDataFrame-methods.R,
+	  R/SpatialPointsDataFrame-methods.R: SpatialPointsDataFrame.R: no
+	  changes
+	  SpatialGridDataFrame: constructor function passes only geometry
+	  as arg x
+
+2011-09-19 08:51  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
 2011-09-19 08:47  rsbivand
 
 	* NAMESPACE, R/image.R, man/image.Rd: adding image.SpatialPixels
