@@ -29,6 +29,18 @@ University of Muenster, Weseler Strasse 253, 48151 M\"{u}nster, Germany.
 \begin{document}
 
 \maketitle
+
+\begin{abstract}
+Numerical ``map overlay'' combines spatial features from one map
+layer with the attribute (numerical) properties of another. This
+vignette explains the R method ``over'', which provides a consistent
+way to retrieve indices or attributes from a given spatial object
+(map layer) at the locations of another. Using this, the R generic
+``aggregate'' is extended for spatial data, so that any spatial
+properties can be used to define an aggregation predicate, and
+any R function can be used as aggregation function.
+\end{abstract}
+
 \tableofcontents
 
 \section{Introduction}

@@ -16,7 +16,8 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
 	col = heat.colors(12), red=NULL, green=NULL, blue=NULL,
         axes = FALSE, xlim = NULL,
 	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE,
-        interpolate = FALSE, angle = 0, useRasterImage=!.isSDI())
+        interpolate = FALSE, angle = 0, useRasterImage=!.isSDI(),
+		zlim = range(x[[attr]][is.finite(x[[attr]])]))
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
 \method{image}{SpatialPixels}(x, ...) 
 \method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
@@ -39,6 +40,7 @@ a column number }
 \item{axes}{ logical; should coordinate axes be drawn? }
 \item{xlim}{ x-axis limits }
 \item{ylim}{ y-axis limits }
+\item{zlim}{ data limits for plotting the (raster, attribute) values }
 \item{add}{ logical; if FALSE, the image is added to the plot layout setup
 by \code{plot(as(x, "Spatial"),axes=axes,xlim=xlim,ylim=ylim,asp=asp)}
 which sets up axes and plotting region; if TRUE, the image is added

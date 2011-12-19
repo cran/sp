@@ -4,11 +4,6 @@ import(methods)
 importFrom(graphics, plot, hist)
 importFrom(stats, aggregate)
 import(utils) # stack, to be changed later (2.5.0?) into
-#importFrom(lattice, levelplot, xyplot, trellis.par.set, 
-#	panel.lines, panel.text, panel.points, panel.identify,
-#	panel.levelplot, panel.superpose, panel.xyplot, trellis.par.get,
-#	trellis.focus, trellis.unfocus, panel.number, lattice.options,
-#	panel.levelplot.raster)
 import(lattice)
 importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
@@ -18,6 +13,8 @@ export(CRS, print.CRS)
 export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
 	remove.duplicates, degAxis, "%over%")
+
+export(get_ll_warn, set_ll_warn, get_ll_TOL, set_ll_TOL)
 
 export(coordinatevalues)
 
@@ -69,7 +66,9 @@ export(read.asciigrid, write.asciigrid)
 export(makegrid, sample.Spatial, sample.Line, sample.Polygon, sample.Polygons,
 	sample.Sgrid)
 
-export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels, HexPoints2SpatialPolygons)
+export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, 
+	as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels, 
+	HexPoints2SpatialPolygons)
 
 export(dd2dms, print.DMS, char2dms, as.character.DMS,
 	as.double.DMS, as.numeric.DMS)

@@ -12,8 +12,18 @@ ReplProj4string = function(obj, value) {
 	}
 	if (ll) {
 		bb <- bbox(obj)
-		if (!.ll_sanity(bb))
-			stop("Geographical CRS given to non-conformant data")
+                ll_sanity_res <- .ll_sanity(bb)
+		if (!ll_sanity_res) {
+                    lst <- sapply(attr(ll_sanity_res, "details"),
+                        attr, "out")
+                    out <- paste(format(unlist(lst), digits=12), collapse=" ")
+                    mess <- paste("Geographical CRS given to",
+                        "non-conformant data:", out)
+                    if (get_ll_warn())
+                        warning(mess)
+                    else 
+			stop(mess)
+		}
 	}
 	obj@proj4string = value;
 	obj
@@ -25,16 +35,23 @@ setReplaceMethod("proj4string", c("Spatial", "CRS"), ReplProj4string)
 # split out from proj4string<- and Spatial validity to cover numerical fuzz
 # RSB 070216
 .ll_sanity <- function(bb) {
-	tol <- .Machine$double.eps ^ 0.25
+        TOL <- get_ll_TOL()
+	tol <- .Machine$double.eps ^ TOL
 	W <- bb[1,1] < -180 && 
 	    !isTRUE(all.equal((bb[1, 1] - -180), 0, tolerance = tol))
+        if (W) attr(W, "out") <- bb[1,1]
 	E <- bb[1,2] > 360 && 
 	    !isTRUE(all.equal((bb[1, 2] - 360), 0, tolerance = tol))
+        if (E) attr(E, "out") <- bb[1,2]
 	S<- bb[2,1] < -90 && 
 	    !isTRUE(all.equal((bb[2, 1] - -90), 0, tolerance = tol))
+        if (S) attr(S, "out") <- bb[2,1]
 	N <- bb[2,2] > 90 && 
 	    !isTRUE(all.equal((bb[2, 2] - 90), 0, tolerance = tol))
-	return(!(any(W || E || S || N))) 
+        if (N) attr(N, "out") <- bb[2,2]
+        res <- !(any(W || E || S || N))
+        attr(res, "details") <- list(W, E, S, N)
+	res
 }
 
 setMethod("is.projected", signature(obj = "Spatial"),

@@ -302,5 +302,9 @@ IDvaluesSpatialPixels <- function(obj) {
 length.SpatialPixels = function(x) { nrow(x@coords) }
 length.SpatialGrid = function(x) { .NumberOfCells(x@grid) }
 
-setAs("SpatialGrid", "SpatialPolygons", function(from)
-	as.SpatialPolygons.GridTopology(from@grid))
+setAs("SpatialGrid", "SpatialPolygons", function(from) {
+		ret = as.SpatialPolygons.GridTopology(from@grid)
+		proj4string(ret) = proj4string(from)
+		ret
+	}
+)
