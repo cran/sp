@@ -13,7 +13,8 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		red=NULL, green=NULL, blue=NULL, axes = FALSE, xlim = NULL, 
 		ylim = NULL, add = FALSE, ..., asp = NA, 
 		setParUsrBB=FALSE, interpolate = FALSE, angle = 0,
-                useRasterImage=!.isSDI()) {
+                useRasterImage=!.isSDI(), 
+		zlim = range(x[[attr]][is.finite(x[[attr]])])) {
 
 	if (!add) 
 		suppressWarnings(plot(as(x, "Spatial"),
@@ -23,9 +24,11 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
         if (exists("rasterImage") && useRasterImage) {
             if (.isSDI()) warning("Bug in SDI raster handling - your R graphics window may stop displaying output")
             bb <- bbox(x)
-            scl <- function(x) {
-                dr <- diff(range(x, na.rm = TRUE))
-                mx <- min(x, na.rm  = TRUE)
+            scl <- function(x, zlim) {
+                #dr <- diff(range(x, na.rm = TRUE))
+		dr = diff(zlim)
+                #mx <- min(x, na.rm  = TRUE)
+		mx = zlim[1]
                 if (abs(dr) < .Machine$double.eps)
                     res <- ifelse(is.na(x), x, 0.5)
                 else res <- (x - mx) / dr
@@ -37,7 +40,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
                 x <- x[attr]
 #                NAs <- is.na(x[[1]])
                 m <-  scl(t(matrix(x[[1]], x@grid@cells.dim[1],
-                    x@grid@cells.dim[2])))
+                    x@grid@cells.dim[2])), zlim)
                 m <- matrix(col[as.vector(m) * (length(col)-1) + 1], 
                     nrow(m), ncol(m))
                 ## if missing, set to transparent
@@ -46,7 +49,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
                     interpolate = interpolate, angle = angle)
             } else {
 		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), 
-                  add = TRUE, col = col, ...)
+                  add = TRUE, col = col, zlim = zlim, ...)
             }
 	} else {
 	    if (is.null(green) || is.null(blue)) 
