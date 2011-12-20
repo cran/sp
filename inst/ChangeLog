@@ -1,29 +1,3 @@
-2011-12-19 07:14  rsbivand
-
-	* DESCRIPTION: tidy
-
-2011-12-18 19:05  edzer
-
-	* R/image.R, inst/ChangeLog, makefile, man/image.Rd,
-	  tests/fail1.Rout.save: added zlim argument to image and
-	  documentation;
-
-2011-12-17 15:19  rsbivand
-
-	* DESCRIPTION, NAMESPACE, R/AAA.R, R/Class-Spatial.R,
-	  R/projected.R, R/spOptions.R, man/Spatial-class.Rd,
-	  man/is.projected.Rd: adding tolerance and warning options to ll
-	  sanity check
-
-2011-11-23 20:32  edzer
-
-	* DESCRIPTION, NAMESPACE: added graphics to Depends: ; cleaned
-	  NAMESPACE file
-
-2011-11-23 08:28  edzer
-
-	* ChangeLog, DESCRIPTION: added Import: graphics to DESCRIPTION
-
 2011-11-14 12:43  edzer
 
 	* inst/doc/over.Rnw: added abstract.
