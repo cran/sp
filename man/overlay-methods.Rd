@@ -5,6 +5,10 @@
 \alias{overlay,SpatialPoints,SpatialPolygons-method}
 \alias{overlay,SpatialPoints,SpatialPolygonsDataFrame-method}
 \alias{overlay,SpatialPolygons,SpatialPoints-method}
+\alias{overlay,SpatialGridDataFrame,SpatialPolygons-method}
+\alias{overlay,SpatialGrid,SpatialPolygons-method}
+\alias{overlay,SpatialGrid,SpatialPolygonsDataFrame-method}
+\alias{overlay,SpatialPolygons,SpatialGrid-method}
 \alias{overlay,SpatialGridDataFrame,SpatialPoints-method}
 \alias{overlay,SpatialGrid,SpatialPoints-method}
 \alias{overlay,SpatialPixelsDataFrame,SpatialPoints-method}

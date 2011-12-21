@@ -19,11 +19,15 @@
 \alias{over,SpatialPoints,SpatialPixels-method}
 \alias{over,SpatialPoints,SpatialPixelsDataFrame-method}
 \alias{over,SpatialPolygons,SpatialGridDataFrame-method}
+\alias{over,SpatialGrid,SpatialPolygons-method}
+\alias{over,SpatialGrid,SpatialPolygonsDataFrame-method}
+\alias{over,SpatialPolygons,SpatialGrid-method}
+
 \alias{aggregate.Spatial}
 \title{ consistent spatial overlay for points, grids and polygons }
-\description{ consistent spatial overlay for points, grids and polygons:
-retrieves the indexes or attributes from one geometry at the spatial
-locations of another }
+\description{ consistent spatial overlay for points, grids and
+polygons: at the spatial locations of object x retrieves the indexes
+or attributes from spatial object y }
 \usage{
 over(x, y, returnList = FALSE, fn = NULL, ...)
 x \%over\% y

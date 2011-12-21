@@ -73,7 +73,7 @@ is stored or a partial grid (i.e., only the non-missing valued cells);
 calling \link{coordinates} on them will give the coordinates for the
 grid cells.
 
-SpatialPoints, SpatialCell and SpatialGridded can be of arbitray
+SpatialPoints, SpatialPixels and SpatialGrid can be of arbitray
 dimension, although most of the effort is in making them work for two
 dimensional data.
 
@@ -82,7 +82,7 @@ lines that end where they start and do not intersect with itself.
 SpatialLines and SpatialPolygons only have two-dimensional data.
 
 SpatialPointsDataFrame extends SpatialPoints with a data slot, having
-a data.frame with attribute data. Similarly, SpatialCellDataFrame,
+a data.frame with attribute data. Similarly, SpatialPixelsDataFrame,
 SpatialLinesDataFrame, SpatialPolygonsDataFrame extend the primary
 spatial information with attribute data.
 

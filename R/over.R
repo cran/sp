@@ -82,6 +82,11 @@ setMethod("over",
 		}
 )
 setMethod("over",
+	signature(x = "SpatialGrid", y = "SpatialPolygons"), 
+		function(x, y, returnList = FALSE, fn = NULL, ...)
+			over(as(x, "SpatialPoints"), y = y, returnList = returnList, fn = fn, ...)
+)
+setMethod("over",
 	signature(x = "SpatialPoints", y = "SpatialPolygonsDataFrame"), 
 		function(x, y, returnList = FALSE, fn = NULL, ...) {
 			stopifnot(identical(proj4string(x),proj4string(y)))
@@ -94,6 +99,11 @@ setMethod("over",
 			ret
 		}
 )
+setMethod("over",
+	signature(x = "SpatialGrid", y = "SpatialPolygonsDataFrame"), 
+		function(x, y, returnList = FALSE, fn = NULL, ...)
+			over(as(x, "SpatialPoints"), y = y, returnList = returnList, fn = fn, ...)
+)
 
 setMethod("over",
 	signature(x = "SpatialPolygons", y = "SpatialPoints"), 
@@ -105,6 +115,11 @@ setMethod("over",
 			else
 				r
 		}
+)
+setMethod("over",
+	signature(x = "SpatialPolygons", y = "SpatialGrid"), 
+		function(x, y, returnList = FALSE, fn = NULL, ...)
+			over(x = x, y = as(y, "SpatialPoints"), returnList = returnList, fn = fn, ...)
 )
 setMethod("over",
 	signature(x = "SpatialPolygons", y = "SpatialPointsDataFrame"), 
