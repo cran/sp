@@ -1,5 +1,5 @@
-279d67d538acfb95cfe94849fd1f0adc *ChangeLog
-35eea5efc7e93a440c8335e90f75e2e8 *DESCRIPTION
+95e94bc870cf1496b3b9055574ecb5ea *ChangeLog
+a62f756ac72eb944ae41c3ab3b5e180b *DESCRIPTION
 078db30a2faa1cd386a02db45f27fbf4 *NAMESPACE
 86b0a37fcdfcfcc6e644bca7508aa9f3 *R/AAA.R
 2d228ef3aa236008897b905437cf62e0 *R/CRS-methods.R
@@ -35,7 +35,7 @@ d886fa8e9df4c134e940c13ebb5e88eb *R/dms.R
 80028a8aeb01f6d8e930d5a928f776a9 *R/flipSGDF.R
 68726fa63e049b7479aa9442339132f5 *R/gridded.R
 0d49c5489a945b19b18eb5063dd49e6d *R/gridlines.R
-30714b15b1ee9cb255de5c58b06e1380 *R/image.R
+1d3324653fe7a4971ef8635c1c0549f4 *R/image.R
 ae5f1099bd4cefd78cf3708a498ddbca *R/loadmeuse.R
 227082b122be9fea35ecdf94ea6fb01d *R/mapasp.R
 be8616b53d82d062a90b12faef3edbdb *R/over.R
@@ -61,11 +61,11 @@ f7c129c1823b0f00bca82f163c8b2dad *demo/00Index
 037cb395027d0d8a2091648a740ae842 *demo/fib.R
 c9f7f40916232c2682ec1c68962246da *demo/gallery.R
 e59129b3ce3d1e02a2d8d21c2e24778f *inst/CITATION
-279d67d538acfb95cfe94849fd1f0adc *inst/ChangeLog
+a007cd18d75e5f19c4521766df4dfe4b *inst/ChangeLog
 3f57c16171320f1cf23343f5323a521a *inst/doc/over.Rnw
-26ed278f019101048fe8c1c3d20a2545 *inst/doc/over.pdf
+aaa687de5f732912290a8a51c37ba516 *inst/doc/over.pdf
 8e6dac63776b20bab0c2d0ca23ca38d0 *inst/doc/sp.Rnw
-b96115a640e49454f84bb27ac5020cf2 *inst/doc/sp.pdf
+3c08659881db266459b0ca33d1636903 *inst/doc/sp.pdf
 ef247b6c335e75e48f81da7ef7554fa6 *inst/external/simple.ag
 15c2101eb916ea116f400d560f73dd7c *inst/external/test.ag
 5d456e44b76a8ffe04cc5d13a871cee2 *inst/include/sp.h
@@ -114,7 +114,7 @@ fd50e71d1b89b6697d733ff7ec0160df *man/flip.Rd
 07eef35922488d7aba086a741302271d *man/geometry-methods.Rd
 946863d5de28dc1c30dbb60d2e6b65ae *man/gridded-methods.Rd
 451015f7f2765ecb78d54c6099de434b *man/gridlines.Rd
-9e98c59faa03b71365818a283b58f27b *man/image.Rd
+f634973592ca33c44b3dfb383cc0421f *man/image.Rd
 6cc5508865540caba4f263500d630a81 *man/is.projected.Rd
 87958fef73cfbd0bdd5da671c58d2f9b *man/loadmeuse.Rd
 66c139002fd33753c525be6c1602b911 *man/mapasp.Rd
