@@ -15,9 +15,17 @@ setMethod("overlay",
 	signature(x = "SpatialPointsDataFrame", y = "SpatialPolygons"), 
 		 overlayPointsWithPolygons)
 
+setMethod("overlay",  # added
+	signature(x = "SpatialGridDataFrame", y = "SpatialPolygons"), 
+		 function(x, y, ...) overlayPointsWithPolygons(as(x, "SpatialPoints"), y, ...))
+
 setMethod("overlay", 
 	signature(x = "SpatialPoints", y = "SpatialPolygons"), 
-	function(x, y, ...) overlayPointsWithPolygons(x, y))  # no fn argument!
+		function(x, y, ...) overlayPointsWithPolygons(x, y))  # no fn argument!
+
+setMethod("overlay",  # added
+	signature(x = "SpatialGrid", y = "SpatialPolygons"), 
+		function(x, y, ...) overlayPointsWithPolygons(as(x, "SpatialPoints"), y))  # no fn argument!
 
 overlayPolygonsWithPoints = function(x, y, ...) {
 	# x = rings, y = pts; return pts with ring values (or id) at grid point
@@ -35,6 +43,9 @@ overlayPolygonsWithPoints = function(x, y, ...) {
 
 setMethod("overlay", signature("SpatialPolygons", "SpatialPoints"), 
 	overlayPolygonsWithPoints)
+
+setMethod("overlay", signature("SpatialPolygons", "SpatialGrid"),  # added
+	function(x,y,...) overlayPolygonsWithPoints(x, as(y, "SpatialPoints"), ...))
 
 #overlayGridWithPoints = function(x, y, fn = NULL) {
 #   cc = coordinates(y)

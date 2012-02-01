@@ -1,8 +1,8 @@
 
-R version 2.13.1 (2011-07-08)
+R version 2.14.1 (2011-12-22)
 Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i486-pc-linux-gnu (32-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -36,7 +36,6 @@ x 178440 181560
 y 329600 333760
 Is projected: NA 
 proj4string : [NA]
-Number of points: 2
 Grid attributes:
   cellcentre.offset cellsize cells.dim
 x            178460       40        78

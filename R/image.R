@@ -29,8 +29,9 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		dr = diff(zlim)
                 #mx <- min(x, na.rm  = TRUE)
 		mx = zlim[1]
+		xx[xx < zlim[1] | xx > zlim[2]] = NA
                 if (abs(dr) < .Machine$double.eps)
-                    res <- ifelse(is.na(xx), xx, 0.5)
+                    res <- ifelse(!is.na(xx), xx, 0.5)
                 else res <- (xx - mx) / dr
                 res
             }

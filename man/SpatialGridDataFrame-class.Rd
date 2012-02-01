@@ -27,11 +27,7 @@ Ordered full grids are stored instead or unordered non-NA cells;
 
 \section{Slots}{
   \describe{
-    \item{\code{coords}:}{see \link{SpatialPoints}; points slot which is
-	not actually filled with all coordinates (only with min/max) }
     \item{\code{grid}:}{see \link{GridTopology-class}; grid parameters }
-    \item{\code{grid.index}:}{see \link{SpatialPixels-class}; this slot
-	is of zero length for this class, as the grid is full }
     \item{\code{bbox}:}{Object of class \code{"matrix"}; bounding box }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}; projection }
     \item{\code{data}:}{Object of class data.frame, containing attribute data }

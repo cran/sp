@@ -1,3 +1,88 @@
+2012-01-23 15:51  edzer
+
+	* R/Class-SpatialGrid.R, R/Class-SpatialGridDataFrame.R,
+	  R/SpatialGrid-methods.R, R/SpatialGridDataFrame-methods.R,
+	  R/over.R, man/SpatialGrid-class.Rd,
+	  man/SpatialGridDataFrame-class.Rd, man/over.Rd,
+	  tests/grid.Rout.save: SpatialGrid no longer subclasses
+	  SpatialPixels (by setIs); only explicit coercion brings one into
+	  the other.
+
+2012-01-22 20:44  rsbivand
+
+	* R/SpatialGrid-methods.R, R/SpatialGridDataFrame-methods.R:
+	  timings
+
+2011-12-23 10:17  edzer
+
+	* man/00sp.Rd: removed references to Cell (Pixels) or Gridded
+	  (Grid)
+
+2011-12-22 14:49  edzer
+
+	* R/SpatialGridDataFrame-methods.R: allow selection of single cell
+	  in SpatialGridDataFrame object.
+
+2011-12-21 17:48  edzer
+
+	* tests/fail1.R, tests/fail1.Rout.save: some more tests for image()
+
+2011-12-21 17:03  edzer
+
+	* R/image.R, tests/fail1.R, tests/fail1.Rout.save: zlim did not
+	  work with useRasterImage = TRUE; added image() tests to fail1.R
+	  (better late than never!)
+
+2011-12-21 15:43  edzer
+
+	* DESCRIPTION: version increase.
+
+2011-12-20 17:02  edzer
+
+	* DESCRIPTION, R/image.R: version bump; corrected error in
+	  image(x,2), which broke other CRAN packages
+
+2011-12-19 21:50  edzer
+
+	* R/image.R, man/image.Rd: breaks in image() did not work if
+	  useRasterImage was TRUE; fixed.
+
+2011-12-19 09:08  rsbivand
+
+	* data/Rlogo.R, data/Rlogo.rda, data/meuse.R, data/meuse.grid.R,
+	  data/meuse.grid.rda, data/meuse.rda, data/meuse.riv.R,
+	  data/meuse.riv.rda: convert data R to rda
+
+2011-12-19 07:20  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2011-12-19 07:14  rsbivand
+
+	* DESCRIPTION: tidy
+
+2011-12-18 19:05  edzer
+
+	* R/image.R, inst/ChangeLog, makefile, man/image.Rd,
+	  tests/fail1.Rout.save: added zlim argument to image and
+	  documentation;
+
+2011-12-17 15:19  rsbivand
+
+	* DESCRIPTION, NAMESPACE, R/AAA.R, R/Class-Spatial.R,
+	  R/projected.R, R/spOptions.R, man/Spatial-class.Rd,
+	  man/is.projected.Rd: adding tolerance and warning options to ll
+	  sanity check
+
+2011-11-23 20:32  edzer
+
+	* DESCRIPTION, NAMESPACE: added graphics to Depends: ; cleaned
+	  NAMESPACE file
+
+2011-11-23 08:28  edzer
+
+	* ChangeLog, DESCRIPTION: added Import: graphics to DESCRIPTION
+
 2011-11-14 12:43  edzer
 
 	* inst/doc/over.Rnw: added abstract.

@@ -10,6 +10,7 @@
 \alias{coerce,SpatialGrid,SpatialPoints-method}
 \alias{coerce,SpatialGrid,SpatialPolygons-method}
 \alias{show,SpatialGrid-method}
+\alias{plot,SpatialGrid,missing-method}
 
 \title{Class "SpatialGrid" }
 \description{ class for defining a full, rectangular grid of
@@ -25,8 +26,6 @@ with grid of class \link{GridTopology-class}
   \describe{
 	\item{\code{grid}}{ object of class \link{GridTopology-class}, defining the
 	grid topology (offset, cellsize, dim) }
-	\item{\code{grid.index}}{ index of points in full grid, or integer(0) }
-	\item{\code{coords}}{ coordinates of points, or bbox of grid }
     \item{\code{bbox}:}{Object of class \code{"matrix"}; bounding box }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}; projection  }
   }
