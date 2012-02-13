@@ -1,2 +1,3 @@
 gallery		scripts to generate graph gallery on http://r-spatial.sourceforge.net/
 fib			demo script for Fibonacci sampling on the sphere
+depend		script that runs check on all R packages depending on sp

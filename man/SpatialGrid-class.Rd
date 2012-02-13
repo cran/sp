@@ -11,6 +11,7 @@
 \alias{coerce,SpatialGrid,SpatialPolygons-method}
 \alias{show,SpatialGrid-method}
 \alias{plot,SpatialGrid,missing-method}
+\alias{coordnames,SpatialGrid-method}
 
 \title{Class "SpatialGrid" }
 \description{ class for defining a full, rectangular grid of

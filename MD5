@@ -1,5 +1,6 @@
-31f00ad6fa7cc1fdc2d600dcd1f2e17a *DESCRIPTION
-078db30a2faa1cd386a02db45f27fbf4 *NAMESPACE
+d113d5e29d3545d9645a4ad3cf9a0adf *ChangeLog
+644e03a87b78543b14ae0fcccc25afa4 *DESCRIPTION
+f26d3d86f04d362296c4fc9168a66827 *NAMESPACE
 86b0a37fcdfcfcc6e644bca7508aa9f3 *R/AAA.R
 2d228ef3aa236008897b905437cf62e0 *R/CRS-methods.R
 b7fa747a8c6c3ad057c201f09d7c1088 *R/Class-CRS.R
@@ -15,7 +16,7 @@ e49bdf0d8711786747581e38d47036ea *R/Class-SpatialPolygons.R
 479c369c9ad185c951578173ff7dd643 *R/Class-SpatialPolygonsDataFrame.R
 4cc16e94ce7dd6cbf1f4303abc0710b7 *R/GridTopology-methods.R
 e9a8ff79a7fcb34e4a131ab0e597fb08 *R/Spatial-methods.R
-a17b0972c1ee877e316244e4961c6043 *R/SpatialGrid-methods.R
+0015849a996591041e87aae654802808 *R/SpatialGrid-methods.R
 8684cceeb5638124596cbd8f2f9d9993 *R/SpatialGridDataFrame-methods.R
 886be79112f0ec90ac86a2d6fc13d45c *R/SpatialLines-methods.R
 882bd73305eaa52c9bf81ab60c42296c *R/SpatialLinesDataFrame-methods.R
@@ -56,15 +57,16 @@ ef69d07f1b75fe31a92f48c1801d01a8 *R/zerodist.R
 bd4235528aa6d6a57dc294e02ae3c2ee *data/meuse.grid_ll.rda
 10f130592d778244fe3cb22b1ef0e641 *data/meuse.rda
 0cb67fca70ee8760ce5505941c191451 *data/meuse.riv.rda
-f7c129c1823b0f00bca82f163c8b2dad *demo/00Index
+0aa319d24a0a5f25ef8ffe7142b8dfc8 *demo/00Index
+47038323adcbb93f31edb652291cca91 *demo/depend.R
 037cb395027d0d8a2091648a740ae842 *demo/fib.R
 c9f7f40916232c2682ec1c68962246da *demo/gallery.R
 e59129b3ce3d1e02a2d8d21c2e24778f *inst/CITATION
-a5541e3ea5d418a0f339ed7ef7f3c279 *inst/ChangeLog
+188d76197c9a6e5bc01d9d3abbfd5b2e *inst/ChangeLog
 3f57c16171320f1cf23343f5323a521a *inst/doc/over.Rnw
-e2a2b1d2d93a7244cca898c15e855750 *inst/doc/over.pdf
+af96db7adeb02b8066629981b27a430a *inst/doc/over.pdf
 8e6dac63776b20bab0c2d0ca23ca38d0 *inst/doc/sp.Rnw
-78b8e30bd4f4754129e2f8d93ef28392 *inst/doc/sp.pdf
+13df16bd52229550a559b52a33285489 *inst/doc/sp.pdf
 ef247b6c335e75e48f81da7ef7554fa6 *inst/external/simple.ag
 15c2101eb916ea116f400d560f73dd7c *inst/external/test.ag
 5d456e44b76a8ffe04cc5d13a871cee2 *inst/include/sp.h
@@ -80,7 +82,7 @@ f1a311d5822eb0a68117d46ec2c5c5a3 *man/Lines-class.Rd
 aa6ef0114a8dd688c8068174149b38c8 *man/Polygons-class.Rd
 c92dc2e2c0e4a5cde949d34987083d76 *man/Rlogo.Rd
 c289a56ef28d0c5d17a1afe7872cd866 *man/Spatial-class.Rd
-3ca1ff7d3b27e1648e7f0ac434cbcb4f *man/SpatialGrid-class.Rd
+83b4e150736961ce00a897871a6850f5 *man/SpatialGrid-class.Rd
 efec013d74b265a1fe0ad2167e91d0c0 *man/SpatialGrid.Rd
 af64276a00e120072ed95f88c84e0ff3 *man/SpatialGridDataFrame-class.Rd
 cf0e9d73973efa3269e6a65bada1754a *man/SpatialGridDataFrame.Rd
@@ -112,6 +114,7 @@ f6317829b278feb4f468feffdc3cfe45 *man/coordnames-methods.Rd
 fd50e71d1b89b6697d733ff7ec0160df *man/flip.Rd
 07eef35922488d7aba086a741302271d *man/geometry-methods.Rd
 946863d5de28dc1c30dbb60d2e6b65ae *man/gridded-methods.Rd
+e69b17e91071d5ca729ec06c2226e9f1 *man/gridindex2nb.Rd
 451015f7f2765ecb78d54c6099de434b *man/gridlines.Rd
 f634973592ca33c44b3dfb383cc0421f *man/image.Rd
 6cc5508865540caba4f263500d630a81 *man/is.projected.Rd
