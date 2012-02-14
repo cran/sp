@@ -39,7 +39,7 @@ export(as.image.SpatialGridDataFrame, image2Grid)
 
 export(gridparameters, SpatialPixels, SpatialPixelsDataFrame,
 	SpatialGrid, SpatialGridDataFrame, GridTopology, getGridTopology,
-	areaSpatialGrid, gridlines, gridat)
+	areaSpatialGrid, gridlines, gridat, gridIndex2nb)
 
 export(getSLlinesSlot, getLinesLinesSlot, 
 	getLinesIDSlot, getSLLinesIDSlots)

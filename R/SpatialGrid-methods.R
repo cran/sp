@@ -128,15 +128,20 @@ rcFromGridIndex = function(obj) {
 	cbind(xi,yi)
 }
 
-gridIndex2nb = function(obj, maxdist = 1) {
+gridIndex2nb = function(obj, maxdist = sqrt(2), fullMat = TRUE, ...) {
 	xy = rcFromGridIndex(obj)
-	n = nrow(xy)
-	dst = function(X, Xi) apply(X, 1, function(Y) max(abs(Y-Xi)))
-	lst = vector(mode = "list", length = n)
-	for (i in 1:n) { # avoid the n x n matrix construction:
-		d = dst(xy, xy[i,])
-		lst[[i]] = which(d > 0 & d <= maxdist)
+	if (fullMat)
+		lst = apply(as.matrix(dist(xy, ...)), 1, function(x) which(x <= maxdist))
+	else {
+		dst = function(X, Xi) apply(X, 1, function(Y) sqrt(sum((Y-Xi)^2)))
+		n = nrow(xy)
+		lst = vector(mode = "list", length = n)
+		for (i in 1:n) { # avoid the n x n matrix construction:
+			d = dst(xy, xy[i,])
+			lst[[i]] = which(d <= maxdist)
+		}
 	}
+	class(lst) = c("nb", "list")
 	lst
 }
 
@@ -314,5 +319,16 @@ setAs("SpatialGrid", "SpatialPolygons", function(from) {
 		ret = as.SpatialPolygons.GridTopology(from@grid)
 		proj4string(ret) = proj4string(from)
 		ret
+	}
+)
+setMethod("coordnames", signature(x = "SpatialGrid"),
+	function(x) dimnames(bbox(x))[[1]])
+
+setReplaceMethod("coordnames", signature(x = "SpatialGrid", 
+	value =  "character"),
+    function(x, value) {
+		dimnames(x@bbox)[[1]] = value
+		coordnames(x@grid) = value
+		x
 	}
 )

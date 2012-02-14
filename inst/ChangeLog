@@ -1,3 +1,30 @@
+2012-01-31 21:48  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2012-01-31 21:46  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2012-01-31 19:09  edzer
+
+	* R/gridded.R: removed unneeded testing code / cleanup.
+
+2012-01-27 16:14  edzer
+
+	* R/SpatialGrid-methods.R: cleaned up construction of SpatialGrid
+	  (bbox)
+
+2012-01-25 08:20  edzer
+
+	* R/Class-SpatialGrid.R: added more checks to SpatialPixels
+	  validity function.
+
+2012-01-23 18:25  edzer
+
+	* R/overlay.R, man/overlay-methods.Rd: added overlay methods for
+	  SpatialGrid*
+
 2012-01-23 15:51  edzer
 
 	* R/Class-SpatialGrid.R, R/Class-SpatialGridDataFrame.R,
