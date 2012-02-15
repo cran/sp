@@ -41,7 +41,7 @@ setMethod("addAttrToGeom", signature(x = "SpatialPolygons", y = "data.frame"),
 )
 
 names.SpatialPolygonsDataFrame = function(x) names(x@data)
-"names<-.SpatialPolygonsDataFrame" = function(x,value) { names(x@data) = value; x }
+"names<-.SpatialPolygonsDataFrame" = function(x,value) { checkNames(value); names(x@data) = value; x }
 
 as.data.frame.SpatialPolygonsDataFrame = function(x, row.names, optional, ...) x@data
 

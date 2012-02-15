@@ -19,7 +19,7 @@ SpatialLinesDataFrame = function(sl, data, match.ID = TRUE) {
 }
 
 names.SpatialLinesDataFrame = function(x) names(x@data)
-"names<-.SpatialLinesDataFrame" = function(x,value) { names(x@data)<-value; x }
+"names<-.SpatialLinesDataFrame" = function(x,value) { checkNames(value); names(x@data)<-value; x }
 
 as.data.frame.SpatialLinesDataFrame = function(x, row.names, optional, ...) x@data
 

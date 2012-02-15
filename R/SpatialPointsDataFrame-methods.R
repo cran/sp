@@ -121,7 +121,8 @@ setAs("SpatialPointsDataFrame", "data.frame", function(from)
 
 names.SpatialPointsDataFrame <- function(x) names(x@data)
 "names<-.SpatialPointsDataFrame" <- function(x, value) { 
-	names(x@data) = value; 
+	checkNames(value)
+	names(x@data) = value 
 	x 
 }
 
