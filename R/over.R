@@ -1,14 +1,15 @@
 .overDF = function(r, data, n, returnList, fn, ...) {
-	ret = lapply(1:n, function(x) data[r[[x]],,drop=FALSE]) # splits ret
-	if (!returnList) {
-		if (is.null(fn))
-			fn = function(x, ...) x[1]
-		ret = do.call(rbind, lapply(ret, 
-			function(x) data.frame(lapply(x, fn, ...))))
-		ret[is.na(ret)] = NA # removes NaN's
-		ret = as.data.frame(ret)
-	} else
-		stopifnot(is.null(fn))
+	if (returnList == FALSE && is.null(fn))
+		ret = data[sapply(r, function(x) x[1]), , drop=FALSE]
+	else {
+		ret = lapply(1:n, function(x) data[r[[x]],,drop=FALSE]) # splits ret
+		if (returnList == FALSE) { # implies: is.null(fn) is FALSE too
+			ret = do.call(rbind, lapply(ret, 
+				function(x) data.frame(lapply(x, fn, ...))))
+			ret[is.na(ret)] = NA # removes NaN's
+			ret = as.data.frame(ret)
+		} 
+	}
 	ret
 }
 
@@ -43,7 +44,7 @@
 # overGeomGeomDF in rgeos,
 # ... and overDFGenericST in spacetime.
 overDFGeneric = function(x, y, returnList = FALSE, fn = NULL, ...) {
-	stopifnot(identical(proj4string(x),proj4string(y)))
+	stopifnot(identical(proj4string(x), proj4string(y)))
 	r = over(x, geometry(y), returnList = TRUE)
 	ret = .overDF(r, y@data, length(x), returnList, fn, ...)
 	if (!returnList)
@@ -69,9 +70,6 @@ setMethod("over",
 		}
 )
 setMethod("over",
-	signature(x = "SpatialPoints", y = "SpatialPointsDataFrame"), 
-		overDFGeneric)
-setMethod("over",
 	signature(x = "SpatialPoints", y = "SpatialPolygons"), 
 		function(x, y, returnList = FALSE, fn = NULL, ...) {
 			stopifnot(identical(proj4string(x),proj4string(y)))
@@ -82,44 +80,50 @@ setMethod("over",
 		}
 )
 setMethod("over",
-	signature(x = "SpatialGrid", y = "SpatialPolygons"), 
-		function(x, y, returnList = FALSE, fn = NULL, ...)
-			over(as(x, "SpatialPoints"), y = y, returnList = returnList, fn = fn, ...)
-)
-setMethod("over",
-	signature(x = "SpatialPoints", y = "SpatialPolygonsDataFrame"), 
-		function(x, y, returnList = FALSE, fn = NULL, ...) {
-			stopifnot(identical(proj4string(x),proj4string(y)))
-			r = pointsInSpatialPolygons(x, geometry(y), returnList=TRUE)
-			r = .invert(r, length(y), length(x))
-			ret = .overDF(r, y@data, length(x), returnList, fn, ...)
-			#ret = y@data[r,,drop=FALSE]
-			if (!returnList)
-				row.names(ret) = row.names(x)
-			ret
-		}
-)
-setMethod("over",
-	signature(x = "SpatialGrid", y = "SpatialPolygonsDataFrame"), 
-		function(x, y, returnList = FALSE, fn = NULL, ...)
-			over(as(x, "SpatialPoints"), y = y, returnList = returnList, fn = fn, ...)
-)
-
-setMethod("over",
 	signature(x = "SpatialPolygons", y = "SpatialPoints"), 
 		function(x, y, returnList = FALSE, fn = NULL, ...) {
 			stopifnot(identical(proj4string(x),proj4string(y)))
 			r = pointsInSpatialPolygons(geometry(y), geometry(x), TRUE)
 			if (!returnList)
-				unlist(lapply(r, function(x) x[1]))
-			else
-				r
+				r = sapply(r, function(x) x[1])
+			r
 		}
+)
+setMethod("over",
+	signature(x = "SpatialGrid", y = "SpatialPolygons"), 
+		function(x, y, returnList = FALSE, fn = NULL, ...)
+			over(as(x, "SpatialPoints"), y = y, returnList = returnList, fn = fn, ...)
 )
 setMethod("over",
 	signature(x = "SpatialPolygons", y = "SpatialGrid"), 
 		function(x, y, returnList = FALSE, fn = NULL, ...)
 			over(x = x, y = as(y, "SpatialPoints"), returnList = returnList, fn = fn, ...)
+)
+setMethod("over", signature("SpatialPoints", "SpatialGrid"), 
+	function(x, y, returnList = FALSE, fn = NULL, ...) {
+		stopifnot(identical(proj4string(x),proj4string(y)))
+		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
+		.index2list(idx, returnList)
+	}
+)
+setMethod("over", signature("SpatialPoints", "SpatialPixels"), 
+	function(x, y, returnList = FALSE, fn = NULL, ...) {
+		stopifnot(identical(proj4string(x),proj4string(y)))
+		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
+		idx = match(idx, y@grid.index)
+		.index2list(idx, returnList)
+	}
+)
+setMethod("over",
+	signature(x = "SpatialPoints", y = "SpatialPointsDataFrame"), 
+		overDFGeneric)
+setMethod("over",
+	signature(x = "SpatialPoints", y = "SpatialPolygonsDataFrame"), 
+		overDFGeneric)
+setMethod("over",
+	signature(x = "SpatialGrid", y = "SpatialPolygonsDataFrame"), 
+		function(x, y, returnList = FALSE, fn = NULL, ...)
+			over(as(x, "SpatialPoints"), y = y, returnList = returnList, fn = fn, ...)
 )
 setMethod("over",
 	signature(x = "SpatialPolygons", y = "SpatialPointsDataFrame"), 
@@ -132,15 +136,6 @@ setMethod("over",
 				fn = fn, ...)
 		}
 )
-
-setMethod("over", signature("SpatialPoints", "SpatialGrid"), 
-	function(x, y, returnList = FALSE, fn = NULL, ...) {
-		stopifnot(identical(proj4string(x),proj4string(y)))
-		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
-		.index2list(idx, returnList)
-	}
-)
-
 setMethod("over", signature("SpatialPoints", "SpatialGridDataFrame"), 
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identical(proj4string(x),proj4string(y)))
@@ -150,16 +145,6 @@ setMethod("over", signature("SpatialPoints", "SpatialGridDataFrame"),
 		.index2list(ret, returnList)
 	}
 )
-
-setMethod("over", signature("SpatialPoints", "SpatialPixels"), 
-	function(x, y, returnList = FALSE, fn = NULL, ...) {
-		stopifnot(identical(proj4string(x),proj4string(y)))
-		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
-		idx = match(idx, y@grid.index)
-		.index2list(idx, returnList)
-	}
-)
-
 setMethod("over", signature("SpatialPoints", "SpatialPixelsDataFrame"), 
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identical(proj4string(x),proj4string(y)))

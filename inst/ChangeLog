@@ -1,3 +1,33 @@
+2012-02-15 11:31  edzer
+
+	* DESCRIPTION, R/SpatialGridDataFrame-methods.R,
+	  R/SpatialLinesDataFrame-methods.R,
+	  R/SpatialPointsDataFrame-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R: added checkNames, that
+	  checks names<- gets syntactically valid names set.
+
+2012-02-13 22:09  edzer
+
+	* DESCRIPTION, R/SpatialGrid-methods.R, man/SpatialGrid-class.Rd:
+	  date; added coordnames method for SpatialGrid objects
+
+2012-02-06 16:51  edzer
+
+	* demo/00Index, demo/depend.R: added script that runs R CMD check
+	  on packages depeding on sp
+
+2012-02-01 23:00  edzer
+
+	* DESCRIPTION, NAMESPACE, R/SpatialGrid-methods.R,
+	  man/gridindex2nb.Rd: version bump; tidied gridIndex2nb function +
+	  docs, exported it in NAMESPACE
+
+2012-02-01 12:00  edzer
+
+	* R/overlay.R, inst/ChangeLog: overlay() for
+	  SpatialGridDataFrame,SpatialPolygons again falls back on
+	  SpatialPoints,SpatialPolygons
+
 2012-01-31 21:48  rsbivand
 
 	* ChangeLog, inst/ChangeLog: tidy

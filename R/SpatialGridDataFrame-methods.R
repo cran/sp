@@ -293,8 +293,12 @@ setMethod("show", "SpatialGridDataFrame",
 names.SpatialPixelsDataFrame = function(x) names(x@data)
 names.SpatialGridDataFrame = function(x) names(x@data)
 
-"names<-.SpatialPixelsDataFrame" = function(x,value) { names(x@data) = value; x }
-"names<-.SpatialGridDataFrame" = function(x,value) { names(x@data) = value; x }
+checkNames = function(x) { 
+	if (!identical(x, make.names(x)))
+		warning("attempt to set invalid names: this may lead to problems later on. See ?make.names")
+}
+"names<-.SpatialPixelsDataFrame" = function(x,value) { checkNames(value); names(x@data) = value; x }
+"names<-.SpatialGridDataFrame" = function(x,value) { checkNames(value); names(x@data) = value; x }
 
 dim.SpatialPixelsDataFrame = function(x) dim(x@data)
 
