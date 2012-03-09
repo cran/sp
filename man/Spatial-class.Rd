@@ -3,6 +3,7 @@
 \alias{Spatial-class}
 \alias{Spatial}
 \alias{print.summary.Spatial}
+\alias{subset.Spatial}
 \alias{summary,Spatial-method}
 \alias{plot,Spatial,missing-method}
 \alias{getParUsrBB}
@@ -47,11 +48,17 @@ are never to be generated; only derived classes can be meaningful }
 
 \usage{
 Spatial(bbox, proj4string = CRS(as.character(NA)))
+\method{subset}{Spatial}(x, subset, select, drop = FALSE, \dots)
 }
 
 \arguments{
 \item{bbox}{a bounding box matrix}
 \item{proj4string}{a CRS object}
+\item{x}{object of class Spatial}
+\item{subset}{see \link{subset.data.frame}}
+\item{select}{see \link{subset.data.frame}}
+\item{drop}{see \link{subset.data.frame}}
+\item{...}{ignored}
 }
 
 \author{ r-spatial team; Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}

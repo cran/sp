@@ -145,19 +145,6 @@ text.SpatialPointsDataFrame = function(x, ...) {
     do.call(text, lst)
 }
 
-subset.SpatialPointsDataFrame <- function(x, subset, select, 
-		drop = FALSE, ...) {
-	xSP <- coordinates(x)
-	dfSP <- as.data.frame(x)
-	cselect <- colnames(xSP)
-	points <- subset(xSP, subset=subset, select=cselect, drop = drop, ...)
-	if (missing(select)) select <- names(dfSP)
-	data <- subset(dfSP, subset=subset, select=select, drop = drop, ...)
-	SPDF <- SpatialPointsDataFrame(points, data, 
-		proj4string = CRS(proj4string(x)))
-	SPDF
-}
-
 row.names.SpatialPointsDataFrame <- function(x) {
     ret = dimnames(slot(x, "coords"))[[1]]
 	if (is.null(ret))
@@ -168,9 +155,6 @@ row.names.SpatialPointsDataFrame <- function(x) {
 "row.names<-.SpatialPointsDataFrame" <- function(x, value) {
     dimnames(slot(x, "coords"))[[1]] <- value
 	rownames(slot(x, "data")) <- value
-    #coords = (slot(x, "coords"))
-    #dimnames(coords)[[1]] <- value
-	#x@coords = coords
 	x
 }
 

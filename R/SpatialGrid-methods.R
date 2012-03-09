@@ -145,14 +145,6 @@ gridIndex2nb = function(obj, maxdist = sqrt(2), fullMat = TRUE, ...) {
 	lst
 }
 
-subset.SpatialPixels <- function(x, subset, select, drop = FALSE, ...) {
-	xSP <- as(x, "SpatialPoints")
-	if (missing(select)) select <- colnames(coordinates(xSP))
-	res <- subset(xSP, subset=subset, select=select, drop = drop, ...)
-	gridded(res) = TRUE
-	res
-}
-
 setMethod("[", "SpatialPixels",
 	function(x, i, j, ..., drop = FALSE) {
 #		if (!missing(drop))

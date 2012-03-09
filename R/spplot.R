@@ -233,7 +233,9 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
 		aspect = mapasp(obj,xlim,ylim), panel = panel.pointsplot,
 		sp.layout = NULL, identify = FALSE, formula,
-		xlim = bbexpand(bbox(obj)[1,], 0.04), ylim = bbexpand(bbox(obj)[2,], 0.04)) {
+		xlim = bbexpand(bbox(obj)[1,], 0.04), 
+		ylim = bbexpand(bbox(obj)[2,], 0.04)) 
+{
 
 	if (is.null(zcol)) stop("no names method for object")
 	dots = list(...)
@@ -258,7 +260,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		xlab = xlab, ylab = ylab, sp.layout = sp.layout,
 		xlim = xlim, ylim = ylim), dots)
 	z = create.z(as(obj, "data.frame"), zcol)
-	args.xyplot = fill.call.groups(args.xyplot, z = z, ...)
+	args.xyplot = Fill.call.groups(args.xyplot, z = z, ...)
 	scales = longlat.scales(obj, scales, xlim, ylim)
 	plt = do.call("xyplot", args.xyplot)
 	if (!(is.logical(identify) && identify==FALSE) && interactive()) {
@@ -380,10 +382,10 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 	sp.panel.layout(sp.layout, panel.number())
 }
 
-panel.pointsplot = function(x, y, subscripts, col, sp.layout, ...) {
-
+panel.pointsplot = function(sp.layout, ...) {
 	sp.panel.layout(sp.layout, panel.number())
-	panel.superpose(x, y, subscripts, col = col, ...)
+	#panel.superpose(x, y, subscripts, col = col, ...)
+	panel.xyplot(...)
 }
 
 fill.call.groups = function(lst, z, ..., cuts, 
@@ -669,3 +671,80 @@ addNAemptyRowsCols = function(obj) {
 	obj
 }
 
+Fill.call.groups <-
+function (lst, z, ..., cuts, col.regions = trellis.par.get("regions")$col, 
+    legendEntries = "", pch, cex = 1, fill = TRUE, do.log = FALSE, 
+    key.space = "bottom") 
+{
+    dots = list(...)
+    if (missing(pch)) 
+        lst$pch = ifelse(fill, 16, 1)
+    else lst$pch = pch
+    if (!missing(cex)) 
+        lst$cex = cex
+    if (is.numeric(z)) {
+        if (missing(cuts)) 
+            cuts = 5
+        if (length(cuts) > 1) 
+            ncuts = length(cuts) - 1
+        else ncuts = cuts
+        if (ncuts != length(col.regions)) {
+            cols = round(1 + (length(col.regions) - 1) * (0:(ncuts - 
+                1))/(ncuts - 1))
+            col = col.regions[cols]
+        }
+        else col = col.regions
+        valid = !is.na(z)
+        if (length(cuts) == 1) {
+            if (do.log) {
+                lz = log(z)
+                cuts = c(min(z[valid]), exp(seq(min(lz[valid]), 
+                  max(lz[valid]), length = cuts + 1))[2:(cuts)], 
+                  max(z[valid]))
+            }
+            else cuts = seq(min(z[valid]), max(z[valid]), length = cuts + 
+                1)
+        }
+        groups = cut(as.matrix(z), cuts, dig.lab = 4, include.lowest = TRUE)
+        lst$col = col[groups]
+    }
+    else if (is.factor(z)) {
+        if (length(col.regions) == 1) 
+            col.regions = rep(col.regions, nlevels(z))
+        if (length(col.regions) < nlevels(z)) 
+            stop("number of colors smaller than number of factor levels")
+        if (length(col.regions) > nlevels(z)) {
+            ncuts = nlevels(z)
+            cols = round(1 + (length(col.regions) - 1) * (0:(ncuts - 
+                1))/(ncuts - 1))
+            col.regions = col.regions[cols]
+        }
+        if (!missing(cuts)) 
+            stop("ncuts cannot be set for factor variable")
+        #lst$col = col.regions
+        #lst$groups = z
+        groups = z
+		col = col.regions
+        lst$col = col[z]
+    }
+    else stop("dependent of not-supported class")
+    if (missing(legendEntries)) 
+        legendEntries = levels(groups)
+    n = nlevels(groups)
+    if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && 
+        identical(dots$auto.key, TRUE))) {
+        if (!is.null(dots$key)) 
+            lst$key = dots$key
+        else lst$key = list(points = list(pch = rep(lst$pch, 
+            length = n), col = rep(col, length = n), cex = rep(cex, 
+            length = n)), text = list(legendEntries))
+        if (is.character(key.space)) 
+            lst$key$space = key.space
+        else if (is.list(key.space)) 
+            lst$key = append(lst$key, key.space)
+        else warning("key.space argument ignored (not list or character)")
+    }
+    if (!is.null(dots$auto.key)) 
+        lst$auto.key <- dots$auto.key
+    return(lst)
+}
