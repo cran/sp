@@ -84,14 +84,6 @@ as.data.frame.SpatialPoints = function(x, row.names, optional, ...) data.frame(x
 
 setAs("SpatialPoints", "data.frame", function(from) as.data.frame(from))
 
-subset.SpatialPoints <- function(x, subset, select, drop = FALSE, ...) {
-	if (!missing(select) && (length(select) < 2)) 
-		stop("selecting too few coordinate columns")
-	res <- SpatialPoints(subset(coordinates(x), subset, select, 
-		drop = drop), proj4string = proj4string(x))
-	res
-}
-
 row.names.SpatialPoints <- function(x) {
     ret = dimnames(slot(x, "coords"))[[1]]
 	if (is.null(ret))

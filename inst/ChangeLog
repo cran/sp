@@ -1,3 +1,14 @@
+2012-03-01 18:56  edzer
+
+	* man/SpatialPolygons-class.Rd,
+	  man/SpatialPolygonsDataFrame-class.Rd: added vignette examples
+	  from scratch to SpatialPolygons man pages
+
+2012-03-01 06:49  edzer
+
+	* R/over.R, inst/ChangeLog: speed issue with %over%, reported on
+	  r-sig-geo
+
 2012-02-15 11:31  edzer
 
 	* DESCRIPTION, R/SpatialGridDataFrame-methods.R,

@@ -124,16 +124,6 @@ setAs("SpatialPixelsDataFrame", "data.frame", function(from)
 setAs("SpatialGridDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialGridDataFrame(from))
 
-subset.SpatialPixelsDataFrame <- function(x, subset, select, drop = FALSE, ...) {
-	xSP <- coordinates(x)
-	dfSP <- as.data.frame(x)
-	cselect <- colnames(xSP)
-	points <- subset(xSP, subset=subset, select=cselect, drop = drop, ...)
-	if (missing(select)) select <- names(dfSP)
-	data <- subset(dfSP, subset=subset, select=select, drop = drop, ...)
-	SpatialPixelsDataFrame(points, data)
-}
-
 setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
 	grid = x@grid
 	x = as(x, "SpatialPointsDataFrame")

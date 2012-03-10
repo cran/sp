@@ -20,6 +20,8 @@ export(coordinatevalues)
 
 export(aggregate.Spatial)
 
+export(subset.Spatial)
+
 export(dimensions)
 
 export(Spatial)
@@ -207,11 +209,6 @@ S3method(stack, SpatialPointsDataFrame)
 S3method(stack, SpatialPixelsDataFrame)
 S3method(stack, SpatialGridDataFrame)
 
-S3method(subset, SpatialPixels)
-S3method(subset, SpatialPixelsDataFrame)
-S3method(subset, SpatialPoints)
-S3method(subset, SpatialPointsDataFrame)
-
 S3method(text, SpatialPointsDataFrame)
 
 S3method(print, DMS)
@@ -219,3 +216,4 @@ S3method(as.character, DMS)
 S3method(as.numeric, DMS)
 S3method(as.double, DMS)
 S3method(aggregate, Spatial)
+S3method(subset, Spatial)
