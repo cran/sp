@@ -382,10 +382,11 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 	sp.panel.layout(sp.layout, panel.number())
 }
 
-panel.pointsplot = function(sp.layout, ...) {
+panel.pointsplot = function(sp.layout, x, y, subscripts, col, cex, pch, ...) {
 	sp.panel.layout(sp.layout, panel.number())
 	#panel.superpose(x, y, subscripts, col = col, ...)
-	panel.xyplot(...)
+	lpoints(x, y, col = col[subscripts], cex = cex[subscripts], 
+		pch = pch[subscripts], ...)
 }
 
 fill.call.groups = function(lst, z, ..., cuts, 
@@ -672,19 +673,12 @@ addNAemptyRowsCols = function(obj) {
 }
 
 Fill.call.groups <-
-function (lst, z, ..., cuts, col.regions = trellis.par.get("regions")$col, 
+function (lst, z, ..., cuts = 5, col.regions = trellis.par.get("regions")$col, 
     legendEntries = "", pch, cex = 1, fill = TRUE, do.log = FALSE, 
-    key.space = "bottom") 
+    key.space = "bottom", cex.key) 
 {
     dots = list(...)
-    if (missing(pch)) 
-        lst$pch = ifelse(fill, 16, 1)
-    else lst$pch = pch
-    if (!missing(cex)) 
-        lst$cex = cex
     if (is.numeric(z)) {
-        if (missing(cuts)) 
-            cuts = 5
         if (length(cuts) > 1) 
             ncuts = length(cuts) - 1
         else ncuts = cuts
@@ -692,8 +686,8 @@ function (lst, z, ..., cuts, col.regions = trellis.par.get("regions")$col,
             cols = round(1 + (length(col.regions) - 1) * (0:(ncuts - 
                 1))/(ncuts - 1))
             col = col.regions[cols]
-        }
-        else col = col.regions
+        } else 
+			col = col.regions
         valid = !is.na(z)
         if (length(cuts) == 1) {
             if (do.log) {
@@ -706,9 +700,7 @@ function (lst, z, ..., cuts, col.regions = trellis.par.get("regions")$col,
                 1)
         }
         groups = cut(as.matrix(z), cuts, dig.lab = 4, include.lowest = TRUE)
-        lst$col = col[groups]
-    }
-    else if (is.factor(z)) {
+    } else if (is.factor(z)) {
         if (length(col.regions) == 1) 
             col.regions = rep(col.regions, nlevels(z))
         if (length(col.regions) < nlevels(z)) 
@@ -721,23 +713,38 @@ function (lst, z, ..., cuts, col.regions = trellis.par.get("regions")$col,
         }
         if (!missing(cuts)) 
             stop("ncuts cannot be set for factor variable")
-        #lst$col = col.regions
-        #lst$groups = z
         groups = z
 		col = col.regions
-        lst$col = col[z]
-    }
-    else stop("dependent of not-supported class")
-    if (missing(legendEntries)) 
-        legendEntries = levels(groups)
+    } else stop("dependent of not-supported class")
     n = nlevels(groups)
-    if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && 
-        identical(dots$auto.key, TRUE))) {
+
+	# deal with col:
+	lst$col = col[groups]
+	print(lst$col)
+
+	# deal with pch:
+    if (missing(pch)) 
+        pch = rep(ifelse(fill, 16, 1), n)
+	lst$pch = pch[groups]
+
+	# deal with cex:
+	if (missing(cex))
+		cex = rep(1, n)
+	if (length(cex) == n) {
+		cex.key = cex
+		lst$cex = cex[groups]
+	} else if (missing(cex.key))
+		cex.key = mean(cex, na.rm = TRUE)
+
+	# do key:
+    if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && identical(dots$auto.key, TRUE))) {
+    	if (missing(legendEntries)) 
+			legendEntries = levels(groups)
         if (!is.null(dots$key)) 
             lst$key = dots$key
         else lst$key = list(points = list(pch = rep(lst$pch, 
-            length = n), col = rep(col, length = n), cex = rep(cex, 
-            length = n)), text = list(legendEntries))
+            length = n), col = rep(col, length = n), cex = 
+			rep(cex.key, length = n)), text = list(legendEntries))
         if (is.character(key.space)) 
             lst$key$space = key.space
         else if (is.list(key.space)) 

@@ -18,6 +18,8 @@ SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps),
 
 SpatialGrid = function(grid, proj4string = CRS(as.character(NA))) {
 	stopifnot(is(grid, "GridTopology"))
+	if (is.character(proj4string))
+		proj4string = CRS(proj4string)
 	cc = rbind(grid@cellcentre.offset - 0.5 * grid@cellsize,
 			grid@cellcentre.offset + (grid@cells.dim - 0.5) * grid@cellsize)
 	bb = .bboxCoords(cc)
