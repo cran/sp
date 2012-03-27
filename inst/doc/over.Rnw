@@ -138,7 +138,8 @@ pol = SpatialPolygons(list(
 	))
 @
 and shown in figure \ref{fig:toy}.
-\begin{figure}
+
+\begin{figure}[htb]
 <<fig=TRUE,echo=FALSE>>=
 plot(pol, xlim = c(-1.1, 2.1), ylim = c(-1.1, 1.6), border=2:6, axes=TRUE)
 points(pts, col='red')
@@ -231,8 +232,14 @@ where a \code{SpatialLines} object is involved (either as \code{x}
 or \code{y}), and the method where \code{x} and \code{y} are both of
 class \code{SpatialPolygons} (table \ref{tab}). For this purpose,
 objects of class \code{SpatialPixels} or \code{SpatialGrid} are
-converted to \code{SpatialPolygons}. For the toy example extended
-with lines, see figure \ref{fig:lines}.
+converted to \code{SpatialPolygons}. A toy example combines polygons
+with lines, created by
+<<>>=
+l1 = Lines(Line(coordinates(pts)), "L1")
+l2 = Lines(Line(rbind(c(1,1.5), c(1.5,1.5))), "L2")
+L = SpatialLines(list(l1,l2))
+@
+and shown in figure \ref{fig:lines}.
 
 \begin{table}
 \begin{tabular}{|l|cccc|} \hline 
@@ -243,17 +250,14 @@ x: polygons      &   s    &    r     &      r      &      s       \\
 x: pixels/grids  &   s    &    r     &      s      &      s       \\ \hline
 \end{tabular}
 \caption{ \code{over} methods implemented for different \code{x} 
-and \code{y} arguments (x: sp; r: rgeos).  }
+and \code{y} arguments (s: sp; r: rgeos).  }
 \label{tab}
 \end{table}
 
-\begin{figure}
+\begin{figure}[htb]
 <<fig=TRUE,echo=FALSE>>=
 plot(pol, xlim = c(-1.1, 2.1), ylim = c(-1.1, 1.6), border=2:6, axes=TRUE)
 text(c(-1,0.1,0.1,1.1,0.45), c(0,0,-1.05,0,0.1), c("x1", "x2", "x3", "x4", "x5"))
-l1 = Lines(Line(coordinates(pts)), "L1")
-l2 = Lines(Line(rbind(c(1,1.5), c(1.5,1.5))), "L2")
-L = SpatialLines(list(l1,l2))
 lines(L, col = 'green')
 text(c(0.52, 1.52), c(1.5, 1.5), c("L1", "L2"))
 @

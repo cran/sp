@@ -1,4 +1,4 @@
-8ba7a1504c97583c8c1c11cd8d1b9fc4 *DESCRIPTION
+cc8726fe1872858fbb45bada340bdd13 *DESCRIPTION
 15cd839b01d76b4ecc335ac8f912d93d *NAMESPACE
 86b0a37fcdfcfcc6e644bca7508aa9f3 *R/AAA.R
 2d228ef3aa236008897b905437cf62e0 *R/CRS-methods.R
@@ -15,7 +15,7 @@ e49bdf0d8711786747581e38d47036ea *R/Class-SpatialPolygons.R
 479c369c9ad185c951578173ff7dd643 *R/Class-SpatialPolygonsDataFrame.R
 4cc16e94ce7dd6cbf1f4303abc0710b7 *R/GridTopology-methods.R
 e9a8ff79a7fcb34e4a131ab0e597fb08 *R/Spatial-methods.R
-60257ba46f3e311e35a422211b43eb73 *R/SpatialGrid-methods.R
+5b9c32e5126574b6ac0299420906e19e *R/SpatialGrid-methods.R
 1a325cbe58d3bdd67afc42c4dee4f952 *R/SpatialGridDataFrame-methods.R
 886be79112f0ec90ac86a2d6fc13d45c *R/SpatialLines-methods.R
 e700a06d169b7d014dd78c65ad347158 *R/SpatialLinesDataFrame-methods.R
@@ -46,7 +46,7 @@ ae5f1099bd4cefd78cf3708a498ddbca *R/loadmeuse.R
 d87dfe785fe09899b2e69a68da95e786 *R/select.spatial.R
 7b31e076449299562be468c368e9784e *R/spOptions.R
 99bafd2631bf608925c715bad8001861 *R/spdists.R
-3b624952dd33f8b41c43cdc255fb51af *R/spplot.R
+dfe3aacae33c427204d44474d05e9848 *R/spplot.R
 0ba3656f23e29a47065150d584871786 *R/spsample.R
 24a1fcc357498b36a232d2368a534f17 *R/stack.R
 522399dab714fed0c17d8a9788652588 *R/subset.R
@@ -58,15 +58,15 @@ bd4235528aa6d6a57dc294e02ae3c2ee *data/meuse.grid_ll.rda
 10f130592d778244fe3cb22b1ef0e641 *data/meuse.rda
 0cb67fca70ee8760ce5505941c191451 *data/meuse.riv.rda
 0aa319d24a0a5f25ef8ffe7142b8dfc8 *demo/00Index
-47038323adcbb93f31edb652291cca91 *demo/depend.R
+a97ea92388bde7b4bba666059af04180 *demo/depend.R
 037cb395027d0d8a2091648a740ae842 *demo/fib.R
 c9f7f40916232c2682ec1c68962246da *demo/gallery.R
 e59129b3ce3d1e02a2d8d21c2e24778f *inst/CITATION
 fab237501f174eb332d0a57200f3899c *inst/ChangeLog
-3f57c16171320f1cf23343f5323a521a *inst/doc/over.Rnw
-959256e0d867de430fc820fd1663e09e *inst/doc/over.pdf
-8e6dac63776b20bab0c2d0ca23ca38d0 *inst/doc/sp.Rnw
-6f70d5071b803955ebbc5ef43ace57c7 *inst/doc/sp.pdf
+8e6dac63776b20bab0c2d0ca23ca38d0 *inst/doc/intro_sp.Rnw
+3276e37c4cd8c254fd09b321cf14918f *inst/doc/intro_sp.pdf
+8ab3f14863b13c9f24dcc43ca18b662f *inst/doc/over.Rnw
+f4947283699adce3ed51d45d6a02a0a3 *inst/doc/over.pdf
 ef247b6c335e75e48f81da7ef7554fa6 *inst/external/simple.ag
 15c2101eb916ea116f400d560f73dd7c *inst/external/test.ag
 5d456e44b76a8ffe04cc5d13a871cee2 *inst/include/sp.h

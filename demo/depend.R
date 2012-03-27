@@ -26,7 +26,11 @@ RCheck = function(x, URL = "http://cran.r-project.org/src/contrib/") {
 result = result[-grep("surveill", result)]
 result
 sel = TRUE
-succ = unlist(lapply(result[sel], function(x) RCheck(x)))
+library(parallel)
+cl <- makeCluster(getOption("cl.cores", 4))
+clusterExport(cl, c("RCheck", "sel", "result"))
+out = parLapply(cl, result[sel], function(x) RCheck(x))
+succ = unlist(out)
 x = which(succ != 0)
 result[x]
 bla = lapply(result[x], function(x) system(paste("tail ",x,".log", sep="")))
