@@ -10,6 +10,7 @@
 \alias{sp.polygons}
 \alias{sp.text}
 \alias{sp.grid}
+\alias{sp.panel.layout}
 
 \title{panel and panel utility functions for spplot}
 \description{panel functions for spplot functions, and functions that can be
@@ -23,6 +24,7 @@ sp.points(obj, pch = 3, ...)
 sp.polygons(obj, col = 1, fill = "transparent", ...)
 sp.grid(obj, col = 1, alpha = 1,...)
 sp.text(loc, txt, ...)
+sp.panel.layout(lst, p.number, ...)
 }
 \arguments{
 \item{sp.layout}{ list; see \link{spplot} for definition }
@@ -45,7 +47,11 @@ traditional graphics functions (FALSE)}
 \item{loc}{ numeric vector of two elements }
 \item{txt}{ text to be plotted }
 \item{alpha}{ alpha (transparency) level }
-\item{...}{ arguments passed to the underlying lattice or grid functions}
+\item{lst}{ sp.layout argument, see \link{spplot}}
+\item{p.number}{ panel number; in a panel, panel.number() should be
+passed to this argument }
+\item{...}{ arguments passed to the underlying panel, lattice or 
+grid functions }
 }
 \note{
 The panel functions of \link{spplot}, \code{panel.gridplot} for grids,
@@ -53,7 +59,8 @@ The panel functions of \link{spplot}, \code{panel.gridplot} for grids,
 or polygons can be called with arguments \code{(x,y,...)}.
 Customizing spplot plots can be done by extending the panel function,
 or by supplying an sp.layout argument; see the documentation for
-\link{spplot}.
+\link{spplot}. Inside these panel functions, \code{sp.panel.layout}
+is called to deal with plotting the items in a \code{sp.layout} object.
 
 \code{SpatialPolygonsRescale} scales and shifts an object of class
 \link{SpatialPolygons-class}; this is useful e.g. for scale bars, or other

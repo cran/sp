@@ -2,7 +2,7 @@
 plot.SpatialPolygons <- function(x, col, border = par("fg"), add=FALSE, 
 	xlim=NULL, ylim=NULL, xpd = NULL, density = NULL, angle = 45, 
 	pbg=NULL, axes = FALSE, lty = par("lty"), ..., setParUsrBB=FALSE,
-        usePolypath=FALSE, rule="winding") {
+        usePolypath=TRUE, rule="winding") {
 
 	if (is.null(pbg))
 		pbg = par("bg") # transparent!
@@ -43,7 +43,7 @@ setMethod("plot", signature(x = "SpatialPolygons", y = "missing"),
 	function(x, y, ...) plot.SpatialPolygons(x, ...))
 
 .polygonRingHoles <- function(Sr, col=NA, border=NULL, xpd=NULL, density=NULL,
-	angle=45, pbg, lty = par("lty"), ..., usePolypath=FALSE,
+	angle=45, pbg, lty = par("lty"), ..., usePolypath=TRUE,
         rule="winding") {
 	if (!is(Sr, "Polygons")) 
 		stop("Not an Polygons object")

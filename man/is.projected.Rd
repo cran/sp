@@ -10,6 +10,8 @@
 \alias{get_ll_TOL}
 \alias{set_ll_warn}
 \alias{set_ll_TOL}
+\alias{get_ReplCRS_warn}
+\alias{set_ReplCRS_warn}
 
 \title{ Sets or retrieves projection attributes on classes extending
 SpatialData }
@@ -21,19 +23,21 @@ proj4string(obj)
 proj4string(obj) <- value
 get_ll_warn()
 get_ll_TOL()
+get_ReplCRS_warn()
 set_ll_warn(value)
 set_ll_TOL(value)
+set_ReplCRS_warn(value)
 }
 \arguments{
   \item{obj}{An object of class or extending \link{Spatial-class}}
-  \item{value}{For \code{proj4string} CRS object, containing a valid proj4 string; attempts to assign an object containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped. For \code{set_ll_warn} a single logical value, if FALSE (default) error on range exceedance, if TRUE, warning. For \code{set_ll_TOL} the value of the power of \code{.Machine$double.eps} (default 0.25) to use as tolerance in testing range exceedance}
+  \item{value}{For \code{proj4string} CRS object, containing a valid proj4 string; attempts to assign an object containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped. For \code{set_ll_warn} a single logical value, if FALSE (default) error on range exceedance, if TRUE, warning. For \code{set_ll_TOL} the value of the power of \code{.Machine$double.eps} (default 0.25) to use as tolerance in testing range exceedance. \code{set_ReplCRS_warn} may be used to turn off warnings issued when changing object CRS with the \code{proj4string} replacement method (by setting \code{value=FALSE}).}
 }
 
 \value{ \code{is.projected} returns a logical; \code{proj4string}
 returns a character vector of length 1; \code{spatial.dimension}
 returns the number of spatial dimensions (2 or 3).  }
 
-\details{ proj4 strings are operative through CRAN package rgdal. For strings defined as \dQuote{longlat}, the minimum longitude should be -180, the maximum longitude 360, the minimum latitude -90, and the maximum latitude 90}
+\details{ proj4 strings are operative through CRAN package rgdal. For strings defined as \dQuote{longlat}, the minimum longitude should be -180, the maximum longitude 360, the minimum latitude -90, and the maximum latitude 90. Note that the \code{proj4string} replacement method does not project spatial data - for this use \code{spTransform} methods in the rgdal package.}
 
 \author{
   Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}

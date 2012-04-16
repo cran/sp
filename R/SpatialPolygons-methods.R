@@ -16,6 +16,10 @@ SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
         stopifnot(is(proj4string, "CRS"))
         res <- .Call("SpatialPolygons_c", Srl, pO, proj4string, PACKAGE="sp")
         validObject(res)
+# 120416 add top-level comment to reduce comment checking
+        cSr <- as.character(any(sapply(slot(res, "polygons"),
+            function(x) !is.null(comment(x))), na.rm=TRUE))
+        comment(res) <- cSr
 	res
 }
 

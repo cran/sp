@@ -97,15 +97,18 @@ points outside the grid }
 }
 \author{Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 
-\note{points on a polygon boundary and points corresponding to a
+\note{\code{over} can be seen as a left outer join in SQL; the
+match is a spatial intersection.
+
+points on a polygon boundary and points corresponding to a
 polygon vertex are considered to be inside the polygon.
 
 These methods assume that pixels and grid cells are never
-overlapping.  
+overlapping; for objects of class \code{SpatialPixels} this is
+not guaranteed.
 
-Methods that involve \code{SpatialLines} objects, or pairs of
-\code{SpatialPolygons} require, and are implemented in, package
-rgeos.}
+over methods that involve \code{SpatialLines} objects, or pairs of
+\code{SpatialPolygons} are implemented in, package rgeos.}
 
 \seealso{\link{overlay}, \link{point.in.polygon}}
 \examples{

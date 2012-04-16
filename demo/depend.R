@@ -16,7 +16,7 @@ result <-  packages_to_check("sp")
 RCheck = function(x, URL = "http://cran.r-project.org/src/contrib/") {
 	if (!file.exists(x))
 		download.file(paste(URL, x, sep=""), x)
-	cmd = paste("R CMD check ", x, " > ", x, ".log", sep = "")
+	cmd = paste("R CMD check --as-cran ", x, " > ", x, ".log", sep = "")
 	print(cmd)
 	ret = system(cmd)
 	print(ret)

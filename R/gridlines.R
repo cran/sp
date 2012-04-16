@@ -47,14 +47,11 @@ gridat <- function(x, easts = pretty(bbox(x)[1,]),
 	a2lab <- degreeLabelsNS(a2[,2])
 	as <- SpatialPoints(rbind(a1, a2), CRS(proj4string(x)))
 	res <- SpatialPointsDataFrame(as, 
-		data.frame(
-		#AttributeList(list(
-		labels = c(a1lab, a2lab), 
+		data.frame(labels = c(a1lab, a2lab), 
 			pos = c(rep(1L+((ac-1)*2), length(easts)),
                         rep(2L+((ac-1)*2), length(norths))), 
 			offset = rep(offset, length(easts)+length(norths))
 		)
-		#)
 	)
 	res
 }

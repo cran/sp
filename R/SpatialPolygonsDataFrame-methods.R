@@ -26,6 +26,17 @@ SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
         res@plotOrder <- Sr@plotOrder
         res@data <- data
         res@polygons <- Sr@polygons
+# 120416 add top-level comment to reduce comment checking
+        cSr <- comment(Sr)
+        if (is.null(cSr))
+            comment(res) <- as.character(any(sapply(slot(res, "polygons"),
+                function(x) !is.null(comment(x))), na.rm=TRUE))
+        else {
+            if (!is.character(cSr) || is.na(cSr) || length(cSr) != 1)
+            cSr <- as.character(any(sapply(slot(res, "polygons"),
+                function(x) !is.null(comment(x))), na.rm=TRUE))
+            comment(res) <- cSr
+        }
         res
 }
 

@@ -6,6 +6,12 @@ get_ll_TOL <- function() {
     get("ll_TOL", envir = .spOptions)
 }
 
+
+get_ReplCRS_warn <- function() {
+    get("ReplCRS_warn", envir = .spOptions)
+}
+
+
 set_ll_warn <- function(value) {
         stopifnot(is.logical(value))
         stopifnot(length(value) == 1)
@@ -21,4 +27,10 @@ set_ll_TOL <- function(value) {
         get_ll_TOL()
 }
 
+set_ReplCRS_warn <- function(value) {
+        stopifnot(is.logical(value))
+        stopifnot(length(value) == 1)
+        assign("ReplCRS_warn", value, envir = .spOptions)
+        get_ReplCRS_warn()
+}
 
