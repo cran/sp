@@ -720,7 +720,7 @@ function (lst, z, ..., cuts = 5, col.regions = trellis.par.get("regions")$col,
 
 	# deal with col:
 	lst$col = col[groups]
-	print(lst$col)
+	#print(lst$col)
 
 	# deal with pch:
     if (missing(pch)) 
@@ -730,6 +730,8 @@ function (lst, z, ..., cuts = 5, col.regions = trellis.par.get("regions")$col,
 	# deal with cex:
 	if (missing(cex))
 		cex = rep(1, n)
+	if (length(cex) == 1)
+		cex = rep(cex, n)
 	if (length(cex) == n) {
 		cex.key = cex
 		lst$cex = cex[groups]

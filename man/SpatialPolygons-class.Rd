@@ -41,6 +41,28 @@ Methods defined with class "SpatialPolygons" in the signature:
 	\item{rbind}{\code{signature(object = "SpatialPolygons")}: rbind-like method}
   }
 }
+
+\details{
+The \code{plot} method for spatial polygons takes the following arguments:
+\describe{
+  \item{x}{a SpatialPolygons object}
+  \item{col}{a vector of colour values}
+  \item{border}{default \code{par("fg")}; the colour to draw the border}
+  \item{add}{default FALSE; if TRUE, add to existing plot}
+  \item{xlim, ylim}{default NULL; ranges for the plotted \sQuote{x} and \sQuote{y} values}
+  \item{xpd}{default NULL; controls clipping, see \code{\link[graphics]{par}}}
+  \item{density}{default NULL; the density of shading lines, in lines per inch, see \code{\link[graphics]{polygon}}}
+  \item{angle}{default 45; the slope of shading lines, given as an angle in degrees (counter-clockwise), see \code{\link[graphics]{polygon}}}
+  \item{pbg}{default NULL, set to \code{par("bg")} by default \dQuote{transparent}; the colour to paint holes}
+  \item{axes}{default FALSE; draw axes}
+  \item{lty}{default \code{par("lty")}; border line type}
+  \item{...}{other arguments passed through}
+  \item{setParUsrBB}{default FALSE;  see \code{\link{Spatial-class}} for further details}
+  \item{usePolypath}{default TRUE; use \code{\link[graphics]{polypath}} for hole-handling in plot}
+  \item{rule}{default "winding"; character value specifying the path fill mode, see \code{\link[graphics]{polypath}}}
+}
+}
+
 \note{
 \code{rbind} calls the function \code{\link{SpatialPolygons}}, where it is 
 checked that all IDs are unique. If \code{rbind}-ing \code{SpatialPolygons} without 
@@ -48,7 +70,7 @@ unique IDs, it is possible to set the argument \code{makeUniqueIDs = TRUE}, alth
 it is preferred to change these explicitly with \code{\link{spChFIDs}}.
 }
 \author{ Roger Bivand }
-\seealso{ \link{SpatialPolygons} }
+\seealso{ \code{\link{SpatialPolygons}} }
 \examples{
 # simple example, from vignette("sp"):
 Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))

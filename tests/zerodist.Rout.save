@@ -1,5 +1,5 @@
 
-R version 2.14.2 (2012-02-29)
+R version 2.15.0 (2012-03-30)
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -65,7 +65,7 @@ Data attributes:
  Mean   : 8.165   Mean   :0.24002   Mean   : 7.478                        
  3rd Qu.: 8.955   3rd Qu.:0.36407   3rd Qu.: 9.000                        
  Max.   :10.520   Max.   :0.88039   Max.   :17.000                        
-                                    NA's   : 2.000                        
+                                    NA's   :2                             
     landuse       dist.m      
  W      :50   Min.   :  10.0  
  Ah     :39   1st Qu.:  80.0  
@@ -100,7 +100,7 @@ Data attributes:
  Mean   : 8.165   Mean   :0.24002   Mean   : 7.478                        
  3rd Qu.: 8.955   3rd Qu.:0.36407   3rd Qu.: 9.000                        
  Max.   :10.520   Max.   :0.88039   Max.   :17.000                        
-                                    NA's   : 2.000                        
+                                    NA's   :2                             
     landuse       dist.m      
  W      :50   Min.   :  10.0  
  Ah     :39   1st Qu.:  80.0  
@@ -118,3 +118,6 @@ Data attributes:
 > dim(remove.duplicates(meusedup))
 [1] 155  12
 > 
+> proc.time()
+   user  system elapsed 
+  0.396   0.036   0.415 
