@@ -119,11 +119,6 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
 ### (label points belong to the Polygons objects, not the SpatialPolygons object)
 })
 
-setMethod("coordinates", "SpatialPolygonsDataFrame", 
-	function(obj) {
-            t(sapply(slot(obj, "polygons"), function(i) slot(i, "labpt")))
-})
-
 setAs("SpatialPolygonsDataFrame", "SpatialLinesDataFrame", 
 	function(from) SpatialLinesDataFrame(as(from, "SpatialLines"),
 		from@data, match.ID = FALSE))

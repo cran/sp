@@ -1,6 +1,8 @@
 \name{spChFIDs-methods}
 \docType{methods}
 \alias{spChFIDs-methods}
+\alias{spChFIDs<-}
+\alias{spChFIDs<-,Spatial-method}
 \alias{spChFIDs,SpatialLines,character-method}
 \alias{spChFIDs,SpatialLinesDataFrame,character-method}
 \alias{spChFIDs,SpatialPolygons,character-method}

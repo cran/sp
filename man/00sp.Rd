@@ -89,9 +89,9 @@ spatial information with attribute data.
 }
 
 \section{References}{
-PROJ.4: \url{http://www.remotesensing.org/proj/}
+PROJ.4: \url{http://trac.osgeo.org/proj/}
 
-GDAL and OGR: \url{http://www.remotesensing.org/gdal/}.
+GDAL and OGR: \url{http://www.gdal.org/}.
 }
 
 \section{Authors}{

@@ -29,7 +29,7 @@ makegrid = function(x, n = 10000, nsig = 2, cellsize,
 	# if (miny < ry[2]) seqy = seq(miny, ry[2], by = cellsize)
 	# else seqy = seq(miny, ry[2], by = -cellsize)
 	# type = "regular" :
-	xy = do.call("expand.grid", expand.grid.arglist)
+	xy = do.call(expand.grid, expand.grid.arglist)
 	attr(xy, "cellsize") = cellsize
 	return(xy)
 }
@@ -80,8 +80,12 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 # Patrick Girardoux 080217
 	if (!is.na(n) && n == 1 && !is.matrix(xy) && is.vector(xy)) 
 		xy <- matrix(xy, ncol=nrow(bb))
+	sel = xy[,1] >= bb[1,1] & xy[,1] <= bb[1,2] & 
+			xy[,2] >= bb[2,1] & xy[,2] <= bb[2,2]
+	xy = xy[sel, ]
 	SpatialPoints(xy, CRS(proj4string(x)))
 }
+
 setMethod("spsample", signature(x = "Spatial"), sample.Spatial)
 
 sample.Line = function(x, n, type, offset = runif(1), proj4string = CRS(as.character(NA)), ...) {
@@ -129,7 +133,7 @@ sample.Lines = function(x, n, type, offset = runif(1), ...) {
 			j = j+1
 		}
 	}
-	do.call("rbind", ret)
+	do.call(rbind, ret)
 }
 setMethod("spsample", signature(x = "Lines"), sample.Lines)
 
@@ -148,7 +152,7 @@ sample.SpatialLines = function(x, n, type, offset = runif(1), ...) {
 			j = j+1
 		}
 	}
-	ret = do.call("rbind", ret)
+	ret = do.call(rbind, ret)
 	if (!is.null(ret)) proj4string(ret) = CRS(proj4string(x))
 	ret
 }
@@ -180,8 +184,8 @@ sample.Polygon = function(x, n, type = "random", bb = bbox(x),
 		   	ifelse(type == "random", (n_now < n), TRUE)) {
 		    pts = sample.Spatial(xSP, n_is, type=type, 
 			offset = offset, ...)
-		    id = overlay(pts, SpatialPolygons(list(Polygons(list(x),
-			"xx")), proj4string=proj4string))
+		    id = over(pts, SpatialPolygons(list(Polygons(list(x),
+				"xx")), proj4string=proj4string))
 		    Not_NAs <- !is.na(id)
 		    if (!any(Not_NAs)) res <- NULL
 		    else res <- pts[which(Not_NAs)]
@@ -232,13 +236,12 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 		    n=nnow, type = type, offset = offset, iter=iter)
 		}
 	    }
-	    crds <- do.call("rbind", lapply(ptsres, function(x) 
+	    crds <- do.call(rbind, lapply(ptsres, function(x) 
 	        if (!is.null(x)) coordinates(x)))
 	    if (is.null(crds)) res <- NULL
 	    else {
 	        pts <- SpatialPoints(crds, proj4string=proj4string)
-	        id = overlay(pts, SpatialPolygons(list(x), 
-				proj4string=proj4string))
+	        id = over(pts, SpatialPolygons(list(x), proj4string=proj4string))
 	        Not_NAs <- !is.na(id)
 	        if (!any(Not_NAs)) res <- NULL
 	        else res <- pts[which(Not_NAs)]
@@ -283,7 +286,7 @@ sample.SpatialPolygons = function(x, n, type = "random", bb = bbox(x),
 	    # enlarge n each iteration:
 	    pts = sample.Spatial(as(x, "Spatial"), n_tot * (1 + its * 0.1), 
 	    	type=type, offset = offset, ...)
-	    Over_pts_x <- overlay(pts, x)
+	    Over_pts_x <- over(pts, geometry(x))
 	    Not_NAs <- !is.na(Over_pts_x)
 	    if (!any(Not_NAs)) res <- NULL
 	    else res <- pts[Not_NAs]
@@ -311,11 +314,7 @@ sample.Sgrid = function(x, n, type = "random", bb = bbox(x),
 	if (area == 0.0)
 		stop("cannot sample from grid with zero area")
 	pts = spsample(as(x, "Spatial"), n, type, offset = offset, ...)
-	#id = overlay(as(x, "SpatialGrid"), pts)
-	id = overlay(x, pts)
-	if (is(id, "SpatialPointsDataFrame"))
-		id = id@data[[1]]
-	pts[which(!is.na(id))]
+	pts[!is.na(over(pts, geometry(x)))]
 }
 setMethod("spsample", signature(x = "SpatialGrid"), sample.Sgrid)
 
@@ -327,11 +326,9 @@ sample.Spixels = function(x, n, type = "random", bb = bbox(x),
 	if (area == 0.0)
 		stop("cannot sample from grid with zero area")
 	bb.area = prod(apply(bb, 1, function(x) diff(range(x))))
-	pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, offset = offset, ...)
-	id = overlay(x, pts)
-	if (is(id, "SpatialPointsDataFrame"))
-		id = id@data[[1]]
-	pts[which(!is.na(id))]
+	pts = spsample(as(x, "Spatial"), round(n * bb.area/area), type, 
+		offset = offset, ...)
+	pts[!is.na(over(pts, geometry(x)))]
 }
 setMethod("spsample", signature(x = "SpatialPixels"), sample.Spixels)
 

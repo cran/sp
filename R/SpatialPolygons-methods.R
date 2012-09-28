@@ -96,7 +96,6 @@ row.names.SpatialPolygons <- function(x) {
     spChFIDs(x, value)
 }
 
-
 setMethod("[", "SpatialPolygons", function(x, i, j, ..., drop = TRUE) {
 	if (is(i, "Spatial"))
 		i = !is.na(over(x, geometry(i)))
@@ -157,8 +156,11 @@ setReplaceMethod("coordnames",
 
 setMethod("coordinates", "SpatialPolygons", 
 	function(obj) {
-            t(sapply(slot(obj, "polygons"), function(i) slot(i, "labpt")))
-})
+		ret = t(sapply(slot(obj, "polygons"), function(i) slot(i, "labpt")))
+		dimnames(ret) = list(sapply(slot(obj, "polygons"), function(i) slot(i, "ID")), NULL)
+		ret
+	}
+)
 
 getSpatialPolygonsLabelPoints = function(SP) {
 	.Deprecated("slot",

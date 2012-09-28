@@ -1,25 +1,35 @@
 sp.polygons = function(obj, col = 1, fill="transparent", ...) {
-	sp.polygon3 = function(x, col, fill, ...) { 
-		cc = slot(x, "coords")
-		grid.polygon(cc[,1], cc[,2], default.units = "native", 
-			gp = gpar(col = col, fill = fill, ...))
-		panel.lines(cc, col = col, ...)
-	}
 	if (is.character(obj))
 		obj = get(obj)
 	if (!is(obj, "SpatialPolygons"))
-		stop(paste("object extending class SpatialPolygons expected; got class", class(obj)))
+		stop(paste(
+		"object extending class SpatialPolygons expected; got class",
+		class(obj)))
 	else
 		obj = as(obj, "SpatialPolygons")
-	pls = slot(obj, "polygons")
-   	pO <- slot(obj, "plotOrder")
-	if (length(fill) != length(pO)) 
-		fill <- rep(fill[1], length(pO))
-	for (i in pO) {
-		Srs <- slot(pls[[i]], "Polygons")
-		pOi <- slot(pls[[i]], "plotOrder")
-		for (j in pOi)
-			sp.polygon3(Srs[[j]], col = col, fill = fill[i], ...)
+	if (get_Polypath()) {
+		obj = as(as(obj, "SpatialLines"), "SpatialPointsDataFrame")
+		cc = coordinates(obj)
+		id = as.numeric(obj$Line.NR)
+		grid.path(cc[,1], cc[,2], id, default.units = "native",
+			gp = gpar(col = col, fill = fill, ...))
+	} else {
+		sp.polygon3 = function(x, col, fill, ...) { 
+			cc = slot(x, "coords")
+			grid.polygon(cc[,1], cc[,2], default.units = "native", 
+				gp = gpar(col = col, fill = fill, ...))
+			panel.lines(cc, col = col, ...)
+		}
+		pls = slot(obj, "polygons")
+   		pO <- slot(obj, "plotOrder")
+		if (length(fill) != length(pO)) 
+			fill <- rep(fill[1], length(pO))
+		for (i in pO) {
+			Srs <- slot(pls[[i]], "Polygons")
+			pOi <- slot(pls[[i]], "plotOrder")
+			for (j in pOi)
+				sp.polygon3(Srs[[j]], col = col, fill = fill[i], ...)
+		}
 	}
 }
 
@@ -44,12 +54,17 @@ sp.points = function(obj, pch = 3, ...) {
 	panel.points(xy[,1], xy[,2], pch = pch, ...)
 }
 
-sp.grid = function(obj, col = 1, alpha = 1, ...) {
+sp.grid = function(obj, col = 1, alpha = 1, ..., at = pretty(obj[[1]]),
+		col.regions = col) {
 	if (is.character(obj))
 		obj = get(obj)
 	xy = coordinates(obj)
-	if (length(col) != 1 && length(col) != nrow(xy)) {
-		# do something with col
+	if (length(col) > 1 && ("data" %in% slotNames(obj))) {
+		z = obj[[1]]
+		if (is.factor(z))
+			col = col[z]
+		else  # cut:
+    		col = level.colors(z, at, col.regions, colors = TRUE)
 	}
 	gt = as(getGridTopology(obj), "data.frame")
 	grid.rect(x = xy[,1], y = xy[,2], width = gt$cellsize[1],
@@ -354,24 +369,35 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 			pls = slot(grid.polygons, "polygons")
    			pO = slot(grid.polygons, "plotOrder")
    			for (i in pO) {
-       			Srs <- slot(pls[[i]], "Polygons")
-       			pOi <- slot(pls[[i]], "plotOrder")
-       			for (j in pOi) {
-					coords = slot(Srs[[j]], "coords")
-					if (slot(Srs[[j]], "hole")) {
-						bg = trellis.par.get()$background
-						if (bg$col == "transparent")
-							fill = "white"
-						else
-							fill = bg$col
-						alpha = bg$alpha
-					} else {
-						fill = col.regions[zcol[i]]
-						alpha = alpha.regions
+				if (get_Polypath()) {
+					obj = as(as(grid.polygons[i,], "SpatialLines"),
+							"SpatialPointsDataFrame")
+					cc = coordinates(obj)
+					id = as.numeric(obj$Line.NR)
+					fill = col.regions[zcol[i]]
+					alpha = alpha.regions
+					grid.path(cc[,1], cc[,2], id, default.units = "native",
+						gp = gpar(col = col, fill = fill, alpha = alpha, ...))
+				} else {
+       				Srs <- slot(pls[[i]], "Polygons")
+       				pOi <- slot(pls[[i]], "plotOrder")
+       				for (j in pOi) {
+						coords = slot(Srs[[j]], "coords")
+						if (slot(Srs[[j]], "hole")) {
+							bg = trellis.par.get()$background
+							if (bg$col == "transparent")
+								fill = "white"
+							else
+								fill = bg$col
+							alpha = bg$alpha
+						} else {
+							fill = col.regions[zcol[i]]
+							alpha = alpha.regions
+						}
+						gp = gpar(fill = fill, alpha = alpha, col = col, lwd = lwd, lty = lty)
+						grid.polygon(coords[,1], coords[,2], default.units = "native", 
+							gp = gp)
 					}
-					gp = gpar(fill = fill, alpha = alpha, col = col, lwd = lwd, lty = lty)
-					grid.polygon(coords[,1], coords[,2], default.units = "native", 
-						gp = gp)
 				}
    			}
 		}

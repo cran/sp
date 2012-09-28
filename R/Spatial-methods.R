@@ -74,6 +74,9 @@ if (!isGeneric("summary"))
 if (!isGeneric("spChFIDs"))
 	setGeneric("spChFIDs", function(obj, x)
 		standardGeneric("spChFIDs"))
+if (!isGeneric("spChFIDs<-"))
+	setGeneric("spChFIDs<-", function(obj, value)
+		standardGeneric("spChFIDs<-"))
 if (!isGeneric("surfaceArea"))
 	setGeneric("surfaceArea", function(m, ...)
 		standardGeneric("surfaceArea"))
@@ -221,6 +224,10 @@ degAxis = function (side, at, labels, ...) {
 		} 
         axis(side, at = at, labels = labels, ...)
 }
+
+setReplaceMethod("spChFIDs", signature(obj = "Spatial", value = "ANY"),
+	function(obj, value) { spChFIDs(obj, as.character(value)) }
+)
 
 setReplaceMethod("coordinates", signature(object = "Spatial", value = "ANY"),
 	function(object, value) 
