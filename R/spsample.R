@@ -82,7 +82,7 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 		xy <- matrix(xy, ncol=nrow(bb))
 	sel = xy[,1] >= bb[1,1] & xy[,1] <= bb[1,2] & 
 			xy[,2] >= bb[2,1] & xy[,2] <= bb[2,2]
-	xy = xy[sel, ]
+	xy = xy[sel,, drop = FALSE]
 	SpatialPoints(xy, CRS(proj4string(x)))
 }
 

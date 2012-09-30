@@ -28,13 +28,15 @@ if (!is.R()) {
 #    if (length(grep("rgdal", search()) > 0) &&
 #      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
 # sessionInfo()/read.dcf() problem in loop 080307
-     if ("rgdal" %in% .packages()) {
+    if ("rgdal" %in% .packages()) {
 	if (!is.na(uprojargs)) {
-		res <- .Call("checkCRSArgs", uprojargs, 
-				PACKAGE="rgdal")
-	} else res <- list(TRUE, as.character(NA))
-	if (!res[[1]]) stop(res[[2]])
-	else uprojargs <- res[[2]]
+	    res <- .Call("checkCRSArgs", uprojargs, PACKAGE="rgdal")
+	    #res <- .Call(RGDAL_checkCRSArgs, uprojargs)
+	    if (!res[[1]]) 
+	    	stop(res[[2]])
+            uprojargs <- res[[2]]
+	} else
+            uprojargs <- as.character(NA)
     }
     res <- new("CRS", projargs=uprojargs)
     res

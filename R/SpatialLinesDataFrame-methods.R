@@ -68,7 +68,8 @@ setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... ,
     } else if (is.character(i)) {
             i <- match(i, row.names(x))
     }
-    if (any(is.na(i))) stop("NAs not permitted in row index")
+    if (any(is.na(i)))
+		stop("NAs not permitted in row index")
     #SpatialLinesDataFrame(as(x, "SpatialLines")[i, , drop = FALSE],
     #    data = x@data[i, j, drop = FALSE], match.ID = FALSE)
 	x@lines = x@lines[i]
