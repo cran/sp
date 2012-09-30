@@ -22,7 +22,7 @@ SpatialPolygonsRescale(obj, offset, scale = 1, fill = "black", col = "black",
 sp.lines(obj, col = 1, ...)
 sp.points(obj, pch = 3, ...)
 sp.polygons(obj, col = 1, fill = "transparent", ...)
-sp.grid(obj, col = 1, alpha = 1,...)
+sp.grid(obj, col = 1, alpha = 1,..., at = pretty(obj[[1]]), col.regions = col)
 sp.text(loc, txt, ...)
 sp.panel.layout(lst, p.number, ...)
 }
@@ -44,6 +44,8 @@ class is evaluated.  }
 \item{plot.grid}{logical; plot through grid functions (TRUE), or through
 traditional graphics functions (FALSE)}
 \item{pch}{ plotting character }
+\item{at}{ numeric; values at which colour breaks should occur }
+\item{col.regions}{ colours to fill the grid cells, defaults to col }
 \item{loc}{ numeric vector of two elements }
 \item{txt}{ text to be plotted }
 \item{alpha}{ alpha (transparency) level }

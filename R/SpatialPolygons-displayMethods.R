@@ -2,12 +2,14 @@
 plot.SpatialPolygons <- function(x, col, border = par("fg"), add=FALSE, 
 	xlim=NULL, ylim=NULL, xpd = NULL, density = NULL, angle = 45, 
 	pbg=NULL, axes = FALSE, lty = par("lty"), ..., setParUsrBB=FALSE,
-        usePolypath=TRUE, rule="winding") {
+        usePolypath=NULL, rule=NULL) {
 
 	if (is.null(pbg))
 		pbg = par("bg") # transparent!
 	if (!is(x, "SpatialPolygons")) 
 		stop("Not a SpatialPolygons object")
+        if (is.null(usePolypath)) usePolypath <- get_Polypath()
+        if (is.null(rule)) rule <- get_PolypathRule()
 
 	if (! add) 
 		plot(as(x, "Spatial"), xlim=xlim, ylim=ylim, axes = axes, 
@@ -43,10 +45,12 @@ setMethod("plot", signature(x = "SpatialPolygons", y = "missing"),
 	function(x, y, ...) plot.SpatialPolygons(x, ...))
 
 .polygonRingHoles <- function(Sr, col=NA, border=NULL, xpd=NULL, density=NULL,
-	angle=45, pbg, lty = par("lty"), ..., usePolypath=TRUE,
-        rule="winding") {
+	angle=45, pbg, lty = par("lty"), ..., usePolypath=NULL,
+        rule=NULL) {
 	if (!is(Sr, "Polygons")) 
 		stop("Not an Polygons object")
+        if (is.null(usePolypath)) usePolypath <- get_Polypath()
+        if (is.null(rule)) rule <- get_PolypathRule()
 	if (!is.null(density)) hatch <- TRUE
 	else hatch <- FALSE
 	pO <- slot(Sr, "plotOrder")

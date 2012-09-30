@@ -11,6 +11,10 @@
 \alias{coerce,Polygons,Lines-method}
 \alias{coerce,SpatialPolygons,SpatialLines-method}
 \alias{row.names.SpatialPolygons}
+\alias{get_Polypath}
+\alias{set_Polypath}
+\alias{get_PolypathRule}
+\alias{set_PolypathRule}
 
 
 \title{Class "SpatialPolygons"}
@@ -58,9 +62,10 @@ The \code{plot} method for spatial polygons takes the following arguments:
   \item{lty}{default \code{par("lty")}; border line type}
   \item{...}{other arguments passed through}
   \item{setParUsrBB}{default FALSE;  see \code{\link{Spatial-class}} for further details}
-  \item{usePolypath}{default TRUE; use \code{\link[graphics]{polypath}} for hole-handling in plot}
-  \item{rule}{default "winding"; character value specifying the path fill mode, see \code{\link[graphics]{polypath}}}
+  \item{usePolypath}{default NULL to set from option value; use \code{\link[graphics]{polypath}} for hole-handling in plot}
+  \item{rule}{default NULL to set from option value; character value specifying the path fill mode, see \code{\link[graphics]{polypath}}}
 }
+The options for \code{usePolypath} and \code{rule} may be retrieved with \code{get_Polypath} (default TRUE on package load) and \code{get_PolypathRule} (default \dQuote{winding} on package load), and set with \code{set_Polypath} and \code{set_PolypathRule}
 }
 
 \note{

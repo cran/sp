@@ -142,7 +142,8 @@ Other methods available are: {\tt plot}, {\tt summary}, {\tt print},
 {\tt dim} and {\tt names} (operate on the data.frame part), {\tt
 as.data.frame}, {\tt as.matrix} and {\tt image} (for gridded data),
 {\tt lines} (for line data), {\tt points} (for point data), {\tt subset}
-(points and grids) and {\tt stack} (point and grid data.frames).
+(points and grids), {\tt stack} (point and grid data.frames),
+and {\tt length} (number of features).
 
 \subsection{Spatial methods}
 A number of spatial methods are available for the classes in {\tt sp}:

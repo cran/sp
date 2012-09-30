@@ -5,8 +5,9 @@ importFrom(graphics, plot, hist)
 importFrom(stats, aggregate)
 import(utils) # stack, to be changed later (2.5.0?) into
 import(lattice)
-importFrom(grid, grid.polygon, grid.rect, polygonGrob, gpar,
-	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator)
+importFrom(grid, grid.polygon, grid.path, grid.rect, polygonGrob, gpar,
+	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator,
+	grid.raster)
 
 export(CRS, print.CRS)
 
@@ -14,7 +15,7 @@ export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
 	remove.duplicates, degAxis, "%over%")
 
-export(get_ll_warn, set_ll_warn, get_ll_TOL, set_ll_TOL, get_ReplCRS_warn, set_ReplCRS_warn)
+export(get_ll_warn, set_ll_warn, get_ll_TOL, set_ll_TOL, get_ReplCRS_warn, set_ReplCRS_warn, get_Polypath, set_Polypath, get_PolypathRule, set_PolypathRule)
 
 export(coordinatevalues)
 
@@ -112,7 +113,7 @@ exportMethods(show, bbox, coordinates, "coordinates<-",
 	coordnames, "coordnames<-", geometry, polygons, "polygons<-",
 	dimensions, coerce, "[", "[[", "$", "$<-", over, overlay, 
 	plot, recenter, spplot, spsample, summary, surfaceArea, split,
-	spChFIDs, "gridded<-", gridded, fullgrid, "fullgrid<-",
+	spChFIDs, "spChFIDs<-", "gridded<-", gridded, fullgrid, "fullgrid<-",
 	proj4string, "proj4string<-", is.projected,
 	addAttrToGeom)
 
