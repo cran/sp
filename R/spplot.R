@@ -10,7 +10,8 @@ sp.polygons = function(obj, col = 1, fill="transparent", ...) {
 	if (get_Polypath()) {
 		obj = as(as(obj, "SpatialLines"), "SpatialPointsDataFrame")
 		cc = coordinates(obj)
-		id = as.numeric(obj$Line.NR)
+		#id = as.numeric(obj$Line.NR)
+		id = as.numeric(obj$Lines.NR * max(obj$Line.NR) + (obj$Line.NR - 1))
 		grid.path(cc[,1], cc[,2], id, default.units = "native",
 			gp = gpar(col = col, fill = fill, ...))
 	} else {

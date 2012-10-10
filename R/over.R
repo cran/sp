@@ -47,7 +47,7 @@ overDFGeneric = function(x, y, returnList = FALSE, fn = NULL, ...) {
 	stopifnot(identical(proj4string(x), proj4string(y)))
 	r = over(x, geometry(y), returnList = TRUE)
 	ret = .overDF(r, y@data, length(x), returnList, fn, ...)
-	if (!returnList)
+	if (! returnList)
 		row.names(ret) = row.names(x)
 	ret
 }
