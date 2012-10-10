@@ -15,7 +15,9 @@ export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
 	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
 	remove.duplicates, degAxis, "%over%")
 
-export(get_ll_warn, set_ll_warn, get_ll_TOL, set_ll_TOL, get_ReplCRS_warn, set_ReplCRS_warn, get_Polypath, set_Polypath, get_PolypathRule, set_PolypathRule)
+export(get_ll_warn, set_ll_warn, get_ll_TOL, set_ll_TOL, get_ReplCRS_warn,
+	set_ReplCRS_warn, get_Polypath, set_Polypath, get_PolypathRule, 
+	set_PolypathRule)
 
 export(coordinatevalues)
 
