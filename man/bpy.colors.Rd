@@ -1,6 +1,7 @@
 \name{bpy.colors}
 \alias{bpy.colors}
-\title{ blue-pink-yellow color scheme that prints well on black/white printers }
+\title{ blue-pink-yellow color scheme, which also prints well on 
+black/white printers }
 \description{ Create a vector of `n' ``contiguous'' colors.  }
 \usage{ bpy.colors(n = 100, cutoff.tails = 0.1, alpha = 1.0) }
 \arguments{
@@ -14,10 +15,9 @@ from blue to yellow, which looks nicer. }
 either to create a user-defined color palette for subsequent graphics
 by `palette(cv)', a `col=' specification in graphics functions or in
 `par'.  }
-\references{ see 
-\url{http://www.ihe.uni-karlsruhe.de/mitarbeiter/vonhagen/palette.en.html};
-gnuplot has this color map. }
-\author{ unknown; R implementation Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
+\author{ unknown; the pallette was posted to gnuplot-info a few
+decades ago; R implementation Edzer Pebesma, 
+\email{edzer.pebesma@uni-muenster.de}}
 \note{ This color map prints well on black-and-white printers. }
 \seealso{\link{rainbow}, \link{cm.colors}}
 \examples{

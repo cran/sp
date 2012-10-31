@@ -34,6 +34,7 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
 
     PROTECT(ringDir = NEW_INTEGER(1)); pc++;
     INTEGER_POINTER(ringDir)[0] = (area > 0.0) ? -1 : 1;
+// -1 cw hole, 1 ccw not-hole
 
 /* RSB 100126 fixing hole assumption
  thanks to Javier Munoz for report */

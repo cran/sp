@@ -84,10 +84,12 @@ geometry (as in the case of the polygon-polygon intersection).
 
 This vignette will explain how the {\tt over} method in package
 {\tt sp} can be used to compute map overlays, meaning that instead
-of overlaying maps visually, the digital information that comes from
-combining two digital map layers is retrieved. From there, methods to
-{\em aggregate} (compute summary statistics; Heuvelink and Pebesma,
-1999) over a spatial domain will be developed and demonstrated.
+of overlaying maps visually, the digital information that comes
+from combining two digital map layers is retrieved. From there,
+methods to {\em aggregate} (compute summary statistics; Heuvelink
+and Pebesma, 1999) over a spatial domain will be developed and
+demonstrated.  Pebesma (2012) describes overlay and aggregation
+for spatio-temporal data.
 
 \section{Geometry overlays}
 We will use the word {\em geometry} to denote the purely spatial
@@ -347,6 +349,11 @@ Davidson, R., 2008.  Reading topographic maps. Free e-book from:
 Heuvelink, G.B.M., and E.J. Pebesma, 1999.  Spatial aggregation
 and soil process modelling Geoderma 89, 1-2, 47-65.
 \url{http://dx.doi.org/10.1016/S0016-7061(98)00077-9}
+\item
+Pebesma, E., 2012.  Spatio-temporal overlay and
+aggregation.  Package vignette for package spacetime,
+\url{http://cran.r-project.org/web/packages/spacetime/vignettes/sto.pdf}
+
 \end{itemize}
 
 \end{document}

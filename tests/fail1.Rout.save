@@ -1,6 +1,6 @@
 
-R version 2.14.0 (2011-10-31)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,7 +23,7 @@ Type 'q()' to quit R.
 > coordinates(x) <- c("x", "y")
 > try(proj4string(x) <- 1.5)
 Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "proj4string<-", for signature "SpatialPointsDataFrame", "numeric"
+  unable to find an inherited method for function 'proj4string<-' for signature '"SpatialPointsDataFrame", "numeric"'
 > try(coordinates(a) <- cbind(1:10, 10:1))
 Error in coordinates(a) <- cbind(1:10, 10:1) : object 'a' not found
 > # fails because a is not found; passes if a assigned NULL, see pass1.R
@@ -202,3 +202,6 @@ Error in points2grid(points, tolerance, round) :
 x          5.721109 0.0005312853        84
 y         50.955770 0.0003318105       112
 > 
+> proc.time()
+   user  system elapsed 
+  1.040   0.036   1.060 

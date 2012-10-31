@@ -13,6 +13,8 @@ SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
            stopifnot(length(pO) == length(Srl))
         }
         stopifnot(is.list(Srl))
+# tess to Polygons bug 121028
+        stopifnot(length(Srl) > 0)
         stopifnot(is(proj4string, "CRS"))
         res <- .Call("SpatialPolygons_c", Srl, pO, proj4string, PACKAGE="sp")
         validObject(res)
@@ -40,6 +42,9 @@ Polygon <- function(coords, hole=as.logical(NA)) {
 }
 
 Polygons <- function(srl, ID) {
+# tess to Polygons bug 121028
+        stopifnot(is.list(srl))
+        stopifnot(length(srl) > 0)
 	if (any(sapply(srl, function(x) !is(x, "Polygon"))))
 		stop("srl not a list of Polygon objects")
 ##	projargs <- unique(sapply(srl, proj4string))
