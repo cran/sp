@@ -54,16 +54,17 @@ CRS arguments: +proj=longlat +datum=WGS84
 +   print(CRSargs(CRS("+init=epsg:28992")))
 + }
 Loading required package: rgdal
+rgdal: version: 0.7.28, (SVN revision 412)
 Geospatial Data Abstraction Library extensions to R successfully loaded
 Loaded GDAL runtime: GDAL 1.9.2, released 2012/10/08
 Path to GDAL shared files: /usr/share/gdal/1.9
 Loaded PROJ.4 runtime: Rel. 4.8.0, 6 March 2012, [PJ_VERSION: 480]
 Path to PROJ.4 shared files: (autodetected)
-[1] " +proj=longlat +datum=NAD27 +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat"
-[1] " +init=epsg:4267 +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat"
-[1] " +init=epsg:26978 +proj=lcc +lat_1=38.56666666666667 +lat_2=37.26666666666667 +lat_0=36.66666666666666 +lon_0=-98.5 +x_0=400000 +y_0=400000 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"
-[1] " +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m"
-[1] " +init=epsg:28992 +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs"
+[1] "+proj=longlat +datum=NAD27 +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat"
+[1] "+init=epsg:4267 +proj=longlat +datum=NAD27 +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat"
+[1] "+init=epsg:26978 +proj=lcc +lat_1=38.56666666666667 +lat_2=37.26666666666667 +lat_0=36.66666666666666 +lon_0=-98.5 +x_0=400000 +y_0=400000 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"
+[1] "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m"
+[1] "+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs"
 > 
 > 
 > 
@@ -559,11 +560,13 @@ cells.dim             78    104
 > ### Aliases: SpatialGridDataFrame-class [,SpatialGridDataFrame-method
 > ###   show,SpatialGridDataFrame-method cbind.SpatialGridDataFrame
 > ###   plot.SpatialGridDataFrame print.summary.SpatialGridDataFrame
+> ###   as.array.SpatialGridDataFrame
 > ###   coerce,SpatialGridDataFrame,SpatialPointsDataFrame-method
 > ###   coerce,SpatialGridDataFrame,SpatialPixelsDataFrame-method
 > ###   coerce,SpatialGridDataFrame,SpatialPolygonsDataFrame-method
 > ###   coerce,SpatialGridDataFrame,data.frame-method
 > ###   coerce,SpatialGridDataFrame,matrix-method
+> ###   coerce,SpatialGridDataFrame,array-method
 > ###   as.data.frame.SpatialGridDataFrame dim.SpatialGridDataFrame
 > ### Keywords: classes
 > 
@@ -596,6 +599,25 @@ cells.dim             78    104
 > image(meuse.grid)
 > image(meuse.grid[20:70, 10:70, "dist"], add = TRUE, col = bpy.colors())
 > 
+> # as.matrix, as.array
+> sgdim = c(3,4)
+> SG = SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+> SGDF = SpatialGridDataFrame(SG, data.frame(val = 1:12))
+> as.array(SGDF)
+     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
+> as.matrix(SGDF)
+     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
+> as(SGDF, "array")
+     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
 > 
 > 
 > 
@@ -19003,7 +19025,7 @@ Data attributes:
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.748 3.056 14.998 0 0 
+Time elapsed:  9.152 1.832 11.006 0 0 
 > grDevices::dev.off()
 null device 
           1 

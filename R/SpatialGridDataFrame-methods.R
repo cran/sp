@@ -99,6 +99,15 @@ as.matrix.SpatialPixelsDataFrame = function(x, ...) {
 	as(x, "matrix", ...)
 }
 
+as.array.SpatialGridDataFrame = function(x,...) {
+    d = gridparameters(x)$cells.dim
+    if (ncol(x@data) > 1)
+        d = c(d, ncol(x@data))
+    array(do.call(c, x@data), dim = d)
+}
+setAs("SpatialGridDataFrame", "array", function(from) 
+	as.array.SpatialGridDataFrame(from))
+
 as.matrix.SpatialGridDataFrame = function(x, ..., byrow = FALSE) {
 	if (ncol(x@data) > 1)
 		warning(

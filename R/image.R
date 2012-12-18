@@ -14,7 +14,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 		ylim = NULL, add = FALSE, ..., asp = NA, 
 		setParUsrBB=FALSE, interpolate = FALSE, angle = 0,
                 useRasterImage=(!.isSDI() && missing(breaks)), breaks, 
-		zlim = range(x[[attr]][is.finite(x[[attr]])])) {
+		zlim = range(as.numeric(x[[attr]])[is.finite(as.numeric(x[[attr]]))])) {
 
 	if (!add) 
 		suppressWarnings(plot(as(x, "Spatial"),
@@ -25,6 +25,7 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
             if (.isSDI()) warning("Bug in SDI raster handling - your R graphics window may stop displaying output")
             bb <- bbox(x)
             scl <- function(xx, zlim) {
+	    	xx = matrix(as.numeric(xx), nrow(xx), ncol(xx))
                 #dr <- diff(range(x, na.rm = TRUE))
 		dr = diff(zlim)
                 #mx <- min(x, na.rm  = TRUE)
