@@ -84,10 +84,10 @@ coordinates(meuse.grid) = c("x", "y") # promote to SpatialPointsDataFrame
 gridded(meuse.grid) = TRUE            # promote to SpatialGridDataFrame
 data(meuse)
 coordinates(meuse) = c("x", "y")
-system.time(image(meuse.grid["dist"], main = "Distance to river Meuse"))
+image(meuse.grid["dist"], main = "Distance to river Meuse")
 points(coordinates(meuse), pch = "+")
-system.time(image(meuse.grid["dist"], main = "Distance to river Meuse",
- useRasterImage=TRUE))
+image(meuse.grid["dist"], main = "Distance to river Meuse",
+ useRasterImage=TRUE)
 points(coordinates(meuse), pch = "+")
 data(Rlogo)
 d = dim(Rlogo)
@@ -101,9 +101,9 @@ df = as.data.frame(df)
 names(df) = paste("band", 1:d[3], sep="")
 Rlogo <- SpatialGridDataFrame(grid = grid, data = df)
 summary(Rlogo)
-system.time(image(Rlogo, red="band1", green="band2", blue="band3"))
-system.time(image(Rlogo, red="band1", green="band2", blue="band3",
- useRasterImage=FALSE))
+image(Rlogo, red="band1", green="band2", blue="band3")
+image(Rlogo, red="band1", green="band2", blue="band3",
+ useRasterImage=FALSE)
 is.na(Rlogo$band1) <- Rlogo$band1 == 255
 is.na(Rlogo$band2) <- Rlogo$band2 == 255
 is.na(Rlogo$band3) <- Rlogo$band3 == 255

@@ -14,7 +14,7 @@
 
 \item{from = "DMS", to = "numeric"}{coerce a \code{"DMS"} object to a \code{"numeric"} vector}
 
-\item{from = "DMS", to = "character"}{coerce a \code{"DMS"} object to a \code{"character"} vector (the \code{as.character.DMS} S3 function is also available)}
+\item{from = "DMS", to = "character"}{coerce a \code{"DMS"} object to a \code{"character"} vector (the \code{as.character.DMS} S3 method is also available)}
 }}
 \usage{
 char2dms(from, chd = "d", chm = "'", chs = "\"")

@@ -9,115 +9,225 @@ importFrom(grid, grid.polygon, grid.path, grid.rect, polygonGrob, gpar,
 	grid.layout, unit, frameGrob, placeGrob, rectGrob, grid.locator,
 	grid.raster)
 
-export(CRS, print.CRS)
+export(
+	CRS,
+	# print.CRS, -> S3Method()
 
-export(bbox, getGridIndex, points2grid, bpy.colors, bubble,
-	mapasp, point.in.polygon, spmap.to.lev, zerodist, zerodist2, 
-	remove.duplicates, degAxis, "%over%")
+	# bbox,
+	getGridIndex,
+	points2grid,
+	bpy.colors,
+	bubble,
+	mapasp,
+	point.in.polygon,
+	spmap.to.lev,
+	zerodist,
+	zerodist2,
+	remove.duplicates,
+	degAxis,
+	"%over%",
 
-export(get_ll_warn, set_ll_warn, get_ll_TOL, set_ll_TOL, get_ReplCRS_warn,
-	set_ReplCRS_warn, get_Polypath, set_Polypath, get_PolypathRule, 
-	set_PolypathRule)
+	get_ll_warn,
+	set_ll_warn,
+	get_ll_TOL,
+	set_ll_TOL,
+	get_ReplCRS_warn,
+	set_ReplCRS_warn,
+	get_Polypath,
+	set_Polypath,
+	get_PolypathRule, 
+	set_PolypathRule,
 
-export(coordinatevalues)
+	coordinatevalues,
 
-export(aggregate.Spatial)
+	dimensions,
 
-export(subset.Spatial)
-
-export(dimensions)
-
-export(Spatial)
+	Spatial,
  
-export(SpatialPoints, SpatialPointsDataFrame)
+	SpatialPoints,
+	SpatialPointsDataFrame,
 
-export(Line, Lines, SpatialLines, SpatialLinesDataFrame, as.SpatialLines.SLDF,
-	gridat, LineLength, LinesLength, SpatialLinesLengths)
+	Line,
+	Lines,
+	SpatialLines,
+	SpatialLinesDataFrame,
+	as.SpatialLines.SLDF,
+	gridat,
+	LineLength,
+	LinesLength,
+	SpatialLinesLengths,
 
-export(layout.scale.bar, layout.north.arrow, sp.theme,
-	mapLegendGrob, spplot.key, panel.gridplot, panel.polygonsplot,
-	panel.pointsplot, sp.polygons, sp.text, sp.points, sp.lines,
-	sp.grid, SpatialPolygonsRescale, spplot.locator, sp.panel.layout)
-# export(sp.pagefn)
+	layout.scale.bar,
+	layout.north.arrow,
+	sp.theme,
+	mapLegendGrob,
+	spplot.key,
+	panel.gridplot,
+	panel.polygonsplot,
+	panel.pointsplot,
+	sp.polygons,
+	sp.text,
+	sp.points,
+	sp.lines,
+	sp.grid,
+	SpatialPolygonsRescale,
+	spplot.locator,
+	sp.panel.layout,
 
-export(as.image.SpatialGridDataFrame, image2Grid)
+	as.image.SpatialGridDataFrame,
+	image2Grid,
+	
+	gridparameters,
+	SpatialPixels,
+	SpatialPixelsDataFrame,
+	SpatialGrid,
+	SpatialGridDataFrame,
+	GridTopology,
+	getGridTopology,
+	areaSpatialGrid,
+	gridlines,
+	gridat,
+	gridIndex2nb,
 
-export(gridparameters, SpatialPixels, SpatialPixelsDataFrame,
-	SpatialGrid, SpatialGridDataFrame, GridTopology, getGridTopology,
-	areaSpatialGrid, gridlines, gridat, gridIndex2nb)
+	getSLlinesSlot,
+	getLinesLinesSlot, 
+	getLinesIDSlot,
+	getSLLinesIDSlots,
 
-export(getSLlinesSlot, getLinesLinesSlot, 
-	getLinesIDSlot, getSLLinesIDSlots)
+	nowrapSpatialLines,
+	getSpatialLinesMidPoints,
 
-export(nowrapSpatialLines, getSpatialLinesMidPoints)
+	getPolygonCoordsSlot,
+	getPolygonLabptSlot,
+	getPolygonAreaSlot,
+	getPolygonHoleSlot,
+	getPolygonsPolygonsSlot,
+	getPolygonsplotOrderSlot,
+	getPolygonsLabptSlot,
+	getPolygonsIDSlot,
+	getSpPpolygonsSlot,
+	getSpPplotOrderSlot,
+	getSpPPolygonsLabptSlots,
+	getSpPPolygonsIDSlots,
+	getSpPnParts,
+	getSpPnHoles,
+	getSpatialPolygonsLabelPoints,
 
-export(getPolygonCoordsSlot, getPolygonLabptSlot, getPolygonAreaSlot,
-	getPolygonHoleSlot, getPolygonsPolygonsSlot, getPolygonsplotOrderSlot,
-	getPolygonsLabptSlot, getPolygonsIDSlot, getSpPpolygonsSlot,
-	getSpPplotOrderSlot, getSpPPolygonsLabptSlots, getSpPPolygonsIDSlots,
-	getSpPnParts, getSpPnHoles, getSpatialPolygonsLabelPoints)
+	select.spatial,
 
-export(as.SpatialPolygons.PolygonsList, Polygons, Polygon, SpatialPolygons,
-       as.SpatialPolygonsDataFrame.SpatialPolygons, SpatialPolygonsDataFrame)
+	as.SpatialPolygons.PolygonsList,
+  # as.SpatialPolygonsDataFrame.SpatialPolygons, -> use coerce()
 
-# export(as.SGDF.SPixDF)
+  # DMS:
+	dd2dms, 
+	print.DMS, 
+	char2dms, 
+	as.character.DMS,
+	as.double.DMS, 
+	as.numeric.DMS,
 
-export(ShowSpatialPointsDataFrame)
+	# is coerce, but needed to add proj4string:
+	as.SpatialPolygons.GridTopology, 
 
-export(select.spatial)
+	# as.SpatialPolygons.SpatialPixels, -> is a coerce(), but plotKML uses it
+	IDvaluesGridTopology, 
+	IDvaluesSpatialPixels, 
+	HexPoints2SpatialPolygons,
 
-export(read.asciigrid, write.asciigrid)
+	flipHorizontal,
+	flipVertical,
 
-export(makegrid, sample.Spatial, sample.Line, sample.Polygon, sample.Polygons,
-	sample.Sgrid)
+	loadMeuse,
 
-export(as.SpatialPolygons.GridTopology, IDvaluesGridTopology, 
-	as.SpatialPolygons.SpatialPixels, IDvaluesSpatialPixels, 
-	HexPoints2SpatialPolygons)
+	makegrid,
 
-export(dd2dms, print.DMS, char2dms, as.character.DMS,
-	as.double.DMS, as.numeric.DMS)
+	read.asciigrid, 
 
-export(spDistsN1, spDists)
+	Polygon,
+	Polygons,
 
-export(flipHorizontal, flipVertical, loadMeuse)
-
-export(rbind.SpatialPoints,
+	rbind.SpatialPoints,
 	rbind.SpatialPointsDataFrame, 
 	rbind.SpatialPixels,
 	rbind.SpatialPixelsDataFrame,
 	rbind.SpatialPolygons,
 	rbind.SpatialPolygonsDataFrame,
 	rbind.SpatialLines,
-	rbind.SpatialLinesDataFrame)
+	rbind.SpatialLinesDataFrame,
+
+	# sample.Spatial, -> coerce()...
+	# sample.Line,
+	# sample.Polygon,
+	# sample.Polygons,
+	# sample.Sgrid,
+
+	# ShowSpatialPointsDataFrame -> coerce()...
+
+	SpatialPolygons,
+	SpatialPolygonsDataFrame,
+
+	spDistsN1,
+	spDists,
+
+	write.asciigrid
+)
 
 exportClasses(
 	DMS,
 	CRS, 
-	Spatial, 
-	SpatialPoints, 
 	GridTopology,
-	SpatialPixels, 
-	SpatialGrid, 
 	Line, 
 	Lines,
-	SpatialLines, 
- 	SpatialPointsDataFrame, 
-	SpatialPixelsDataFrame,
-	SpatialGridDataFrame,
-	SpatialLinesDataFrame,
 	Polygon, 
 	Polygons, 
+	Spatial, 
+	SpatialGrid, 
+	SpatialGridDataFrame,
+	SpatialLines, 
+	SpatialLinesDataFrame,
+	SpatialPixels, 
+	SpatialPixelsDataFrame,
+	SpatialPoints, 
+ 	SpatialPointsDataFrame, 
 	SpatialPolygons, 
-	SpatialPolygonsDataFrame)
+	SpatialPolygonsDataFrame
+)
 
-exportMethods(show, bbox, coordinates, "coordinates<-",
-	coordnames, "coordnames<-", geometry, polygons, "polygons<-",
-	dimensions, coerce, "[", "[[", "$", "$<-", over, overlay, 
-	plot, recenter, spplot, spsample, summary, surfaceArea, split,
-	spChFIDs, "spChFIDs<-", "gridded<-", gridded, fullgrid, "fullgrid<-",
-	proj4string, "proj4string<-", is.projected,
-	addAttrToGeom)
+exportMethods(
+	"[", "[[", "$", "$<-", 
+	addAttrToGeom,
+	bbox, 
+	coerce, 
+	coordinates, 
+	"coordinates<-",
+	coordnames, 
+	"coordnames<-", 
+	dimensions, 
+	fullgrid,
+	"fullgrid<-",
+	geometry, 
+	gridded,
+	"gridded<-",
+	is.projected,
+	over,
+	overlay, 
+	plot,
+	polygons, 
+	"polygons<-",
+	proj4string,
+	"proj4string<-",
+	recenter,
+	show, 
+	spChFIDs,
+	"spChFIDs<-",
+	split,
+	spplot,
+	spsample,
+	summary,
+	surfaceArea
+)
+
+S3method(as.character, DMS)
 
 S3method(as.data.frame, SpatialPoints)
 S3method(as.data.frame, SpatialPixels)
@@ -129,8 +239,13 @@ S3method(as.data.frame, SpatialLinesDataFrame)
 S3method(as.data.frame, SpatialPolygonsDataFrame)
 S3method(as.data.frame, GridTopology)
 
+S3method(as.double, DMS)
+S3method(as.numeric, DMS)
+
 S3method(as.matrix, SpatialGridDataFrame)
 S3method(as.matrix, SpatialPixelsDataFrame)
+
+S3method(aggregate, Spatial)
 
 S3method(cbind, SpatialGridDataFrame)
 
@@ -171,6 +286,12 @@ S3method(names, SpatialPolygonsDataFrame)
 S3method(names, SpatialLines)
 S3method(names, SpatialPolygons)
 
+S3method("names<-", SpatialPointsDataFrame)
+S3method("names<-", SpatialPolygonsDataFrame)
+S3method("names<-", SpatialLinesDataFrame)
+S3method("names<-", SpatialPixelsDataFrame)
+S3method("names<-", SpatialGridDataFrame)
+
 S3method(row.names, SpatialPoints)
 S3method(row.names, SpatialLines)
 S3method(row.names, SpatialPolygons)
@@ -188,16 +309,11 @@ S3method("row.names<-", SpatialPolygonsDataFrame)
 S3method("row.names<-", SpatialLines)
 S3method("row.names<-", SpatialLinesDataFrame)
 
-S3method("names<-", SpatialPointsDataFrame)
-S3method("names<-", SpatialPolygonsDataFrame)
-S3method("names<-", SpatialLinesDataFrame)
-S3method("names<-", SpatialPixelsDataFrame)
-S3method("names<-", SpatialGridDataFrame)
-
 S3method(points, SpatialPoints)
 S3method(points, SpatialPointsDataFrame)
 
 S3method(print, CRS)
+S3method(print, DMS)
 S3method(print, GridTopology)
 S3method(print, SpatialPoints)
 S3method(print, SpatialPixels)
@@ -211,12 +327,6 @@ S3method(print, summary.GridTopology)
 S3method(stack, SpatialPointsDataFrame)
 S3method(stack, SpatialPixelsDataFrame)
 S3method(stack, SpatialGridDataFrame)
+S3method(subset, Spatial)
 
 S3method(text, SpatialPointsDataFrame)
-
-S3method(print, DMS)
-S3method(as.character, DMS)
-S3method(as.numeric, DMS)
-S3method(as.double, DMS)
-S3method(aggregate, Spatial)
-S3method(subset, Spatial)

@@ -1,5 +1,5 @@
 
-R version 2.15.0 (2012-03-30)
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -41,14 +41,14 @@ Grid attributes:
 x            178460       40        78
 y            329620       40       104
 Data attributes:
-     part.a          part.b           dist            soil        ffreq     
- Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :1.000   1   : 779  
- 1st Qu.:0.000   1st Qu.:0.000   1st Qu.:0.119   1st Qu.:1.000   2   :1335  
- Median :0.000   Median :1.000   Median :0.272   Median :1.000   3   : 989  
- Mean   :0.399   Mean   :0.601   Mean   :0.297   Mean   :1.578   NA's:5009  
- 3rd Qu.:1.000   3rd Qu.:1.000   3rd Qu.:0.440   3rd Qu.:2.000              
- Max.   :1.000   Max.   :1.000   Max.   :0.993   Max.   :3.000              
- NA's   :5009    NA's   :5009    NA's   :5009    NA's   :5009               
+     part.a          part.b           dist         soil       ffreq     
+ Min.   :0.000   Min.   :0.000   Min.   :0.000   1   :1665   1   : 779  
+ 1st Qu.:0.000   1st Qu.:0.000   1st Qu.:0.119   2   :1084   2   :1335  
+ Median :0.000   Median :1.000   Median :0.272   3   : 354   3   : 989  
+ Mean   :0.399   Mean   :0.601   Mean   :0.297   NA's:5009   NA's:5009  
+ 3rd Qu.:1.000   3rd Qu.:1.000   3rd Qu.:0.440                          
+ Max.   :1.000   Max.   :1.000   Max.   :0.993                          
+ NA's   :5009    NA's   :5009    NA's   :5009                           
 > gridparameters(x)
   cellcentre.offset cellsize cells.dim
 x            178460       40        78
@@ -77,13 +77,13 @@ Grid attributes:
 x            178460       40        78
 y            329620       40       104
 Data attributes:
-     part.a           part.b            dist             soil       ffreq   
- Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :1.000   1: 779  
- 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.1193   1st Qu.:1.000   2:1335  
- Median :0.0000   Median :1.0000   Median :0.2715   Median :1.000   3: 989  
- Mean   :0.3986   Mean   :0.6014   Mean   :0.2971   Mean   :1.578           
- 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.4402   3rd Qu.:2.000           
- Max.   :1.0000   Max.   :1.0000   Max.   :0.9926   Max.   :3.000           
+     part.a           part.b            dist        soil     ffreq   
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   1:1665   1: 779  
+ 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.1193   2:1084   2:1335  
+ Median :0.0000   Median :1.0000   Median :0.2715   3: 354   3: 989  
+ Mean   :0.3986   Mean   :0.6014   Mean   :0.2971                    
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.4402                    
+ Max.   :1.0000   Max.   :1.0000   Max.   :0.9926                    
 > class(as(x, "matrix"))
 [1] "matrix"
 Warning message:
@@ -270,4 +270,4 @@ Coordinate Reference System (CRS) arguments: NA
 > 
 > proc.time()
    user  system elapsed 
-  0.820   0.040   0.845 
+  0.816   0.048   0.849 
