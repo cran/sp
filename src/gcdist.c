@@ -46,7 +46,8 @@ void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat)
 
 }
 
-/* http://home.att.net/~srschmitt/script_greatcircle.html */
+/* was: http://home.att.net/~srschmitt/script_greatcircle.html */
+/* now at: http://mysite.verizon.net/res148h4j/javascript/script_greatcircle.html */
 
 void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2, 
 		double *dist) {

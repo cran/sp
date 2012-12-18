@@ -94,6 +94,7 @@ print.SpatialPointsDataFrame = function(x, ..., digits = 6, asWKT = .asWKT) {
 	row.names(df) = row.names(x@data)
 	print(df, ...)
 }
+setMethod("show", "SpatialPointsDataFrame", function(object) print(object))
 
 dim.SpatialPointsDataFrame = function(x) dim(x@data)
 
@@ -127,9 +128,6 @@ names.SpatialPointsDataFrame <- function(x) names(x@data)
 }
 
 #"coordnames<-.SpatialPointsDataFrame" <- function(x, value)
-
-ShowSpatialPointsDataFrame = function(object) print.SpatialPointsDataFrame(object)
-setMethod("show", "SpatialPointsDataFrame", ShowSpatialPointsDataFrame)
 
 points.SpatialPointsDataFrame = function(x, y = NULL, ...) 
 	points(as(x, "SpatialPoints"), ...)

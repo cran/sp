@@ -8,12 +8,23 @@ sp.polygons = function(obj, col = 1, fill="transparent", ...) {
 	else
 		obj = as(obj, "SpatialPolygons")
 	if (get_Polypath()) {
+		lo = length(obj)
 		obj = as(as(obj, "SpatialLines"), "SpatialPointsDataFrame")
 		cc = coordinates(obj)
 		#id = as.numeric(obj$Line.NR)
 		id = as.numeric(obj$Lines.NR * max(obj$Line.NR) + (obj$Line.NR - 1))
-		grid.path(cc[,1], cc[,2], id, default.units = "native",
-			gp = gpar(col = col, fill = fill, ...))
+		if (length(fill) > 1 || length(col) > 1) {
+			fill = rep(fill, length.out = lo)
+			col = rep(col, length.out = lo)
+			for (i in 1:lo) {
+				sel = obj$Lines.NR == i
+				grid.path(cc[sel,1], cc[sel,2], id[sel], 
+					default.units = "native", 
+					gp = gpar(col = col[i], fill = fill[i], ...))
+			}
+		} else 
+			grid.path(cc[,1], cc[,2], id, default.units = "native",
+				gp = gpar(col = col, fill = fill, ...))
 	} else {
 		sp.polygon3 = function(x, col, fill, ...) { 
 			cc = slot(x, "coords")
@@ -414,84 +425,6 @@ panel.pointsplot = function(sp.layout, x, y, subscripts, col, cex, pch, ...) {
 	#panel.superpose(x, y, subscripts, col = col, ...)
 	lpoints(x, y, col = col[subscripts], cex = cex[subscripts], 
 		pch = pch[subscripts], ...)
-}
-
-fill.call.groups = function(lst, z, ..., cuts, 
-	col.regions = trellis.par.get("regions")$col, legendEntries = "", pch, 
-	cex = 1, fill = TRUE, do.log = FALSE, key.space = "bottom") 
-{
-	# always:
-	dots = list(...)
-	if (missing(pch)) 
-		lst$pch = ifelse(fill, 16, 1)
-	else
-		lst$pch = pch
-	if (!missing(cex))
-		lst$cex = cex
-
-	if (is.numeric(z)) {
-		if (missing(cuts))
-			cuts = 5
-		if (length(cuts) > 1)
-			ncuts = length(cuts) - 1
-		else
-			ncuts = cuts
-		if (ncuts != length(col.regions)) {
-			cols = round(1+(length(col.regions)-1)*(0:(ncuts-1))/(ncuts-1))
-			lst$col = col.regions[cols]
-		} else
-			lst$col = col.regions
-
-		valid = !is.na(z)
-		#z = na.omit(z)
-    	if (length(cuts) == 1) {
-			if (do.log) {
-       			lz = log(z)
-       			cuts = c(min(z[valid]), exp(seq(min(lz[valid]), max(lz[valid]), length = cuts + 
-           			1))[2:(cuts)], max(z[valid]))
-			} else
-				cuts = seq(min(z[valid]), max(z[valid]), length = cuts + 1)
-    	}
-    	lst$groups = cut(as.matrix(z), cuts, dig.lab = 4, include.lowest = TRUE)
-
-	} else if (is.factor(z)) {
-		if (length(col.regions) == 1)
-			col.regions = rep(col.regions, nlevels(z))
-		if (length(col.regions) < nlevels(z))
-			stop("number of colors smaller than number of factor levels")
-		if (length(col.regions) > nlevels(z)) {
-			ncuts = nlevels(z)
-			cols = round(1+(length(col.regions)-1)*(0:(ncuts-1))/(ncuts-1))
-			col.regions = col.regions[cols]
-		}
-		if (!missing(cuts))
-			stop("ncuts cannot be set for factor variable")
-		lst$col = col.regions
-		lst$groups = z
-	} else
-		stop("dependent of not-supported class")
-
-	if (missing(legendEntries))
-		legendEntries = levels(lst$groups)
-	n = nlevels(lst$groups)
-
-	if (is.null(dots$auto.key) || (!is.null(dots$auto.key) && 
-          identical(dots$auto.key, TRUE))) {
-	  if (!is.null(dots$key))
-		lst$key = dots$key
-	  else
-		lst$key = list(points = list(pch = rep(lst$pch, length = n), 
-			col = rep(lst$col, length = n), cex = rep(cex, length = n)), 
-			text = list(legendEntries))
-	  if (is.character(key.space))
-		lst$key$space = key.space
-	  else if (is.list(key.space))
-		lst$key = append(lst$key, key.space)
-	  else
-		warning("key.space argument ignored (not list or character)")
-        }
-        if (!is.null(dots$auto.key)) lst$auto.key <- dots$auto.key
-	return(lst)
 }
 
 SpatialPolygons2Grob = function(obj, fill) {

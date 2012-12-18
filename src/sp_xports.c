@@ -475,6 +475,8 @@ SEXP SP_PREFIX(comment2comm)(SEXP obj) {
     }
 
     nc = length(STRING_ELT(comment, 0));
+    if (nc < 1) error("comment2comm: empty string comment");
+
     buf = (char *) R_alloc((size_t) (nc+1), sizeof(char));
 
     strcpy(buf, CHAR(STRING_ELT(comment, 0)));

@@ -1,13 +1,15 @@
 Package: sp
-Version: 1.0-2
-Date: 2012-10-10
+Version: 1.0-4
+Date: 2012-12-18
 Title: classes and methods for spatial data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"), email =
         "edzer.pebesma@uni-muenster.de"), person("Roger", "Bivand",
-        role = c("aut"), email = "Roger.Bivand@nhh.no"))
-Depends: R (>= 2.14.0), methods, graphics
-Suggests: lattice, RColorBrewer, rgdal, rgeos (>= 0.1-8)
-Imports: utils, lattice, grid
+        role = "aut", email = "Roger.Bivand@nhh.no"), person("Barry",
+        "Rowlingson", role = "ctb"), person("Virgilio", "Gomez-Rubio",
+        role = "ctb"))
+Depends: R (>= 2.14.0)
+Suggests: lattice, RColorBrewer, rgdal (>= 0.7-21), rgeos (>= 0.1-8)
+Imports: methods, graphics, utils, lattice, grid
 Description: A package that provides classes and methods for spatial
         data. The classes document where the spatial location
         information resides, for 2D or 3D data. Utility functions are
@@ -15,7 +17,8 @@ Description: A package that provides classes and methods for spatial
         well as methods for retrieving coordinates, for subsetting,
         print, summary, etc.
 License: GPL (>= 2)
-URL: http://rspatial.r-forge.r-project.org/
+URL: https://r-forge.r-project.org/projects/rspatial/
+        http://rspatial.r-forge.r-project.org/
 Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         Spatial-methods.R projected.R Class-SpatialPoints.R
         SpatialPoints-methods.R Class-SpatialPointsDataFrame.R
@@ -33,8 +36,9 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         recenter.R dms.R gridlines.R spdists.R rbind.R flipSGDF.R
         chfids.R loadmeuse.R compassRose.R surfaceArea.R spOptions.R
         subset.R
-Packaged: 2012-10-31 15:19:47 UTC; edzer
-Author: Edzer Pebesma [aut, cre], Roger Bivand [aut]
+Packaged: 2012-12-18 08:52:09 UTC; rsb
+Author: Edzer Pebesma [aut, cre], Roger Bivand [aut], Barry Rowlingson
+        [ctb], Virgilio Gomez-Rubio [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2012-10-31 15:35:27
+Date/Publication: 2012-12-18 14:46:28

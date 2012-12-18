@@ -87,7 +87,7 @@ plot(SpP, col = 1:3, pbg="white")
 %plot(ncSpPDF, col=cols[findInterval(rrt, brks, all.inside=TRUE)])
 %plot(ncSpPDF, density=dens[findInterval(rrt, brks, all.inside=TRUE)])
 grd <- GridTopology(c(1,1), c(1,1), c(10,10))
-polys <- as.SpatialPolygons.GridTopology(grd)
+polys <- as(grd, "SpatialPolygons")
 centroids <- coordinates(polys)
 x <- centroids[,1]
 y <- centroids[,2]
