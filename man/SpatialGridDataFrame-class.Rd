@@ -7,11 +7,13 @@
 % \alias{SpatialGridDataFrame}
 \alias{plot.SpatialGridDataFrame}
 \alias{print.summary.SpatialGridDataFrame}
+\alias{as.array.SpatialGridDataFrame}
 \alias{coerce,SpatialGridDataFrame,SpatialPointsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,SpatialPixelsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,SpatialPolygonsDataFrame-method}
 \alias{coerce,SpatialGridDataFrame,data.frame-method}
 \alias{coerce,SpatialGridDataFrame,matrix-method}
+\alias{coerce,SpatialGridDataFrame,array-method}
 \alias{as.data.frame.SpatialGridDataFrame}
 \alias{dim.SpatialGridDataFrame}
 
@@ -42,7 +44,8 @@ Class \code{"Spatial"}, by class \code{"SpatialGrid"}.
     \item{coordinates}{\code{signature(x = "SpatialGridDataFrame")}: retrieves (and calculates!) coordinates }
     \item{[}{\code{signature(x = "SpatialGridDataFrame")}: selects rows, columns, and attributes; returns an
 	object of class \code{SpatialGridDataFrame}}
-	\item{as.matrix}{\code{signature(x = "SpatialGridDataFrame")}: coerce to matrix }
+	\item{as.matrix}{\code{signature(x = "SpatialGridDataFrame")}: coerce to matrix; increasing col index corresponds to decreasing y coordinate, row index increases with coordinate index }
+	\item{as.array}{\code{signature(x = "SpatialGridDataFrame")}: coerce to array; increasing array index for the second dimension corresponds to decreasing coordinates, all other coordinate dimensions increase with array index }
 	\item{cbind}{\code{signature(...)}: if arguments have identical topology, combine their
 	attribute values}
   }
@@ -83,5 +86,12 @@ fullgrid(meuse.grid) = TRUE
 image(meuse.grid)
 image(meuse.grid[20:70, 10:70, "dist"], add = TRUE, col = bpy.colors())
 
+# as.matrix, as.array
+sgdim = c(3,4)
+SG = SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+SGDF = SpatialGridDataFrame(SG, data.frame(val = 1:12))
+as.array(SGDF)
+as.matrix(SGDF)
+as(SGDF, "array")
 }
 \keyword{classes}

@@ -1,3 +1,35 @@
+2012-12-21 13:42  rsbivand
+
+	* ChangeLog, R/image.R, inst/ChangeLog, man/image.Rd: tidy
+
+2012-12-21 13:27  edzer
+
+	* R/image.R: factor data are now converted to numeric by
+	  image.SpatialGridDataFrame
+
+2012-12-20 23:27  edzer
+
+	* man/SpatialGridDataFrame-class.Rd,
+	  tests/Examples/sp-Ex.Rout.save: more tests
+
+2012-12-20 23:15  edzer
+
+	* tests/Examples/sp-Ex.Rout.save: updated test
+
+2012-12-20 21:49  edzer
+
+	* NAMESPACE, R/SpatialGridDataFrame-methods.R,
+	  man/SpatialGridDataFrame-class.Rd: added as.array and as(x,
+	  "array") methods for SpatialGridDataFrame.
+
+2012-12-18 13:57  edzer
+
+	* DESCRIPTION: version bump.
+
+2012-12-18 08:48  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
 2012-12-18 08:47  rsbivand
 
 	* DESCRIPTION, inst/include/sp_xports.c, src/sp_xports.c: catch

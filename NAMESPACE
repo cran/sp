@@ -227,6 +227,8 @@ exportMethods(
 	surfaceArea
 )
 
+S3method(as.array, SpatialGridDataFrame)
+
 S3method(as.character, DMS)
 
 S3method(as.data.frame, SpatialPoints)

@@ -17,8 +17,8 @@ image on data in SpatialGridDataFrame format. The aspect ratio is set as either 
         axes = FALSE, xlim = NULL,
 	ylim = NULL, add = FALSE, ..., asp = NA, setParUsrBB=FALSE,
         interpolate = FALSE, angle = 0, 
-		useRasterImage = (!.isSDI() && missing(breaks)), breaks,
-		zlim = range(x[[attr]][is.finite(x[[attr]])]))
+	useRasterImage = (!.isSDI() && missing(breaks)), breaks,
+	zlim = range(as.numeric(x[[attr]])[is.finite(as.numeric(x[[attr]]))]))
 \method{image}{SpatialPixelsDataFrame}(x, ...) 
 \method{image}{SpatialPixels}(x, ...) 
 \method{contour}{SpatialGridDataFrame}(x, attr = 1, xcol = 1, ycol = 2,
