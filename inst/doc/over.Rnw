@@ -244,15 +244,21 @@ L = SpatialLines(list(l1,l2))
 and shown in figure \ref{fig:lines}.
 
 \begin{table}
-\begin{tabular}{|l|cccc|} \hline 
-              & y: points & y: lines & y: polygons & y: pixels/grids \\ \hline
-x: points        &   s    &    r     &      s      &      s       \\
-x: lines         &   r    &    r     &      r      &      r       \\
-x: polygons      &   s    &    r     &      r      &      s       \\
-x: pixels/grids  &   s    &    r     &      s      &      s       \\ \hline
+\centering
+\begin{tabular}{|l|ccccc|} \hline
+              & y: Points & y: Lines & y: Polygons & y: Pixels & y: Grid \\
+              \hline
+x: Points        &   s    &    r     &      s      &      s    &  s  \\
+x: Lines         &   r    &    r     &      r      &     r:y   & r:y \\
+x: Polygons      &   s    &    r     &      r      &     s:y   & s:y \\
+x: Pixels        &  s:x   &   r:x    &     s:x     &     s:x   & s:x \\ \hline
+x: Grid          &  s:x   &   r:x    &     s:x     &     s:x   & s:x \\ \hline
 \end{tabular}
-\caption{ \code{over} methods implemented for different \code{x} 
-and \code{y} arguments (s: sp; r: rgeos).  }
+\caption{ \code{over} methods implemented for different \code{x}
+and \code{y} arguments.  s: provided by \pkg{sp}; r: provided by
+\pkg{rgeos}. s:x or s:y indicates that the x or y argument is converted to grid
+cell center points; r:x or r:y indicate grids or pixels are converted to
+polygons. }
 \label{tab}
 \end{table}
 

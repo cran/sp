@@ -51,7 +51,7 @@ chFIDsSpatialPolygonsDataFrame <- function(obj, x) {
     SP <- as(obj, "SpatialPolygons")
     SPx <- spChFIDs(SP, x)
     df <- as(obj, "data.frame")
-    row.names(df) <- .Call("SpatialPolygons_getIDs_c", SPx, PACKAGE="sp")
+    row.names(df) <- .Call(SpatialPolygons_getIDs_c, SPx)
     SpatialPolygonsDataFrame(SPx, data=df)
 }
 

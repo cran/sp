@@ -1,10 +1,9 @@
 point.in.polygon = function(point.x, point.y, pol.x, pol.y,
     mode.checked=FALSE) {
-    if (mode.checked) res <- .Call("R_point_in_polygon_sp", point.x,
-        point.y, pol.x, pol.y, PACKAGE = "sp")
-    else res <- .Call("R_point_in_polygon_sp", as.numeric(point.x),
-        as.numeric(point.y), as.numeric(pol.x), as.numeric(pol.y),
-        PACKAGE = "sp")
+    if (mode.checked) res <- .Call(R_point_in_polygon_sp, point.x,
+        point.y, pol.x, pol.y)
+    else res <- .Call(R_point_in_polygon_sp, as.numeric(point.x),
+        as.numeric(point.y), as.numeric(pol.x), as.numeric(pol.y))
     res
 }
 
@@ -65,9 +64,8 @@ pointsInSpatialPolygons = function(pts, SpPolygons, returnList = FALSE) {
     cpts <- coordinates(pts)
     storage.mode(cpts) <- "double"
     mode.checked <- storage.mode(cpts) == "double"
-    cand <- .Call("tList", 
-    	.Call("pointsInBox", lb, cpts[,1], cpts[,2], PACKAGE="sp"), 
-		as.integer(length(pls)), PACKAGE="sp")
+    cand <- .Call(tList, .Call(pointsInBox, lb, cpts[,1], cpts[,2]), 
+		as.integer(length(pls)))
     # rm(cand0)
     # gc(verbose=FALSE)
     res <- pointsInPolys2(pls, cand, cpts, mode.checked=mode.checked,

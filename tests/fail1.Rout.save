@@ -166,8 +166,7 @@ y            329620       40       104
 > image(meuse.grid[2])
 > image(meuse.grid, 2)
 > try(image(meuse.grid, 0))
-Error in .subset2(x, i, exact = exact) : 
-  attempt to select less than one element
+Error in .subset2(x, i, exact = exact) : subscript out of bounds
 > image(meuse.grid[3], breaks=c(0,.2,.5,.8,1), col = bpy.colors(4))
 > image(meuse.grid, 3, zlim = c(0,.3))
 > image(meuse.grid, 3, zlim = c(.3,.1))
@@ -204,4 +203,4 @@ y         50.955770 0.0003318105       112
 > 
 > proc.time()
    user  system elapsed 
-  1.040   0.036   1.060 
+  1.044   0.028   1.056 

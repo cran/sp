@@ -3,6 +3,7 @@
 \alias{CRS-class}
 \alias{CRS}
 \alias{CRSargs}
+\alias{identicalCRS}
 \alias{print.CRS}
 \alias{show,CRS-method}
 \title{Class "CRS" of coordinate reference system arguments}

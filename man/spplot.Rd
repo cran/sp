@@ -31,7 +31,8 @@ spplot.polygons(obj, zcol = names(obj), ..., names.attr,
 spplot.points(obj, zcol = names(obj), ..., names.attr, 
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
 	panel = panel.pointsplot, sp.layout = NULL, identify = FALSE, formula, 
-	xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04))
+	xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04),
+	edge.col = "transparent", colorkey = FALSE)
 mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 	fill = "black", just = "right")
 sp.theme(set = FALSE, regions = list(col = bpy.colors(100)), ...)
@@ -68,6 +69,8 @@ to \code{z~x+y} for single and \code{z~x+y|name} for multiple attributes; use
 e.g. \code{exp(x)~x+y|name} to plot the exponent of the z-variable}
 \item{xlim}{ numeric; x-axis limits }
 \item{ylim}{ numeric; y-axis limits }
+\item{edge.col}{ color of symbol edge }
+\item{colorkey}{ logical; if TRUE, use continuous, levelplot-like colorkey instead of symbol key}
 \item{widths}{width of grob}
 \item{heights}{heights of grob}
 \item{fill}{fill color of grob}

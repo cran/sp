@@ -1,4 +1,17 @@
-useDynLib(sp)
+useDynLib(sp,
+	bboxCalcR_c,
+	pointsInBox,
+	Polygon_c,
+	Polygon_validate_c,
+	Polygons_c,
+	R_point_in_polygon_sp,
+	sp_zerodist,
+	SpatialPolygons_c,
+	SpatialPolygons_getIDs_c,
+	SpatialPolygons_plotOrder_c,
+	SpatialPolygons_validate_c,
+	tList
+)
 
 import(methods)
 importFrom(graphics, plot, hist)
@@ -11,6 +24,7 @@ importFrom(grid, grid.polygon, grid.path, grid.rect, polygonGrob, gpar,
 
 export(
 	CRS,
+	identicalCRS,
 	# print.CRS, -> S3Method()
 
 	# bbox,
@@ -73,6 +87,8 @@ export(
 	SpatialPolygonsRescale,
 	spplot.locator,
 	sp.panel.layout,
+	degreeLabelsEW,
+	degreeLabelsNS,
 
 	as.image.SpatialGridDataFrame,
 	image2Grid,

@@ -19,7 +19,7 @@ a data.frame with (possibly aggregate) properties of \code{x} in units
 of \code{y}.
 }
 \note{points on a polygon boundary and points corresponding to a polygon vertex are
-considered to be inside the polygon. This function is deprecated, as it has some
+considered to be inside the polygon. This function is deprecated, as it has
 inconsistences. A better implementation is found in the \link{over} method. }
 \seealso{\link{overlay-methods}, \link{point.in.polygon}}
 \examples{
@@ -51,6 +51,7 @@ polygon(r1)
 polygon(r2)
 polygon(r3)
 
+\dontrun{
 overlay(srdf, meuse)
 overlay(sr, meuse)
 
@@ -67,5 +68,6 @@ overlay(meuse.grid, srdf, fn = mean)
 overlay(meuse.grid, srdf)
 overlay(as(meuse.grid, "SpatialPoints"), srdf)
 overlay(as(meuse.grid, "SpatialPoints"), sr)
+}
 }
 \keyword{manip}

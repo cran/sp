@@ -1,0 +1,161 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+	
+	areaSpatialGrid,
+	as.character.DMS,
+	as.double.DMS, 
+	as.image.SpatialGridDataFrame,
+	as.numeric.DMS,
+	as.SpatialLines.SLDF,
+  # as.SpatialPolygonsDataFrame.SpatialPolygons, -> use coerce()
+	as.SpatialPolygons.GridTopology, 
+	as.SpatialPolygons.PolygonsList,
+	# as.SpatialPolygons.SpatialPixels, -> is a coerce(), but plotKML uses it
+	# bbox,
+	bpy.colors,
+	bubble,
+	char2dms, 
+	coordinatevalues,
+	CRS,
+	dd2dms, 
+	degAxis,
+	dimensions,
+  # DMS:
+	flipHorizontal,
+	flipVertical,
+	getGridIndex,
+	getGridTopology,
+	getLinesIDSlot,
+	getLinesLinesSlot, 
+	get_ll_TOL,
+	get_ll_warn,
+	getPolygonAreaSlot,
+	getPolygonCoordsSlot,
+	getPolygonHoleSlot,
+	getPolygonLabptSlot,
+	getPolygonsIDSlot,
+	getPolygonsLabptSlot,
+	getPolygonsplotOrderSlot,
+	getPolygonsPolygonsSlot,
+	get_Polypath,
+	get_PolypathRule, 
+	get_ReplCRS_warn,
+	getSLLinesIDSlots,
+	getSLlinesSlot,
+	getSpatialLinesMidPoints,
+	getSpatialPolygonsLabelPoints,
+	getSpPnHoles,
+	getSpPnParts,
+	getSpPplotOrderSlot,
+	getSpPPolygonsIDSlots,
+	getSpPPolygonsLabptSlots,
+	getSpPpolygonsSlot,
+	gridat,
+	gridat,
+	gridIndex2nb,
+	gridlines,
+	gridparameters,
+	GridTopology,
+	HexPoints2SpatialPolygons,
+	identicalCRS,
+	IDvaluesGridTopology, 
+	IDvaluesSpatialPixels, 
+	image2Grid,
+	# is coerce, but needed to add proj4string:
+	layout.north.arrow,
+	layout.scale.bar,
+	Line,
+	LineLength,
+	Lines,
+	LinesLength,
+	loadMeuse,
+	makegrid,
+	mapasp,
+	mapLegendGrob,
+	nowrapSpatialLines,
+	"%over%",
+	panel.gridplot,
+	panel.pointsplot,
+	panel.polygonsplot,
+	point.in.polygon,
+	points2grid,
+	Polygon,
+	Polygons,
+	# print.CRS, -> S3Method()
+	print.DMS, 
+	rbind.SpatialLines,
+	rbind.SpatialLinesDataFrame,
+	rbind.SpatialPixels,
+	rbind.SpatialPixelsDataFrame,
+	rbind.SpatialPoints,
+	rbind.SpatialPointsDataFrame, 
+	rbind.SpatialPolygons,
+	rbind.SpatialPolygonsDataFrame,
+	read.asciigrid, 
+	remove.duplicates,
+	# sample.Line,
+	# sample.Polygon,
+	# sample.Polygons,
+	# sample.Sgrid,
+	# sample.Spatial, -> coerce()...
+	select.spatial,
+	set_ll_TOL,
+	set_ll_warn,
+	set_Polypath,
+	set_PolypathRule,
+	set_ReplCRS_warn,
+	# ShowSpatialPointsDataFrame -> coerce()...
+	Spatial,
+	SpatialGrid,
+	SpatialGridDataFrame,
+	SpatialLines,
+	SpatialLinesDataFrame,
+	SpatialLinesLengths,
+	SpatialPixels,
+	SpatialPixelsDataFrame,
+	SpatialPoints,
+	SpatialPointsDataFrame,
+	SpatialPolygons,
+	SpatialPolygonsDataFrame,
+	SpatialPolygonsRescale,
+	spDists,
+	spDistsN1,
+	sp.grid,
+	sp.lines,
+	spmap.to.lev,
+	sp.panel.layout,
+	spplot.key,
+	spplot.locator,
+	sp.points,
+	sp.polygons,
+	sp.text,
+	sp.theme,
+	write.asciigrid
+	zerodist,
+	zerodist2,

@@ -30,7 +30,6 @@ if (!is.R()) {
 # sessionInfo()/read.dcf() problem in loop 080307
     if ("rgdal" %in% .packages()) {
 	if (!is.na(uprojargs)) {
-	    #res <- .Call("checkCRSArgs", uprojargs, PACKAGE="rgdal")
 	    res <- checkCRSArgs(uprojargs)
 	    if (!res[[1]]) 
 	    	stop(res[[2]])
@@ -51,3 +50,7 @@ if (!is.R()) {
 }
 
 setMethod("show", "CRS", function(object) print.CRS(object))
+
+identicalCRS = function(x,y) {
+	identical(CRS(proj4string(x)), CRS(proj4string(y)))
+}

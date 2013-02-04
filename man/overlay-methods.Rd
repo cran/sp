@@ -16,7 +16,7 @@
 \title{ Methods for spatially overlay-ing points (grids) and polygons layers }
 \description{
 overlay combines points (or grids) and polygons by performing point-in-polygon
-operation on all point-polygons combinations.
+operation on all point-polygons combinations; deprecated: one should use \link{over} instead.
 }
 \section{Methods}{
 \describe{

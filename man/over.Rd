@@ -22,6 +22,12 @@
 \alias{over,SpatialGrid,SpatialPolygons-method}
 \alias{over,SpatialGrid,SpatialPolygonsDataFrame-method}
 \alias{over,SpatialPolygons,SpatialGrid-method}
+\alias{over,SpatialGrid,SpatialGrid-method}
+\alias{over,SpatialGrid,SpatialGridDataFrame-method}
+\alias{over,SpatialGrid,SpatialPixels-method}
+\alias{over,SpatialGrid,SpatialPixelsDataFrame-method}
+\alias{over,SpatialGrid,SpatialPointsDataFrame-method}
+
 
 \alias{aggregate.Spatial}
 \title{ consistent spatial overlay for points, grids and polygons }

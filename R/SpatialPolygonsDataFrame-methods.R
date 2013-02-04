@@ -8,8 +8,7 @@ SpatialPolygonsDataFrame <- function(Sr, data, match.ID = TRUE) {
 	if (match.ID) {
 #		Sr_IDs <- sapply(slot(Sr, "polygons"),
 #                    function(i) slot(i, "ID"))
-                Sr_IDs <- .Call("SpatialPolygons_getIDs_c", Sr,
-                    PACKAGE="sp")
+                Sr_IDs <- .Call(SpatialPolygons_getIDs_c, Sr)
 		data_IDs <- row.names(data)
 		mtch <- match(Sr_IDs, data_IDs)
                 if (!identical(Sr_IDs, data_IDs)) {
@@ -60,7 +59,7 @@ setAs("SpatialPolygonsDataFrame", "data.frame", function(from)
     as.data.frame.SpatialPolygonsDataFrame(from))
 
 row.names.SpatialPolygonsDataFrame <- function(x) {
-    .Call("SpatialPolygons_getIDs_c", x, PACKAGE="sp")
+    .Call(SpatialPolygons_getIDs_c, x)
 }
 
 "row.names<-.SpatialPolygonsDataFrame" <- function(x, value) {
@@ -105,12 +104,11 @@ setMethod("[", "SpatialPolygonsDataFrame", function(x, i, j, ... , drop = TRUE) 
 
 	y@polygons = x@polygons[i]
 #	x@bbox <- .bboxCalcR(x@polygons)
-        y@bbox <- .Call("bboxCalcR_c", y@polygons, PACKAGE="sp")
+        y@bbox <- .Call(bboxCalcR_c, y@polygons)
         if (is.numeric(i) && i < 0) {
 #             area <- sapply(x@polygons, function(y) y@area)
 #             x@plotOrder <- as.integer(order(area, decreasing=TRUE))
-              y@plotOrder <- .Call("SpatialPolygons_plotOrder_c",
-                  y@polygons, PACKAGE="sp")
+              y@plotOrder <- .Call(SpatialPolygons_plotOrder_c, y@polygons)
         } else {
 	    y@plotOrder = order(match(i, x@plotOrder))
         }

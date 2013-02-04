@@ -2,7 +2,7 @@ setClass("Polygon",
 	representation("Line", labpt = "numeric", 
 	area = "numeric", hole = "logical", ringDir = "integer"),
 	validity = function(object) {
-                res <- .Call("Polygon_validate_c", object, PACKAGE="sp")
+                res <- .Call(Polygon_validate_c, object)
                 res
 #		coords <- object@coords
 #		start <- coords[1,]
@@ -19,7 +19,7 @@ setClass("Polygons",
 	representation(Polygons = "list", plotOrder = "integer", 
 	labpt = "numeric", ID = "character", area = "numeric"),
 	validity = function(object) {
-                res <- .Call("Polygons_validate_c", object, PACKAGE="sp")
+                res <- .Call(Polygons_validate_c, object)
                 res
 #		if (any(sapply(object@Polygons, function(x) !is(x, "Polygon"))))
 #			return("not a list of Polygon objects")
@@ -48,10 +48,10 @@ setClass("SpatialPolygons",
 #			return("polygons not Polygons objects")
 #                pls <- slot(object, "polygons")
 #                IDs <- sapply(pls, slot, "ID")
-                IDs <- .Call("SpatialPolygons_getIDs_c", object, PACKAGE="sp")
+                IDs <- .Call(SpatialPolygons_getIDs_c, object)
 		if (anyDuplicated(IDs))
 			return("non-unique Polygons ID slot values")
-                res <- .Call("SpatialPolygons_validate_c", object, PACKAGE="sp")
+                res <- .Call(SpatialPolygons_validate_c, object)
                 res
 #		if (length(object@polygons) != 
 #			length(unique(sapply(slot(object, "polygons"), 
