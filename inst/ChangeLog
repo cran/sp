@@ -1,3 +1,110 @@
+2013-03-02 11:27  edzer
+
+	* man/SpatialPixels-class.Rd, tests/Examples/sp-Ex.Rout.save:
+	  corrected documentation about drop=FALSE default argument in [
+
+2013-02-22 16:33  edzer
+
+	* inst/doc/over.Rnw: synchronized with code in sp and rgeos
+
+2013-02-22 14:08  edzer
+
+	* R/over.R: make sure aggregate returns NA for empty sets, and not
+	  e.g. -Inf and a warning when fn is max
+
+2013-02-22 11:03  edzer
+
+	* R/over.R, man/over.Rd, tests/Examples/sp-Ex.Rout.save: added some
+	  missing over() methods.
+
+2013-02-09 22:31  edzer
+
+	* R/spplot.R: typo.
+
+2013-02-09 17:30  edzer
+
+	* R/spplot.R: added more flexibility in keeping auto.key options.
+
+2013-02-06 11:14  edzer
+
+	* R/spplot.R: addressed the problem raised by David Rossiter in
+	  https://stat.ethz.ch/pipermail/r-sig-geo/2013-February/017351.html
+
+2013-02-04 14:51  edzer
+
+	* DESCRIPTION: updated date
+
+2013-02-04 14:51  edzer
+
+	* man/spsample.Rd: updated docs;
+
+2013-01-30 16:59  edzer
+
+	* NAMESPACE, man/mapasp.Rd, man/spsample.Rd: export (and document)
+	  degreeAxisLabelsNS|EW
+
+2013-01-22 20:10  edzer
+
+	* demo/gallery.R: use coordinates() for deprecated function
+
+2013-01-22 18:33  edzer
+
+	* tests/Examples/sp-Ex.Rout.save: test outputs now reflect the full
+	  CRS of meuse[.grid]
+
+2013-01-22 18:10  edzer
+
+	* DESCRIPTION, R/spplot.R, man/spplot.Rd: update to spplot,
+	  suggested in
+	  https://stat.ethz.ch/pipermail/r-sig-geo/2013-January/017243.html
+	  ; try:
+	  library(sp)
+	  loadMeuse()
+	  spplot(meuse[c("lead", "zinc")], edge.col=1, colorkey=T,
+	  cuts=c(10,100,200,500,1000,2000))
+
+2013-01-19 12:22  edzer
+
+	* R/spplot.R: longlat scales for spplot.points were ignored,
+	  reported by Oscar Perpiñán Lamigueiro
+
+2013-01-12 13:14  edzer
+
+	* R/loadmeuse.R: changed crs to full CRS, as libproj would fill it
+	  in
+
+2013-01-11 11:34  edzer
+
+	* NAMESPACE, R/CRS-methods.R, R/over.R, man/CRS-class.Rd,
+	  tests/Examples/sp-Ex.Rout.save: added identicalCRS() function,
+	  and used it in all over() methods.
+
+2012-12-28 15:09  edzer
+
+	* DESCRIPTION, R/overlay.R, man/as.SpatialPolygons.GridTopology.Rd,
+	  man/overlay-methods.Rd, man/overlay.Rd,
+	  tests/Examples/sp-Ex.Rout.save: .Deprecated() overlay; removed
+	  them from examples
+
+2012-12-27 19:51  edzer
+
+	* NAMESPACE, R/CRS-methods.R, R/Class-SpatialPolygons.R,
+	  R/SpatialPolygons-methods.R,
+	  R/SpatialPolygonsDataFrame-methods.R, R/chfids.R,
+	  R/point.in.polygon.R, R/zerodist.R: changed
+	  .Call("foo",x,package="sp") into .Call(foo,x); NAMESPACE to
+	  export symbols accordingly.
+
+2012-12-21 19:48  edzer
+
+	* DESCRIPTION, R/image.R, man/image.Rd, tests/fail1.Rout.save:
+	  image() with factor attr now works; updated docs;
+	  version bump after CRAN release; tests output update.
+
+2012-12-21 13:42  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
 2012-12-21 13:42  rsbivand
 
 	* ChangeLog, R/image.R, inst/ChangeLog, man/image.Rd: tidy

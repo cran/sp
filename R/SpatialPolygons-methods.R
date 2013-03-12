@@ -16,7 +16,7 @@ SpatialPolygons <- function(Srl, pO, proj4string=CRS(as.character(NA))) {
 # tess to Polygons bug 121028
         stopifnot(length(Srl) > 0)
         stopifnot(is(proj4string, "CRS"))
-        res <- .Call("SpatialPolygons_c", Srl, pO, proj4string, PACKAGE="sp")
+        res <- .Call(SpatialPolygons_c, Srl, pO, proj4string)
         validObject(res)
 # 120416 add top-level comment to reduce comment checking
         cSr <- as.character(any(sapply(slot(res, "polygons"),
@@ -36,7 +36,7 @@ Polygon <- function(coords, hole=as.logical(NA)) {
         ihole <- as.integer(hole)
 # RSB 100126 fixing hole assumption
 # thanks to Javier Munoz for report
-        res <- .Call("Polygon_c", coords, n, ihole, PACKAGE="sp")
+        res <- .Call(Polygon_c, coords, n, ihole)
 #        validObject(res)
         res
 }
@@ -55,7 +55,7 @@ Polygons <- function(srl, ID) {
         ID <- as.character(ID)
         stopifnot(nchar(ID) > 0)
 # RSB 091203
-        res <- .Call("Polygons_c", srl, ID, PACKAGE="sp")
+        res <- .Call(Polygons_c, srl, ID)
 #        validObject(res)
         res
 }
@@ -94,7 +94,7 @@ as.SpatialPolygons.PolygonsList <- function(Srl, proj4string=CRS(as.character(NA
 }
 
 row.names.SpatialPolygons <- function(x) {
-    .Call("SpatialPolygons_getIDs_c", x, PACKAGE="sp")
+    .Call(SpatialPolygons_getIDs_c, x)
 }
 
 "row.names<-.SpatialPolygons" <- function(x, value) {
