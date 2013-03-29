@@ -1,6 +1,6 @@
 overlayPointsWithPolygons = function(x, y, fn = NULL) {
 	if (interactive())
-		.Deprecated("over")
+		.Deprecated("over", package = "sp")
 	# x = pts, y = rings, return ring with f(grid) items
 	y = as(y, "SpatialPolygons")
 	id = pointsInSpatialPolygons(x, y)
@@ -30,7 +30,7 @@ setMethod("overlay",  # added
 		function(x, y, ...) overlayPointsWithPolygons(as(x, "SpatialPoints"), y))  # no fn argument!
 
 overlayPolygonsWithPoints = function(x, y, ...) {
-	.Deprecated("over")
+	.Deprecated("over", package = "sp")
 	# x = rings, y = pts; return pts with ring values (or id) at grid point
 	ypts = as(y, "SpatialPoints")
 	sr = as(x, "SpatialPolygons")
@@ -65,7 +65,7 @@ setMethod("overlay", signature("SpatialPolygons", "SpatialGrid"),  # added
 #}
 
 overlayGridWithPoints = function(x, y, fn = NULL) {
-	.Deprecated("over")
+	.Deprecated("over", package = "sp")
 	cc = coordinates(y)
 	idx = getGridIndex(cc, x@grid, all.inside = FALSE)
 	if (!fullgrid(x))

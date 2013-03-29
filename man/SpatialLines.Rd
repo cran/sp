@@ -2,8 +2,6 @@
 \alias{SpatialLines}
 \alias{SpatialLinesDataFrame}
 \alias{as.SpatialLines.SLDF}
-\alias{getSLlinesSlot}
-\alias{getSLLinesIDSlots}
 \alias{getSpatialLinesMidPoints}
 \alias{LineLength}
 \alias{LinesLength}
@@ -16,8 +14,6 @@ lists of \code{Lines} objects and data.frames; extract list od Lines from a Spat
 SpatialLines(LinesList, proj4string = CRS(as.character(NA)))
 SpatialLinesDataFrame(sl, data, match.ID = TRUE)
 as.SpatialLines.SLDF(SLDF)
-getSLlinesSlot(SL)
-getSLLinesIDSlots(SL)
 getSpatialLinesMidPoints(SL)
 LineLength(cc, longlat=FALSE, sum=TRUE)
 LinesLength(Ls, longlat=FALSE)

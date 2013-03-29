@@ -9,21 +9,6 @@
 \alias{dim.SpatialPolygonsDataFrame}
 \alias{row.names.SpatialPolygonsDataFrame}
 
-\alias{getSpPPolygonsIDSlots}
-\alias{getSpPPolygonsLabptSlots}
-\alias{getSpPnParts}
-\alias{getSpPnHoles}
-\alias{getSpPplotOrderSlot}
-\alias{getSpPpolygonsSlot}
-\alias{getPolygonAreaSlot}
-\alias{getPolygonCoordsSlot}
-\alias{getPolygonLabptSlot}
-\alias{getPolygonHoleSlot}
-\alias{getPolygonsIDSlot}
-\alias{getPolygonsLabptSlot}
-\alias{getPolygonsPolygonsSlot}
-\alias{getPolygonsplotOrderSlot}
-
 \title{Class "SpatialPolygonsDataFrame" }
 \description{ class to hold polygons with attributes }
 \section{Objects from the Class}{

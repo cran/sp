@@ -168,7 +168,7 @@ setMethod("coordinates", "SpatialPolygons",
 )
 
 getSpatialPolygonsLabelPoints = function(SP) {
-	.Deprecated("slot",
+	.Deprecated("slot", package = "sp",
             msg="use *apply and slot directly, or coordinates method")
 	ret = t(sapply(slot(SP, "polygons"), function(x) slot(x, "labpt")))
 	SpatialPoints(ret, CRS(proj4string(SP)))

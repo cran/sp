@@ -41,24 +41,22 @@ setClass("SpatialLines",
 )
 
 getSLlinesSlot <- function(SL) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
     SL@lines
 }
 
 getLinesLinesSlot <- function(SL) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
     SL@Lines
 }
 
 getLinesIDSlot <- function(Lines) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
     Lines@ID
 }
 
 getSLLinesIDSlots <- function(SL) {
-        .Deprecated("slot", msg="use *apply and slot directly")
+        .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
 	Sls <- slot(SL, "lines")
 	sapply(Sls, function(x) slot(x, "ID"))
 }
-
-

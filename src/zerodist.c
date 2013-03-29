@@ -19,7 +19,7 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
 	ncol = INTEGER_POINTER(pncol)[0];
 	nrow = LENGTH(pp)/ncol;
 	zerodist2 = NUMERIC_POINTER(zero)[0] * NUMERIC_POINTER(zero)[0];
-	x = (double **) malloc(nrow * sizeof(double *));
+	x = (double **) malloc((size_t) nrow * sizeof(double *));
 	if (x == NULL)
 		error("could not allocate memory in zerodist");
 	for (i = 0; i < nrow; i++)
@@ -34,7 +34,7 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
 				dist += d * d;
 			}
 			if (dist <= zerodist2) {
-				which = (int *) realloc(which, (nzero+2) * sizeof(int));
+				which = (int *) realloc(which, (size_t) (nzero+2) * sizeof(int));
 				if (which == NULL)
 					error("could not allocate memory in zerodist");
 				which[nzero] = j; /* lowest */
