@@ -17,7 +17,7 @@ SEXP tList(SEXP nl, SEXP m0) {
     int n=length(nl), m=INTEGER_POINTER(m0)[0], i, ii, j, jj, *k, pc=0;
     SEXP res;
     PROTECT(res = NEW_LIST(m)); pc++;
-    k = (int *) R_alloc(m, sizeof(int));
+    k = (int *) R_alloc((size_t) m, sizeof(int));
     for (j=0; j<m; j++) k[j] = 0;
     for (i=0; i<n; i++) {
         ii = length(VECTOR_ELT(nl, i));
@@ -50,8 +50,8 @@ SEXP pointsInBox(SEXP lb, SEXP px, SEXP py) {
     double *x, ppx, ppy;
     SEXP res;
     PROTECT(res = NEW_LIST(n)); pc++;
-    x = (double *) R_alloc(m*4, sizeof(double));
-    k = (int *) R_alloc(m, sizeof(int));
+    x = (double *) R_alloc((size_t) (m*4), sizeof(double));
+    k = (int *) R_alloc((size_t) m, sizeof(int));
     for (i=0; i<m; i++) {
         for (j=0; j<4; j++) x[(i*4)+j] = NUMERIC_POINTER(VECTOR_ELT(lb, i))[j];
     }

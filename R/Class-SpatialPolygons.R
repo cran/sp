@@ -62,75 +62,75 @@ setClass("SpatialPolygons",
 )
 
 getPolygonCoordsSlot <- function(Polygon) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
     Polygon@coords
 }
 
 getPolygonLabptSlot <- function(Polygon)  {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygon@labpt
 }
 
 getPolygonAreaSlot <- function(Polygon)  {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygon@area
 }
 
 getPolygonHoleSlot <- function(Polygon)  {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygon@hole
 }
 
 getPolygonsPolygonsSlot <- function(Polygons) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygons@Polygons
 }
 
 getPolygonsplotOrderSlot <- function(Polygons) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygons@plotOrder
 }
 
 getPolygonsLabptSlot <- function(Polygons) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygons@labpt
 }
 
 getPolygonsIDSlot <- function(Polygons) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    Polygons@ID
 }
 
 getSpPpolygonsSlot <- function(SpP) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    SpP@polygons
 }
 
 getSpPplotOrderSlot <- function(SpP) {
-    .Deprecated("slot", msg="use *apply and slot directly")
+    .Deprecated("slot", msg="use *apply and slot directly", package = "sp")
    SpP@plotOrder
 }
 
 getSpPPolygonsLabptSlots <- function(SpP) {
-    .Deprecated("coordinates", msg="use coordinates method")
+    .Deprecated("coordinates", msg="use coordinates method", package = "sp")
 	Srs <- slot(SpP, "polygons")
 	t(sapply(Srs, function(i) slot(i, "labpt")))
 }
 
 getSpPPolygonsIDSlots <- function(SpP) {
-    .Deprecated("coordinates", msg="use *apply and slot directly")
+    .Deprecated("coordinates", msg="use *apply and slot directly", package = "sp")
 	Srs <- slot(SpP, "polygons")
 	sapply(Srs, function(i) slot(i, "ID"))
 }
 
 getSpPnParts <- function(SpP) {
-    .Deprecated("coordinates", msg="use *apply and slot directly")
+    .Deprecated("coordinates", msg="use *apply and slot directly", package = "sp")
 	Srs <- slot(SpP, "polygons")
 	sapply(Srs, function(x) length(slot(x, "Polygons")))
 }
 
 getSpPnHoles <- function(SpP) {
-    .Deprecated("coordinates", msg="use *apply and slot directly")
+    .Deprecated("coordinates", msg="use *apply and slot directly", package = "sp")
 	Srs <- slot(SpP, "polygons")
 	sapply(Srs, function(x) sapply(slot(x, "Polygons"), 
 		function(y) slot(y, "hole")))

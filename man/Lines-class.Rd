@@ -1,8 +1,6 @@
 \name{Lines-class}
 \docType{class}
 \alias{Lines-class}
-\alias{getLinesLinesSlot}
-\alias{getLinesIDSlot}
 % \alias{coordinates,Lines-method}
 
 \title{Class "Lines" }
@@ -24,14 +22,9 @@ Objects can be created by calls to the function \link{Line}
     \item{lines}{\code{signature(x = "Line")}: add lines to a plot}
   }
 }
-\usage{
-getLinesLinesSlot(SL)
-getLinesIDSlot(Lines)
-}
 \arguments{
 \item{SL, Lines}{an Lines object}
 }
-
 
 \author{ Roger Bivand, Edzer Pebesma }
 

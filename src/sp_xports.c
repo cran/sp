@@ -13,7 +13,7 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
     SEXP valid;
 
     SP_PREFIX(spRFindCG_c)(n, coords, &xc, &yc, &area);
-    if (abs(area) < DOUBLE_EPS) {
+    if (fabs(area) < DOUBLE_EPS) {
         if (!R_FINITE(xc) || !R_FINITE(xc)) {
             if (nn == 1) {
                 xc = NUMERIC_POINTER(coords)[0];
@@ -408,7 +408,7 @@ void SP_PREFIX(spRFindCG_c)( SEXP n, SEXP coords, double *xc, double *yc,
 	tPointd CG;
 	double Areasum2;
 	nn = INTEGER_POINTER(n)[0];
-	P = (tPointd *) R_alloc(nn, sizeof(tPointd));
+	P = (tPointd *) R_alloc((size_t) nn, sizeof(tPointd));
 	for (i=0; i<nn; i++) {
 		P[i][0] = NUMERIC_POINTER(coords)[i];
 		P[i][1] = NUMERIC_POINTER(coords)[i+nn];
@@ -550,7 +550,7 @@ void SP_PREFIX(comm2comment)(char *buf, int bufsiz, int *comm, int nps) {
     char cbuf[15];
     int i, nc, nc1;
 
-    nc = ceil(log10(nps)+1)+1;
+    nc = (int) (ceil(log10(nps)+1.0)+1.0);
     nc1 = (nc*nps)+1;
     if (bufsiz < nc1) error("comm2comment: buffer overflow");
 

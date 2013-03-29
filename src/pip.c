@@ -22,7 +22,7 @@ SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly) {
 
 	S_EVALUATOR
 	pol.lines = LENGTH(polx); /* check later that first == last */
-	pol.p = (PLOT_POINT *) R_alloc(pol.lines, sizeof(PLOT_POINT)); 
+	pol.p = (PLOT_POINT *) R_alloc((size_t) pol.lines, sizeof(PLOT_POINT)); 
 	/* transient; will be freed by R; freed by R on user interrupt */
 	for (i = 0; i < LENGTH(polx); i++) {
 		pol.p[i].x = NUMERIC_POINTER(polx)[i];
