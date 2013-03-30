@@ -1,6 +1,6 @@
 Package: sp
-Version: 1.0-8
-Date: 2013-03-29
+Version: 1.0-9
+Date: 2013-03-30
 Title: classes and methods for spatial data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"), email =
         "edzer.pebesma@uni-muenster.de"), person("Roger", "Bivand",
@@ -8,7 +8,7 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"), email =
         "Rowlingson", role = "ctb"), person("Virgilio", "Gomez-Rubio",
         role = "ctb"))
 Depends: R (>= 2.14.0)
-Suggests: lattice, RColorBrewer, rgdal (>= 0.7-21), rgeos (>= 0.1-8)
+Suggests: lattice, RColorBrewer, rgdal (>= 0.8-7), rgeos (>= 0.1-8)
 Imports: methods, graphics, utils, lattice, grid
 Description: A package that provides classes and methods for spatial
         data. The classes document where the spatial location
@@ -36,10 +36,10 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         recenter.R dms.R gridlines.R spdists.R rbind.R flipSGDF.R
         chfids.R loadmeuse.R compassRose.R surfaceArea.R spOptions.R
         subset.R
-Packaged: 2013-03-29 10:01:36 UTC; rsb
+Packaged: 2013-04-22 16:34:19 UTC; edzer
 Author: Edzer Pebesma [aut, cre], Roger Bivand [aut], Barry Rowlingson
         [ctb], Virgilio Gomez-Rubio [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2013-03-29 13:10:06
+Date/Publication: 2013-04-22 19:44:44

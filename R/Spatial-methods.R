@@ -83,6 +83,9 @@ if (!isGeneric("surfaceArea"))
 if (!isGeneric("split"))
 	setGeneric("split", function(x, f, drop = FALSE, ...)
 		standardGeneric("split"))
+if (!isGeneric("spTransform"))
+	setGeneric("spTransform", function(x, CRSobj, ...)
+		standardGeneric("spTransform"))
 
 bbox.default <- function(obj) {
 	is_points <- function(obj) {

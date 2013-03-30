@@ -240,7 +240,8 @@ exportMethods(
 	spplot,
 	spsample,
 	summary,
-	surfaceArea
+	surfaceArea, 
+	spTransform
 )
 
 S3method(as.array, SpatialGridDataFrame)
