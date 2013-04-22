@@ -200,7 +200,8 @@ setMethod("spplot", signature("SpatialGridDataFrame"),
 	function(obj, ...) spplot.grid(as(obj, "SpatialPixelsDataFrame"), ...))
 
 spplot.polygons = function(obj, zcol = names(obj), ..., names.attr, 
-		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
+		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
+		aspect = mapasp(obj,xlim,ylim), 
 		panel = panel.polygonsplot, sp.layout = NULL, formula, 
 		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,]) {
 
@@ -212,7 +213,8 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 		# get first points of each lines object:
 		n = length(obj@lines)
 		labpts = matrix(unlist(lapply(obj@lines, function(x) 
-			lapply(x@Lines[1], function(x) coordinates(x)[1,]))), n, 2, byrow=TRUE) 
+			lapply(x@Lines[1], function(x) coordinates(x)[1,]))), 
+				n, 2, byrow=TRUE) 
 	}
 	dimnames(labpts)[[2]] = c("xlabelpoint", "ylabelpoint")
 	sdf = as.data.frame(cbind(labpts, sdf))
@@ -239,7 +241,8 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 				nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
 			stop("length of col.regions should match number of factor levels")
 		args$data[[zcol2]] = as.numeric(args$data[[zcol2]])
-		if (is.null(args$colorkey) || (is.logical(args$colorkey) && args$colorkey)
+		if (is.null(args$colorkey) 
+				|| (is.logical(args$colorkey) && args$colorkey)
 				|| (is.list(args$colorkey) && is.null(args$colorkey$at) && 
 					is.null(args$colorkey$labels))) {
 			if (!is.list(args$colorkey))
@@ -348,8 +351,10 @@ panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
 panel.polygonsplot =
 function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL, 
    		label.style = c("mixed", "flat", "align"), contour = FALSE, 
-   		region = TRUE, col = add.line$col, lty = add.line$lty, lwd = add.line$lwd, 
-   		cex = add.text$cex, font = add.text$font, fontfamily = add.text$fontfamily, 
+   		region = TRUE, col = add.line$col, lty = add.line$lty, 
+		lwd = add.line$lwd, 
+   		cex = add.text$cex, font = add.text$font, 
+		fontfamily = add.text$fontfamily, 
    		fontface = add.text$fontface, col.text = add.text$col, ..., 
    		col.regions = regions$col, alpha.regions = regions$alpha, 
 		grid.polygons, sp.layout) 
@@ -393,7 +398,8 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 					fill = col.regions[zcol[i]]
 					alpha = alpha.regions
 					grid.path(cc[,1], cc[,2], id, default.units = "native",
-						gp = gpar(col = col, fill = fill, alpha = alpha, ...))
+						gp = gpar(col = col, fill = fill, alpha = alpha, 
+							lwd = lwd, lty = lty, ...))
 				} else {
        				Srs <- slot(pls[[i]], "Polygons")
        				pOi <- slot(pls[[i]], "plotOrder")
