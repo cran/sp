@@ -27,10 +27,11 @@
 zerodist <- function(obj, zero = 0.0, unique.ID = FALSE) {
 	if (!extends(class(obj), "SpatialPoints"))
 		stop("obj should be of, or extend, class SpatialPoints")
+	lonlat = as.integer(!is.na(is.projected(obj)) && !is.projected(obj))
 	# calculates matrix with pairwise distances for 
 	# coordinate vectors x and y:
 	cc = coordinates(obj)
-	zd = matrix(.Call(sp_zerodist, as.vector(t(cc)), ncol(cc), zero), 
+	zd = matrix(.Call(sp_zerodist, as.vector(t(cc)), ncol(cc), zero, lonlat), 
 		ncol = 2, byrow = TRUE) + 1
 	if (unique.ID) {
 		id = 1:nrow(cc)
@@ -44,11 +45,13 @@ zerodist2 <- function (obj1, obj2, zero = 0) {
     if (!(extends(class(obj1), "SpatialPoints")
     		&& extends(class(obj2), "SpatialPoints"))) 
         stop("obj1 and obj2 should be of, or extend, class SpatialPoints")
+	stopifnot(identicalCRS(obj1, obj2))
+	lonlat = as.integer(!is.na(is.projected(obj1)) && !is.projected(obj1))
     cc1 = coordinates(obj1)
     cc2 = coordinates(obj2)
 	n = nrow(cc1)
 	cc = rbind(cc1, cc2)
-	ret = matrix(.Call(sp_zerodist, as.vector(t(cc)), ncol(cc), zero), 
+	ret = matrix(.Call(sp_zerodist, as.vector(t(cc)), ncol(cc), zero, lonlat), 
 		ncol = 2, byrow = TRUE) + 1
 	ret = ret[ret[,1] <= n & ret[,2] > n, , drop=FALSE]
 	ret[,2] = ret[,2] - n

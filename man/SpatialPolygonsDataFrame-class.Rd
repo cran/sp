@@ -77,8 +77,8 @@ centroids <- coordinates(polys)
 x <- centroids[,1]
 y <- centroids[,2]
 z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
-#ex_1.7 <- SpatialPolygonsDataFrame(polys, data=data.frame(x=x, y=y, z=z, row.names=sapply(slot(polys, "polygons"), function(i) slot(i, "ID"))))
-ex_1.7 <- SpatialPolygonsDataFrame(polys, data=data.frame(x=x, y=y, z=z, row.names=row.names(polys)))
+ex_1.7 <- SpatialPolygonsDataFrame(polys,
+ data=data.frame(x=x, y=y, z=z, row.names=row.names(polys)))
 brks <- quantile(z, seq(0,1,1/7))
 cols <- grey((length(brks):2)/length(brks))
 dens <- (2:length(brks))*3

@@ -12,6 +12,12 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
     int i, ii, nn=INTEGER_POINTER(n)[0];
     SEXP valid;
 
+    for (i=0; i<nn; i++) {
+       if(!R_FINITE(NUMERIC_POINTER(coords)[i]))
+           error("non-finite x coordinate");
+       if(!R_FINITE(NUMERIC_POINTER(coords)[i+nn]))
+           error("non-finite y coordinate");
+    }
     SP_PREFIX(spRFindCG_c)(n, coords, &xc, &yc, &area);
     if (fabs(area) < DOUBLE_EPS) {
         if (!R_FINITE(xc) || !R_FINITE(xc)) {

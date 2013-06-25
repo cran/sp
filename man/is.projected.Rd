@@ -16,7 +16,7 @@
 \title{ Sets or retrieves projection attributes on classes extending
 SpatialData }
 \description{ Sets or retrieves projection attributes on classes extending
-SpatialData; set or retrieve option value for error or warning on exceedance of geographical coordinate range, set or retrieve option value for exceedance tolerance of geographical coordinate range}
+SpatialData; set or retrieve option value for error or warning on exceedance of geographical coordinate range, set or retrieve option value for exceedance tolerance of geographical coordinate range. Note that only \dQuote{+proj=longlat} is accepted for geographical coordinates, which must be ordered (eastings, northings).}
 \usage{
 is.projected(obj)
 proj4string(obj)
@@ -30,7 +30,7 @@ set_ReplCRS_warn(value)
 }
 \arguments{
   \item{obj}{An object of class or extending \link{Spatial-class}}
-  \item{value}{For \code{proj4string} CRS object, containing a valid proj4 string; attempts to assign an object containing "longlat" to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped. For \code{set_ll_warn} a single logical value, if FALSE (default) error on range exceedance, if TRUE, warning. For \code{set_ll_TOL} the value of the power of \code{.Machine$double.eps} (default 0.25) to use as tolerance in testing range exceedance. \code{set_ReplCRS_warn} may be used to turn off warnings issued when changing object CRS with the \code{proj4string} replacement method (by setting \code{value=FALSE}).}
+  \item{value}{For \code{proj4string} CRS object, containing a valid proj4 string; attempts to assign an object containing \dQuote{longlat} to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped. For \code{set_ll_warn} a single logical value, if FALSE (default) error on range exceedance, if TRUE, warning. For \code{set_ll_TOL} the value of the power of \code{.Machine$double.eps} (default 0.25) to use as tolerance in testing range exceedance. \code{set_ReplCRS_warn} may be used to turn off warnings issued when changing object CRS with the \code{proj4string} replacement method (by setting \code{value=FALSE}).}
 }
 
 \value{ \code{is.projected} returns a logical; \code{proj4string}

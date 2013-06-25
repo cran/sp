@@ -19,19 +19,13 @@ spatial coordinates }
 data.frame to a SpatialPolygonsDataFrame object }
 
 \examples{
-%data(ncshp)
-%nc1 <- as.SpatialPolygons.Shapes(nc.shp$Shapes, as.character(nc.shp$att.data$FIPS))
-%df <- nc.shp$att.data
-%rownames(df) <- df$FIPS
-%polygons(df) <- nc1
-%class(df)
 grd <- GridTopology(c(1,1), c(1,1), c(10,10))
 polys <- as.SpatialPolygons.GridTopology(grd)
 centroids <- coordinates(polys)
 x <- centroids[,1]
 y <- centroids[,2]
 z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
-df <- data.frame(x=x, y=y, z=z, row.names=sapply(slot(polys, "polygons"), function(i) slot(i, "ID")))
+df <- data.frame(x=x, y=y, z=z, row.names=row.names(polys))
 polygons(df) <- polys
 class(df)
 summary(df)

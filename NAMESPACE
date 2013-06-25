@@ -206,7 +206,9 @@ exportClasses(
 	SpatialPoints, 
  	SpatialPointsDataFrame, 
 	SpatialPolygons, 
-	SpatialPolygonsDataFrame
+	SpatialPolygonsDataFrame,
+	# spatstat classes:
+	ppp, im, owin, psp
 )
 
 exportMethods(
@@ -219,6 +221,7 @@ exportMethods(
 	coordnames, 
 	"coordnames<-", 
 	dimensions, 
+	disaggregate,
 	fullgrid,
 	"fullgrid<-",
 	geometry, 

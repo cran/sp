@@ -26,9 +26,9 @@ spDists(x, y = x, longlat = FALSE)
 all n x n distances, not the sufficient n x (n-1).
 }
 
-\note{The function can also be used to find a local kilometer equivalent to a plot scaled in decimal degrees in order to draw a scale bar.}
+\note{The function can also be used to find a local kilometer equivalent to a plot scaled in decimal degrees in order to draw a scale bar.  }
 \references{\url{http://home.att.net/~srschmitt/script_greatcircle.html}}
-\author{Roger Bivand}
+\author{Roger Bivand, Edzer Pebesma}
 
 
 \seealso{\code{\link{is.projected}}}

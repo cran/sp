@@ -16,6 +16,14 @@ if (!is.R()) {
             stop(paste("PROJ4 argument-value pairs must begin with +:", 
 	        projargs))
     }
+    if (!is.na(projargs)) {
+        if (length(grep("latlon", projargs)) != 0)
+            stop("northings must follow eastings: ", projargs)
+        if (length(grep("lonlat", projargs)) != 0) {
+            projargs <- sub("lon", "long", projargs)
+            warning("'lonlat' changed to 'longlat': ", projargs)
+        }
+    }    
     if (is.na(projargs)) uprojargs <- projargs
     else uprojargs <- paste(unique(unlist(strsplit(projargs, " "))), 
 	collapse=" ")
