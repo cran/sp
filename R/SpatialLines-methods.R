@@ -41,8 +41,10 @@ LineLength = function(cc, longlat=FALSE, sum=TRUE) {
 	lonlat <- as.integer(longlat)
 	res <- .C("sp_lengths", x, y, n, lengths, lonlat, PACKAGE = "sp")[[4]]
 	if (any(!is.finite(res))) stop("non-finite line lengths")
-        if (sum) res <- sum(res)
-	res
+    if (sum) 
+		sum(res)
+	else
+		res
 
 #	dxy = matrix(apply(cc, 2, diff), ncol = 2)
 #	sum(sqrt(apply(dxy, 1, function(x) sum(x ** 2))))

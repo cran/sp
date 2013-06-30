@@ -13,6 +13,10 @@
 \alias{[[,Spatial,ANY,missing-method}
 \alias{$<-,Spatial-method}
 \alias{$,Spatial-method}
+\alias{im-class}
+\alias{owin-class}
+\alias{ppp-class}
+\alias{psp-class}
 
 \title{Class "Spatial"}
 \description{ An abstract class from which useful spatial classes are

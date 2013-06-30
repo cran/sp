@@ -1,7 +1,7 @@
 
-R version 3.0.0 (2013-04-03) -- "Masked Marvel"
+R version 3.0.1 (2013-05-16) -- "Good Sport"
 Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -48,12 +48,13 @@ CRS arguments: +proj=longlat +datum=WGS84
 +   print(CRSargs(CRS("+proj=longlat +datum=NAD27")))
 +   print(CRSargs(CRS("+init=epsg:4267")))
 +   print(CRSargs(CRS("+init=epsg:26978")))
-+   print(CRSargs(CRS("+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m")))
-+ # see http://trac.osgeo.org/gdal/ticket/1987
++   print(CRSargs(CRS(paste("+proj=sterea +lat_0=52.15616055555555",
++  "+lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel",
++  " +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m"))))
 +   print(CRSargs(CRS("+init=epsg:28992")))
 + }
 Loading required package: rgdal
-rgdal: version: 0.8-7, (SVN revision 459M)
+rgdal: version: 0.8-10, (SVN revision 478)
 Geospatial Data Abstraction Library extensions to R successfully loaded
 Loaded GDAL runtime: GDAL 1.9.2, released 2012/10/08
 Path to GDAL shared files: /usr/share/gdal/1.9
@@ -64,6 +65,7 @@ Path to PROJ.4 shared files: (autodetected)
 [1] "+init=epsg:26978 +proj=lcc +lat_1=38.56666666666667 +lat_2=37.26666666666667 +lat_0=36.66666666666666 +lon_0=-98.5 +x_0=400000 +y_0=400000 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"
 [1] "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m"
 [1] "+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs"
+> # see http://trac.osgeo.org/gdal/ticket/1987
 > 
 > 
 > 
@@ -567,6 +569,8 @@ cells.dim             78    104
 > ###   coerce,SpatialGridDataFrame,matrix-method
 > ###   coerce,SpatialGridDataFrame,array-method
 > ###   as.data.frame.SpatialGridDataFrame dim.SpatialGridDataFrame
+> ###   coerce,im,SpatialGridDataFrame-method
+> ###   coerce,ppp,SpatialGridDataFrame-method
 > ### Keywords: classes
 > 
 > ### ** Examples
@@ -3923,7 +3927,8 @@ y            329620       40       104
 > ###   show,SpatialPoints-method as.data.frame.SpatialPoints
 > ###   plot,SpatialPoints,missing-method summary,SpatialPoints-method
 > ###   print.SpatialPoints summary.SpatialPoints rbind.SpatialPoints
-> ###   $<-,SpatialPoints,character-method row.names.SpatialPoints
+> ###   $,SpatialPoints-method $<-,SpatialPoints,character-method
+> ###   row.names.SpatialPoints coerce,ppp,SpatialPoints-method
 > ### Keywords: classes
 > 
 > ### ** Examples
@@ -3964,6 +3969,7 @@ Coordinate Reference System (CRS) arguments: NA
 > ###   print.SpatialPointsDataFrame ShowSpatialPointsDataFrame
 > ###   as.SpatialPoints.SpatialPointsDataFrame rbind.SpatialPointsDataFrame
 > ###   row.names.SpatialPointsDataFrame
+> ###   coerce,ppp,SpatialPointsDataFrame-method
 > ### Keywords: classes
 > 
 > ### ** Examples
@@ -4043,7 +4049,6 @@ attr(,"package")
 > grd <- GridTopology(c(1,1), c(1,1), c(10,10))
 > polys <- as(grd, "SpatialPolygons")
 > plot(polys)
-> #text(coordinates(polys), labels=sapply(slot(polys, "polygons"), function(i) slot(i, "ID")), cex=0.6)
 > text(coordinates(polys), labels=row.names(polys))
 > 
 > 
@@ -4085,8 +4090,8 @@ attr(,"package")
 > x <- centroids[,1]
 > y <- centroids[,2]
 > z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
-> #ex_1.7 <- SpatialPolygonsDataFrame(polys, data=data.frame(x=x, y=y, z=z, row.names=sapply(slot(polys, "polygons"), function(i) slot(i, "ID"))))
-> ex_1.7 <- SpatialPolygonsDataFrame(polys, data=data.frame(x=x, y=y, z=z, row.names=row.names(polys)))
+> ex_1.7 <- SpatialPolygonsDataFrame(polys,
++  data=data.frame(x=x, y=y, z=z, row.names=row.names(polys)))
 > brks <- quantile(z, seq(0,1,1/7))
 > cols <- grey((length(brks):2)/length(brks))
 > dens <- (2:length(brks))*3
@@ -4116,7 +4121,8 @@ attr(,"package")
 > SpP_grd <- as.SpatialPolygons.GridTopology(grd)
 > plot(SpP_grd)
 > text(coordinates(SpP_grd), sapply(slot(SpP_grd, "polygons"), function(i) slot(i, "ID")), cex=0.5)
-> trdata <- data.frame(A=rep(c(1,2,3,4), 4), B=rep(c(1,2,3,4), each=4), row.names=sapply(slot(SpP_grd, "polygons"), function(i) slot(i, "ID")))
+> trdata <- data.frame(A=rep(c(1,2,3,4), 4), B=rep(c(1,2,3,4), each=4),
++  row.names=sapply(slot(SpP_grd, "polygons"), function(i) slot(i, "ID")))
 > SpPDF <- SpatialPolygonsDataFrame(SpP_grd, trdata)
 > spplot(SpPDF)
 > 
@@ -4415,6 +4421,53 @@ attr(,"package")
 > 
 > 
 > cleanEx()
+> nameEx("disaggregate")
+> ### * disaggregate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: disaggregate-methods
+> ### Title: disaggregate SpatialLines or SpatialPolygons
+> ### Aliases: disaggregate disaggregate-methods
+> ###   disaggregate,SpatialPolygons-method
+> ###   disaggregate,SpatialPolygonsDataFrame-method
+> ###   disaggregate,SpatialLines-method
+> ###   disaggregate,SpatialLinesDataFrame-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
+> Sr2 = Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))
+> Sr3 = Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))
+> Sr4 = Polygon(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE)
+> 
+> Srs1 = Polygons(list(Sr1), "s1")
+> Srs2 = Polygons(list(Sr2), "s2")
+> Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
+> sp = SpatialPolygons(list(Srs1,Srs2,Srs3), 1:3)
+> length(sp)
+[1] 3
+> length(disaggregate(sp))
+[1] 4
+> 
+> l1 = cbind(c(1,2,3),c(3,2,2))
+> l1a = cbind(l1[,1]+.05,l1[,2]+.05)
+> l2 = cbind(c(1,2,3),c(1,1.5,1))
+> Sl1 = Line(l1)
+> Sl1a = Line(l1a)
+> Sl2 = Line(l2)
+> S1 = Lines(list(Sl1, Sl1a), ID="a")
+> S2 = Lines(list(Sl2), ID="b")
+> sl = SpatialLines(list(S1,S2))
+> length(sl)
+[1] 2
+> length(disaggregate(sl))
+[1] 3
+> 
+> 
+> 
+> cleanEx()
 > nameEx("flip")
 > ### * flip
 > 
@@ -4576,7 +4629,7 @@ Data attributes:
 +   pos=grdat_x$pos, offset=grdat_x$offset)
 + }
 Loading required package: rgdal
-rgdal: version: 0.8-7, (SVN revision 459M)
+rgdal: version: 0.8-10, (SVN revision 478)
 Geospatial Data Abstraction Library extensions to R successfully loaded
 Loaded GDAL runtime: GDAL 1.9.2, released 2012/10/08
 Path to GDAL shared files: /usr/share/gdal/1.9
@@ -4833,7 +4886,8 @@ Data attributes:
 > 
 > ### ** Examples
 > 
-> Sl <- SpatialLines(list(Lines(list(Line(cbind(sin(seq(-4,4,0.4)), seq(1,21,1)))), "1")), proj4string=CRS("+proj=longlat"))
+> Sl <- SpatialLines(list(Lines(list(Line(cbind(sin(seq(-4,4,0.4)),
++  seq(1,21,1)))), "1")), proj4string=CRS("+proj=longlat"))
 > summary(Sl)
 Object of class SpatialLines
 Coordinates:
@@ -14579,7 +14633,7 @@ r4        NA        NA        NA   NA    NA
 > x <- centroids[,1]
 > y <- centroids[,2]
 > z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
-> df <- data.frame(x=x, y=y, z=z, row.names=sapply(slot(polys, "polygons"), function(i) slot(i, "ID")))
+> df <- data.frame(x=x, y=y, z=z, row.names=row.names(polys))
 > polygons(df) <- polys
 > class(df)
 [1] "SpatialPolygonsDataFrame"
@@ -14632,7 +14686,8 @@ y   50  52
 x 179 181
 y  50  52
 > rcrds <- rbind(crds, crds[1,])
-> SpP <- SpatialPolygons(list(Polygons(list(Polygon(rcrds)), ID="r1")), proj4string=CRS("+proj=longlat"))
+> SpP <- SpatialPolygons(list(Polygons(list(Polygon(rcrds)), ID="r1")),
++  proj4string=CRS("+proj=longlat"))
 > bbox(SpP)
    min max
 x -179 179
@@ -14658,7 +14713,8 @@ y  50  52
 x   1 359
 y  50  52
 > rcrds <- rbind(crds, crds[1,])
-> SpP <- SpatialPolygons(list(Polygons(list(Polygon(rcrds)), ID="r1")), proj4string=CRS("+proj=longlat"))
+> SpP <- SpatialPolygons(list(Polygons(list(Polygon(rcrds)), ID="r1")),
++  proj4string=CRS("+proj=longlat"))
 > bbox(SpP)
   min max
 x  -1   1
@@ -15085,8 +15141,9 @@ Data attributes:
 > 
 > ### * <FOOTER>
 > ###
+> options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.208 1.372 13.619 0 0 
+Time elapsed:  12.556 1.412 14.008 0 0 
 > grDevices::dev.off()
 null device 
           1 

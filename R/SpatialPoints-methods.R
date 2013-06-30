@@ -23,7 +23,9 @@
 		stop("cannot retrieve coordinates from non-numeric elements")
 	#lapply(obj, function(x) { if(!is.numeric(x)) 
 	#	stop("cannot retrieve coordinates from non-numeric elements") })
-	lapply(obj, as.double)
+	fin_check <- sapply(obj, function(x) all(is.finite(x)))
+        if (!all(fin_check)) stop("non-finite coordinates")
+        lapply(obj, as.double)
 }
 
 setMethod("coordinates", "list", function(obj)
@@ -34,6 +36,8 @@ setMethod("coordinates", "matrix",
 	function(obj) {
 		if (!is.numeric(obj))
 			stop("cannot derive coordinates from non-numeric matrix")
+                if (any(!is.finite(obj)))
+                    stop("non-finite coordinates")
 		dn = dimnames(obj)
 		dd = dim(obj)
 #		obj = apply(obj, 2, as.double)
@@ -130,3 +134,13 @@ setReplaceMethod("coordnames", signature(x = "SpatialPoints", value = "character
 )
 
 length.SpatialPoints = function(x) { nrow(x@coords) }
+
+setMethod("$", "SpatialPoints", 
+	function(x, name) {
+		if (name %in% coordnames(x))
+			return(x@coords[,name])
+		if (!("data" %in% slotNames(x)))
+			stop("no $ method for object without attributes")
+		x@data[[name]]
+	}
+)

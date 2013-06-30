@@ -10,13 +10,16 @@
 
 #include "sp.h"
 
-SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
-	int i, j, k, ncol, nrow, nzero = 0, *which = NULL;
+SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat) {
+	int i, j, k, ncol, nrow, nzero = 0, *which = NULL, ll;
 	double **x, *xi, *xj, d, dist, zerodist2;
 	SEXP ret = NULL;
 
 	S_EVALUATOR
 	ncol = INTEGER_POINTER(pncol)[0];
+	ll = INTEGER_POINTER(lonlat)[0];
+	if (ll && ncol != 2)
+		error("for longlat data, coordinates should be two-dimensional");
 	nrow = LENGTH(pp)/ncol;
 	zerodist2 = NUMERIC_POINTER(zero)[0] * NUMERIC_POINTER(zero)[0];
 	x = (double **) malloc((size_t) nrow * sizeof(double *));
@@ -29,9 +32,14 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero) {
 		xi = x[i];
 		for (j = 0; j < i; j++) {
 			xj = x[j];
-			for (k = 0, dist = 0.0; k < ncol; k++) {
-				d = (xi[k] - xj[k]);
-				dist += d * d;
+			if (ll) {
+				sp_gcdist(xi, xi+1, xj, xj+1, &d);
+				dist = d * d;
+			} else {
+				for (k = 0, dist = 0.0; k < ncol; k++) {
+					d = (xi[k] - xj[k]);
+					dist += d * d;
+				}
 			}
 			if (dist <= zerodist2) {
 				which = (int *) realloc(which, (size_t) (nzero+2) * sizeof(int));

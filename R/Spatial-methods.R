@@ -86,6 +86,13 @@ if (!isGeneric("split"))
 if (!isGeneric("spTransform"))
 	setGeneric("spTransform", function(x, CRSobj, ...)
 		standardGeneric("spTransform"))
+setMethod("spTransform", signature("ANY", "CRS"), 
+	function(x, CRSobj, ...) stop("load package rgdal for spTransform methods")
+)
+setMethod("spTransform", signature("ANY", "ANY"), 
+	function(x, CRSobj, ...) stop("second argument needs to be of class CRS")
+)
+
 
 bbox.default <- function(obj) {
 	is_points <- function(obj) {

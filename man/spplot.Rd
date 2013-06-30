@@ -20,19 +20,19 @@
 \description{Lattice (trellis) plot methods for spatial data with attributes}
 \usage{
 spplot(obj, ...)
-spplot.grid(obj, zcol = names(obj), ..., names.attr, 
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
-	panel = panel.gridplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ], 
-	ylim = bbox(obj)[2, ], checkEmptyRC = TRUE)
-spplot.polygons(obj, zcol = names(obj), ..., names.attr, 
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
-	panel = panel.polygonsplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ], 
-	ylim = bbox(obj)[2, ])
-spplot.points(obj, zcol = names(obj), ..., names.attr, 
-	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim), 
-	panel = panel.pointsplot, sp.layout = NULL, identify = FALSE, formula, 
-	xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04),
-	edge.col = "transparent", colorkey = FALSE)
+spplot.grid(obj, zcol = names(obj), ..., names.attr, scales = list(draw = FALSE),
+ xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim),
+ panel = panel.gridplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ],
+ ylim = bbox(obj)[2, ], checkEmptyRC = TRUE)
+spplot.polygons(obj, zcol = names(obj), ..., names.attr, scales = list(draw = FALSE),
+ xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim),
+ panel = panel.polygonsplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ],
+ ylim = bbox(obj)[2, ])
+spplot.points(obj, zcol = names(obj), ..., names.attr, scales = list(draw = FALSE),
+ xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim),
+ panel = panel.pointsplot, sp.layout = NULL, identify = FALSE, formula,
+ xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04),
+ edge.col = "transparent", colorkey = FALSE)
 mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 	fill = "black", just = "right")
 sp.theme(set = FALSE, regions = list(col = bpy.colors(100)), ...)

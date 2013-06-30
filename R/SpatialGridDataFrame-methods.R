@@ -42,7 +42,30 @@ as.SPixDF.SGDF = function(from) {
    	names(data) = names(from@data)
 	SpatialGridDataFrame(from@grid, data, CRS(proj4string(from)))
 }
-setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPixDF.SGDF)
+#setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", as.SPixDF.SGDF)
+
+# Jon Skoien, Apr 18, 2013:
+# Version where from@data is first added to data, then the columns with
+# factors are correctly added in a second step. By far the fastest when 
+# there are few factor columns.
+pix2grid = function(from) {
+	n = .NumberOfCells(from@grid)
+	data = data.frame(matrix(nrow = n, ncol = ncol(from@data)))
+	data[from@grid.index,] = from@data # takes care of character columns
+	names(data) = names(from@data)
+# Which columns have factors
+	fids = which(sapply(from@data, is.factor))
+	if (length(fids) > 0) {
+		for (fi in fids) {
+			v = vector(mode(from@data[[fi]]), n)
+			v = factor(rep(NA, n), levels = levels(from@data[[fi]]))
+			v[from@grid.index] = from@data[[fi]]
+			data[,fi] = v
+		}
+	}
+	SpatialGridDataFrame(from@grid, data, CRS(proj4string(from)))
+}
+setAs("SpatialPixelsDataFrame", "SpatialGridDataFrame", pix2grid)
 
 as.SGDF.SPixDF = function(from) { 
 	# find rows with only NA's in attribute table:

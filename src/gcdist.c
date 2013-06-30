@@ -34,13 +34,13 @@ void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat)
 	double gc[1];
         if (N < 2) error("N less than 2");
 		
-	if (lonlat[0] == 0) {
-		for (j=0; j<(N-1); j++) 
-			lengths[j] = hypot((u[j]-u[(j+1)]), (v[j]-v[(j+1)]));
-	} else {
-		for (j=0; j<(N-1); j++) {
-			sp_gcdist(u+j, u+(j+1), v+j, v+(j+1), gc);
-		    	lengths[j] = gc[0];
+	if (lonlat[0] == 0)
+		for (j=0; j < N-1; j++) 
+			lengths[j] = hypot(u[j]-u[j+1], v[j]-v[j+1]);
+	else {
+		for (j=0; j < N-1; j++) {
+			sp_gcdist(u+j, u+j+1, v+j, v+j+1, gc);
+			lengths[j] = gc[0];
 		}
 	}
 

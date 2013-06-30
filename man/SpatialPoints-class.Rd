@@ -18,8 +18,11 @@
 \alias{print.SpatialPoints} 
 \alias{summary.SpatialPoints}
 \alias{rbind.SpatialPoints}
+\alias{$,SpatialPoints-method}
 \alias{$<-,SpatialPoints,character-method}
 \alias{row.names.SpatialPoints}
+\alias{coerce,ppp,SpatialPoints-method}
+
 
 \title{Class "SpatialPoints" }
 \description{  Class for (irregularly spaced) points }

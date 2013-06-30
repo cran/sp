@@ -1,5 +1,7 @@
 \name{spTransform}
 \alias{spTransform-methods}
+\alias{spTransform,ANY,ANY-method}
+\alias{spTransform,ANY,CRS-method}
 \alias{spTransform}
 \title{ spTransform for map projection and datum transformation }
 \description{ spTransform for map projection and datum transformation }

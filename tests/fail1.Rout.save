@@ -200,6 +200,14 @@ Error in points2grid(points, tolerance, round) :
 x          5.721109 0.0005312853        84
 y         50.955770 0.0003318105       112
 > 
+> try(CRS("+proj=latlon"))
+Error in CRS("+proj=latlon") : 
+  northings must follow eastings: +proj=latlon
+> try(CRS("+proj=lonlat"))
+CRS arguments: +proj=longlat 
+Warning message:
+In CRS("+proj=lonlat") : 'lonlat' changed to 'longlat': +proj=longlat
+> 
 > proc.time()
    user  system elapsed 
   1.088   0.032   1.111 
