@@ -7,18 +7,18 @@
     }
 	if (!is(coords, "SpatialPoints"))
 		coords = coordinates(coords)
-	if (match.ID && is.matrix(coords)) {
-		cc.ID = dimnames(coords)[[1]]
+	cc.ID = dimnames(coords)[[1]]
+	if (is.null(cc.ID))
+		match.ID = FALSE # nothing to match to!
+	else if (match.ID && length(unique(cc.ID)) != nrow(data))
+		stop("nr of unique coords ID's (rownames) not equal to nr of data records")
+	if (match.ID && is.character(attr(data, "row.names"))) {
 		if (!is.null(cc.ID) && is(data, "data.frame")) { # match ID:
-			n = nrow(data)
-			if (length(unique(cc.ID)) != n)
-				stop(
-				"nr of unique coords ID's (rownames) not equal to nr of data records")
 			data.ID = row.names(data)
 			mtch = match(cc.ID, data.ID)
 			if (any(is.na(mtch)))
 				stop("row.names of data and coords do not match")
-			if (length(unique(mtch)) != n)
+			if (length(unique(mtch)) != nrow(data))
 				stop("row.names of data and dimnames of coords do not match")
 			data = data[mtch, , drop = FALSE]
 		}
@@ -26,6 +26,9 @@
 	if (!is(coords, "SpatialPoints"))
 		coords = SpatialPoints(coords, proj4string = proj4string, 
 			bbox=bbox)
+	# EJP, Tue Aug 13 19:54:04 CEST 2013
+	if (is.character(attr(data, "row.names"))) # i.e., data has "real" row names
+		dimnames(coords@coords)[[1]] = row.names(data)
 	new("SpatialPointsDataFrame", coords, data = data, coords.nrs = coords.nrs)
 }
 
@@ -176,6 +179,8 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		stop("matrix argument not supported in SpatialPointsDataFrame selection")
 	if (is(i, "Spatial"))
 		i = !is.na(over(x, geometry(i)))
+	if (is.character(i)) 
+		i <- match(i, row.names(x))
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
 	#coords.nrs = x@coords.nrs

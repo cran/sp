@@ -34,7 +34,19 @@ the column in \code{data} with Polygons IDs to match}
 } 
 
 \details{
-In \code{Polygon}, if the hole argument is not given, the status of the polygon as a hole or an island will be taken from the ring direction, with clockwise meaning island, and counter-clockwise meaning hole. In \code{Polygons}, if all of the member Polygon objects are holes, the largest by area will be converted to island status. Until 2010-04-17, version 0.9-61, the area of this converted object was erroneously left at its hole value of zero. Thanks to Patrick Giraudoux for spotting the bug.
+In \code{Polygon}, if the hole argument is not given, the status of the polygon as a hole or an island will be taken from the ring direction, with clockwise meaning island, and counter-clockwise meaning hole. In \code{Polygons}, if all of the member Polygon objects are holes, the largest by area will be converted to island status. Until 2010-04-17, version 0.9-61, the area of this converted object was erroneously left at its hole value of zero. Thanks to Patrick Giraudoux for spotting the bug. 
+
+The class definitions used for polygons in \pkg{sp} do not accord with those of
+the simple features specification of the Open Geospatial Consortium. The \pkg{rgeos} package, an interface to Geometry Engine -- Open Source (GEOS), uses this
+specification, in which each hole (interior ring) must be associated with
+its containing exterior ring. In order to avoid introducing incompatible
+changes into the class definition of Polygons objects, a comment has been
+added as a single character string to each such object. Here we can trust
+the data source to assign the hole status correctly, and use the simple
+function \code{\link[rgeos]{createSPComment}} to add such comments to each Polygons member of  
+the polygons slot of this SpatialPolygons object. Exterior rings are coded
+zero, while interior rings are coded with the 1-based index of the
+exterior ring to which they belong. SpatialPolygons objects created by reading using \code{\link[rgdal]{readOGR}} from \pkg{rgdal} have the comments set on input, as OGR also uses SFS.
 }
 
 \value{

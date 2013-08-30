@@ -1,7 +1,7 @@
 ### R code from vignette source 'csdacm.Rnw'
 
 ###################################################
-### code chunk number 1: csdacm.Rnw:52-55
+### code chunk number 1: csdacm.Rnw:53-56
 ###################################################
 owidth <- getOption("width")
 options("width"=90)
@@ -17,7 +17,7 @@ options("width"=90)
 
 
 ###################################################
-### code chunk number 3: csdacm.Rnw:64-65
+### code chunk number 3: csdacm.Rnw:65-66
 ###################################################
 .iwidth <- 5
 .iheight <- 6
@@ -40,7 +40,7 @@ options("width"=90)
 
 
 ###################################################
-### code chunk number 6: csdacm.Rnw:108-111
+### code chunk number 6: csdacm.Rnw:109-112
 ###################################################
 myfun <- function(x) {
 	x + 2
@@ -48,19 +48,19 @@ myfun <- function(x) {
 
 
 ###################################################
-### code chunk number 7: csdacm.Rnw:116-117
+### code chunk number 7: csdacm.Rnw:117-118
 ###################################################
 myfun(1:3)
 
 
 ###################################################
-### code chunk number 8: csdacm.Rnw:122-123
+### code chunk number 8: csdacm.Rnw:123-124
 ###################################################
 myfun(x=1:3)
 
 
 ###################################################
-### code chunk number 9: csdacm.Rnw:129-132
+### code chunk number 9: csdacm.Rnw:130-133
 ###################################################
 plotXplus2Yminus3 <- function(x, y, ...) {
 	plot(x = x + 2, y = y - 3, ...)
@@ -68,20 +68,20 @@ plotXplus2Yminus3 <- function(x, y, ...) {
 
 
 ###################################################
-### code chunk number 10: csdacm.Rnw:145-146
+### code chunk number 10: csdacm.Rnw:146-147
 ###################################################
 methods("plot")
 
 
 ###################################################
-### code chunk number 11: csdacm.Rnw:151-153
+### code chunk number 11: csdacm.Rnw:152-154
 ###################################################
 library(sp)
 showMethods("plot")
 
 
 ###################################################
-### code chunk number 12: csdacm.Rnw:164-167
+### code chunk number 12: csdacm.Rnw:165-168
 ###################################################
 x <- rnorm(10)
 class(x) <- "foo"
@@ -89,7 +89,7 @@ x
 
 
 ###################################################
-### code chunk number 13: csdacm.Rnw:176-179
+### code chunk number 13: csdacm.Rnw:177-180
 ###################################################
 plot.foo <- function(x, y, ...) {
 	plot.default(x, type = 'l', ...)
@@ -97,19 +97,19 @@ plot.foo <- function(x, y, ...) {
 
 
 ###################################################
-### code chunk number 14: csdacm.Rnw:188-189
+### code chunk number 14: csdacm.Rnw:189-190
 ###################################################
 class(x) <- c("foo", "bar")
 
 
 ###################################################
-### code chunk number 15: csdacm.Rnw:191-192 (eval = FALSE)
+### code chunk number 15: csdacm.Rnw:192-193 (eval = FALSE)
 ###################################################
 ## plot(x)
 
 
 ###################################################
-### code chunk number 16: csdacm.Rnw:203-206
+### code chunk number 16: csdacm.Rnw:204-207
 ###################################################
 data(meuse)
 class(meuse)
@@ -117,13 +117,13 @@ class(lm(log(zinc)~sqrt(dist), meuse))
 
 
 ###################################################
-### code chunk number 17: csdacm.Rnw:225-226
+### code chunk number 17: csdacm.Rnw:226-227
 ###################################################
 options("width"=60)
 
 
 ###################################################
-### code chunk number 18: csdacm.Rnw:228-248 (eval = FALSE)
+### code chunk number 18: csdacm.Rnw:229-249 (eval = FALSE)
 ###################################################
 ## setClass("CRS", representation(projargs = "character"))
 ## setClass("Spatial",
@@ -148,26 +148,26 @@ options("width"=60)
 
 
 ###################################################
-### code chunk number 19: csdacm.Rnw:250-251
+### code chunk number 19: csdacm.Rnw:251-252
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 20: csdacm.Rnw:263-264
+### code chunk number 20: csdacm.Rnw:264-265
 ###################################################
 isGeneric("show")
 
 
 ###################################################
-### code chunk number 21: csdacm.Rnw:270-272 (eval = FALSE)
+### code chunk number 21: csdacm.Rnw:271-273 (eval = FALSE)
 ###################################################
 ## setGeneric("bbox", function(obj) standardGeneric("bbox"))
 ## setMethod("bbox", signature = "Spatial", function(obj) obj@bbox)
 
 
 ###################################################
-### code chunk number 22: csdacm.Rnw:303-314
+### code chunk number 22: csdacm.Rnw:304-315
 ###################################################
 library(sp)
 setClass("trip", representation("SpatialPointsDataFrame", TOR.columns = "character"),
@@ -183,7 +183,7 @@ showClass("trip")
 
 
 ###################################################
-### code chunk number 23: csdacm.Rnw:327-340
+### code chunk number 23: csdacm.Rnw:328-341
 ###################################################
 trip.default <- function(obj, TORnames) {
     if (!is(obj, "SpatialPointsDataFrame"))
@@ -201,13 +201,13 @@ setMethod("trip", signature(obj = "SpatialPointsDataFrame", TORnames = "ANY"), t
 
 
 ###################################################
-### code chunk number 24: csdacm.Rnw:347-348
+### code chunk number 24: csdacm.Rnw:348-349
 ###################################################
 turtle <- read.csv(system.file("external/seamap105_mod.csv", package="sp"))
 
 
 ###################################################
-### code chunk number 25: csdacm.Rnw:350-359
+### code chunk number 25: csdacm.Rnw:351-360
 ###################################################
 timestamp <- as.POSIXlt(strptime(as.character(turtle$obs_date), "%m/%d/%Y %H:%M:%S"), "GMT")
 turtle <- data.frame(turtle, timestamp = timestamp)
@@ -221,7 +221,7 @@ summary(turtle_trip)
 
 
 ###################################################
-### code chunk number 26: csdacm.Rnw:371-381
+### code chunk number 26: csdacm.Rnw:372-382
 ###################################################
 summary.trip <- function(object, ...) {
 	cat("Object of class \"trip\"\nTime column: ")
@@ -236,7 +236,7 @@ summary(turtle_trip)
 
 
 ###################################################
-### code chunk number 27: csdacm.Rnw:399-414
+### code chunk number 27: csdacm.Rnw:400-415
 ###################################################
 setGeneric("lines", function(x, ...) standardGeneric("lines"))
 setMethod("lines", signature(x = "trip"),
@@ -256,13 +256,13 @@ setMethod("lines", signature(x = "trip"),
 
 
 ###################################################
-### code chunk number 28: csdacm.Rnw:435-436
+### code chunk number 28: csdacm.Rnw:436-437
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 29: csdacm.Rnw:438-447
+### code chunk number 29: csdacm.Rnw:439-448
 ###################################################
 setClass("SpatialMultiPoints", representation("SpatialLines"), 
 	validity <- function(object) {
@@ -276,13 +276,13 @@ SpatialMultiPoints <- function(object) new("SpatialMultiPoints", object)
 
 
 ###################################################
-### code chunk number 30: csdacm.Rnw:449-450
+### code chunk number 30: csdacm.Rnw:450-451
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 31: csdacm.Rnw:457-467
+### code chunk number 31: csdacm.Rnw:458-468
 ###################################################
 n <- 5
 set.seed(1)
@@ -297,7 +297,7 @@ smp <- SpatialMultiPoints(s)
 
 
 ###################################################
-### code chunk number 32: csdacm.Rnw:476-490
+### code chunk number 32: csdacm.Rnw:477-491
 ###################################################
 plot.SpatialMultiPoints <- function(x, ..., pch = 1:length(x@lines), col = 1, cex = 1) {
 	n <- length(x@lines)
@@ -316,7 +316,7 @@ setMethod("plot", signature(x = "SpatialMultiPoints", y = "missing"),
 
 
 ###################################################
-### code chunk number 33: csdacm.Rnw:512-524
+### code chunk number 33: csdacm.Rnw:513-525
 ###################################################
 cName <- "SpatialMultiPointsDataFrame"
 setClass(cName, representation("SpatialLinesDataFrame"), 
@@ -333,7 +333,7 @@ SpatialMultiPointsDataFrame <- function(object) {
 
 
 ###################################################
-### code chunk number 34: csdacm.Rnw:530-535
+### code chunk number 34: csdacm.Rnw:531-536
 ###################################################
 df <- data.frame(x1 = 1:3, x2 = c(1,4,2), row.names = c("mp1", "mp2", "mp3"))
 smp_df <- SpatialMultiPointsDataFrame(SpatialLinesDataFrame(smp, df))
@@ -343,13 +343,13 @@ grys <- c("grey10", "grey40", "grey80")
 
 
 ###################################################
-### code chunk number 35: csdacm.Rnw:537-538 (eval = FALSE)
+### code chunk number 35: csdacm.Rnw:538-539 (eval = FALSE)
 ###################################################
 ## plot(smp_df, col = grys[smp_df[["x1"]]], pch = smp_df[["x2"]], cex = 2, axes = TRUE) 
 
 
 ###################################################
-### code chunk number 36: csdacm.Rnw:545-552
+### code chunk number 36: csdacm.Rnw:546-553
 ###################################################
 .iwidth <- 6
 .iheight <- 2.5
@@ -366,7 +366,7 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 37: csdacm.Rnw:568-572
+### code chunk number 37: csdacm.Rnw:569-573
 ###################################################
 data(meuse.grid)
 gridded(meuse.grid)=~x+y
@@ -375,19 +375,19 @@ class(xx)
 
 
 ###################################################
-### code chunk number 38: csdacm.Rnw:580-581
+### code chunk number 38: csdacm.Rnw:581-582
 ###################################################
 HexPts <- spsample(meuse.grid,  type="hexagonal", cellsize=200)
 
 
 ###################################################
-### code chunk number 39: csdacm.Rnw:583-584 (eval = FALSE)
+### code chunk number 39: csdacm.Rnw:584-585 (eval = FALSE)
 ###################################################
 ## spplot(meuse.grid["dist"], sp.layout = list("sp.points", HexPts, col = 1))
 
 
 ###################################################
-### code chunk number 40: csdacm.Rnw:586-589
+### code chunk number 40: csdacm.Rnw:587-590
 ###################################################
 HexPols <- HexPoints2SpatialPolygons(HexPts)
 df <- over(HexPols, meuse.grid)
@@ -395,13 +395,13 @@ HexPolsDf <- SpatialPolygonsDataFrame(HexPols, df, match.ID = FALSE)
 
 
 ###################################################
-### code chunk number 41: csdacm.Rnw:591-592 (eval = FALSE)
+### code chunk number 41: csdacm.Rnw:592-593 (eval = FALSE)
 ###################################################
 ## spplot(HexPolsDf["dist"])
 
 
 ###################################################
-### code chunk number 42: csdacm.Rnw:598-610
+### code chunk number 42: csdacm.Rnw:599-611
 ###################################################
 .iwidth <- 6
 .iheight <- 4
@@ -423,7 +423,7 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 43: csdacm.Rnw:623-630
+### code chunk number 43: csdacm.Rnw:624-631
 ###################################################
 setClass("SpatialHexGrid", representation("SpatialPoints", dx = "numeric"),
 	validity <- function(object) {
@@ -435,13 +435,13 @@ setClass("SpatialHexGrid", representation("SpatialPoints", dx = "numeric"),
 
 
 ###################################################
-### code chunk number 44: csdacm.Rnw:632-633
+### code chunk number 44: csdacm.Rnw:633-634
 ###################################################
 options("width"=40)
 
 
 ###################################################
-### code chunk number 45: csdacm.Rnw:635-643
+### code chunk number 45: csdacm.Rnw:636-644
 ###################################################
 setClass("SpatialHexGridDataFrame", representation("SpatialPointsDataFrame", dx = "numeric"),
 # NOT TOO WIDE
@@ -454,13 +454,13 @@ setClass("SpatialHexGridDataFrame", representation("SpatialPointsDataFrame", dx 
 
 
 ###################################################
-### code chunk number 46: csdacm.Rnw:645-646
+### code chunk number 46: csdacm.Rnw:646-647
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 47: csdacm.Rnw:663-668
+### code chunk number 47: csdacm.Rnw:664-669
 ###################################################
 HexPts <- spsample(meuse.grid,  type="hexagonal", cellsize=200)
 Hex <- new("SpatialHexGrid", HexPts, dx = 200)
@@ -470,7 +470,7 @@ HexDf <- new("SpatialHexGridDataFrame", spdf, dx = 200)
 
 
 ###################################################
-### code chunk number 48: csdacm.Rnw:675-678
+### code chunk number 48: csdacm.Rnw:676-679
 ###################################################
 is(HexDf, "SpatialHexGrid")
 setIs("SpatialHexGridDataFrame", "SpatialHexGrid")
@@ -478,13 +478,13 @@ is(HexDf, "SpatialHexGrid")
 
 
 ###################################################
-### code chunk number 49: csdacm.Rnw:688-689
+### code chunk number 49: csdacm.Rnw:689-690
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 50: csdacm.Rnw:691-700
+### code chunk number 50: csdacm.Rnw:692-701
 ###################################################
 # NOT TOO WIDE
 setAs("SpatialHexGrid", "SpatialPolygons", 
@@ -498,13 +498,13 @@ setAs("SpatialHexGridDataFrame", "SpatialPolygonsDataFrame",
 
 
 ###################################################
-### code chunk number 51: csdacm.Rnw:702-703
+### code chunk number 51: csdacm.Rnw:703-704
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 52: csdacm.Rnw:710-723
+### code chunk number 52: csdacm.Rnw:711-724
 ###################################################
 setMethod("plot", signature(x = "SpatialHexGrid", y = "missing"),
     function(x, y, ...) plot(as(x, "SpatialPolygons"), ...)
@@ -522,27 +522,27 @@ setMethod("over", c("SpatialHexGrid", "SpatialPoints"), function(x, y, ...)
 
 
 ###################################################
-### code chunk number 53: csdacm.Rnw:729-731 (eval = FALSE)
+### code chunk number 53: csdacm.Rnw:730-732 (eval = FALSE)
 ###################################################
 ## spplot(meuse.grid["dist"], sp.layout = list("sp.points", Hex, col = 1))
 ## spplot(HexDf["dist"])
 
 
 ###################################################
-### code chunk number 54: csdacm.Rnw:738-739 (eval = FALSE)
+### code chunk number 54: csdacm.Rnw:739-740 (eval = FALSE)
 ###################################################
 ## as(HexDf, "data.frame")
 
 
 ###################################################
-### code chunk number 55: csdacm.Rnw:746-748
+### code chunk number 55: csdacm.Rnw:747-749
 ###################################################
 bbox(Hex)
 bbox(as(Hex, "SpatialPolygons"))
 
 
 ###################################################
-### code chunk number 56: csdacm.Rnw:769-775
+### code chunk number 56: csdacm.Rnw:770-776
 ###################################################
 n <- 10
 x <- data.frame(expand.grid(x1 = 1:n, x2 = 1:n, x3 = 1:n), z = rnorm(n^3))
@@ -553,13 +553,13 @@ summary(x)
 
 
 ###################################################
-### code chunk number 57: csdacm.Rnw:790-791
+### code chunk number 57: csdacm.Rnw:791-792
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 58: csdacm.Rnw:793-800
+### code chunk number 58: csdacm.Rnw:794-801
 ###################################################
 # NOT TOO WIDE
 setClass("SpatialTimeGrid", "SpatialGrid",
@@ -571,13 +571,13 @@ setClass("SpatialTimeGrid", "SpatialGrid",
 
 
 ###################################################
-### code chunk number 59: csdacm.Rnw:802-803
+### code chunk number 59: csdacm.Rnw:803-804
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 60: csdacm.Rnw:810-818
+### code chunk number 60: csdacm.Rnw:811-819
 ###################################################
 setClass("SpatialTimeGridDataFrame", "SpatialGridDataFrame",
 	validity <- function(object) {
@@ -590,7 +590,7 @@ x <- new("SpatialTimeGridDataFrame", x)
 
 
 ###################################################
-### code chunk number 61: csdacm.Rnw:823-834
+### code chunk number 61: csdacm.Rnw:824-835
 ###################################################
 summary.SpatialTimeGridDataFrame <- function(object, ...) {
 	cat("Object of class SpatialTimeGridDataFrame\n")
@@ -606,13 +606,13 @@ summary.SpatialTimeGridDataFrame <- function(object, ...) {
 
 
 ###################################################
-### code chunk number 62: csdacm.Rnw:836-837
+### code chunk number 62: csdacm.Rnw:837-838
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 63: csdacm.Rnw:839-842
+### code chunk number 63: csdacm.Rnw:840-843
 ###################################################
 # NOT TOO WIDE
 setMethod("summary", "SpatialTimeGridDataFrame", summary.SpatialTimeGridDataFrame)
@@ -620,13 +620,13 @@ summary(x)
 
 
 ###################################################
-### code chunk number 64: csdacm.Rnw:844-845
+### code chunk number 64: csdacm.Rnw:845-846
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 65: csdacm.Rnw:852-879
+### code chunk number 65: csdacm.Rnw:853-880
 ###################################################
 subs.SpatialTimeGridDataFrame <- function(x, i, j, ..., drop=FALSE) {
 	t <- coordinates(x)[,3] + ISOdate(1970,1,1,0,0,0)
@@ -658,7 +658,7 @@ summary(x[t1])
 
 
 ###################################################
-### code chunk number 66: csdacm.Rnw:892-905
+### code chunk number 66: csdacm.Rnw:893-906
 ###################################################
 spplot.stgdf <- function(obj, zcol = 1, ..., format = NULL) {
 # NOT TOO WIDE
@@ -676,7 +676,7 @@ setMethod("spplot", "SpatialTimeGridDataFrame", spplot.stgdf)
 
 
 ###################################################
-### code chunk number 67: csdacm.Rnw:911-917
+### code chunk number 67: csdacm.Rnw:912-918
 ###################################################
 .iwidth <- 6
 .iheight <- 4
@@ -692,7 +692,7 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 68: csdacm.Rnw:926-931 (eval = FALSE)
+### code chunk number 68: csdacm.Rnw:927-932 (eval = FALSE)
 ###################################################
 ## library(lattice)
 ## trellis.par.set(canonical.theme(color = FALSE))
@@ -702,13 +702,13 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 69: csdacm.Rnw:937-938 (eval = FALSE)
+### code chunk number 69: csdacm.Rnw:938-939 (eval = FALSE)
 ###################################################
 ## ?as.character.POSIXt
 
 
 ###################################################
-### code chunk number 70: csdacm.Rnw:962-968
+### code chunk number 70: csdacm.Rnw:963-969
 ###################################################
 library(gstat)
 data(meuse)
@@ -719,7 +719,7 @@ sim@data <- exp(sim@data)
 
 
 ###################################################
-### code chunk number 71: csdacm.Rnw:976-980
+### code chunk number 71: csdacm.Rnw:977-981
 ###################################################
 quantile.Spatial <- function(x, ..., byLayer = FALSE) {
 	stopifnot("data" %in% slotNames(x))
@@ -728,32 +728,32 @@ quantile.Spatial <- function(x, ..., byLayer = FALSE) {
 
 
 ###################################################
-### code chunk number 72: csdacm.Rnw:986-988
+### code chunk number 72: csdacm.Rnw:987-989
 ###################################################
 sim$lower <- quantile.Spatial(sim[1:100], probs = 0.025)
 sim$upper <- quantile.Spatial(sim[1:100], probs = 0.975)
 
 
 ###################################################
-### code chunk number 73: csdacm.Rnw:995-996
+### code chunk number 73: csdacm.Rnw:996-997
 ###################################################
 medians <- quantile.Spatial(sim[1:100], probs = 0.5, byLayer = TRUE)
 
 
 ###################################################
-### code chunk number 74: csdacm.Rnw:998-999 (eval = FALSE)
+### code chunk number 74: csdacm.Rnw:999-1000 (eval = FALSE)
 ###################################################
 ## hist(medians)
 
 
 ###################################################
-### code chunk number 75: csdacm.Rnw:1013-1014
+### code chunk number 75: csdacm.Rnw:1014-1015
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 76: csdacm.Rnw:1016-1021
+### code chunk number 76: csdacm.Rnw:1017-1022
 ###################################################
 fractionBelow <- function(x, q, byLayer = FALSE) {
 	stopifnot(is(x, "Spatial") || !("data" %in% slotNames(x)))
@@ -763,13 +763,13 @@ fractionBelow <- function(x, q, byLayer = FALSE) {
 
 
 ###################################################
-### code chunk number 77: csdacm.Rnw:1023-1024
+### code chunk number 77: csdacm.Rnw:1024-1025
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 78: csdacm.Rnw:1026-1029
+### code chunk number 78: csdacm.Rnw:1027-1030
 ###################################################
 over500 <- 1 - fractionBelow(sim[1:100], 200, byLayer = TRUE)
 summary(over500)
@@ -777,13 +777,13 @@ quantile(over500, c(0.025, 0.975))
 
 
 ###################################################
-### code chunk number 79: csdacm.Rnw:1046-1047
+### code chunk number 79: csdacm.Rnw:1047-1048
 ###################################################
 fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
 
 
 ###################################################
-### code chunk number 80: csdacm.Rnw:1049-1052 (eval = FALSE)
+### code chunk number 80: csdacm.Rnw:1050-1053 (eval = FALSE)
 ###################################################
 ## x <- readGDAL(fn, output.dim = c(120, 132))
 ## x$band1[x$band1 <= 0] <- NA
@@ -791,7 +791,7 @@ fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
 
 
 ###################################################
-### code chunk number 81: csdacm.Rnw:1063-1069
+### code chunk number 81: csdacm.Rnw:1064-1070
 ###################################################
 library(rgdal)
 x <- GDAL.open(fn)
@@ -802,13 +802,13 @@ gridparameters(x.subs)
 
 
 ###################################################
-### code chunk number 82: csdacm.Rnw:1087-1088
+### code chunk number 82: csdacm.Rnw:1088-1089
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 83: csdacm.Rnw:1090-1095
+### code chunk number 83: csdacm.Rnw:1091-1096
 ###################################################
 setClass("SpatialGDAL",
     representation("Spatial", grid = "GridTopology", grod = "GDALReadOnlyDataset", 
@@ -818,13 +818,13 @@ setClass("SpatialGDALWrite", "SpatialGDAL")
 
 
 ###################################################
-### code chunk number 84: csdacm.Rnw:1097-1098
+### code chunk number 84: csdacm.Rnw:1098-1099
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 85: csdacm.Rnw:1109-1125 (eval = FALSE)
+### code chunk number 85: csdacm.Rnw:1110-1126 (eval = FALSE)
 ###################################################
 ## x <- open.SpatialGDAL(fn)
 ## nrows <- GDALinfo(fn)["rows"]
@@ -845,7 +845,7 @@ options("width"=70)
 
 
 ###################################################
-### code chunk number 86: csdacm.Rnw:1132-1139 (eval = FALSE)
+### code chunk number 86: csdacm.Rnw:1133-1140 (eval = FALSE)
 ###################################################
 ## setMethod("[", "SpatialGDAL",
 ##     function(x, i, j, ... , drop = FALSE)
@@ -857,7 +857,7 @@ options("width"=70)
 
 
 ###################################################
-### code chunk number 87: csdacm.Rnw:1165-1166
+### code chunk number 87: csdacm.Rnw:1166-1167
 ###################################################
 options("width"=owidth)
 

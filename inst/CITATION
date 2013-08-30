@@ -16,13 +16,13 @@ citEntry(entry="Article",
 )
 
 citEntry(entry="book",
-  author       = "Roger S. Bivand, Edzer J. Pebesma and Virgilio Gomez-Rubio",
-  title        = "Applied spatial data analysis with {R}",
-  year         = "2008",
+  author       = "Roger S. Bivand, Edzer Pebesma and Virgilio Gomez-Rubio",
+  title        = "Applied spatial data analysis with {R}, Second edition",
+  year         = "2013",
   publisher    = "Springer, NY",
   url          = "http://www.asdar-book.org/",
   textVersion = 
-  paste("Roger S. Bivand, Edzer J. Pebesma, Virgilio Gomez-Rubio, 2008.",
-	"Applied spatial data analysis with R. Springer, NY.",
+  paste("Roger S. Bivand, Edzer Pebesma, Virgilio Gomez-Rubio, 2013.",
+	"Applied spatial data analysis with R, Second edition. Springer, NY.",
 	"http://www.asdar-book.org/")
 )

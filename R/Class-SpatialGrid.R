@@ -1,5 +1,6 @@
 setClass("SpatialPixels", 
-	representation("SpatialPoints", grid = "GridTopology", grid.index = "integer"),
+	contains = "SpatialPoints",
+	slots = c(grid = "GridTopology", grid.index = "integer"),
 	validity = function(object) {
 		if (nrow(object@coords) != length(object@grid.index))
 			stop("grid.index should have length equal to nrow(coords)")
@@ -12,7 +13,8 @@ setClass("SpatialPixels",
 )
 
 setClass("SpatialGrid",
-	representation("Spatial", grid = "GridTopology"),
+	contains = "Spatial", 
+	slots = c(grid = "GridTopology"),
 	validity = function(object) {
 		return(TRUE)
 	}

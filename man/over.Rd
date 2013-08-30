@@ -27,9 +27,9 @@
 \alias{over,SpatialGrid,SpatialPixels-method}
 \alias{over,SpatialGrid,SpatialPixelsDataFrame-method}
 \alias{over,SpatialGrid,SpatialPointsDataFrame-method}
-
-
 \alias{aggregate.Spatial}
+\alias{overDF_for_rgeos}
+
 \title{ consistent spatial overlay for points, grids and polygons }
 \description{ consistent spatial overlay for points, grids and
 polygons: at the spatial locations of object x retrieves the indexes

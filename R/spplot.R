@@ -189,7 +189,7 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 		} else
 			args = append(args, colorkey.factor(obj[[zcol[1]]], ck, FALSE))
 	}
-	ret = do.call("levelplot", args)
+	ret = do.call(levelplot, args)
     if (exists("panel.levelplot.raster"))
         lattice.options("panel.levelplot" = opan)
 	ret 
@@ -253,7 +253,7 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 		} else
 			args = append(args, colorkey.factor(obj[[zcol[1]]], ck, FALSE))
 	}
-	do.call("levelplot", args)
+	do.call(levelplot, args)
 }
 
 setMethod("spplot", signature("SpatialPolygonsDataFrame"), spplot.polygons)
@@ -296,7 +296,7 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		colorkey = colorkey, ...)
 	# debug:
 	#print(args.xyplot)
-	plt = do.call("xyplot", args.xyplot)
+	plt = do.call(xyplot, args.xyplot)
 	if (!(is.logical(identify) && identify==FALSE) && interactive()) {
 		print(plt)
 		if (!(is.numeric(identify) && length(identify) == 2))

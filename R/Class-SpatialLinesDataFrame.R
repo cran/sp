@@ -1,5 +1,6 @@
 setClass("SpatialLinesDataFrame",
-	representation("SpatialLines", data = "data.frame"),
+	contains = "SpatialLines", 
+	slots = c(data = "data.frame"),
 	validity = function(object) {
 		if (!inherits(object@data, "data.frame"))
 			stop("data should be of class data.frame")

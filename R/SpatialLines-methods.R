@@ -243,12 +243,12 @@ SpatialLinesLengths = function(SL, longlat) {
 }
 
 setAs("Lines", "SpatialPoints", function(from) {
-		SpatialPoints(do.call("rbind", coordinates(from)))
+		SpatialPoints(do.call(rbind, coordinates(from)))
 	}
 )
 setAs("SpatialLines", "SpatialPoints", function(from) {
 		SpatialPoints(
-			do.call("rbind",
+			do.call(rbind,
 				lapply(from@lines, function(x) as(x, "SpatialPoints"))),
 			CRS(proj4string(from))
 		)

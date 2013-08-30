@@ -6,11 +6,11 @@
 \alias{disaggregate,SpatialPolygonsDataFrame-method}
 \alias{disaggregate,SpatialLines-method}
 \alias{disaggregate,SpatialLinesDataFrame-method}
-\title{ disaggregate SpatialLines or SpatialPolygons }
-\description{ disaggregate SpatialLines or SpatialPolygons }
-\usage{
-disaggregate(x, ...)
-}
+\title{ disaggregate SpatialLines, SpatialLinesDataFrame, 
+SpatialPolygons, or SpatialPolygonsDataFrame objects }
+\description{ disaggregate SpatialLines, SpatialLinesDataFrame, 
+SpatialPolygons, or SpatialPolygonsDataFrame objects }
+\usage{ disaggregate(x, ...) }
 \arguments{
 \item{x}{object of class \link{SpatialLines} or \link{SpatialPolygons}}
 \item{...}{ignored}

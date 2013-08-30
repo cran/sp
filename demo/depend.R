@@ -36,7 +36,7 @@ x = which(succ != 0)
 result[x]
 bla = lapply(result[x], function(y) {
 		cat(paste(y, ":\n"))
-		system(paste("tail ",y,".log", sep=""))
+		system(paste("tail -20 ",y,".log", sep=""))
 	}
 )
 

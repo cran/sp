@@ -74,7 +74,7 @@ setMethod("plot", signature(x = "SpatialPolygons", y = "missing"),
             else {
                 NAr <- as.double(c(NA, NA))
                 crds1 <- lapply(crds, function(x) rbind(x, NAr))
-                mcrds <- do.call("rbind", crds1)
+                mcrds <- do.call(rbind, crds1)
                 mcrds <- mcrds[-nrow(mcrds),]
                 rownames(mcrds) <- NULL
             }
