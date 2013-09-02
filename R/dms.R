@@ -1,4 +1,4 @@
-setClass("DMS", representation(WS="logical", deg="numeric", 
+setClass("DMS", slots = c(WS="logical", deg="numeric", 
 	min="numeric", sec="numeric", NS="logical"),
 	validity = function(object) {
 	    if (object@NS) {

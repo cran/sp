@@ -157,6 +157,8 @@ export(
 
 	makegrid,
 
+	overDF_for_rgeos, # for rgeos only!
+
 	read.asciigrid, 
 
 	Polygon,
@@ -228,6 +230,7 @@ exportMethods(
 	gridded,
 	"gridded<-",
 	is.projected,
+	merge,
 	over,
 	overlay, 
 	plot,

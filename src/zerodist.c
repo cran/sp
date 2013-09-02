@@ -33,7 +33,7 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat) {
 		for (j = 0; j < i; j++) {
 			xj = x[j];
 			if (ll) {
-				sp_gcdist(xi, xi+1, xj, xj+1, &d);
+				sp_gcdist(xi, xj, xi+1, xj+1, &d);
 				dist = d * d;
 			} else {
 				for (k = 0, dist = 0.0; k < ncol; k++) {

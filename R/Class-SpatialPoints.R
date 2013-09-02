@@ -1,5 +1,6 @@
 setClass("SpatialPoints",
-	representation("Spatial", coords = "matrix"),
+	contains = "Spatial", 
+	slots = c(coords = "matrix"),
 	prototype = list(bbox=matrix(NA), 
 		proj4string = CRS(as.character(NA)),
 		coords = matrix(0)),

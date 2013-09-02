@@ -1,5 +1,6 @@
 setClass("SpatialPolygonsDataFrame",
-	representation("SpatialPolygons", data = "data.frame"),
+	contains = "SpatialPolygons", 
+	slots = c(data = "data.frame"),
 	prototype = list(
 		bbox = matrix(rep(NA, 6), 3, 2, dimnames = list(NULL, c("min","max"))),
 		proj4string = CRS(as.character(NA)),

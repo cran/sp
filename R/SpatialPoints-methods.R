@@ -29,9 +29,9 @@
 }
 
 setMethod("coordinates", "list", function(obj)
-		do.call("cbind", .checkNumericCoerce2double(as.data.frame(obj))))
+		do.call(cbind, .checkNumericCoerce2double(as.data.frame(obj))))
 setMethod("coordinates", "data.frame", function(obj)
-		do.call("cbind", .checkNumericCoerce2double(obj)))
+		do.call(cbind, .checkNumericCoerce2double(obj)))
 setMethod("coordinates", "matrix", 
 	function(obj) {
 		if (!is.numeric(obj))

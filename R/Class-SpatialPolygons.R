@@ -1,6 +1,7 @@
 setClass("Polygon",
-	representation("Line", labpt = "numeric", 
-	area = "numeric", hole = "logical", ringDir = "integer"),
+	contains = "Line", 
+	slots = c(labpt = "numeric", area = "numeric", hole = "logical", 
+		ringDir = "integer"),
 	validity = function(object) {
                 res <- .Call(Polygon_validate_c, object)
                 res
@@ -16,8 +17,8 @@ setClass("Polygon",
 )
 
 setClass("Polygons",
-	representation(Polygons = "list", plotOrder = "integer", 
-	labpt = "numeric", ID = "character", area = "numeric"),
+	slots = c(Polygons = "list", plotOrder = "integer", 
+		labpt = "numeric", ID = "character", area = "numeric"),
 	validity = function(object) {
                 res <- .Call(Polygons_validate_c, object)
                 res
@@ -32,8 +33,8 @@ setClass("Polygons",
 )
 
 setClass("SpatialPolygons",
-	representation("Spatial",
-		polygons = "list",
+	contains = "Spatial",
+	slots = c(polygons = "list",
 		plotOrder = "integer"),
 	prototype = list(
 		bbox = matrix(rep(NA, 4), 2, 2, dimnames = list(NULL, c("min","max"))),

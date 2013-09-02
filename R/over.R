@@ -20,6 +20,7 @@
 	}
 	ret
 }
+overDF_for_rgeos = .overDF # to be exported, for rgeos only
 
 # we need to invert a list of indexes, i.e.
 # list(c(1,4), c(2,4,5))

@@ -1,15 +1,15 @@
 # sp functions:
 if (!isClass("ppp"))
-	setClass("ppp")
+	setOldClass("ppp")
 
 if (!isClass("psp"))
-	setClass("psp")
+	setOldClass("psp")
 
 if (!isClass("owin"))
-	setClass("owin")
+	setOldClass("owin")
 
 if (!isClass("im"))
-    setClass("im")
+    setOldClass("im")
 
 as.SpatialPoints.ppp =  function(from) {
     mult <- 1

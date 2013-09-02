@@ -1,7 +1,8 @@
 # Lancaster, Thu Nov  4 14:44:00 GMT 2004, fresh start from icelfloe
 setClass("Spatial",
-	representation(bbox = "matrix", proj4string = "CRS"),
-	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, dimnames = list(NULL, c("min","max"))),
+	slots = c(bbox = "matrix", proj4string = "CRS"),
+	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, 
+		dimnames = list(NULL, c("min","max"))),
 		proj4string = CRS(as.character(NA))), # prototype should not pass validity
 	validity = function(object) {
 # print("Entering validation: Spatial")

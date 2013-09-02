@@ -16,10 +16,10 @@ as.data.frame.GridTopology = function(x, row.names, optional, ...) data.frame(
 setAs("GridTopology", "data.frame", function(from) as.data.frame.GridTopology(from))
 
 setMethod("coordinates", "GridTopology", function(obj) {
-	cc = do.call("expand.grid", coordinatevalues(obj))
+	cc = do.call(expand.grid, coordinatevalues(obj))
 #	as.matrix(sapply(cc, as.numeric))
 # dropping dimension for single cell grid
-	do.call("cbind", lapply(cc, as.numeric))
+	do.call(cbind, lapply(cc, as.numeric))
 })
 
 coordnamesGT = function(x, value) {

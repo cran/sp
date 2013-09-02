@@ -38,7 +38,8 @@
 Pebesma, E. and G\'{o}mez-Rubio V. (2008) Applied Spatial Data Analysis with R,
 Springer-Verlag, New York. It was retired from the second edition (2013) to
 accommodate material on other topics, and is made available in this form
-with the understanding of the publishers.} }
+with the understanding of the publishers. It has been updated to the 2013
+state of the software, e.g. using \code{over}.} }
 \author{Edzer Pebesma\footnote{Institute for Geoinformatics,
 University of Muenster, Weseler Strasse 253, 48151 M\"{u}nster, Germany.
 {\tt edzer.pebesma@uni-muenster.de}}}
