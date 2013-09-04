@@ -1,6 +1,7 @@
 # Copyright (c) 2003-7 by Barry Rowlingson and Roger Bivand
 
-setClass("CRS", slots = c(projargs = "character"),
+setClass("CRS", # slots = c(projargs = "character"),
+			representation(projargs = "character"),
     		prototype = list(projargs = character(1)),
                 validity = function(object) {
                   if (length(object@projargs) != 1)

@@ -1,5 +1,6 @@
-setClass("DMS", slots = c(WS="logical", deg="numeric", 
-	min="numeric", sec="numeric", NS="logical"),
+setClass("DMS", 
+	#slots = c(WS="logical", deg="numeric", min="numeric", sec="numeric", NS="logical"),
+	representation(WS="logical", deg="numeric", min="numeric", sec="numeric", NS="logical"),
 	validity = function(object) {
 	    if (object@NS) {
 		if (any(abs(object@deg) > 90)) return("abs(degree) > 90")
