@@ -1,5 +1,8 @@
 setClass("GridTopology", 
-	slots = c(cellcentre.offset = "numeric",
+	#slots = c(cellcentre.offset = "numeric",
+	#	cellsize = "numeric",
+	#	cells.dim = "integer"),
+	representation(cellcentre.offset = "numeric",
 		cellsize = "numeric",
 		cells.dim = "integer"),
 	prototype = list( # not so relevant what this does

@@ -1,6 +1,7 @@
 setClass("SpatialPixelsDataFrame",
 	contains = c("SpatialPixels", "SpatialPointsDataFrame"),
-	slots = c(data = "data.frame", coords.nrs = "numeric"),
+	#slots = c(data = "data.frame", coords.nrs = "numeric"),
+	representation(data = "data.frame", coords.nrs = "numeric"),
 	validity = function(object) {
 		if (length(object@grid.index) != nrow(object@data))
 			stop("grid.index should have length equal to data slot")
@@ -12,7 +13,8 @@ setClass("SpatialPixelsDataFrame",
 
 setClass("SpatialGridDataFrame",
 	contains = "SpatialGrid",
-	slots = c(data = "data.frame"),
+	#slots = c(data = "data.frame"),
+	representation(data = "data.frame"),
 	validity = function(object) {
 		if (.NumberOfCells(object@grid) != nrow(object@data))
 			stop("unequal number of objects in full grid and data slot")

@@ -1,6 +1,7 @@
 setClass("SpatialPointsDataFrame",
 	contains = "SpatialPoints", 
-	slots = c(data = "data.frame", coords.nrs = "numeric"),
+	#slots = c(data = "data.frame", coords.nrs = "numeric"),
+	representation(data = "data.frame", coords.nrs = "numeric"),
 	prototype = list(bbox = matrix(NA), proj4string = CRS(as.character(NA)),
 		coords = matrix(NA), data = data.frame(), 
 		coords.nrs = numeric(0)),

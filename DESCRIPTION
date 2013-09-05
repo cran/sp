@@ -1,6 +1,6 @@
 Package: sp
-Version: 1.0-12
-Date: 2013-08-30
+Version: 1.0-13
+Date: 2013-09-04
 Title: classes and methods for spatial data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
                     email = "edzer.pebesma@uni-muenster.de"),
@@ -38,7 +38,7 @@ Collate: AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         recenter.R dms.R gridlines.R spdists.R rbind.R flipSGDF.R
         chfids.R loadmeuse.R compassRose.R surfaceArea.R spOptions.R
         subset.R disaggregate.R sp_spat1.R merge.R
-Packaged: 2013-09-02 10:32:18 UTC; edzer
+Packaged: 2013-09-04 13:23:47 UTC; edzer
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2013-09-02 13:39:45
+Date/Publication: 2013-09-05 08:33:30
