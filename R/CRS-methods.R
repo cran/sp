@@ -59,6 +59,15 @@ if (!is.R()) {
 
 setMethod("show", "CRS", function(object) print.CRS(object))
 
-identicalCRS = function(x,y) {
-	identical(CRS(proj4string(x)), CRS(proj4string(y)))
+identicalCRS = function(x, y) {
+	if (! missing(y))
+		identical(CRS(proj4string(x)), CRS(proj4string(y)))
+	else { # x has to be list:
+		stopifnot(is.list(x))
+		if (length(x) > 1) {
+			p1 = CRS(proj4string(x[[1]]))
+			!any(!sapply(x[-1], function(p2) identical(CRS(proj4string(p2)), p1)))
+		} else
+			TRUE
+	}
 }

@@ -24,9 +24,20 @@ Objects can be created by calls of the form \code{CRS("projargs")}, where "proja
 }
 \usage{
 CRS(projargs)
+identicalCRS(x,y)
 }
 \arguments{
 \item{projargs}{A character string of projection arguments; the arguments must be entered exactly as in the PROJ.4 documentation; if the projection is unknown, use \code{as.character(NA)}, it may be missing or an empty string of zero length and will then set to the missing value.}
+\item{x}{object having a \link{proj4string} method,
+or if \code{y} is missing, list with objects that have a \code{proj4string} method}
+\item{y}{object of class \link{Spatial}, or having a \link{proj4string} method}
+}
+\value{
+\code{CRS} returns on success an object of class
+\link{CRS}. \code{identicalCRS} returns a logical, indicating
+whether \code{x} and \code{y} have identical CRS, or if \code{y}
+is missing whether all objects in list \code{x}
+have identical CRS.
 }
 \references{\url{http://trac.osgeo.org/proj/}}
 \author{Roger Bivand \email{Roger.Bivand@nhh.no}}

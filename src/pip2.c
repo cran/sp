@@ -1,5 +1,5 @@
 # include "sp.h"
-# include <Rdefines.h>
+# include <Rinternals.h>
 
 #define ROFFSET 1
 

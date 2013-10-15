@@ -11,6 +11,8 @@
 \alias{sp.text}
 \alias{sp.grid}
 \alias{sp.panel.layout}
+\alias{longlat.scales}
+\alias{bbexpand}
 
 \title{panel and panel utility functions for spplot}
 \description{panel functions for spplot functions, and functions that can be
@@ -25,6 +27,7 @@ sp.polygons(obj, col = 1, fill = "transparent", ...)
 sp.grid(obj, col = 1, alpha = 1,..., at = pretty(obj[[1]]), col.regions = col)
 sp.text(loc, txt, ...)
 sp.panel.layout(lst, p.number, ...)
+bbexpand(x, fraction)
 }
 \arguments{
 \item{sp.layout}{ list; see \link{spplot} for definition }
@@ -52,6 +55,8 @@ traditional graphics functions (FALSE)}
 \item{lst}{ sp.layout argument, see \link{spplot}}
 \item{p.number}{ panel number; in a panel, panel.number() should be
 passed to this argument }
+\item{x}{length two numeric vector, containing a range}
+\item{fraction}{fraction to expand the range by}
 \item{...}{ arguments passed to the underlying panel, lattice or 
 grid functions }
 }

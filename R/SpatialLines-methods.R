@@ -14,7 +14,6 @@ Lines <- function(slinelist, ID) {
 	if (length(ID) != 1) stop("Single ID required")
         ID <- as.character(ID)
         stopifnot(nchar(ID) > 0)
-
 	new("Lines", Lines = slinelist, ID=ID)
 }
 
@@ -269,7 +268,19 @@ setAs("SpatialLines", "SpatialPointsDataFrame", function(from)
 	SpatialLines2SpatialPointsDataFrame(from)
 )
 
-asWKTSpatialLines = function(x, digits = 6) {
+setAs("SpatialPoints", "Line", function(from)
+	Line(coordinates(from))
+)
+
+setAs("SpatialPoints", "Lines", function(from)
+	Lines(as(from, "Line"), "ID")
+)
+
+setAs("SpatialPoints", "SpatialLines", function(from)
+	SpatialLines(list(as(from, "Lines")), from@proj4string)
+)
+
+asWKTSpatialLines = function(x, digits = getOption("digits")) {
 	ids = sapply(x@lines, function(x)slot(x,"ID"))
 	df = data.frame(geometry = paste("MULTILINESTRING((",
 		apply(
@@ -278,7 +289,8 @@ asWKTSpatialLines = function(x, digits = 6) {
 	row.names(df) = ids
 	df
 }
-print.SpatialLines = function(x, ..., digits = 6, asWKT=FALSE) {
+print.SpatialLines = function(x, ..., digits = getOption("digits"), 
+		asWKT=FALSE) {
 	cat("SpatialLines:\n")
 	if (asWKT)
 		print(asWKTSpatialLines(x, digits))
