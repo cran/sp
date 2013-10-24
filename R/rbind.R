@@ -1,13 +1,3 @@
-checkCRSequal = function(dots) {
-	if (length(dots) > 1) {
-		p1 = proj4string(dots[[1]])
-		res = unlist(lapply(dots[-1], function(x) identical(proj4string(x), p1)))
-		if (any(!res))
-		#if (!isTRUE(all.equal(proj4string(obj), proj4string(x))))
-			stop("coordinate reference systems differ")
-	}
-}
-
 makeUniqueIDs <- function(lst) {
 	ids = sapply(lst, function(i) slot(i, "ID"))
 	if (any(duplicated(ids))) {
@@ -21,7 +11,7 @@ makeUniqueIDs <- function(lst) {
 rbind.SpatialPoints <- function(...) {
 	dots = list(...)
 	names(dots) <- NULL
-	checkCRSequal(dots)
+	stopifnot(identicalCRS(dots))
 	SpatialPoints(do.call(rbind, lapply(list(...), coordinates)),
 		CRS(proj4string(dots[[1]])))
 }
@@ -54,7 +44,7 @@ rbind.SpatialPixelsDataFrame = function(...) {
 rbind.SpatialPolygons = function(..., makeUniqueIDs = FALSE) {
 	dots = list(...)
 	names(dots) <- NULL
-	checkCRSequal(dots)
+	stopifnot(identicalCRS(dots))
 	# checkIDSclash(dots)
 	pl = do.call(c, lapply(dots, function(x) slot(x, "polygons")))
 	if (makeUniqueIDs)
@@ -74,7 +64,7 @@ rbind.SpatialPolygonsDataFrame <- function(...) {
 rbind.SpatialLines = function(..., makeUniqueIDs = FALSE) {
 	dots = list(...)
 	names(dots) <- NULL
-	checkCRSequal(dots)
+	stopifnot(identicalCRS(dots))
 	ll = do.call(c, lapply(dots, function(x) slot(x, "lines")))
 	if (makeUniqueIDs)
 		ll = makeUniqueIDs(ll)

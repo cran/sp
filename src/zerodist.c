@@ -3,8 +3,7 @@
 
 #ifdef USING_R
 # include <R.h>
-# include <Rdefines.h>
-/* # include <Rinternals.h> */
+# include <Rinternals.h>
 # define S_EVALUATOR
 #endif
 

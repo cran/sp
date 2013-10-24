@@ -48,13 +48,14 @@ setMethod("coordinates", "matrix",
 	}
 )
 
-asWKTSpatialPoints = function(x, digits = 6) {
+asWKTSpatialPoints = function(x, digits = getOption("digits")) {
 	data.frame(geometry = paste("POINT(",unlist(lapply(data.frame(
 		t(signif(coordinates(x),digits = digits))),
 		paste, collapse=" ")),")",sep=""))
 }
 
-"print.SpatialPoints" <- function(x, ..., digits = 6, asWKT = .asWKT)
+"print.SpatialPoints" <- function(x, ..., digits = getOption("digits"), 
+	asWKT = .asWKT)
 {
 	cat("SpatialPoints:\n")
 	if (asWKT) 

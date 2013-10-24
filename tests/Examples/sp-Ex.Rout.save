@@ -54,10 +54,10 @@ CRS arguments: +proj=longlat +datum=WGS84
 +   print(CRSargs(CRS("+init=epsg:28992")))
 + }
 Loading required package: rgdal
-rgdal: version: 0.8-10, (SVN revision 478)
+rgdal: version: 0.8-11, (SVN revision 479M)
 Geospatial Data Abstraction Library extensions to R successfully loaded
-Loaded GDAL runtime: GDAL 1.9.2, released 2012/10/08
-Path to GDAL shared files: /usr/share/gdal/1.9
+Loaded GDAL runtime: GDAL 1.10.0, released 2013/04/24
+Path to GDAL shared files: /usr/share/gdal/1.10
 Loaded PROJ.4 runtime: Rel. 4.8.0, 6 March 2012, [PJ_VERSION: 480]
 Path to PROJ.4 shared files: (autodetected)
 [1] "+proj=longlat +datum=NAD27 +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat"
@@ -3923,6 +3923,8 @@ y            329620       40       104
 > ###   coerce,SpatialPoints,matrix-method
 > ###   coerce,SpatialPoints,data.frame-method
 > ###   coerce,SpatialPoints,SpatialPixels-method
+> ###   coerce,SpatialPoints,Line-method coerce,SpatialPoints,Lines-method
+> ###   coerce,SpatialPoints,SpatialLines-method
 > ###   coerce,SpatialPointsDataFrame,SpatialPixelsDataFrame-method
 > ###   show,SpatialPoints-method as.data.frame.SpatialPoints
 > ###   plot,SpatialPoints,missing-method summary,SpatialPoints-method
@@ -4630,10 +4632,10 @@ Data attributes:
 +   pos=grdat_x$pos, offset=grdat_x$offset)
 + }
 Loading required package: rgdal
-rgdal: version: 0.8-10, (SVN revision 478)
+rgdal: version: 0.8-11, (SVN revision 479M)
 Geospatial Data Abstraction Library extensions to R successfully loaded
-Loaded GDAL runtime: GDAL 1.9.2, released 2012/10/08
-Path to GDAL shared files: /usr/share/gdal/1.9
+Loaded GDAL runtime: GDAL 1.10.0, released 2013/04/24
+Path to GDAL shared files: /usr/share/gdal/1.10
 Loaded PROJ.4 runtime: Rel. 4.8.0, 6 March 2012, [PJ_VERSION: 480]
 Path to PROJ.4 shared files: (autodetected)
 > 
@@ -15145,7 +15147,7 @@ Data attributes:
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.336 1.412 13.786 0 0 
+Time elapsed:  12.228 1.328 13.591 0 0 
 > grDevices::dev.off()
 null device 
           1 

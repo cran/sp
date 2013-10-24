@@ -12,7 +12,8 @@
 		match.ID = FALSE # nothing to match to!
 	else if (match.ID && length(unique(cc.ID)) != nrow(data))
 		stop("nr of unique coords ID's (rownames) not equal to nr of data records")
-	if (match.ID && is.character(attr(data, "row.names"))) {
+	#if (match.ID && is.character(attr(data, "row.names"))) {
+	if (match.ID) {
 		if (!is.null(cc.ID) && is(data, "data.frame")) { # match ID:
 			data.ID = row.names(data)
 			mtch = match(cc.ID, data.ID)
@@ -85,7 +86,8 @@ setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
 )
 
 .asWKT = FALSE
-print.SpatialPointsDataFrame = function(x, ..., digits = 6, asWKT = .asWKT) {
+print.SpatialPointsDataFrame = function(x, ..., digits = getOption("digits"), 
+		asWKT = .asWKT) {
 	#EJP, Fri May 21 12:40:59 CEST 2010
 	if (asWKT)
 		df = data.frame(asWKTSpatialPoints(x, digits), x@data)

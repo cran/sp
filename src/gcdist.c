@@ -23,7 +23,7 @@ void sp_dists(double *u, double *v, double *uout, double *vout,
 	} else {
 		for (j=0; j<N; j++) {
 			sp_gcdist(u+j, uout, v+j, vout, gc);
-		    	dists[j] = gc[0];
+			dists[j] = gc[0];
 		}
 	}
 }

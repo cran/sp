@@ -5,6 +5,9 @@
 \alias{coerce,SpatialPoints,matrix-method}
 \alias{coerce,SpatialPoints,data.frame-method} % here???
 \alias{coerce,SpatialPoints,SpatialPixels-method} % here???
+\alias{coerce,SpatialPoints,Line-method}
+\alias{coerce,SpatialPoints,Lines-method}
+\alias{coerce,SpatialPoints,SpatialLines-method}
 \alias{coerce,SpatialPointsDataFrame,SpatialPixelsDataFrame-method} % here???
 %\alias{coerce,SpatialPoints,data.frame-method}
 %\alias{coerce,data.frame,SpatialPoints-method}

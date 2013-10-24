@@ -1,3 +1,75 @@
+2013-10-02 15:53  edzer
+
+	* inst/include/sp.h, src/sp.h: synchronized inst/include/sp.h with
+	  src/sp.h
+	  removed non-existing function declaration
+
+2013-10-01 16:04  edzer
+
+	* R/spplot.R: added check draw=TRUE before creating axes labels
+
+2013-09-30 21:38  edzer
+
+	* NAMESPACE, man/panel.Rd: now exporting bbexpand (needed by
+	  spacetime)
+
+2013-09-28 10:30  edzer
+
+	* DESCRIPTION, NAMESPACE, man/panel.Rd: exporting longlat.scales
+	  (for spacetime).
+
+2013-09-27 12:22  edzer
+
+	* src/gcdist.c: indent
+
+2013-09-26 12:51  edzer
+
+	* src/pip.c, src/pip2.c, src/zerodist.c: changed Rdefines.h into
+	  Rinternals.h
+
+2013-09-18 07:40  edzer
+
+	* R/SpatialPointsDataFrame-methods.R: removed constraint that
+	  attr(data, "row.names") has to be of mode character before
+	  matching IDs in SpatialPointsDataFrame()
+
+2013-09-11 09:12  edzer
+
+	* R/SpatialLines-methods.R, man/SpatialPoints-class.Rd,
+	  tests/Examples/sp-Ex.Rout.save: added coerce from SpatialPoints
+	  to Line, Lines and SpatialLines
+
+2013-09-05 07:50  edzer
+
+	* DESCRIPTION: updated version; removed Maintainer and Author
+	  fields.
+
+2013-09-04 13:33  edzer
+
+	* DESCRIPTION, R/Class-CRS.R, R/Class-GridTopology.R,
+	  R/Class-Spatial.R, R/Class-SpatialGrid.R,
+	  R/Class-SpatialGridDataFrame.R, R/Class-SpatialLines.R,
+	  R/Class-SpatialLinesDataFrame.R, R/Class-SpatialPoints.R,
+	  R/Class-SpatialPointsDataFrame.R, R/Class-SpatialPolygons.R,
+	  R/Class-SpatialPolygonsDataFrame.R, R/dms.R: version bump, R
+	  dependency downgrade;
+	  reverted to pre-3.0.0 representation() instead of slots =
+	  definitions in setClass()
+
+2013-09-04 10:30  edzer
+
+	* DESCRIPTION: dependency on R 3.0.0
+
+2013-09-02 10:35  edzer
+
+	* R/SpatialPointsDataFrame-methods.R, oChangeLog, svn2cl.xsl,
+	  tests/fail1.Rout.save: reworked the SpatialPointsDataFrame
+	  construction checks.
+
+2013-09-02 09:49  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
 2013-09-02 09:47  rsbivand
 
 	* tests/fail1.Rout.save: test output fail

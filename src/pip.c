@@ -3,7 +3,7 @@
 
 #ifdef USING_R
 # include <R.h>
-# include <Rdefines.h>
+# include <Rinternals.h>
 /* # include <Rinternals.h> */
 # define R_UNIFORM unif_rand()
 # define R_NORMAL  norm_rand()
