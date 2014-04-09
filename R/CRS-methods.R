@@ -11,6 +11,8 @@ if (!is.R()) {
 "CRS" <- function(projargs) {
     if (missing(projargs)) projargs <- as.character(NA)
     if (nchar(projargs) == 0) projargs <- as.character(NA)
+# condition added 140301
+    stopifnot(is.character(projargs))
     if (!is.na(projargs)) {
         if (length(grep("^[ ]*\\+", projargs)) == 0)
             stop(paste("PROJ4 argument-value pairs must begin with +:", 
@@ -24,7 +26,8 @@ if (!is.R()) {
             warning("'lonlat' changed to 'longlat': ", projargs)
         }
     }    
-    if (is.na(projargs)) uprojargs <- projargs
+    if (is.na(projargs))
+        uprojargs <- projargs
     else uprojargs <- paste(unique(unlist(strsplit(projargs, " "))), 
 	collapse=" ")
     if (length(grep("= ", uprojargs)) != 0)
@@ -36,14 +39,11 @@ if (!is.R()) {
 #    if (length(grep("rgdal", search()) > 0) &&
 #      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
 # sessionInfo()/read.dcf() problem in loop 080307
-    if ("rgdal" %in% .packages()) {
-	if (!is.na(uprojargs)) {
-	    res <- checkCRSArgs(uprojargs)
-	    if (!res[[1]]) 
-	    	stop(res[[2]])
-            uprojargs <- res[[2]]
-	} else
-            uprojargs <- as.character(NA)
+    if (!is.na(uprojargs) && "rgdal" %in% .packages()) {
+	res <- checkCRSArgs(uprojargs)
+	if (!res[[1]]) 
+	    stop(res[[2]])
+        uprojargs <- res[[2]]
     }
     res <- new("CRS", projargs=uprojargs)
     res

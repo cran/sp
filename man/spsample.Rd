@@ -49,7 +49,7 @@ its end }
 \item{cellsize}{ if missing, a cell size is derived from the sample size
 \code{n}; otherwise, this cell size is used for all sampling methods
 except \code{"random"} }
-\item{nsig}{ for "pretty" coordinates; \code{spsample} does not result in
+\item{nsig}{ for "pretty" cell size; \code{spsample} does not result in
   pretty grids }
 }
 
@@ -67,8 +67,11 @@ Sampling type \code{"nonaligned"} is not implemented for line objects.
 
 Some methods may return NULL if no points could be successfully placed. 
 
-\code{makegrid} makes a regular grid, deriving cell size from the number
-of grid points requested (approximating the number of cells).
+\code{makegrid} makes a regular grid that covers \code{x}; when
+\code{cellsize} is not given it derives one from the number of grid
+points requested (approximating the number of cells). It tries to
+choose pretty cell size and grid coordinates.
+
 }
 
 \section{Methods}{

@@ -6,8 +6,6 @@ setClass("SpatialPointsDataFrame",
 		coords = matrix(NA), data = data.frame(), 
 		coords.nrs = numeric(0)),
 	validity = function(object) {
-		#if (!inherits(object@data, "data.frame"))
-		#	stop("data should be of class data.frame")
 		if (nrow(object@coords) < 1)
 			stop("no points set: too few rows")
 		if (ncol(object@coords) <= 1)

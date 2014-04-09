@@ -78,6 +78,7 @@ void sp_dists(double *u, double *v, double *uout, double *vout,
 		int *n, double *dists, int *lonlat);
 void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat);
 SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat);
+SEXP sp_duplicates(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat);
 SEXP pointsInBox(SEXP lb, SEXP px, SEXP py);
 SEXP tList(SEXP nl, SEXP m);
 

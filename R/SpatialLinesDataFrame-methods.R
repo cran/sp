@@ -96,7 +96,7 @@ setMethod("split", "SpatialLinesDataFrame", split.data.frame)
 
 print.SpatialLinesDataFrame = function(x, ..., digits = getOption("digits"), 
 		asWKT = .asWKT)
-	print(data.frame(asWKTSpatialLines(x, digits), x@data),...)
+	print(data.frame(asWKTSpatialLines(x, digits), x@data),..., digits = digits)
 
 setMethod("geometry", "SpatialLinesDataFrame",
 	function(obj) as(obj, "SpatialLines"))

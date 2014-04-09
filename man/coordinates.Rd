@@ -2,10 +2,10 @@
 \alias{coordinates}
 \alias{coordinates<-}
 
-\title{ sets spatial coordinates to create spatial data, or retrieves
-spatial coordinates }
-\description{ sets spatial coordinates to create spatial data, or retrieves
-spatial coordinates }
+\title{ set spatial coordinates to create a Spatial object, or retrieve
+spatial coordinates from a Spatial object}
+\description{ set spatial coordinates to create a Spatial object, or retrieve
+spatial coordinates from a Spatial object}
 \usage{
 	coordinates(obj, ...)
 	coordinates(object) <- value
@@ -21,7 +21,7 @@ which columns in \code{object} are the spatial coordinates. If the coordinates
 are part of object, giving the reference does not duplicate them, giving
 their value does duplicate them in the resulting structure.
 }
-\item{...}{additional arguments that may be used by particular instances}
+\item{...}{additional arguments that may be used by particular methods}
 }
 \value{ usually an object of class SpatialPointsDataFrame; if the coordinates
 set cover the full set of variables in object, an object of class SpatialPoints

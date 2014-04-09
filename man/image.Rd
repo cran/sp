@@ -6,6 +6,7 @@
 \alias{contour.SpatialPixelsDataFrame}
 \alias{as.image.SpatialGridDataFrame}
 \alias{image2Grid}
+\alias{imageScale}
 \title{ image gridded spatial data, or convert to format for image }
 \description{
 Convert gridded data in SpatialGridDataFrame to image format; call
@@ -89,6 +90,13 @@ points(coordinates(meuse), pch = "+")
 image(meuse.grid["dist"], main = "Distance to river Meuse",
  useRasterImage=TRUE)
 points(coordinates(meuse), pch = "+")
+
+# color scale:
+layout(cbind(1,2), c(4,1),1)
+image(meuse.grid["dist"])
+imageScale(meuse.grid$dist, axis.pos=4, add.axis=FALSE)
+axis(4,at=c(0,.2,.4,.8), las=2)
+
 data(Rlogo)
 d = dim(Rlogo)
 cellsize = abs(c(gt[2],gt[6]))

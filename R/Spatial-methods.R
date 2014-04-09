@@ -147,7 +147,7 @@ setMethod("summary", "Spatial", summary.Spatial)
 print.summary.Spatial = function(x, ...) {
     cat(paste("Object of class ", x[["class"]], "\n", sep = ""))
     cat("Coordinates:\n")
-    print(x[["bbox"]])
+    print(x[["bbox"]], ...)
     cat(paste("Is projected:", x[["is.projected"]], "\n"))
 #    cat(paste("proj4string : [", x[["proj4string"]], "]\n", sep=""))
     pst <- paste(strwrap(x[["proj4string"]]), collapse="\n")
@@ -165,11 +165,11 @@ print.summary.Spatial = function(x, ...) {
     }
 	if (!is.null(x$grid)) {
         cat("Grid attributes:\n")
-        print(x$grid)
+        print(x$grid, ...)
     }
     if (!is.null(x$data)) {
         cat("Data attributes:\n")
-        print(x$data)
+        print(x$data, ...)
     }
     invisible(x)
 }

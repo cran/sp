@@ -12,7 +12,6 @@
 		match.ID = FALSE # nothing to match to!
 	else if (match.ID && length(unique(cc.ID)) != nrow(data))
 		stop("nr of unique coords ID's (rownames) not equal to nr of data records")
-	#if (match.ID && is.character(attr(data, "row.names"))) {
 	if (match.ID) {
 		if (!is.null(cc.ID) && is(data, "data.frame")) { # match ID:
 			data.ID = row.names(data)
@@ -40,15 +39,9 @@ setMethod("addAttrToGeom", signature(x = "SpatialPoints", y = "data.frame"),
 		SpatialPointsDataFrame(x, y, match.ID = match.ID, ...)
 )
 
-#setReplaceMethod("coordinates", signature(object = "data.frame", value = "numeric"),
-#	coordinates.num)
-#coordinates.repl = function(object, value) {
-
 setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
   function(object, value) {
 	coord.numbers = NULL
-	#if (!is.list(object))
-	#	stop("coordinates can only be set on objects of class data.frame or list")
 	if (inherits(value, "formula")) {
 		cc = model.frame(value, object) # retrieve coords
 		if (dim(cc)[2] == 2) {
@@ -97,7 +90,7 @@ print.SpatialPointsDataFrame = function(x, ..., digits = getOption("digits"),
 		df = data.frame("coordinates" = cc, x@data)
 	}
 	row.names(df) = row.names(x@data)
-	print(df, ...)
+	print(df, ..., digits = digits)
 }
 setMethod("show", "SpatialPointsDataFrame", function(object) print(object))
 
@@ -123,16 +116,12 @@ as.data.frame.SpatialPointsDataFrame = function(x, ...)  {
 setAs("SpatialPointsDataFrame", "data.frame", function(from)
 	as.data.frame.SpatialPointsDataFrame(from))
 
-#setAs("SpatialPointsDataFrame", "AttributeList", function(from) from@data)
-
 names.SpatialPointsDataFrame <- function(x) names(x@data)
 "names<-.SpatialPointsDataFrame" <- function(x, value) { 
 	checkNames(value)
 	names(x@data) = value 
 	x 
 }
-
-#"coordnames<-.SpatialPointsDataFrame" <- function(x, value)
 
 points.SpatialPointsDataFrame = function(x, y = NULL, ...) 
 	points(as(x, "SpatialPoints"), ...)
@@ -185,14 +174,8 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 		i <- match(i, row.names(x))
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
-	#coords.nrs = x@coords.nrs
 	if (!isTRUE(j)) # i.e., we do some sort of column selection
 		x@coords.nrs = numeric(0) # will move coordinate colums last
-#	SpatialPointsDataFrame(coords = x@coords[i, , drop = FALSE],
-#		data = x@data[i, j, drop = FALSE], 
-#		coords.nrs = coords.nrs, 
-#		proj4string = CRS(proj4string(x)), 
-#		match.ID = FALSE)
 	x@coords = x@coords[i, , drop = FALSE]
 	x@bbox = .bboxCoords(x@coords)
 	x@data = x@data[i, j, ..., drop = FALSE]

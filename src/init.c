@@ -24,6 +24,7 @@ static R_CallMethodDef CallEntries[] = {
 /*    {"insiders", (DL_FUNC) &insiders, 2}, */
     {"R_point_in_polygon_sp", (DL_FUNC) &R_point_in_polygon_sp, 4},
 	{"sp_zerodist", (DL_FUNC) &sp_zerodist, 4},
+	{"sp_duplicates", (DL_FUNC) &sp_duplicates, 4},
     {"pointsInBox", (DL_FUNC) &pointsInBox, 3},
     {"tList", (DL_FUNC) &tList, 2},
 /* RSB 091203 */

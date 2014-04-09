@@ -18,8 +18,20 @@ setMethod('merge', signature(x='Spatial', y='data.frame'),
 	d$donotusethisvariablename976 <- 1:nrow(d)
 	
 	y <- unique(y)
-	i <- apply(y[, by.y, drop=FALSE], 1, paste) %in% 
-			apply(x@data[, by.x, drop=FALSE], 1, paste)
+# email, RJH, 12/24/13, replace:
+#	i <- apply(y[, by.y, drop=FALSE], 1, paste) %in% 
+#			apply(x@data[, by.x, drop=FALSE], 1, paste)
+# by the following block:
+
+	i <- apply(y[, by.y, drop=FALSE], 1, 
+		function(x) paste(x, collapse='_')) %in% 
+		apply(x@data[, by.x, drop=FALSE], 1, 
+			function(x) paste(x, collapse='_'))
+	if (all(!i))
+		warning("none of the records in y can be matched to x")
+	else if (sum(!i) > 0)
+		warning(paste(sum(!i), "records in y cannot be matched to x"))
+
 	y <- y[i, ,drop=FALSE]
 	if (isTRUE(any(table(y[, by.y]) > 1)))
 		stop("'y' has multiple records for one or more 'by.y' key(s)")

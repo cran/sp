@@ -58,12 +58,10 @@ image(meuse.grid["dist"])
 plot(xxpl, add = TRUE)
 points(xx, cex = .5)
 \dontrun{
-df = as.data.frame(meuse.grid)[overlay(meuse.grid, xx),]
-# avoiding overlay:
-df = as.data.frame(meuse.grid[over(xx,geometry(meuse.grid)),])
+df = as.data.frame(meuse.grid[xx,])
 x = SpatialPolygonsDataFrame(xxpl, df, match.ID = FALSE)
 spplot(x, "dist")
-}
 spplot(aggregate(meuse.grid[,1:3], xxpl), main = "aggregated meuse.grid")
+}
 }
 \keyword{spatial}

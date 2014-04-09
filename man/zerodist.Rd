@@ -34,7 +34,11 @@ observations if present, and else returns \code{obj}. }
 spatial locations result in singular covariance matrices.
 This function may help identify and remove spatial duplices.
 The full matrix with all pair-wise distances is not stored; the
-double loop is done at the C level.  }
+double loop is done at the C level.  
+
+When \code{unique.ID=TRUE} is used, sp 1.0-14 returned the highest
+index, sp 1.0-15 and later return the lowest index.
+}
 
 \examples{
 data(meuse)

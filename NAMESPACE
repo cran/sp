@@ -6,6 +6,7 @@ useDynLib(sp,
 	Polygons_c,
 	R_point_in_polygon_sp,
 	sp_zerodist,
+	sp_duplicates,
 	SpatialPolygons_c,
 	SpatialPolygons_getIDs_c,
 	SpatialPolygons_plotOrder_c,
@@ -94,6 +95,7 @@ export(
 
 	as.image.SpatialGridDataFrame,
 	image2Grid,
+	imageScale,
 	
 	gridparameters,
 	SpatialPixels,

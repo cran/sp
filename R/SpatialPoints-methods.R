@@ -21,8 +21,6 @@
 .checkNumericCoerce2double = function(obj) {
 	if (any(!unlist(lapply(obj, is.numeric))))
 		stop("cannot retrieve coordinates from non-numeric elements")
-	#lapply(obj, function(x) { if(!is.numeric(x)) 
-	#	stop("cannot retrieve coordinates from non-numeric elements") })
 	fin_check <- sapply(obj, function(x) all(is.finite(x)))
         if (!all(fin_check)) stop("non-finite coordinates")
         lapply(obj, as.double)
@@ -40,7 +38,6 @@ setMethod("coordinates", "matrix",
                     stop("non-finite coordinates")
 		dn = dimnames(obj)
 		dd = dim(obj)
-#		obj = apply(obj, 2, as.double)
 		storage.mode(obj) <- "double"
 		dim(obj) = dd
 		dimnames(obj) = dn
@@ -101,25 +98,18 @@ row.names.SpatialPoints <- function(x) {
 	x
 }
 
-#"[.SpatialPoints" =  function(x, i, j, ..., drop = T) {
 setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	if (!missing(j))
 		warning("j index ignored")
-#	drop = FALSE
 	if (is.character(i))
 		i <- match(i, row.names(x))
 	else if (is(i, "Spatial"))
 		i = !is.na(over(x, geometry(i)))
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
-#	SpatialPoints(coords=x@coords[i, , drop=drop], 
-#		proj4string = CRS(proj4string(x)))
 	x@coords = x@coords[i, , drop = FALSE]
-#	print(drop)
-       if (drop) {
-            x@bbox = .bboxCoords(x@coords)
-#            print(bbox(x))
-        }
+	if (drop)
+		x@bbox = .bboxCoords(x@coords)
 	x
 })
 

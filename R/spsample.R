@@ -1,4 +1,35 @@
 makegrid = function(x, n = 10000, nsig = 2, cellsize, 
+		offset = rep(0.5, nrow(bb))) {
+	if (is(x, "Spatial"))
+		bb = bbox(x)
+	else
+		bb = x
+	if (missing(cellsize)) {
+		pw = 1.0/nrow(bb)
+		cellsize = signif((prod(apply(bb, 1, diff))/n) ^ pw, nsig)
+	}
+	if (length(cellsize) == 1)
+		cellsize = rep(cellsize, nrow(bb))
+	# find pretty grid coordinates:
+	nsig = max(ceiling(log10(bb[1,] / cellsize)))
+	min.coords = signif(bb[,1] + offset * cellsize, nsig)
+	sel = min.coords - offset * cellsize > bb[,1]
+	if (any(sel))
+		min.coords[sel] = min.coords[sel] - cellsize[sel]
+	expand.grid.arglist = list()
+	for (i in 1:nrow(bb)) {
+		name = paste("x", i, sep = "")
+		from = min.coords[i]
+		by = cellsize[i]
+		length.out = round(1 + (bb[i,2] - from) / by)
+		expand.grid.arglist[[name]] = seq(from, by=by, length.out=length.out)
+	}
+	xy = do.call(expand.grid, expand.grid.arglist)
+	attr(xy, "cellsize") = cellsize
+	return(xy)
+}
+
+makegrid0 = function(x, n = 10000, nsig = 2, cellsize, 
 		offset = rep(0.5,nrow(bb))) {
 #cat("n in makegrid", n, "\n")
 	if (is(x, "Spatial"))
@@ -10,6 +41,7 @@ makegrid = function(x, n = 10000, nsig = 2, cellsize,
 	if (missing(cellsize)) {
 		pw = 1.0/nrow(bb)
 		cellsize = signif((prod(apply(bb, 1, diff))/n) ^ pw, nsig)
+		cellsize = min(cellsize, min(apply(bb, 1, diff)))
 	}
 	if (length(cellsize) == 1)
 		cellsize = rep(cellsize, nrow(bb))
@@ -50,10 +82,10 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 		xy = hexGrid(bb, n = n, offset = offset, cellsize = cellsize)
 	else {
 		if (is.na(n))
-			xy = makegrid(bb, nsig = 20, cellsize = cellsize, 
+			xy = makegrid0(bb, nsig = 20, cellsize = cellsize, 
 				offset = offset)
 		else
-			xy = makegrid(bb, n = n, nsig = 20, cellsize = cellsize,
+			xy = makegrid0(bb, n = n, nsig = 20, cellsize = cellsize,
 				offset = offset)
 		cellsize = attr(xy, "cellsize")
 		if (type == "stratified") {

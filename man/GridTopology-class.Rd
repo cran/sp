@@ -6,6 +6,8 @@
 \alias{show,GridTopology-method}
 \alias{show,summary.GridTopology-method}
 \alias{coerce,GridTopology,data.frame-method}
+\alias{coerce,SpatialGrid,GridTopology-method}
+\alias{coerce,SpatialPixels,GridTopology-method}
 
 \title{Class "GridTopology" }
 \description{ class for defining a rectangular grid of

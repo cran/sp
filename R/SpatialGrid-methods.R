@@ -3,7 +3,6 @@ SpatialPixels = function(points, tolerance = sqrt(.Machine$double.eps),
 	if (!is(points, "SpatialPoints"))
 		stop("points should be of class or extending SpatialPoints")
 	is.gridded = gridded(points)
-#	points = as(points, "SpatialPoints")
 	if (is.na(proj4string(points))) 
 		proj4string(points) = proj4string
 	if (is.null(grid))
@@ -45,10 +44,7 @@ row.names.SpatialPixels <- function(x) {
 	ret
 }
 
-row.names.SpatialGrid <- function(x) {
-	#warning("row.names order might not reflect grid sequence!")
-	1:prod(x@grid@cells.dim)
-}
+row.names.SpatialGrid <- function(x) 1:prod(x@grid@cells.dim)
 
 setMethod("coordinates", "SpatialGrid", function(obj) coordinates(obj@grid))
 
@@ -149,32 +145,25 @@ gridIndex2nb = function(obj, maxdist = sqrt(2), fullMat = TRUE, ...) {
 
 setMethod("[", "SpatialPixels",
 	function(x, i, j, ..., drop = FALSE) {
-#		if (!missing(drop))
-#			stop("don't supply drop: it needs to be FALSE anyway")
 		if (!missing(j))
 			stop("can only select pixels with a single index")
 		if (missing(i))
 			return(x)
 		if (is(i, "Spatial"))
 			i = !is.na(over(x, geometry(i)))
-		if (drop) { # default: adjust bbox and grid
+		if (drop) { # if FALSE: adjust bbox and grid
 			res = as(x, "SpatialPoints")[i]
 			tolerance = list(...)$tolerance
 			if (!is.null(tolerance))
 				res = SpatialPixels(res, tolerance = tolerance)
 			else
 				gridded(res) = TRUE
-		} else {
-			res = new("SpatialPixels", bbox = x@bbox, 
+			res
+		} else # default: don't adjust bbox and grid
+			new("SpatialPixels", bbox = x@bbox, 
 				proj4string = x@proj4string,	
 				coords = x@coords[i, , drop = FALSE], grid = x@grid, 
 				grid.index = x@grid.index[i])
-			#x@coords = x@coords[i, , drop = FALSE]
-			#x@grid.index = x@grid.index[i]
-			#x@bbox = as.matrix(t(apply(x@coords, 2, range)))
-			#res = x
-		}
-		res
 	}
 )
 
@@ -224,24 +213,6 @@ setAs("SpatialPixels", "data.frame",
 setAs("SpatialGrid", "data.frame", 
 	function(from) as.data.frame.SpatialGrid(from))
 
-# uncommented 070122 RSB
-#setAs("SpatialGrid", "SpatialPixels", function(from)
-#	SpatialPixels(SpatialPoints(coordinates(from), from@proj4string))
-#)
-# added EJP, 100521
-## outcommented 100607 as it breaks the ASDAR scripts in csdacm.R
-#setAs("SpatialGrid", "SpatialPoints", function(from)
-#	SpatialPoints(coordinates(from), from@proj4string)
-#)
-#xxxx
-#setAs("SpatialGrid", "SpatialPoints", function(from)
-#	as(as(from, "SpatialPixels"), "SpatialPoints")
-#)
-#setIs("SpatialGrid", "SpatialPoints", coerce = function(from)
-#	as(as(from, "SpatialPixels"), "SpatialPoints"), 
-#	replace = function(obj, value) stop("no replace function for this coercion")
-#)
-
 print.SpatialPixels = function(x, ...) {
 	cat("Object of class SpatialPixels\n")
 	print(summary(x@grid))
@@ -251,7 +222,6 @@ print.SpatialPixels = function(x, ...) {
 		"Coordinate Reference System (CRS) arguments:", 
 		proj4string(x))), collapse="\n")
 	cat(pst, "\n")
-#	print(as(x, "SpatialPoints"))
 	invisible(x)
 }
 setMethod("show", "SpatialPixels", function(object) print.SpatialPixels(object))
@@ -265,7 +235,6 @@ print.SpatialGrid = function(x, ...) {
 		"Coordinate Reference System (CRS) arguments:", 
 		proj4string(x))), collapse="\n")
 	cat(pst, "\n")
-#	print(as(x, "SpatialPoints"))
 	invisible(x)
 }
 setMethod("show", "SpatialGrid", function(object) print.SpatialGrid(object))
@@ -285,10 +254,6 @@ as.SpatialPolygons.SpatialPixels <- function(obj) {
 		yi <- obj_crds[i,2]
 		x <- c(xi-cS2x, xi-cS2x, xi+cS2x, xi+cS2x, xi-cS2x)
 		y <- c(yi-cS2y, yi+cS2y, yi+cS2y, yi-cS2y, yi-cS2y)
-#                x <- c(rep(xi-cS2x, 10), seq(xi-cS2x, xi+cS2x, length.out=10),
-#                    rep(xi+cS2x, 10), seq(xi+cS2x, xi-cS2x, length.out=10))
-#                y <- c(seq(yi-cS2y, yi+cS2y, length.out=10), rep(yi+cS2y, 10),
-#                    seq(yi+cS2y, yi-cS2y, length.out=10), rep(yi-cS2y, 10))
 		Srl[[i]] <- Polygons(list(Polygon(coords=cbind(x, y))), ID=IDs[i])
 	}
 	res <- SpatialPolygons(Srl, proj4string=CRS(proj4string(obj)))
@@ -326,3 +291,6 @@ setReplaceMethod("coordnames", signature(x = "SpatialGrid",
 		x
 	}
 )
+
+setAs("SpatialGrid", "GridTopology", function(from) getGridTopology(from))
+setAs("SpatialPixels", "GridTopology", function(from) getGridTopology(from))
