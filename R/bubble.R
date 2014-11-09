@@ -1,5 +1,12 @@
+# Colorbrewer.org, 5-class PiYG
+#d01c8b
+#f1b6da
+#f7f7f7
+#b8e186
+#4dac26
+
 "bubble" <- function (obj, zcol = 1, ..., fill = TRUE, maxsize = 3, do.sqrt = TRUE, 
-	pch, col = c(2, 3), key.entries = quantile(data[,zcol]),
+	pch, col = c("#d01c8b", "#4dac26"), key.entries = quantile(data[,zcol]),
 	main = ifelse(is.numeric(zcol), names(data)[zcol], zcol),
     identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, panel = panel.bubble,

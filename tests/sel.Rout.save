@@ -1,8 +1,7 @@
 
-R version 2.12.0 (2010-10-15)
-Copyright (C) 2010 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: i486-pc-linux-gnu (32-bit)
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -41,7 +40,8 @@ Type 'q()' to quit R.
 > points(pts, col='red')
 > 
 > over(pts, pol)
-[1] NA NA  2  4  4
+ a  b  c  d  e 
+NA NA  2  4  4 
 > over(pts, poldf)
    z zz    f
 a NA NA <NA>
@@ -60,7 +60,8 @@ e  3  4
 > #rbind(poldf, over(pts, poldf[1:2], fn = mean))
 > 
 > over(pol, pts)
-[1] NA  3 NA  4
+x9 x2 x3 x4 
+NA  3 NA  4 
 > over(pol, ptsdf)
    z1 z2    f
 x9 NA NA <NA>
@@ -98,7 +99,8 @@ proj4string : [NA]
 > df6 = data.frame(z = 6:1, f = c("a", "a", "b", "b", "c", "c"))
 > sgdf = SpatialGridDataFrame(gt, df6)
 > over(sg, pol)
-[1] NA NA NA  2  4 NA
+ 1  2  3  4  5  6 
+NA NA NA  2  4 NA 
 > over(sg, poldf)
    z zz    f
 1 NA NA <NA>
@@ -119,7 +121,8 @@ proj4string : [NA]
 > spix = as(sg, "SpatialPixels")
 > spixdf = as(sgdf, "SpatialPixelsDataFrame")
 > over(spix, pol)
-[1] NA NA NA  2  4 NA
+ 1  2  3  4  5  6 
+NA NA NA  2  4 NA 
 > over(spix, poldf)
    z zz    f
 1 NA NA <NA>
@@ -138,7 +141,8 @@ proj4string : [NA]
 6 NA NA
 > 
 > over(pol, sg)
-[1] NA  4 NA  5
+x9 x2 x3 x4 
+NA  4 NA  5 
 > over(pol, sgdf)
     z    f
 x9 NA <NA>
@@ -153,7 +157,8 @@ x3 NA
 x4  2
 > 
 > over(pol, spix)
-[1] NA  4 NA  5
+x9 x2 x3 x4 
+NA  4 NA  5 
 > over(pol, spixdf)
     z    f
 x9 NA <NA>
@@ -168,9 +173,11 @@ x3 NA
 x4  2
 > 
 > over(pts, sg)
-[1] 1 2 4 5 5
+a b c d e 
+1 2 4 5 5 
 > over(pts, spix)
-[1] 1 2 4 5 5
+a b c d e 
+1 2 4 5 5 
 > over(pts, sgdf)
   z f
 a 6 a
@@ -191,3 +198,6 @@ e 2 c
 > #over(pts, sgdf, returnList=TRUE)
 > #over(pts, spixdf, returnList=TRUE)
 > 
+> proc.time()
+   user  system elapsed 
+  0.554   0.030   0.569 

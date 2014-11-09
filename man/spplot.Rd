@@ -15,6 +15,8 @@
 \alias{spplot,SpatialPolygonsDataFrame-method}
 \alias{spplot,SpatialLinesDataFrame-method}
 \alias{spplot,SpatialPointsDataFrame-method}
+\alias{set_col_regions}
+\alias{get_col_regions}
 
 \title{Plot methods for spatial data with attributes}
 \description{Lattice (trellis) plot methods for spatial data with attributes}
@@ -23,22 +25,24 @@ spplot(obj, ...)
 spplot.grid(obj, zcol = names(obj), ..., names.attr, scales = list(draw = FALSE),
  xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim),
  panel = panel.gridplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ],
- ylim = bbox(obj)[2, ], checkEmptyRC = TRUE)
+ ylim = bbox(obj)[2, ], checkEmptyRC = TRUE, col.regions = get_col_regions())
 spplot.polygons(obj, zcol = names(obj), ..., names.attr, scales = list(draw = FALSE),
  xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim),
  panel = panel.polygonsplot, sp.layout = NULL, formula, xlim = bbox(obj)[1, ],
- ylim = bbox(obj)[2, ])
+ ylim = bbox(obj)[2, ], col.regions = get_col_regions())
 spplot.points(obj, zcol = names(obj), ..., names.attr, scales = list(draw = FALSE),
  xlab = NULL, ylab = NULL, aspect = mapasp(obj,xlim,ylim),
  panel = panel.pointsplot, sp.layout = NULL, identify = FALSE, formula,
  xlim = bbexpand(bbox(obj)[1, ], 0.04), ylim = bbexpand(bbox(obj)[2, ], 0.04),
- edge.col = "transparent", colorkey = FALSE)
+ edge.col = "transparent", colorkey = FALSE, col.regions = get_col_regions())
 mapLegendGrob(obj, widths = unit(1, "cm"), heights = unit(1, "cm"),
 	fill = "black", just = "right")
 sp.theme(set = FALSE, regions = list(col = bpy.colors(100)), ...)
 layout.north.arrow(type = 1)
 layout.scale.bar(height = 0.05)
 spplot.locator(n = 512, type = "n", ...)
+set_col_regions(value)
+get_col_regions()
 }
 \arguments{
 \item{obj}{ object of class extending \link{Spatial-class}} 
@@ -84,6 +88,10 @@ that can be passed to trellis.par.set() }
 \item{checkEmptyRC}{logical; if TRUE, a check is done to see if
 empty rows or columns are present, and need to be taken care of. Setting
 to FALSE may improve speed. }
+\item{col.regions}{ vector with fill colours; in case the variable
+to be plotted is a factor, this vector should have length equal to the
+number of factor levels } 
+\item{value}{ vector with color values, default for \code{col.regions}}
 }
 \value{
 spplot returns a lattice plot of class "trellis", if you fail to "see" it,
@@ -93,6 +101,8 @@ the selected points.
 
 \code{spplot.locator} returns a matrix with identified point locations;
 use \code{trellis.focus} first to focus on a given panel.
+
+\code{get_col_regions} returns the default value for \code{col.regions}
 }
 
 \section{Methods}{
@@ -112,20 +122,16 @@ methods for \code{spplot}; see \link{spplot-methods}.
 
 Useful arguments that can be passed as \code{...} are: 
 \describe{
-\item{\code{layout}}{for the layout of panels}
-\item{\code{col.regions}}{to specify fill colours; in case the variable
-to be plotted is a factor, this vector should have length equal to the
-number of factor levels; when plotting points it may also have length one,
-using symbol type to distinguish classes }
-\item{\code{pretty}}{ for colour breaks at pretty numbers}
-\item{\code{at}}{to specify at which values colours change}
-\item{\code{as.table}}{to start drawing panels upper-left instead
+\item{\code{layout}}{integer; for the layout of panels (cols,rows)}
+\item{\code{pretty}}{logical; choose colour breaks at pretty numbers?}
+\item{\code{at}}{specify at which values colours change}
+\item{\code{as.table}}{logical; start drawing panels upper-left instead
 of lower-left}
 \item{\code{page}}{to add marks to each plotted page}
 }
 
 for useful values see the appropriate documentation of \link{xyplot}
-and \link{levelplot}.
+(in case of points), and \link{levelplot} (otherwise).
 
 If \code{obj} is of SpatialPointsDataFrame, the following options are
 useful to pass:

@@ -12,7 +12,7 @@ rbind.SpatialPoints <- function(...) {
 	dots = list(...)
 	names(dots) <- NULL
 	stopifnot(identicalCRS(dots))
-	SpatialPoints(do.call(rbind, lapply(list(...), coordinates)),
+	SpatialPoints(do.call(rbind, lapply(dots, coordinates)),
 		CRS(proj4string(dots[[1]])))
 }
 

@@ -52,6 +52,8 @@ export(
 	set_Polypath,
 	get_PolypathRule, 
 	set_PolypathRule,
+	set_col_regions,
+	get_col_regions,
 
 	coordinatevalues,
 

@@ -5,9 +5,9 @@
 \title{ find point pairs with equal spatial coordinates }
 \description{ find point pairs with equal spatial coordinates }
 \usage{ 
-zerodist(obj, zero = 0.0, unique.ID = FALSE) 
-zerodist2(obj1, obj2, zero = 0.0) 
-remove.duplicates(obj, zero = 0.0, remove.second = TRUE)
+zerodist(obj, zero = 0.0, unique.ID = FALSE, memcmp = TRUE) 
+zerodist2(obj1, obj2, zero = 0.0, memcmp = TRUE) 
+remove.duplicates(obj, zero = 0.0, remove.second = TRUE, memcmp = TRUE)
 }
 \arguments{
 \item{obj}{ object of, or extending, class \link{SpatialPoints} }
@@ -19,6 +19,7 @@ units are those of the coordinates for projected data or unknown projection,
 or km if coordinates are defined to be longitute/latitude }
 \item{unique.ID}{logical; if TRUE, return an ID (integer) for each point 
 that is different only when two points do not share the same location }
+\item{memcmp}{use \code{memcmp} to find exactly equal coordinates; see NOTE}
 \item{remove.second}{logical; if TRUE, the second of each pair of duplicate
 points is removed, if FALSE remove the first}
 }
@@ -36,8 +37,16 @@ This function may help identify and remove spatial duplices.
 The full matrix with all pair-wise distances is not stored; the
 double loop is done at the C level.  
 
-When \code{unique.ID=TRUE} is used, sp 1.0-14 returned the highest
-index, sp 1.0-15 and later return the lowest index.
+When \code{unique.ID=TRUE} is used, an integer index is returned. sp
+1.0-14 returned the highest index, sp 1.0-15 and later return the
+lowest index.
+
+When \code{zero} is 0.0 and \code{memcmp} is not \code{FALSE},
+\code{zerodist} uses \code{memcmp} to evaluate exact equality of
+coordinates; there may be cases where this results in a different
+evaluation compared to doing the double arithmetic of computing
+distances.
+
 }
 
 \examples{

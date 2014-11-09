@@ -189,7 +189,7 @@ setMethod("[", "SpatialGrid",
 			stop("NAs not permitted in indices")
 		m = matrix(idx, gr@cells.dim[2], gr@cells.dim[1], byrow = TRUE)[rows,cols]
 		idx = as.vector(m) # t(m)?
-		cc = SpatialPixels(SpatialPoints(coordinates(x)[idx,], CRS(proj4string(x))))
+		cc = SpatialPixels(SpatialPoints(coordinates(x)[idx,,drop=FALSE], CRS(proj4string(x))))
 		cc = as(cc, "SpatialGrid")
 		cc
 	}

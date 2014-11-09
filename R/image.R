@@ -21,84 +21,84 @@ image.SpatialGridDataFrame = function(x, attr = 1, xcol = 1, ycol = 2,
 			xlim = xlim, ylim = ylim, axes = axes, asp = asp, ..., 
 			setParUsrBB=setParUsrBB))
 
-        if (exists("rasterImage") && useRasterImage) {
-            if (.isSDI()) warning("Bug in SDI raster handling - your R graphics window may stop displaying output")
-            bb <- bbox(x)
-            scl <- function(xx, zlim) {
-	    	xx = matrix(as.numeric(xx), nrow(xx), ncol(xx))
-                #dr <- diff(range(x, na.rm = TRUE))
-		dr = diff(zlim)
-                #mx <- min(x, na.rm  = TRUE)
-		mx = zlim[1]
-		xx[xx < zlim[1] | xx > zlim[2]] = NA
-                if (abs(dr) < .Machine$double.eps)
-                    res <- ifelse(is.na(xx), xx, 0.5)
-                else res <- (xx - mx) / dr
-                res
-            }
-        }
+	if (exists("rasterImage") && useRasterImage) {
+		if (.isSDI()) 
+			warning("Bug in SDI raster handling - your R graphics window may stop displaying output")
+		bb <- bbox(x)
+		scl <- function(xx, zlim) {
+			xx = matrix(as.numeric(xx), nrow(xx), ncol(xx))
+			#dr <- diff(range(x, na.rm = TRUE))
+			dr = diff(zlim)
+			#mx <- min(x, na.rm  = TRUE)
+			mx = zlim[1]
+			xx[xx < zlim[1] | xx > zlim[2]] = NA
+			if (abs(dr) < .Machine$double.eps)
+				res <- ifelse(is.na(xx), xx, 0.5)
+			else res <- (xx - mx) / dr
+				res
+		}
+	}
 	if (is.null(red)) {
-            if (exists("rasterImage") && useRasterImage) {
-	    	if (!missing(breaks))
-			warning("set useRasterImage to FALSE when using breaks")
-                #x <- x[attr]
+		if (exists("rasterImage") && useRasterImage) {
+			if (!missing(breaks))
+				warning("set useRasterImage to FALSE when using breaks")
+			#x <- x[attr]
 #                NAs <- is.na(x[[1]])
-                m <-  scl(t(matrix(x[attr][[1]], x@grid@cells.dim[1],
+			m <-  scl(t(matrix(x[attr][[1]], x@grid@cells.dim[1],
                     x@grid@cells.dim[2])), zlim)
-                m <- matrix(col[as.vector(m) * (length(col)-1) + 1], 
-                    nrow(m), ncol(m))
-                ## if missing, set to transparent
+			m <- matrix(col[as.vector(m) * (length(col)-1) + 1], nrow(m), ncol(m))
+			## if missing, set to transparent
 #                m[is.na(m)] <- rgb(1, 1, 1, 0)
-                rasterImage(m, bb[1,1], bb[2,1], bb[1,2], bb[2,2],
-                    interpolate = interpolate, angle = angle)
-            } else {
-		if (is.factor(x[[attr]]))
-			x[[attr]] = as.numeric(x[[attr]])
-		image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), 
+			rasterImage(m, bb[1,1], bb[2,1], bb[1,2], bb[2,2],
+				interpolate = interpolate, angle = angle)
+		} else {
+			if (is.factor(x[[attr]]))
+				x[[attr]] = as.numeric(x[[attr]])
+			image(as.image.SpatialGridDataFrame(x[attr], xcol, ycol), 
                   add = TRUE, col = col, zlim = zlim, breaks = breaks, ...)
-            }
+		}
 	} else {
 	    if (is.null(green) || is.null(blue)) 
-		stop("all colour bands must be given")
+			stop("all colour bands must be given")
 # modified to handle NAs in input (typical for coercion of Spatial Pixels
 # to Spatial Grid)
-            if (exists("rasterImage") && useRasterImage) {
+		if (exists("rasterImage") && useRasterImage) {
 	    	if (!missing(breaks))
-			warning("set useRasterImage to FALSE when using breaks")
-                xd <- x@data[, c(red, green, blue)]
-                NAs <- is.na(xd[, 1]) | is.na(xd[, 2]) | is.na(xd[, 3])
-                if (any(NAs))
-                    xd <- xd[!NAs, ]
-                ## create RGBs (using alpha=1 by default)
-                RGBs <- rgb(xd, maxColorValue = 255)
-                if (any(NAs)) {
-                    z <- rep(NA, length(NAs))
-                    z[!NAs] <- RGBs
-                    RGBs <- z
-                }
-                cv <- coordinatevalues(getGridTopology(x))
-                m <- t(matrix(RGBs, x@grid@cells.dim[1], 
-                    x@grid@cells.dim[2], byrow = FALSE))
-                rasterImage(m, bb[1,1], bb[2,1], bb[1,2], bb[2,2],
-                    interpolate = interpolate, angle = angle)
-            } else {
-		xd <- x@data[,c(red, green, blue)]
-		NAs <- is.na(xd[,1]) | is.na(xd[,2]) | is.na(xd[,3])
-		if (any(NAs)) xd <- xd[!NAs,]
-		RGBs <- rgb(xd, maxColorValue = 255)
-		if (any(NAs)) {
-		    z <- rep(NA, length(NAs))
-		    z[!NAs] <- RGBs
-		    RGBs <- z
+				warning("set useRasterImage to FALSE when using breaks")
+			xd <- x@data[, c(red, green, blue)]
+			NAs <- is.na(xd[, 1]) | is.na(xd[, 2]) | is.na(xd[, 3])
+			if (any(NAs))
+				xd <- xd[!NAs, ]
+			## create RGBs (using alpha=1 by default)
+			RGBs <- rgb(xd, maxColorValue = 255)
+			if (any(NAs)) {
+				z <- rep(NA, length(NAs))
+				z[!NAs] <- RGBs
+				RGBs <- z
+			}
+			cv <- coordinatevalues(getGridTopology(x))
+			m <- t(matrix(RGBs, x@grid@cells.dim[1], 
+				x@grid@cells.dim[2], byrow = FALSE))
+			rasterImage(m, bb[1,1], bb[2,1], bb[1,2], bb[2,2],
+				interpolate = interpolate, angle = angle)
+		} else {
+			xd <- x@data[,c(red, green, blue)]
+			NAs <- is.na(xd[,1]) | is.na(xd[,2]) | is.na(xd[,3])
+			if (any(NAs)) xd <- xd[!NAs,]
+			RGBs <- rgb(xd, maxColorValue = 255)
+			if (any(NAs)) {
+				z <- rep(NA, length(NAs))
+				z[!NAs] <- RGBs
+				RGBs <- z
+			}
+			fcols <- factor(RGBs)
+			cv <- coordinatevalues(getGridTopology(x))
+			m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
+				x@grid@cells.dim[2], byrow=FALSE)
+			res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), 
+				z=m[,ncol(m):1,drop=FALSE])
+			image(res, col=levels(fcols), add = TRUE, breaks = breaks, ...)
 		}
-		fcols <- factor(RGBs)
-		cv <- coordinatevalues(getGridTopology(x))
-		m <- matrix(as.integer(fcols), x@grid@cells.dim[1], 
-			x@grid@cells.dim[2], byrow=FALSE)
-		res <- list(x=cv[[xcol]], y=sort(cv[[ycol]]), 
-			z=m[,ncol(m):1,drop=FALSE])
-		image(res, col=levels(fcols), add = TRUE, breaks = breaks, ...)
-            }
 	}
 }
 

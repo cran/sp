@@ -180,7 +180,7 @@ points(meuse.grid, pch = 3, cex=.2, col = "#80808080")
 ###################################################
 ### code chunk number 21: over.Rnw:338-341
 ###################################################
-sl.agg = aggregate(meuse.grid, sl)
+sl.agg = aggregate(meuse.grid[,1:3], sl)
 class(sl.agg)
 as.data.frame(sl.agg)
 

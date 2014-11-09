@@ -57,3 +57,13 @@ set_PolypathRule <- function(value) {
         get_PolypathRule()
 }
 
+set_col_regions <- function(value) {
+        stopifnot(is.character(value))
+        stopifnot(length(value) > 1)
+	    assign("col.regions", value, envir = .spOptions)
+		get_col_regions()
+}
+
+get_col_regions <- function() {
+	    get("col.regions", envir = .spOptions)
+}

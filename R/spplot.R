@@ -150,7 +150,8 @@ getFormulaLevelplot = function(sdf, zcol) {
 spplot.grid = function(obj, zcol = names(obj), ..., names.attr, 
 		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
 		aspect = mapasp(obj,xlim,ylim), panel = panel.gridplot, sp.layout = NULL, formula, 
-		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,], checkEmptyRC = TRUE) {
+		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,], checkEmptyRC = TRUE,
+		col.regions = get_col_regions()) {
 	if (is.null(zcol)) stop("no names method for object")
 	if (checkEmptyRC)
 		sdf = addNAemptyRowsCols(obj) # returns SpatialPointsDataFrame
@@ -171,12 +172,13 @@ spplot.grid = function(obj, zcol = names(obj), ..., names.attr,
 	scales = longlat.scales(obj, scales, xlim, ylim)
 	args = append(list(formula, data = as(sdf, "data.frame"), 
 		aspect = aspect, panel = panel, xlab = xlab, ylab = ylab, scales = scales,
-		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
+		sp.layout = sp.layout, xlim = xlim, ylim = ylim, col.regions = col.regions), 
+		list(...))
 	# deal with factor variables:
 	if (all(unlist(lapply(obj@data[zcol], is.factor)))) {
-		if (!is.null(args$col.regions) &&
-				nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
-			stop("length of col.regions should match number of factor levels")
+		#if (!is.null(args$col.regions) &&
+		#		nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
+		#	stop("length of col.regions should match number of factor levels")
 		args$data[[zcol2]] = as.numeric(args$data[[zcol2]])
 		if (is.null(args$colorkey) || (is.logical(args$colorkey) && args$colorkey)
 				|| (is.list(args$colorkey) && is.null(args$colorkey$at) && 
@@ -203,7 +205,8 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 		scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
 		aspect = mapasp(obj,xlim,ylim), 
 		panel = panel.polygonsplot, sp.layout = NULL, formula, 
-		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,]) {
+		xlim = bbox(obj)[1,], ylim = bbox(obj)[2,],
+		col.regions = get_col_regions()) {
 
 	if (is.null(zcol)) stop("no names method for object")
 	sdf = as(obj, "data.frame")
@@ -235,11 +238,12 @@ spplot.polygons = function(obj, zcol = names(obj), ..., names.attr,
 	args = append(list(formula, data = as(sdf, "data.frame"),
 		aspect = aspect, grid.polygons = grid.polygons, panel =
 		panel, xlab = xlab, ylab = ylab, scales = scales,
-		sp.layout = sp.layout, xlim = xlim, ylim = ylim), list(...))
+		sp.layout = sp.layout, xlim = xlim, ylim = ylim,
+		col.regions = col.regions), list(...))
 	if (all(unlist(lapply(obj@data[zcol], is.factor)))) {
-		if (!is.null(args$col.regions) &&
-				nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
-			stop("length of col.regions should match number of factor levels")
+		#if (!is.null(args$col.regions) &&
+		#		nlevels(obj@data[[zcol[1]]]) != length(args$col.regions))
+		#	stop("length of col.regions should match number of factor levels")
 		args$data[[zcol2]] = as.numeric(args$data[[zcol2]])
 		if (is.null(args$colorkey) 
 				|| (is.logical(args$colorkey) && args$colorkey)
@@ -265,7 +269,8 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 		sp.layout = NULL, identify = FALSE, formula,
 		xlim = bbexpand(bbox(obj)[1,], 0.04), 
 		ylim = bbexpand(bbox(obj)[2,], 0.04),
-		edge.col = "transparent", colorkey = FALSE) 
+		edge.col = "transparent", colorkey = FALSE,
+		col.regions = get_col_regions()) 
 {
 
 	if (is.null(zcol)) stop("no names method for object")
@@ -290,9 +295,10 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 	args.xyplot = append(list(formula, data = as(sdf, "data.frame"), 
 		panel = panel, aspect = aspect, scales = scales, 
 		xlab = xlab, ylab = ylab, sp.layout = sp.layout,
-		xlim = xlim, ylim = ylim, edge.col = edge.col), dots)
+		xlim = xlim, ylim = ylim, edge.col = edge.col,
+		col.regions = col.regions), dots)
 	z = create.z(as(obj, "data.frame"), zcol)
-	args.xyplot = Fill.call.groups(args.xyplot, z = z, edge.col = edge.col, 
+	args.xyplot = fill.call.groups(args.xyplot, z = z, edge.col = edge.col, 
 		colorkey = colorkey, ...)
 	# debug:
 	#print(args.xyplot)
@@ -626,7 +632,7 @@ addNAemptyRowsCols = function(obj) {
 	missing.x = which(apply(missingpatt, 1, all))
 	missing.y = which(apply(missingpatt, 2, all))
 
-	xy = coordinates(obj)[,1:2]
+	xy = coordinates(obj)[,1:2,drop=FALSE]
 	coordvals = coordinatevalues(obj@grid)
 	missing.x = coordvals[[1]][missing.x]
 	missing.y = coordvals[[2]][missing.y]
@@ -644,14 +650,15 @@ addNAemptyRowsCols = function(obj) {
 	obj
 }
 
-Fill.call.groups <-
+fill.call.groups <-
 function (lst, z, ..., cuts = ifelse(colorkey, 100, 5), 
-	col.regions = trellis.par.get("regions")$col, 
+	#col.regions = trellis.par.get("regions")$col, 
     legendEntries = "", pch, cex = 1, do.fill = TRUE, do.log = FALSE, 
     key.space = ifelse(colorkey, "right", "bottom"), 
 	cex.key, edge.col, colorkey) 
 {
     dots = list(...)
+	col.regions = lst$col.regions
     if (is.numeric(z)) {
         if (length(cuts) > 1) 
             ncuts = length(cuts) - 1

@@ -3,6 +3,8 @@ SpatialPixelsDataFrame = function(points, data,
 		proj4string = CRS(as.character(NA)), round = NULL, grid = NULL) {
 	if (is.null(points))
 		stop("points argument is NULL")
+	if (is(points, "SpatialPixels") && is.null(grid))
+		grid = points@grid
 	if (!is(points, "SpatialPoints"))
 		points = SpatialPoints(points, proj4string = proj4string)
 	points = SpatialPixels(points, tolerance = tolerance, round = round,	
@@ -79,7 +81,7 @@ as.SGDF.SPixDF = function(from) {
 	#	data = from@data[sel,,drop=FALSE], proj4string = CRS(proj4string(from)))
 	new("SpatialPixelsDataFrame", 
 		new("SpatialPixels", 
-			new("SpatialPoints", coords = coordinates(from)[sel,], 
+			new("SpatialPoints", coords = coordinates(from)[sel,,drop=FALSE], 
 				bbox = from@bbox, proj4string = from@proj4string),
 			grid = from@grid,
 			grid.index = which(sel)),

@@ -67,7 +67,8 @@ asWKTSpatialPoints = function(x, digits = getOption("digits")) {
 setMethod("show", "SpatialPoints", function(object) print.SpatialPoints(object))
 
 plot.SpatialPoints = function(x, pch = 3, axes = FALSE, add = FALSE, 
-	xlim = NULL, ylim = NULL, ..., setParUsrBB=FALSE, cex = 1, col = 1, lwd = 1, bg = 1) 
+	xlim = NULL, ylim = NULL, ..., setParUsrBB=FALSE, cex = 1, col = 1, 
+	lwd = 1, bg = 1) 
 {
 	if (! add)
 		plot(as(x, "Spatial"), axes = axes, xlim = xlim, ylim = ylim, 

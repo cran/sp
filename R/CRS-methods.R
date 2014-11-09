@@ -40,7 +40,8 @@ if (!is.R()) {
 #      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
 # sessionInfo()/read.dcf() problem in loop 080307
     if (!is.na(uprojargs) && "rgdal" %in% .packages()) {
-	res <- checkCRSArgs(uprojargs)
+	stopifnot(requireNamespace("rgdal", quietly = TRUE))
+	res <- rgdal::checkCRSArgs(uprojargs)
 	if (!res[[1]]) 
 	    stop(res[[2]])
         uprojargs <- res[[2]]

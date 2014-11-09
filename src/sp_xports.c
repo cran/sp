@@ -11,6 +11,7 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
     int pc=0, rev=FALSE;
     int i, ii, nn=INTEGER_POINTER(n)[0];
     SEXP valid;
+    SEXP coords1, dim1;
 
     for (i=0; i<nn; i++) {
        if(!R_FINITE(NUMERIC_POINTER(coords)[i]))
@@ -18,9 +19,28 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
        if(!R_FINITE(NUMERIC_POINTER(coords)[i+nn]))
            error("non-finite y coordinate");
     }
+
+// 140406 ring closure attempt
+    if (NUMERIC_POINTER(coords)[0] != NUMERIC_POINTER(coords)[nn-1]
+        || NUMERIC_POINTER(coords)[nn] != NUMERIC_POINTER(coords)[(2*nn)-1]) {
+        PROTECT(coords1 = NEW_NUMERIC((nn+1)*2)); pc++;
+        PROTECT(dim1 = NEW_INTEGER(2)); pc++;
+        for (i=0; i<nn; i++) {
+            NUMERIC_POINTER(coords1)[i] = NUMERIC_POINTER(coords)[i];
+            NUMERIC_POINTER(coords1)[i+(nn+1)] = NUMERIC_POINTER(coords)[i+nn];
+        }
+        NUMERIC_POINTER(coords1)[nn] = NUMERIC_POINTER(coords)[0];
+        NUMERIC_POINTER(coords1)[(2*(nn+1))-1] = NUMERIC_POINTER(coords)[nn];
+        nn++;
+        INTEGER_POINTER(dim1)[0] = nn;
+        INTEGER_POINTER(dim1)[1] = 2;
+        setAttrib(coords1, R_DimSymbol, dim1);
+        coords = coords1;
+    }
+
     SP_PREFIX(spRFindCG_c)(n, coords, &xc, &yc, &area);
     if (fabs(area) < DOUBLE_EPS) {
-        if (!R_FINITE(xc) || !R_FINITE(xc)) {
+        if (!R_FINITE(xc) || !R_FINITE(yc)) {
             if (nn == 1) {
                 xc = NUMERIC_POINTER(coords)[0];
                 yc = NUMERIC_POINTER(coords)[1];
@@ -81,6 +101,7 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
        }
     }
     
+
     SET_SLOT(SPans, install("coords"), coords);
 
     PROTECT(labpt = NEW_NUMERIC(2)); pc++;
@@ -96,6 +117,7 @@ SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP ihole) {
     SET_SLOT(SPans, install("ringDir"), ringDir);
 
     PROTECT(valid = SP_PREFIX(Polygon_validate_c)(SPans)); pc++;
+
     if (!isLogical(valid)) {
         UNPROTECT(pc);
         if (isString(valid)) error(CHAR(STRING_ELT(valid, 0)));

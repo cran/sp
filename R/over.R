@@ -56,7 +56,9 @@ overDFGeneric = function(x, y, returnList = FALSE, fn = NULL, ...) {
 	stopifnot(identicalCRS(x, y))
 	r = over(x, geometry(y), returnList = TRUE)
 	ret = .overDF(r, y@data, length(x), returnList, fn, ...)
-	if (! returnList)
+	if (returnList)
+		names(ret) = row.names(x)
+	else
 		row.names(ret) = row.names(x)
 	ret
 }
@@ -75,6 +77,7 @@ setMethod("over",
 				ret = rep(as.integer(NA), length(x))
 				ret[zd[,1]] = zd[,2]
 			}
+			names(ret) = row.names(x)
 			ret
 		}
 )
@@ -85,6 +88,7 @@ setMethod("over",
 			r = pointsInSpatialPolygons(x, y, returnList)
 			if (returnList)
 				r = .invert(r, length(y), length(x))
+			names(r) = row.names(x)
 			r
 		}
 )
@@ -95,6 +99,7 @@ setMethod("over",
 			r = pointsInSpatialPolygons(geometry(y), geometry(x), TRUE)
 			if (!returnList)
 				r = sapply(r, function(x) x[1])
+			names(r) = row.names(x)
 			r
 		}
 )
@@ -127,7 +132,9 @@ setMethod("over", signature("SpatialPoints", "SpatialGrid"),
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
 		stopifnot(identicalCRS(x,y))
 		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
-		.index2list(idx, returnList)
+		r = .index2list(idx, returnList)
+		names(r) = row.names(x)
+		r
 	}
 )
 setMethod("over", signature("SpatialPoints", "SpatialPixels"), 
@@ -135,7 +142,9 @@ setMethod("over", signature("SpatialPoints", "SpatialPixels"),
 		stopifnot(identicalCRS(x,y))
 		idx = getGridIndex(coordinates(x), y@grid, all.inside = FALSE)
 		idx = match(idx, y@grid.index)
-		.index2list(idx, returnList)
+		r = .index2list(idx, returnList)
+		names(r) = row.names(x)
+		r
 	}
 )
 setMethod("over",
@@ -202,12 +211,4 @@ setMethod("over", signature("SpatialPoints", "SpatialPixelsDataFrame"),
 		l
 	} else
 		x
-}
-
-aggregate.Spatial = function(x, by, FUN = mean, ...) {
-	by0 = by
-	if (gridded(by))
-		by = as(by, "SpatialPolygons")
-	df = over(by, x, fn = FUN, ...)
-	addAttrToGeom(by0, df, match.ID = FALSE)
 }

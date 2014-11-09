@@ -27,7 +27,6 @@
 \alias{over,SpatialGrid,SpatialPixels-method}
 \alias{over,SpatialGrid,SpatialPixelsDataFrame-method}
 \alias{over,SpatialGrid,SpatialPointsDataFrame-method}
-\alias{aggregate.Spatial}
 \alias{overDF_for_rgeos}
 
 \title{ consistent spatial overlay for points, grids and polygons }
@@ -37,16 +36,13 @@ or attributes from spatial object y }
 \usage{
 over(x, y, returnList = FALSE, fn = NULL, ...)
 x \%over\% y
-\method{aggregate}{Spatial}(x, by, FUN = mean, \dots)
 }
 \arguments{
 \item{x}{geometry (locations) of the queries}
 \item{y}{layer from which the geometries or attributes are queried}
 \item{returnList}{ logical; see value }
 \item{fn}{(optional) a function; see value }
-\item{by}{ geometry over which attributes in \code{x} are aggregated }
-\item{FUN}{aggregation function }
-\item{...}{arguments passed on to function fn or FUN}
+\item{...}{arguments passed on to function \code{fn}}
 }
 \value{ 
 If \code{y} is only geometry an object of length \code{length(x)}.
@@ -63,10 +59,6 @@ number of rows equal to \code{length(x)} is returned, if it is
 TRUE a list with \code{length(x)} elements is returned, with a
 list element the \code{data.frame} elements of all geometries in
 \code{y} that correspond to that element of \code{x}.
-
-Function aggregate.Spatial aggregates the attribute values
-of \code{x} over the geometry of \code{by}, using aggregation
-function FUN.
 }
 
 \section{Methods}{

@@ -109,15 +109,12 @@ setMethod("bbox", "Line", bbox.Line)
 plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
 	col = 1, lwd = 1, lty=1, add = FALSE, axes = FALSE,
 	lend = 0, ljoin = 0, lmitre = 10, ...,
-	setParUsrBB=FALSE)
-{
-#	frame()
-#	plot.window(xlim = xlim, ylim = ylim, asp = asp)
+	setParUsrBB=FALSE) {
+
 	if (! add)
 		plot(as(SL, "Spatial"), xlim = xlim, ylim = ylim,
 		    axes = axes, ..., setParUsrBB=setParUsrBB)
 	lst <- SL@lines
-
 
 	if (length(col) != length(lst)) col <- rep(col, length = length(lst))
 	if (length(lwd) != length(lst)) lwd <- rep(lwd, length = length(lst))
@@ -130,15 +127,11 @@ plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
 		sllst = lst[[i]]@Lines
 		for (j in seq(along=sllst)) {
 			crds <- coordinates(sllst[[j]])
-
 			lines(crds, col = col[i], lwd = lwd[i], lty = lty[i],
-				lend = lend[i], ljoin = ljoin[i], lmitre = lmitre[i],
-			...)
+				lend = lend[i], ljoin = ljoin[i], lmitre = lmitre[i])
 		}
 	}
 }
-
-
 
 setMethod("plot", signature(x = "SpatialLines", y = "missing"),
 	function(x, y, ...) plotSpatialLines(x, ...))
@@ -248,7 +241,8 @@ setAs("Lines", "SpatialPoints", function(from) {
 setAs("SpatialLines", "SpatialPoints", function(from) {
 		SpatialPoints(
 			do.call(rbind,
-				lapply(from@lines, function(x) as(x, "SpatialPoints"))),
+				lapply(from@lines, function(x) coordinates(
+						as(x, "SpatialPoints")))),
 			CRS(proj4string(from))
 		)
 	}

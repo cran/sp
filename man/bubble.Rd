@@ -9,7 +9,7 @@ residual plots (xyplot wrapper)
 }
 \usage{
 bubble(obj, zcol = 1, ..., fill = TRUE, maxsize = 3, do.sqrt = TRUE, pch, 
-	col = c(2,3), key.entries = quantile(data[,zcol]), main, 
+	col = c("#d01c8b", "#4dac26"), key.entries = quantile(data[,zcol]), main, 
 	identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, panel = panel.bubble,
 	sp.layout = NULL) 
@@ -29,7 +29,8 @@ is proportional to the value of the z-variable; if FALSE, the symbol size
 (diameter) is proportional to the z-variable }
 \item{pch}{ plotting character }
 \item{col}{ colours to be used; numeric vector of size two: first value
-is for negative values, second for positive values. }
+is for negative values, second for positive values. Default colors: 
+5-class PiYG from colorbrewer.org. }
 \item{key.entries}{ the values that will be plotted in the key; by default 
 the five quantiles min, q.25, median q.75, max }
 \item{main}{ main plotting title }

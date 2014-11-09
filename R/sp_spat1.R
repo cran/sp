@@ -51,7 +51,6 @@ as.SpatialGridDataFrame.ppp = function(from) {
 setAs("ppp", "SpatialGridDataFrame", as.SpatialGridDataFrame.ppp)
 
 as.SpatialGridDataFrame.im = function(from) {
-    #require(spatstat)
     offset = c(from$xrange[1] + 0.5 * from$xstep, from$yrange[1] + 
         0.5 * from$ystep)
     cellsize = c(diff(from$xrange)/from$dim[2], diff(from$yrange)/from$dim[1])

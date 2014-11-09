@@ -336,7 +336,7 @@ x 400 m grid}
 An example of the aggregated values of \code{meuse.grid} along
 (or under) the line shown in Figure \ref{fig:line} are
 <<>>=
-sl.agg = aggregate(meuse.grid, sl)
+sl.agg = aggregate(meuse.grid[,1:3], sl)
 class(sl.agg)
 as.data.frame(sl.agg)
 @
@@ -353,8 +353,8 @@ Davidson, R., 2008.  Reading topographic maps. Free e-book from:
 \url{http://www.map-reading.com/}
 \item
 Heuvelink, G.B.M., and E.J. Pebesma, 1999.  Spatial aggregation
-and soil process modelling Geoderma 89, 1-2, 47-65.
-\url{http://dx.doi.org/10.1016/S0016-7061(98)00077-9}
+and soil process modelling. Geoderma 89, 1-2, 
+\href{http://dx.doi.org/10.1016/S0016-7061(98)00077-9}{47-65}.
 \item
 Pebesma, E., 2012.  Spatio-temporal overlay and
 aggregation.  Package vignette for package spacetime,
