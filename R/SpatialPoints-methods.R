@@ -22,8 +22,12 @@
 	if (any(!unlist(lapply(obj, is.numeric))))
 		stop("cannot retrieve coordinates from non-numeric elements")
 	fin_check <- sapply(obj, function(x) all(is.finite(x)))
-        if (!all(fin_check)) stop("non-finite coordinates")
-        lapply(obj, as.double)
+	if (!all(fin_check))
+		stop("non-finite coordinates")
+	na_check <- sapply(obj, function(x) all(!is.na(x)))
+	if (!all(na_check))
+		stop("NA in coordinates")
+	lapply(obj, as.double)
 }
 
 setMethod("coordinates", "list", function(obj)
@@ -34,8 +38,10 @@ setMethod("coordinates", "matrix",
 	function(obj) {
 		if (!is.numeric(obj))
 			stop("cannot derive coordinates from non-numeric matrix")
-                if (any(!is.finite(obj)))
-                    stop("non-finite coordinates")
+		if (any(is.na(obj)))
+			stop("NA values in coordinates")
+		if (any(!is.finite(obj)))
+			stop("non-finite coordinates")
 		dn = dimnames(obj)
 		dd = dim(obj)
 		storage.mode(obj) <- "double"

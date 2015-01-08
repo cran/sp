@@ -10,3 +10,6 @@ proj4string(meuse.grid) <- crs
 data("meuse.riv")
 meuse.riv <- SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)),"meuse.riv")))
 proj4string(meuse.riv) <- crs
+data("meuse.area")
+meuse.area = SpatialPolygons(list(Polygons(list(Polygon(meuse.area)), "area")))
+proj4string(meuse.area) <- crs

@@ -43,7 +43,7 @@ setReplaceMethod("coordinates", signature(object = "data.frame", value = "ANY"),
   function(object, value) {
 	coord.numbers = NULL
 	if (inherits(value, "formula")) {
-		cc = model.frame(value, object) # retrieve coords
+		cc = model.frame(value, object, na.action = na.fail) # retrieve coords
 		if (dim(cc)[2] == 2) {
 			nm = as.character(as.list(value)[[2]])[2:3]
 			coord.numbers = match(nm, names(object))
