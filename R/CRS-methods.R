@@ -8,9 +8,9 @@ if (!is.R()) {
   }
 }
 
-"CRS" <- function(projargs) {
-    if (missing(projargs)) projargs <- as.character(NA)
-    if (nchar(projargs) == 0) projargs <- as.character(NA)
+"CRS" <- function(projargs=NA_character_) {
+# cautious change BDR 150424
+    if (!is.na(projargs) && !nzchar(projargs)) projargs <- NA_character_
 # condition added 140301
     stopifnot(is.character(projargs))
     if (!is.na(projargs)) {
@@ -39,11 +39,10 @@ if (!is.R()) {
 #    if (length(grep("rgdal", search()) > 0) &&
 #      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
 # sessionInfo()/read.dcf() problem in loop 080307
-    if (!is.na(uprojargs) && "rgdal" %in% .packages()) {
-	stopifnot(requireNamespace("rgdal", quietly = TRUE))
-	res <- rgdal::checkCRSArgs(uprojargs)
-	if (!res[[1]]) 
-	    stop(res[[2]])
+    if (!is.na(uprojargs) && requireNamespace("rgdal", quietly = TRUE)) {
+        res <- rgdal::checkCRSArgs(uprojargs)
+        if (!res[[1]]) 
+            stop(res[[2]])
         uprojargs <- res[[2]]
     }
     res <- new("CRS", projargs=uprojargs)

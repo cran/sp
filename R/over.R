@@ -203,6 +203,14 @@ setMethod("over", signature("SpatialPoints", "SpatialPixelsDataFrame"),
 	}
 )
 
+setMethod("over", signature("Spatial", "Spatial"),  # catch remaining:
+	function(x, y, returnList = FALSE, fn = NULL, ...) {
+    	if (!requireNamespace("rgeos", quietly = TRUE))
+			stop("package rgeos is required for additional over methods")
+		over(x, y, returnList = returnList, fn = fn, ...) # rgeos methods
+	}
+)
+
 .index2list = function(x, returnList) {
 	if (returnList) {
 		l = lapply(1:length(x), function(x) { integer(0) })

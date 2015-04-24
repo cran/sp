@@ -212,7 +212,7 @@ rv = list("sp.polygons", meuse.sr,
 	fill = ifelse(alphaChannelSupported(), "blue", "transparent"),
 	alpha = ifelse(alphaChannelSupported(), 0.1, 1))
 pts = list("sp.points", meuse, pch = 3, col = "grey", 
-	alpha = ifelse(alphaChannelSupported(), .5, 1))
+	alpha = ifelse(alphaChannelSupported(), .7, 1))
 spplot(zn.uk, "var1.pred",
 	sp.layout = list(rv, scale, text1, text2, pts),
 	main = "log(zinc); universal kriging using sqrt(dist to Meuse)")

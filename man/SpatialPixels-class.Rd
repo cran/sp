@@ -8,6 +8,7 @@
 \alias{summary,SpatialPixels-method}
 \alias{coerce,SpatialPixels,data.frame-method}
 \alias{show,SpatialPixels-method}
+\alias{plot,SpatialPixels,missing-method}
 \alias{rbind.SpatialPixels}
 
 \title{Class "SpatialPixels" }
@@ -58,6 +59,7 @@ y = SpatialPixels(SpatialPoints(pts))
 class(y)
 y
 summary(y)
-plot(y)
+plot(y) # plots grid
+plot(y, grid = FALSE) # plots points
 }
 \keyword{classes}

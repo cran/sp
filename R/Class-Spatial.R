@@ -1,15 +1,13 @@
 # Lancaster, Thu Nov  4 14:44:00 GMT 2004, fresh start from icelfloe
 setClass("Spatial",
-	#slots = c(bbox = "matrix", proj4string = "CRS"),
-	representation(bbox = "matrix", proj4string = "CRS"),
-	prototype = list(bbox = matrix(rep(NA, 6), 3, 2, 
-		dimnames = list(NULL, c("min","max"))),
-		proj4string = CRS(as.character(NA))), # prototype should not pass validity
+	slots = c(bbox = "matrix", proj4string = "CRS"),
 	validity = function(object) {
 # print("Entering validation: Spatial")
 		bb = bbox(object)
 		if (!is.matrix(bb))
 			return("bbox should be a matrix")
+		if (!mode(bb) == "numeric")
+			return("bbox should be a numeric matrix")
 		n = dimensions(object)
 		if (n < 2)
 			return("spatial.dimension should be 2 or more") 
@@ -22,7 +20,7 @@ setClass("Spatial",
 		if (!is(object@proj4string, "CRS"))
 			return("proj4string slot should be of class CRS")
 		p4str <- object@proj4string@projargs
-		if (!is.na(p4str) && nchar(p4str) > 0) {
+		if (!is.na(p4str) && !nzchar(p4str)) {
 		  res <- grep("longlat", p4str, fixed=TRUE)
 		  if (length(res) != 0) {# unprojected,
                     ll_sanity_res <- .ll_sanity(bb)
@@ -48,4 +46,3 @@ setClass("Spatial",
 		return(TRUE)
 	}
 )
-

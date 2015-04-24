@@ -49,7 +49,22 @@ row.names.SpatialGrid <- function(x) 1:prod(x@grid@cells.dim)
 setMethod("coordinates", "SpatialGrid", function(obj) coordinates(obj@grid))
 
 setMethod("plot", signature(x = "SpatialGrid", y = "missing"),
-    function(x,y,...) plot(as(x, "SpatialPoints"),...))
+    function(x, y, ..., grid = TRUE) {
+		if (grid)
+			plot.SpatialGrid(x, ...)
+		else
+			plot(as(x, "SpatialPoints"), ...)
+	}
+)
+
+setMethod("plot", signature(x = "SpatialPixels", y = "missing"),
+    function(x, y, ..., grid = TRUE) {
+		if (grid)
+			plot.SpatialPixels(x, ...)
+		else
+			plot(as(x, "SpatialPoints"), ...)
+	}
+)
 
 coordnamesSG = function(x, value) {
 	dimnames(x@bbox)[[1]] = value
@@ -116,12 +131,12 @@ getGridIndex = function(cc, grid, all.inside = TRUE) {
 	as.integer(round(idx))
 }
 
-rcFromGridIndex = function(obj) {
+rcFromGridIndex = function(obj) { # returns <x,y> entries: col,row rather than row,col
 	obj = as(obj, "SpatialPixels")
 	gi = obj@grid.index
 	grid = obj@grid
 	stopifnot(ncol(coordinates(obj)) == 2)
-	xi = (gi %% grid@cells.dim[1]) + 1
+	xi = ((gi - 1) %% grid@cells.dim[1]) + 1
 	yi = grid@cells.dim[2] - ((gi - 1) %/% grid@cells.dim[1])
 	cbind(xi,yi)
 }
@@ -294,3 +309,100 @@ setReplaceMethod("coordnames", signature(x = "SpatialGrid",
 
 setAs("SpatialGrid", "GridTopology", function(from) getGridTopology(from))
 setAs("SpatialPixels", "GridTopology", function(from) getGridTopology(from))
+
+plot.SpatialGrid = function(obj, ..., col = par("fg"), 
+		lty = par("lty"), lwd = par("lwd"), add = FALSE) {
+
+  if (! add)
+  	plot(as(obj, "Spatial"), ...)
+  gr = obj@grid
+  # Don MacQueen, Feb 12 2015
+  csiz <- gr@cellsize
+  ncells <- gr@cells.dim
+  nbounds <- ncells+1
+  
+  ## first get and sort the cell centers
+  cv <- coordinatevalues(gr)
+  cv[[1]] <- sort(cv[[1]])
+  cv[[2]] <- sort(cv[[2]])
+
+  ## calculate cell boundaries
+  cv[[1]] <- c(cv[[1]][1] - csiz[1]/2,  cv[[1]] + csiz[1]/2 )
+  cv[[2]] <- c(cv[[2]][1] - csiz[2]/2,  cv[[2]] + csiz[2]/2 )
+  
+  ## construct endpoints of cell boundary lines
+  ## vertical lines
+  vfrom <- cbind(cv[[1]], cv[[2]][1])
+  vto   <- cbind(cv[[1]], cv[[2]][nbounds[2]])
+
+  ## horizontal lines
+  hfrom <- cbind(cv[[1]][1], cv[[2]])
+  hto   <- cbind(cv[[1]][nbounds[1]], cv[[2]])
+    
+  ## add to plot
+  segments(vfrom[,1], vfrom[,2] , vto[,1], vto[,2], 
+  	col = col, lty = lty, lwd = lwd)
+  segments(hfrom[,1], hfrom[,2] , hto[,1], hto[,2],
+  	col = col, lty = lty, lwd = lwd)
+}
+
+plot.SpatialPixels = function(obj, ..., col = par("fg"), 
+		lty = par("lty"), lwd = par("lwd"), add = FALSE) {
+
+	# based on plot.SpatialGrid:
+	if (! add)
+		plot(as(obj, "Spatial"), ...)
+
+	gr = obj@grid
+	csiz <- gr@cellsize
+	ncells <- gr@cells.dim
+	nbounds <- ncells + 1
+
+	m = matrix(FALSE, ncells[2], ncells[1])
+	rc = rcFromGridIndex(obj)[,c(2,1)]
+	m[rc] = TRUE # the pattern
+  
+	## first get and sort the cell centers
+	cv <- coordinatevalues(gr)
+	cv[[1]] <- sort(cv[[1]])
+	cv[[2]] <- sort(cv[[2]])
+
+	## calculate cell boundaries
+	x <- c(cv[[1]][1] - csiz[1]/2,  cv[[1]] + csiz[1]/2 )
+	y <- c(cv[[2]][1] - csiz[2]/2,  cv[[2]] + csiz[2]/2 )
+  
+	# horizontal lines:
+  	p = do.call(rbind, lapply(1:nbounds[2], function(i) {
+			if (i == 1) # bottom line
+				cells = m[1,]
+			else if (i == nbounds[2]) # top line
+				cells = m[nbounds[2]-1,]
+			else # in-between, draw for:
+				cells = m[i-1,] | m[i,]
+			r = rle(cells) # figure out line pieces
+			if (any(r$values)) {
+				wr = which(r$values) # where to draw/end
+				cs0 = c(0, cumsum(r$lengths)) # all start/end indices
+				cbind(x[cs0[wr] + 1], y[i], x[cs0[wr+1] + 1], y[i])
+			}
+		}
+	))
+	segments(p[,1], p[,2], p[,3], p[,4], col = col, lty = lty, lwd = lwd)
+	# vertical lines:
+  	p = do.call(rbind, lapply(1:nbounds[1], function(i) {
+			if (i == 1) # left boundary
+				cells = m[,1]
+			else if (i == nbounds[1]) # right boundary
+				cells = m[,nbounds[1]-1]
+			else # non-boundary lines, draw for:
+				cells = m[,i-1] | m[,i]
+			r = rle(cells)
+			if (any(r$values)) {
+				wr = which(r$values)
+				cs0 = c(0, cumsum(r$lengths))
+				cbind(x[i], y[cs0[wr]+1], x[i], y[cs0[wr+1]+1])
+			}
+		}
+	))
+	segments(p[,1], p[,2], p[,3], p[,4], col = col, lty = lty, lwd = lwd)
+}

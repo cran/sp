@@ -116,7 +116,7 @@ over(pol, ptsdf[1:2], fn = mean)
 
 
 ###################################################
-### code chunk number 15: over.Rnw:239-242
+### code chunk number 15: over.Rnw:240-243
 ###################################################
 l1 = Lines(Line(coordinates(pts)), "L1")
 l2 = Lines(Line(rbind(c(1,1.5), c(1.5,1.5))), "L2")
@@ -124,7 +124,7 @@ L = SpatialLines(list(l1,l2))
 
 
 ###################################################
-### code chunk number 16: over.Rnw:266-270
+### code chunk number 16: over.Rnw:267-271
 ###################################################
 plot(pol, xlim = c(-1.1, 2.1), ylim = c(-1.1, 1.6), border=2:6, axes=TRUE)
 text(c(-1,0.1,0.1,1.1,0.45), c(0,0,-1.05,0,0.1), c("x1", "x2", "x3", "x4", "x5"))
@@ -133,7 +133,7 @@ text(c(0.52, 1.52), c(1.5, 1.5), c("L1", "L2"))
 
 
 ###################################################
-### code chunk number 17: over.Rnw:278-287
+### code chunk number 17: over.Rnw:279-288
 ###################################################
 library(rgeos)
 over(pol, pol)
@@ -147,7 +147,7 @@ over(L, pts)
 
 
 ###################################################
-### code chunk number 18: over.Rnw:292-300
+### code chunk number 18: over.Rnw:293-301
 ###################################################
 data(meuse.grid)
 gridded(meuse.grid) = ~x+y
@@ -160,7 +160,7 @@ lines(sl)
 
 
 ###################################################
-### code chunk number 19: over.Rnw:311-317
+### code chunk number 19: over.Rnw:312-318
 ###################################################
 data(meuse.grid)
 gridded(meuse.grid) = ~x+y
@@ -171,14 +171,14 @@ agg = aggregate(meuse.grid[3], SG)
 
 
 ###################################################
-### code chunk number 20: over.Rnw:327-329
+### code chunk number 20: over.Rnw:328-330
 ###################################################
 image(agg)
 points(meuse.grid, pch = 3, cex=.2, col = "#80808080")
 
 
 ###################################################
-### code chunk number 21: over.Rnw:338-341
+### code chunk number 21: over.Rnw:339-342
 ###################################################
 sl.agg = aggregate(meuse.grid[,1:3], sl)
 class(sl.agg)

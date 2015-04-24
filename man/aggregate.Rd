@@ -6,7 +6,7 @@
 \title{ aggregation of spatial objects }
 \description{ spatial aggregation of thematic information in spatial objects}
 \usage{
-\method{aggregate}{Spatial}(x, by, FUN = mean, \dots, dissolve = TRUE)
+\method{aggregate}{Spatial}(x, by, FUN = mean, \dots, dissolve = TRUE, areaWeighted = FALSE)
 }
 \arguments{
 \item{x}{object deriving from \link{Spatial}, with attributes }
@@ -18,12 +18,20 @@ is a list, aggregation by attribute(s), see \link{aggregate.data.frame}}
 \item{dissolve}{logical; should, when aggregating based on attributes, the
 resulting geometries be dissolved? Note that if \code{x} has class
 \code{SpatialPointsDataFrame}, this is not possible}
+\item{areaWeighted}{logical; should the aggregation of \code{x} be weighted by the
+areas it intersects with each feature of \code{by}? See value.}
 }
 \value{ 
-Function aggregate.Spatial aggregates the attribute values of
-\code{x} either over the geometry of \code{by} by using \link{over} for
-spatial matching, or by attribute values, using aggregation function 
-\code{FUN}.
+The aggregation of attribute values of \code{x} either over the
+geometry of \code{by} by using \link{over} for spatial matching,
+or by attribute values, using aggregation function \code{FUN}.
+
+If \code{areaWeighted} is \code{TRUE}, \code{FUN} is ignored and the
+area weighted mean is computed for numerical variables, or if all
+attributes are \code{factor}s, the area dominant factor level (area
+mode) is returned. This will compute the \link[rgeos]{gIntersection}
+of \code{x} and \code{by}; see examples below.
+
 }
 
 \author{Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
@@ -65,6 +73,38 @@ if (require(gstat) && require(rgeos)) {
 		include.lowest = TRUE)
 	xa = aggregate(x["var1.pred"], list(i=i))
 	spplot(xa[1],col.regions=bpy.colors(8))
+}
+
+if (require(rgeos)) {
+# Area-weighted example, using two partly overlapping grids:
+
+  gt1 = SpatialGrid(GridTopology(c(0,0), c(1,1), c(4,4)))
+  gt2 = SpatialGrid(GridTopology(c(-1.25,-1.25), c(1,1), c(4,4)))
+
+  # convert both to polygons; give p1 attributes to aggregate
+  p1 = SpatialPolygonsDataFrame(as(gt1, "SpatialPolygons"), 
+		  data.frame(v = 1:16, w=5:20, x=factor(1:16)), match.ID = FALSE)
+  p2 = as(gt2, "SpatialPolygons")
+
+  # plot the scene:
+  plot(p1, xlim = c(-2,4), ylim = c(-2,4))
+  plot(p2, add = TRUE, border = 'red')
+  i = gIntersection(p1, p2, byid = TRUE)
+  plot(i, add=TRUE, density = 5, col = 'blue')
+  # plot IDs p2:
+  ids.p2 = sapply(p2@polygons, function(x) slot(x, name = "ID"))
+  text(coordinates(p2), ids.p2)
+  # plot IDs i:
+  ids.i = sapply(i@polygons, function(x) slot(x, name = "ID"))
+  text(coordinates(i), ids.i, cex = .8, col = 'blue')
+
+  # compute & plot area-weighted average; will warn for the factor
+  ret = aggregate(p1, p2, areaWeighted = TRUE)
+  spplot(ret)
+
+  # all-factor attributes: compute area-dominant factor level:
+  ret = aggregate(p1["x"], p2, areaWeighted = TRUE) 
+  spplot(ret)
 }
 }
 \keyword{methods}

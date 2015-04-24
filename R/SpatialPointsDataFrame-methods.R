@@ -1,21 +1,29 @@
 "SpatialPointsDataFrame" = function(coords, data, coords.nrs = numeric(0), 
-		proj4string = CRS(as.character(NA)), match.ID = TRUE,
-                bbox=NULL) {
-    if (is.character(match.ID)) {
+		proj4string = CRS(as.character(NA)), match.ID, bbox = NULL) {
+
+	if (!is(coords, "SpatialPoints"))
+		coords = coordinates(coords) 
+		# make sure data.frame becomes double matrix; NA checks
+	mtch = NULL
+	cc.ID = dimnames(coords)[[1]]
+	if (missing(match.ID)) { # sort it out:
+		if (is.null(cc.ID))
+			match.ID = FALSE # nothing to match to!
+		else {
+			mtch = match(cc.ID, row.names(data))
+			match.ID = !any(is.na(mtch)) # && length(unique(mtch)) == nrow(data)
+			if (match.ID && any(mtch != 1:nrow(data)))
+				warning("forming a SpatialPointsDataFrame based on maching IDs, not on record order. Use match.ID = FALSE to match on record order")
+		}
+	} else if (is.character(match.ID)) {
         row.names(data) = data[, match.ID[1]]
         match.ID = TRUE
-    }
-	if (!is(coords, "SpatialPoints"))
-		coords = coordinates(coords)
-	cc.ID = dimnames(coords)[[1]]
-	if (is.null(cc.ID))
-		match.ID = FALSE # nothing to match to!
-	else if (match.ID && length(unique(cc.ID)) != nrow(data))
-		stop("nr of unique coords ID's (rownames) not equal to nr of data records")
+    } 
+
 	if (match.ID) {
 		if (!is.null(cc.ID) && is(data, "data.frame")) { # match ID:
-			data.ID = row.names(data)
-			mtch = match(cc.ID, data.ID)
+			if (is.null(mtch))
+				mtch = match(cc.ID, row.names(data))
 			if (any(is.na(mtch)))
 				stop("row.names of data and coords do not match")
 			if (length(unique(mtch)) != nrow(data))
@@ -24,8 +32,7 @@
 		}
 	}
 	if (!is(coords, "SpatialPoints"))
-		coords = SpatialPoints(coords, proj4string = proj4string, 
-			bbox=bbox)
+		coords = SpatialPoints(coords, proj4string = proj4string, bbox = bbox)
 	# EJP, Tue Aug 13 19:54:04 CEST 2013
 	if (is.character(attr(data, "row.names"))) # i.e., data has "real" row names
 		dimnames(coords@coords)[[1]] = row.names(data)
@@ -177,7 +184,8 @@ setMethod("[", "SpatialPointsDataFrame", function(x, i, j, ..., drop = TRUE) {
 	if (!isTRUE(j)) # i.e., we do some sort of column selection
 		x@coords.nrs = numeric(0) # will move coordinate colums last
 	x@coords = x@coords[i, , drop = FALSE]
-	x@bbox = .bboxCoords(x@coords)
+	if (nrow(x@coords))
+		x@bbox = .bboxCoords(x@coords)
 	x@data = x@data[i, j, ..., drop = FALSE]
 	x
 })

@@ -48,6 +48,9 @@ are never to be generated; only derived classes can be meaningful }
 	for spatial objects; does nothing but setting up a plotting region choosing
 	a suitable aspect if not given(see below), colouring the plot background using either a bg= argument or par("bg"), and possibly drawing axes.  }
 	\item{summary}{\code{signature(object = "Spatial")}: summarize object}
+	\item{\code{$}}{ retrieves attribute column }
+	\item{\code{$<-}}{ sets or replaces attribute column, or promote a
+	geometry-only object to an object having an attribute }
   }
 }
 
@@ -63,7 +66,24 @@ Spatial(bbox, proj4string = CRS(as.character(NA)))
 \item{subset}{see \link{subset.data.frame}}
 \item{select}{see \link{subset.data.frame}}
 \item{drop}{see \link{subset.data.frame}}
-\item{...}{ignored}
+\item{...}{passed through}
+}
+
+\section{plot method arguments}{
+The plot method for \dQuote{Spatial} objects takes the following arguments:
+\describe{
+\item{x}{object of class Spatial}
+\item{xlim}{default NULL; the x limits (x1, x2) of the plot}
+\item{ylim}{default NULL; the y limits of the plot}
+\item{asp}{default NA; the y/x aspect ratio}
+\item{axes}{default FALSE; a logical value indicating whether both axes should be drawn }
+\item{bg}{default \code{par("bg")}; colour to be used for the background of the device region}
+\item{xaxs}{ The style of axis interval calculation to be used for the x-axis}
+\item{yaxs}{ The style of axis interval calculation to be used for the y-axis}
+\item{lab}{A numerical vector of the form \code{c(x, y, len)} which modifies the default way that axes are annotated}
+\item{setParUsrBB}{default FALSE; set the \code{par} \dQuote{usr} bounding box; see below}
+\item{...}{passed through}
+}
 }
 
 \author{ r-spatial team; Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}

@@ -64,18 +64,10 @@ setReplaceMethod("proj4string", c("Spatial", "CRS"), ReplProj4string)
 setMethod("is.projected", signature(obj = "Spatial"),
 	function(obj) {
 		p4str <- proj4string(obj)
-#ifdef R
-		if (is.na(p4str) || nchar(p4str) == 0) 
-#else
-#S	if (p4str == "NA")  # bloody S-Plus!
-#endif
+		if (is.na(p4str) || !nzchar(p4str)) 
 			return(as.logical(NA))
 		else {
-#ifdef R
-			res <- grep("longlat", p4str, fixed=TRUE)
-#else
-#S		res <- grep("longlat", p4str)
-#endif
+			res <- grep("longlat", p4str, fixed = TRUE)
 			if (length(res) == 0)
 				return(TRUE)
 			else

@@ -125,5 +125,5 @@ try(gridded(meuse.grid_ll) <- TRUE)
 try(meuse.grid_ll <- SpatialPixelsDataFrame(as(meuse.grid_ll, "SpatialPoints"), data=as(meuse.grid_ll, "data.frame"), tolerance=0.9))
 gridparameters(meuse.grid_ll)
 
-try(CRS("+proj=latlon"))
-try(CRS("+proj=lonlat"))
+try(CRS("+proj=latlon +ellps=WGS84"))
+try(CRS("+proj=lonlat +ellps=WGS84"))

@@ -1,7 +1,5 @@
 setClass("Line", 
-	#slots = c(coords = "matrix"),
-	representation(coords = "matrix"),
-	prototype = list(coords = matrix(0)),
+	slots = c(coords = "matrix"),
 	validity = function(object) {
 		if (any(is.na(object@coords)))
 			stop("coords cannot contain missing values")
@@ -14,8 +12,7 @@ setClass("Line",
 )
 
 setClass("Lines",
-	#slots = c(Lines = "list", ID = "character"),
-	representation(Lines = "list", ID = "character"),
+	slots = c(Lines = "list", ID = "character"),
 	validity = function(object) {
 		if (any(sapply(object@Lines, function(x) !is(x, "Line"))))
 			stop("not a list of Line objects")
@@ -23,13 +20,8 @@ setClass("Lines",
 })
 
 setClass("SpatialLines",
-	contains = "Spatial", 
-	#slots = c(lines = "list"),
-	representation(lines = "list"),
-	prototype = list(bbox = matrix(rep(NA, 2), 2, 2, 
-			dimnames = list(NULL, c("min","max"))),
-		proj4string = CRS(as.character(NA)),
-		lines = list()),
+	contains = "Spatial",
+	slots = c(lines = "list"),
 	validity = function(object) {
 		if (any(unlist(lapply(object@lines, function(x) 
 			!is(x, "Lines"))))) stop("lines not Lines objects")

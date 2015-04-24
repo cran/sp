@@ -21,7 +21,8 @@ methods; the methods used assume that the geometry used is not spherical,
 so objects should be in planar coordinates }
 \usage{
 spsample(x, n, type, ...)
-makegrid(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5, nrow(bb)))
+makegrid(x, n = 10000, nsig = 2, cellsize, offset = rep(0.5, nrow(bb)),
+	pretty = TRUE)
 }
 \arguments{
 \item{x}{Spatial object; \code{spsample(x,...)} is a generic method for the
@@ -51,6 +52,7 @@ its end }
 except \code{"random"} }
 \item{nsig}{ for "pretty" cell size; \code{spsample} does not result in
   pretty grids }
+\item{pretty}{logical; if \code{TRUE}, choose pretty (rounded) coordinates}
 }
 
 \value{ an object of class \link{SpatialPoints-class}. The number of
@@ -60,8 +62,9 @@ of points will have expected value \code{n}.
 
 When \code{x} is of a class deriving from \link{Spatial-class} for which
 no \link{spsample-methods} exists, sampling is done in the bounding box
-of the object, using \code{spsample.Spatial}. An \link{overlay} may be
-necessary to select afterwards. 
+of the object, using \code{spsample.Spatial}. An overlay using
+\link{over} may be necessary to select the features inside the geometry
+afterwards. 
 
 Sampling type \code{"nonaligned"} is not implemented for line objects. 
 
@@ -115,7 +118,7 @@ Geosciences 42(1), p. 49-64 }
 
 \author{Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
 
-\seealso{\link{overlay-methods}, \link{point.in.polygon}, \link{sample}}
+\seealso{\link{over}, \link{point.in.polygon}, \link{sample}}
 \examples{
 
 data(meuse.riv)

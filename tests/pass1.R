@@ -63,3 +63,92 @@ meuse[["xxx"]] = log(meuse$zinc)
 summary(meuse)
 meuse$xxy = log(meuse[["zinc"]])
 summary(meuse)
+
+# test behaviour on zero-length objects:
+demo(meuse, ask = FALSE, echo = FALSE)
+p = as(meuse, "SpatialPoints")
+
+p[0]
+dim(p[0])
+
+meuse[0,]
+dim(meuse[1:3,0])
+dim(subset(meuse, zinc < 100, 0))
+dim(subset(meuse, , 0))
+dim(subset(meuse, F, 0))
+
+dim(meuse.grid[0,])
+fullgrid(meuse.grid) = TRUE
+dim(meuse.grid[0,])
+summary(meuse.grid[0,])
+dim(meuse.grid[,0])
+summary(meuse.grid[,0])
+dim(meuse.grid[0,,0])
+summary(meuse.grid[0,,0])
+
+# SpatialPolygons:
+L = as(meuse.riv, "SpatialPolygons")
+length(L[1])
+length(L[0])
+summary(L[0])
+
+# SpatialPolygonsDataFrame:
+L$something = "bla"
+class(L)
+length(L[1])
+summary(L[1])
+length(L[0])
+summary(L[0])
+
+# SpatialLines
+L = as(meuse.riv, "SpatialLines")
+length(L[1])
+length(L[0])
+summary(L[0])
+
+# SpatialLinesDataFrame
+L$something = "bla"
+class(L)
+length(L[1])
+summary(L[1])
+length(L[0])
+summary(L[0])
+
+m = meuse
+all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[1:3,], m[0,], m[5:7,]))
+all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[0,], m[1:3,], m[0,], m[5:7,]))
+all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[1:3,], m[0,], m[5:7,], m[0,]))
+
+# match.ID settings for SpatialPointsDataFrame():
+set.seed(1331)
+pts = cbind(1:5, 1:5)
+dimnames(pts)[[1]] = letters[1:5]
+df = data.frame(a = 1:5)
+row.names(df) = letters[5:1]
+
+library(sp)
+options(warn=1) # show warnings where they occur
+SpatialPointsDataFrame(pts, df) # warn
+SpatialPointsDataFrame(pts, df, match.ID = TRUE) # don't warn
+SpatialPointsDataFrame(pts, df, match.ID = FALSE) # don't warn
+df$m = letters[5:1]
+SpatialPointsDataFrame(pts, df, match.ID = "m") # don't warn
+
+dimnames(pts)[[1]] = letters[5:1]
+pts
+SpatialPointsDataFrame(pts, df) # don't warn: match doesn't reorder
+
+# duplicated row name:
+dimnames(pts)[[1]] = letters[c(1:4,1)]
+pts
+xx = try(x <- SpatialPointsDataFrame(pts, df))
+class(xx)
+xx
+SpatialPointsDataFrame(pts, df, match.ID = FALSE)
+try(x <- SpatialPointsDataFrame(pts, df, match.ID = TRUE)) # fail
+
+dimnames(pts)[[1]] = letters[5:1]
+row.names(df) = letters[6:2] # non-matching row.names
+SpatialPointsDataFrame(pts, df) # do not match.ID
+SpatialPointsDataFrame(pts, df, match.ID = FALSE)
+try(x <- SpatialPointsDataFrame(pts, df, match.ID = TRUE)) # fail

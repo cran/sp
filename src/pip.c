@@ -14,11 +14,17 @@
 
 #include "sp.h"
 
-SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly) {
-	int i;
+SEXP R_point_in_polygon_sp(const SEXP px, const SEXP py, const SEXP polx, 
+		const SEXP poly) {
+	int i, pc=0;
 	PLOT_POINT p;
 	POLYGON pol;
-	SEXP ret;
+	SEXP ret, px1, py1, polx1, poly1;
+
+        PROTECT(px1 = duplicate(px)); pc++;
+        PROTECT(py1 = duplicate(py)); pc++;
+        PROTECT(polx1 = duplicate(polx)); pc++;
+        PROTECT(poly1 = duplicate(poly)); pc++;
 
 	S_EVALUATOR
 	pol.lines = LENGTH(polx); /* check later that first == last */
@@ -32,7 +38,7 @@ SEXP R_point_in_polygon_sp(SEXP px, SEXP py, SEXP polx, SEXP poly) {
 			pol.p[0].y == pol.p[pol.lines - 1].y);
 	setup_poly_minmax(&pol);
 
-	PROTECT(ret = NEW_INTEGER(LENGTH(px)));
+	PROTECT(ret = NEW_INTEGER(LENGTH(px))); pc++;
 	for (i = 0; i < LENGTH(px); i++) {
 		p.x = NUMERIC_POINTER(px)[i];
 		p.y = NUMERIC_POINTER(py)[i];
@@ -51,7 +57,7 @@ For each query point q, InPoly returns one of four char's:
 			default: INTEGER_POINTER(ret)[i] = -1; break;
 		}
 	}
-	UNPROTECT(1);
+	UNPROTECT(pc);
 	return(ret);
 }
 

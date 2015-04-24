@@ -1,5 +1,8 @@
 # taken from subset.data.frame:
 subset.Spatial = function(x, subset, select, drop = FALSE, ...) {
+
+	if (! "data" %in% slotNames(x))
+		stop("subset only works for Spatial*DataFrame objects")
     if (missing(subset))
         r <- TRUE
     else {
@@ -9,15 +12,15 @@ subset.Spatial = function(x, subset, select, drop = FALSE, ...) {
         e <- substitute(subset)
         r <- eval(e, x@data, parent.frame())
         if (!is.logical(r)) 
-            stop("'subset' must evaluate to logical")
+            stop("'subset' must be or evaluate to logical")
         r <- r & !is.na(r)
     }
-    if (missing(select)) 
-        vars <- TRUE
-    else {
-        nl <- as.list(seq_along(x@data))
-        names(nl) <- names(x@data)
-        vars <- eval(substitute(select), nl, parent.frame())
-    }
-    x[r, vars, drop = drop]
+   	if (missing(select)) 
+       	vars <- TRUE
+   	else {
+       	nl <- as.list(seq_along(x@data))
+       	names(nl) <- names(x@data)
+       	vars <- eval(substitute(select), nl, parent.frame())
+   	}
+	x[r, vars, drop = drop]
 }

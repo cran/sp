@@ -1,5 +1,5 @@
 makegrid = function(x, n = 10000, nsig = 2, cellsize, 
-		offset = rep(0.5, nrow(bb))) {
+		offset = rep(0.5, nrow(bb)), pretty = TRUE) {
 	if (is(x, "Spatial"))
 		bb = bbox(x)
 	else
@@ -11,8 +11,9 @@ makegrid = function(x, n = 10000, nsig = 2, cellsize,
 	if (length(cellsize) == 1)
 		cellsize = rep(cellsize, nrow(bb))
 	# find pretty grid coordinates:
-	nsig = max(ceiling(log10(bb[1,] / cellsize)))
-	min.coords = signif(bb[,1] + offset * cellsize, nsig)
+	min.coords = bb[,1] + offset * cellsize
+	if (pretty)
+		min.coords = signif(min.coords, max(ceiling(log10(abs(bb[1,]) / cellsize))))
 	sel = min.coords - offset * cellsize > bb[,1]
 	if (any(sel))
 		min.coords[sel] = min.coords[sel] - cellsize[sel]
@@ -170,22 +171,27 @@ sample.Lines = function(x, n, type, offset = runif(1), ...) {
 setMethod("spsample", signature(x = "Lines"), sample.Lines)
 
 sample.SpatialLines = function(x, n, type, offset = runif(1), ...) {
-	lengths = SpatialLinesLengths(x, longlat=FALSE)
-        if (sum(lengths) < .Machine$double.eps)
-	    stop("SpatialLines object of no length")
+	# lengths = SpatialLinesLengths(x, longlat = isTRUE(!is.projected(x)))
+	if (isTRUE(!is.projected(x)))
+		warning("working under the assumption of projected data!")
+	lengths = SpatialLinesLengths(x, longlat = FALSE)
+	if (sum(lengths) < .Machine$double.eps)
+		stop("SpatialLines object of no length")
 	nrs = round(lengths / sum(lengths) * n)
 	if (sum(nrs) == 0) 
-	    warning("n too small, increase n and sample from output")
+		warning("n too small, increase n and sample from output")
 	ret = vector("list", sum(nrs > 0))
 	j = 1
 	for (i in 1:length(lengths)) {
 		if (nrs[i] > 0) {
-			ret[[j]] = sample.Lines(x@lines[[i]], nrs[i], type = type, offset = offset, ...)
+			ret[[j]] = sample.Lines(x@lines[[i]], nrs[i], type = type, 
+				offset = offset, ...)
 			j = j+1
 		}
 	}
 	ret = do.call(rbind, ret)
-	if (!is.null(ret)) proj4string(ret) = CRS(proj4string(x))
+	if (!is.null(ret)) 
+		proj4string(ret) = CRS(proj4string(x))
 	ret
 }
 setMethod("spsample", signature(x = "SpatialLines"), sample.SpatialLines)

@@ -18,7 +18,7 @@ in N/S/E/W; in case of negative degrees, sign is reversed and S or W is added; s
 \note{decimal degrees are used if variation is small, instead of minutes and seconds}
 \examples{
 xy = cbind(x = 2 * runif(100) - 1, y = 2 * runif(100) - 1)
-plot(SpatialPoints(xy, proj4string = CRS("+proj=longlat")),xlim=c(-1,1),ylim=c(-1,1))
+plot(SpatialPoints(xy, proj4string = CRS("+proj=longlat +ellps=WGS84")),xlim=c(-1,1),ylim=c(-1,1))
 degAxis(1)
 degAxis(2, at = c(-1,-0.5,0,0.5,1))
 #

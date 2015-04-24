@@ -15,6 +15,18 @@
 \alias{spplot,SpatialPolygonsDataFrame-method}
 \alias{spplot,SpatialLinesDataFrame-method}
 \alias{spplot,SpatialPointsDataFrame-method}
+\alias{sppanel}
+\alias{sppanel,Line-method}
+\alias{sppanel,Lines-method}
+\alias{sppanel,NULL-method}
+\alias{sppanel,SpatialGrid-method}
+\alias{sppanel,SpatialLines-method}
+\alias{sppanel,SpatialPixels-method}
+\alias{sppanel,SpatialPoints-method}
+\alias{sppanel,SpatialPolygons-method}
+\alias{sppanel,character-method}
+\alias{sppanel,list-method}
+\alias{sppanel-methods}
 \alias{set_col_regions}
 \alias{get_col_regions}
 
@@ -74,7 +86,7 @@ e.g. \code{exp(x)~x+y|name} to plot the exponent of the z-variable}
 \item{xlim}{ numeric; x-axis limits }
 \item{ylim}{ numeric; y-axis limits }
 \item{edge.col}{ color of symbol edge }
-\item{colorkey}{ logical; if TRUE, use continuous, levelplot-like colorkey instead of symbol key}
+\item{colorkey}{ if FALSE, use symbol key; if TRUE, use continuous, levelplot-like colorkey; if list, follow syntax of argument \code{colorkey} in \link[lattice]{levelplot} (see below for an example) }
 \item{widths}{width of grob}
 \item{heights}{heights of grob}
 \item{fill}{fill color of grob}
@@ -153,31 +165,37 @@ else use a linear scale if \code{cuts} is only number of cuts }
 to set a north arrow or scale bar.
 
 The \code{sp.layout} argument is either a single layout item, or a list
-with one or more layout items. A layout item is a list with its first argument
+with one or more layout items. A layout item is one of
+\itemize{
+\item{a list with one or more \code{Spatial*} objects, along with
+style arguments like \code{col}, \code{lty}, \code{pch}, \code{fill} etc.}
+\item{a list with its first argument the layout function or
 the name of the layout function to be called: \code{sp.points} for
 SpatialPoints, \code{sp.polygons} for SpatialPolygons object, \code{sp.lines}
 for a SpatialLines object, and \code{sp.text} for text to place. The
 second argument contains the object (or text) to be plotted; remaining
-arguments are passed to the corresponding \code{panel.*} functions.
+arguments are passed to the corresponding \code{panel.*} functions.}}
 
-The order of items in \code{sp.layout} matters; objects are drawn in
-the order they appear. Plot order and prevalence of sp.layout items:
-for points and lines, sp.layout items are drawn before the points
-(to allow for grids and polygons); for grids and polygons sp.layout
-is drawn afterwards (so the item will not be overdrawn by the grid
-and/or polygon). Transparency may further help when combining things.
+The order of items in \code{sp.layout} matters; objects are drawn in the
+order they appear. With respect to \code{obj}, default plot order and
+precedence of \code{sp.layout} items is as follows: for points and
+lines, \code{sp.layout} items are drawn over (after) \code{obj}; for
+grids and polygons, \code{sp.layout} items are drawn behind (before)
+\code{obj}.  Transparency may further help making multiple things
+visible. Adding a \code{first} argument to a layout item overrides its
+default plotting order with respect to \code{obj}:
 
-Items of the \code{sp.layout} list, or its elements, can be:
+Special control elements of \code{sp.layout} items:
 \describe{
+\item{\code{first}}{logical; should the layout item be drawn before
+the \code{obj} (TRUE), or after (FALSE)? This overrides
+the default order (points and lines in front, polygons and grids behind). }
 \item{\code{which}}{integer; controls to which panel a layout
 item should be added. If \code{which} is present in the main,
 top-level list it applies to all layout items; in sub-lists with
-layout items it denotes the (set of) panels in which the layout
+layout items it denotes the (set of) panel(s) in which the layout
 item should be drawn.  Without a \code{which} item, layout items
 are drawn in each panel.}
-\item{\code{first}}{logical; should the layout item be drawn before
-the main spplot object (TRUE), or after (FALSE)? This overrides
-the default order.}
 }
 
 \code{sp.theme} returns a lattice theme; use, after loading package
@@ -194,7 +212,7 @@ with different factor levels result in an error.
 }
 
 \references{
-\url{http://r-spatial.sourceforge.net/}
+\url{http://rspatial.r-forge.r-project.org/gallery/}
 }
 \seealso{\link[lattice]{xyplot}, \link[lattice]{levelplot},
 \link[lattice]{panel.identify} to identify objects }
@@ -204,8 +222,7 @@ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}
 \examples{
 library(lattice)
 trellis.par.set(sp.theme()) # sets bpy.colors() ramp
-data(meuse)
-coordinates(meuse) <- ~x+y
+demo(meuse, ask = FALSE, echo = FALSE)
 l2 = list("SpatialPolygonsRescale", layout.north.arrow(), offset = c(181300,329800), 
 	scale = 400)
 l3 = list("SpatialPolygonsRescale", layout.scale.bar(), offset = c(180500,329800), 
@@ -227,12 +244,48 @@ if (require(RColorBrewer)) {
 		col.regions=brewer.pal(3, "Set1"))
 }
 
-data(meuse.grid)
-gridded(meuse.grid)=~x+y
-meuse.grid$g = factor(sample(letters[1:5], 3103, replace=TRUE),levels=letters[1:10])
-meuse.grid$f = factor(sample(letters[6:10], 3103, replace=TRUE),levels=letters[1:10])
-spplot(meuse.grid, c("f","g"))
+meuse.grid$g = factor(sample(letters[1:5], 3103, replace=TRUE),
+	levels=letters[1:10])
+meuse.grid$f = factor(sample(letters[6:10], 3103, replace=TRUE),
+	levels=letters[1:10])
 spplot(meuse.grid, c("f","g"), col.regions=bpy.colors(10))
 
+# example modifying colorkey for points:
+spplot(meuse["dist"], colorkey = list(
+	right = list( # see ?levelplot in package trellis, argument colorkey:
+		fun = draw.colorkey, 
+		args = list(
+			key = list(
+				at = seq(0, 1, .1), # colour breaks
+				col = bpy.colors(11), # colours
+				labels = list(
+					at = c(0, .2, .4, .6, .8, 1), 
+					labels = c("0x", "20x", "40x", "60x", "80x", "100x")
+				)
+			)
+		)
+	)
+))
+l6 = list(meuse.grid["dist"], col = grey(seq(.5,.9,length.out=10)))
+spplot(meuse, c("zinc", "lead"), sp.layout = l6)
+spplot(meuse, c("zinc", "lead"), 
+	sp.layout = list(meuse.grid, meuse.riv, col = 'grey'))
+
+#  Custom legend placement, taken from 
+# http://stackoverflow.com/questions/29344692/custom-placement-of-spplot-legend-in-the-map
+s <- spplot(meuse.grid[,'dist'], colorkey = list(space = "left", height = 0.4))
+
+args <- s$legend$left$args$key
+
+## Prepare list of arguments needed by `legend=` argument (as described in ?xyplot)
+library(lattice) # draw.colorkey
+legendArgs <- list(fun = draw.colorkey,
+                   args = list(key = args),
+                   corner = c(0.05,.75))
+
+## Call spplot() again, this time passing in to legend the arguments
+## needed to print a color key
+spplot(meuse.grid[,'dist'], colorkey = FALSE,
+       legend = list(inside = legendArgs))
 }
 \keyword{dplot}

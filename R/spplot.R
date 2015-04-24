@@ -1,4 +1,5 @@
-sp.polygons = function(obj, col = 1, fill="transparent", ...) {
+setMethod("sppanel", "SpatialPolygons",
+  function(obj, col = 1, fill = "transparent", ...) {
 	if (is.character(obj))
 		obj = get(obj)
 	if (!is(obj, "SpatialPolygons"))
@@ -43,33 +44,36 @@ sp.polygons = function(obj, col = 1, fill="transparent", ...) {
 				sp.polygon3(Srs[[j]], col = col, fill = fill[i], ...)
 		}
 	}
-}
+})
 
-sp.lines = function(obj, col = 1, ...) {
-	if (is.character(obj))
-		obj = get(obj)
-	sp.lines3 = function(x, col, ...) panel.lines(coordinates(x), col = col, ...)
-	sp.lines2 = function(x, col, ...) lapply(x@Lines, sp.lines3, col = col, ...)
-	if (is(obj, "SpatialLines"))
-		lapply(obj@lines, sp.lines2, col = col, ...)
-	else if (is(obj, "Lines"))
-		lapply(obj@Lines, sp.lines3, col = col, ...)
-	else if (is(obj, "Line"))
-		panel.lines(coordinates(obj), col = col, ...)
-	else stop(paste("obj of class Line, Lines or SpatialLines expected, got", class(obj)))
-}
+# backward compatibility:
+sp.polygons = function(obj,col=1,fill="transparent",...) sppanel(obj,col=col,fill=fill,...)
 
-sp.points = function(obj, pch = 3, ...) {
-	if (is.character(obj))
-		obj = get(obj)
-	xy = coordinates(obj)
-	panel.points(xy[,1], xy[,2], pch = pch, ...)
-}
+setMethod("sppanel", "SpatialLines", 
+  function (obj, col = 1, ...) {
+    ## contributed by Josh O'Brien, Mar 15, 2015
+	lo <- length(obj@lines)
+	col <- rep(col, length.out = lo)
+	lapply(seq_len(lo), function(ii) sppanel(obj@lines[[ii]], col = col[ii], ...))
+})
+
+setMethod("sppanel", "Lines",
+  function (obj, col = 1, ...) lapply(obj@Lines, sppanel, col = col, ...))
+
+setMethod("sppanel", "Line",
+  function (obj, col = 1, ...) panel.lines(coordinates(obj), col = col, ...))
+
+# backward compatibility:
+sp.lines = function(obj, col = 1,...) sppanel(obj,col=col,...)
+
+setMethod("sppanel", "SpatialPoints",
+	function(obj, pch = 3, ...)
+		panel.points(coordinates(obj), pch = pch, ...))
+# backward compatibility:
+sp.points = function(obj, pch=3, ...) sppanel(obj, pch = pch, ...)
 
 sp.grid = function(obj, col = 1, alpha = 1, ..., at = pretty(obj[[1]]),
 		col.regions = col) {
-	if (is.character(obj))
-		obj = get(obj)
 	xy = coordinates(obj)
 	if (length(col) > 1 && ("data" %in% slotNames(obj))) {
 		z = obj[[1]]
@@ -83,42 +87,34 @@ sp.grid = function(obj, col = 1, alpha = 1, ..., at = pretty(obj[[1]]),
 		height = gt$cellsize[2], default.units = "native",
 		gp = gpar(fill = col, col = NA, alpha = alpha))
 }
+setMethod("sppanel", "SpatialPixels", sp.grid)
+setMethod("sppanel", "SpatialGrid", sp.grid)
 
 sp.text = function(loc, txt, ...) {
 	if (!is.numeric(loc))
-		stop("loc should be numeric")
+		stop("loc (first argument) should be numeric, indicating text locations")
 	if (length(loc) == 2)
 		panel.text(loc[1], loc[2], txt, ...)
 	else if (is.matrix(loc) && ncol(loc) == 2 && nrow(loc) == length(txt))
 		panel.text(loc[,1], loc[,2], txt, ...)
 	else
 		stop("loc and txt have non-matching dimensions")
-	#panel.text(loc[[1]], loc[[2]], txt, ...)
 }
+setMethod("sppanel", "character", function(obj,txt, ...) sp.text(obj, txt, ...))
 
-sp.panel.layout = function(lst, p.number, ...) {
+sp.panel.layout = function(lst, p.number, ...) { # now obsolete...
+	.Deprecated("sppanel")
 	sp.panel0 = function(x, first = FALSE, ...) {
-		if (is.character(x))
-#			obj = get(x)
-			x = get(x)
-		if (!is.null(x$which) && is.na(match(p.number, x$which)))
-			return()
 		if (inherits(x, "list")) {
+			if (!is.null(x$which) && is.na(match(p.number, x$which)))
+				return()
 			# print(paste(class(x), "first val", first, "first obj", x$first))
 			if (!is.null(x$first)) {
 				if (x$first == first)
 					do.call(x[[1]], x[2:length(x)])
 			} else if (!first)
 				do.call(x[[1]], x[2:length(x)])
-		} else if (is(x, "SpatialLines") || is(x, "Lines") || is(x, "Line"))
-			sp.lines(x, ...)
-		else if (is(x, "SpatialPoints"))
-			sp.points(as(x, "SpatialPoints"), ...)
-		else if (is(x, "SpatialPolygons"))
-			sp.polygons(x, ...)
-		else if (is(x, "SpatialPixels") || is(x, "SpatialGrid"))
-			sp.grid(x, ...)
-		else stop(paste("cannot plot object of class", class(x)))
+		} 
 	}
 	if (!is.null(lst$which) && is.na(match(p.number, lst$which)))
 		return()
@@ -134,6 +130,39 @@ sp.panel.layout = function(lst, p.number, ...) {
 	} else
 		stop(paste("expected object of class list; got object of class", class(lst)))
 }
+
+setMethod("sppanel", "NULL", function(obj,...) { })
+
+setMethod("sppanel", "list", 
+	function(obj, p.number, first = FALSE, ...) {
+		if (length(obj) == 1 & is.null(obj[[1]]))
+			return()
+		if (!is.null(obj$which) && is.na(match(p.number, obj$which)))
+			return()
+		else 
+			obj$which = NULL
+		if (is.list(obj[[1]])) # list-of-lists, recurse:
+			lapply(obj, sppanel, p.number = p.number, first = first, ...)
+		# condition 1: `which' was set, and corresponds to panel number:
+		else if (is.null(obj$which) || !is.na(match(p.number, obj$which))) {
+			opaque = function(x) (is(x, "SpatialPolygons") 
+				|| is(x, "SpatialGrid") || is(x, "SpatialPixels"))
+			if (is.character(obj[[1]]) || is.function(obj[[1]])) {
+				if (is.null(obj$first))
+					obj$first = opaque(obj[[2]]) # default: grids/polygons behind, rest front
+				if (obj$first == first)
+					do.call(obj[[1]], obj[-1], ...)
+			} else {
+				sp = sapply(obj, is, "Spatial")
+				stopifnot(any(sp))
+				lapply(obj[sp], function(x) { 
+					if (identical(obj$first, first) || opaque(x) == first)
+						do.call(sppanel, append(x, obj[!sp]), ...)
+				})
+			}
+		}
+	}
+)
 
 getFormulaLevelplot = function(sdf, zcol) {
 	if (length(zcol) > 1)
@@ -334,24 +363,9 @@ create.z = function(df, zcol) {
 }
 
 panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
-	# set first = TRUE defaults for polygons objects in sp.layout:
-	if (!missing(sp.layout) && inherits(sp.layout, "list")) {
-		if (inherits(sp.layout[[1]], "list")) {
-			for (i in seq(along = sp.layout)) {
-				if (inherits(sp.layout[[i]], "list")) {
-					sp.i = sp.layout[[i]]
-					if (is.null(sp.i$first) && sp.i[[1]] == "sp.polygons")
-						sp.layout[[i]]$first = TRUE
-				}
-			}
-		} else if (is.null(sp.layout$first) && sp.layout[[1]] == "sp.polygons")
-			sp.layout$first = TRUE
-	}
-	# print(sp.layout)
-
-	sp.panel.layout(sp.layout, panel.number(), first = TRUE)
+	sppanel(list(sp.layout), panel.number(), first = TRUE)
 	panel.levelplot(x, y, z, subscripts, ...)
-	sp.panel.layout(sp.layout, panel.number())
+	sppanel(list(sp.layout), panel.number())
 }
 
 panel.polygonsplot =
@@ -382,10 +396,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 	z <- as.numeric(z[subscripts])
 	zcol <- as.numeric(zcol[subscripts])
 
-	#EJP,2010-10-8: 
-	#if (is(grid.polygons, "SpatialLines"))
-	#	sp.panel.layout(sp.layout, panel.number())
-	sp.panel.layout(sp.layout, panel.number(), first = TRUE)
+	sppanel(list(sp.layout), panel.number(), first = TRUE)
 	if (any(subscripts)) {
 		if (is(grid.polygons, "SpatialLines")) {
 			sp.lines3 = function(x, col, ...) panel.lines(coordinates(x), col = col, ...)
@@ -395,6 +406,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 		} else {
 			pls = slot(grid.polygons, "polygons")
    			pO = slot(grid.polygons, "plotOrder")
+			col = rep(col, length.out = length(grid.polygons))
    			for (i in pO) {
 				if (get_Polypath()) {
 					obj = as(as(grid.polygons[i,], "SpatialLines"),
@@ -404,7 +416,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
 					fill = col.regions[zcol[i]]
 					alpha = alpha.regions
 					grid.path(cc[,1], cc[,2], id, default.units = "native",
-						gp = gpar(col = col, fill = fill, alpha = alpha, 
+						gp = gpar(col = col[i], fill = fill, alpha = alpha, 
 							lwd = lwd, lty = lty, ...))
 				} else {
        				Srs <- slot(pls[[i]], "Polygons")
@@ -430,19 +442,15 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
    			}
 		}
 	}
-	# EJP, 2010-10-8
-	#if (!is(grid.polygons, "SpatialLines"))
-	#	sp.panel.layout(sp.layout, panel.number())
-	sp.panel.layout(sp.layout, panel.number())
+	sppanel(list(sp.layout), panel.number())
 }
 
 panel.pointsplot = function(sp.layout, x, y, subscripts, groups, col, cex,
 		pch, ...) {
-	sp.panel.layout(sp.layout, panel.number())
-	#panel.superpose(x, y, subscripts, col = col, ...)
+	sppanel(list(sp.layout), panel.number(), first = TRUE)
 	lpoints(x, y, fill = groups[subscripts], col = col[subscripts], 
 		cex = cex[subscripts], pch = pch[subscripts], ...)
-	#panel.xyplot(x, y, pch = 21, fill = fill, ...)
+	sppanel(list(sp.layout), panel.number())
 }
 
 SpatialPolygons2Grob = function(obj, fill) {
@@ -549,7 +557,7 @@ spplot.key = function(sp.layout, rows = 1, cols = 1) {
 	for (i in seq(along=rows)) {
 		for (j in seq(along=cols)) {
 			trellis.focus("panel", cols[j], rows[i], highlight = FALSE)
-			sp.panel.layout(sp.layout)
+			sppanel(sp.layout)
 			trellis.unfocus()
 		}
 	}
@@ -651,10 +659,10 @@ addNAemptyRowsCols = function(obj) {
 }
 
 fill.call.groups <-
-function (lst, z, ..., cuts = ifelse(colorkey, 100, 5), 
+function (lst, z, ..., cuts = ifelse(identical(FALSE, colorkey), 5, 100), 
 	#col.regions = trellis.par.get("regions")$col, 
     legendEntries = "", pch, cex = 1, do.fill = TRUE, do.log = FALSE, 
-    key.space = ifelse(colorkey, "right", "bottom"), 
+    key.space = ifelse(identical(FALSE, colorkey), "bottom", "right"), 
 	cex.key, edge.col, colorkey) 
 {
     dots = list(...)
@@ -730,7 +738,9 @@ function (lst, z, ..., cuts = ifelse(colorkey, 100, 5),
 		cex.key = mean(cex, na.rm = TRUE)
 
 	# do key:
-	if (colorkey) {
+	if (is.list(colorkey))
+		lst$legend = colorkey
+	else if (isTRUE(colorkey)) {
 		lst$legend = list(
 			right = list(
 				fun = draw.colorkey,

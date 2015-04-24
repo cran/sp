@@ -46,7 +46,7 @@ Methods defined with class "SpatialPolygons" in the signature:
   }
 }
 
-\details{
+\section{plot method arguments}{
 The \code{plot} method for spatial polygons takes the following arguments:
 \describe{
   \item{x}{a SpatialPolygons object}

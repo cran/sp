@@ -1,7 +1,8 @@
 \name{spTransform}
 \alias{spTransform-methods}
-\alias{spTransform,ANY,ANY-method}
-\alias{spTransform,ANY,CRS-method}
+\alias{spTransform,Spatial,CRS-method}
+\alias{spTransform,Spatial,character-method}
+\alias{spTransform,Spatial,ANY-method}
 \alias{spTransform}
 \title{ spTransform for map projection and datum transformation }
 \description{ spTransform for map projection and datum transformation }
@@ -10,17 +11,18 @@ spTransform(x, CRSobj, ...)
 }
 \arguments{
 \item{x}{ object to be transformed }
-\item{CRSobj}{ object of class \link{CRS}}
-\item{...}{further arguments}
+\item{CRSobj}{ object of class \link{CRS}, or of class \code{character} in
+which case it is converted to \link{CRS}}
+\item{...}{further arguments (ignored) }
 }
 \value{
 object with coordinates transformed to the new coordinate reference
 system.
 }
 \note{
-Package \code{sp} only provides the definition of the generic, 
-methods doing actual transformation are found in package \code{rgdal},
-see \link[rgdal]{spTransform}
+Package \code{rgdal} provides the methods doing actual transformation,
+see \link[rgdal]{spTransform}; when \code{rgdal} cannot be loaded, an
+error message follows.
 }
 \keyword{methods}
 \keyword{spatial}

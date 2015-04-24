@@ -222,16 +222,17 @@ over(pol, ptsdf)
 over(pol, ptsdf[1:2], fn = mean)
 @
 
-\section{Lines, and Polygon-Polygon overlays with {\tt rgeos}}
+\section{Lines, and Polygon-Polygon overlays require {\tt rgeos}}
 
 Package \code{sp} provides many of the \code{over} methods, but
-not all.  Package \code{rgeos} provides functions to compute
-geometry intersections, i.e.  for any set of (points, lines,
+not all.  Package \code{rgeos} can compute
+geometry intersections, i.e. for any set of (points, lines,
 polygons) to determine whether they have one ore more points in
-common. The \code{over} methods not provided by package \code{sp}
-can thus be completed; it involves {\em any} \code{over} methods
+common. This means that the \code{over} methods provided by package 
+\code{sp}
+can be completed by \code{rgeos} for {\em any} \code{over} methods
 where a \code{SpatialLines} object is involved (either as \code{x}
-or \code{y}), and the method where \code{x} and \code{y} are both of
+or \code{y}), or where \code{x} and \code{y} are both of
 class \code{SpatialPolygons} (table \ref{tab}). For this purpose,
 objects of class \code{SpatialPixels} or \code{SpatialGrid} are
 converted to \code{SpatialPolygons}. A toy example combines polygons

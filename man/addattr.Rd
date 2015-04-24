@@ -33,6 +33,5 @@ when some IDs do not match }
 }
 }
 \author{Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}
-
-\seealso{\link{overlay}, \link{point.in.polygon}}
+\seealso{\link{over}}
 \keyword{methods}

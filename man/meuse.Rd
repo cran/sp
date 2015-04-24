@@ -52,7 +52,7 @@ P.A. Burrough, R.A. McDonnell, 1998. Principles of Geographical Information Syst
 
 Stichting voor Bodemkartering (STIBOKA), 1970. Bodemkaart van Nederland : Blad 59 Peer, Blad 60 West en 60 Oost Sittard: schaal 1 : 50 000. Wageningen, STIBOKA.
 
-\url{http:/www.gstat.org/}
+\url{http://www.gstat.org/}
 }
 \keyword{datasets}
 

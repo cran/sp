@@ -13,7 +13,7 @@ Lines <- function(slinelist, ID) {
 	if (missing(ID)) stop("Single ID required")
 	if (length(ID) != 1) stop("Single ID required")
         ID <- as.character(ID)
-        stopifnot(nchar(ID) > 0)
+        stopifnot(nzchar(ID))
 	new("Lines", Lines = slinelist, ID=ID)
 }
 
@@ -155,8 +155,7 @@ row.names.SpatialLines <- function(x) {
 }
 
 #"[.SpatialLines" =  function(x, i, j, ..., drop = T) {
-setMethod("[", "SpatialLines",
-	function(x, i, j, ..., drop = TRUE) {
+setMethod("[", "SpatialLines", function(x, i, j, ..., drop = TRUE) {
 	if (is(i, "Spatial"))
 		i = !is.na(over(x, geometry(i)))
 	if (is.logical(i)) {
@@ -164,16 +163,16 @@ setMethod("[", "SpatialLines",
 			i = 1:length(x@lines)
 		else
 			i <- which(i)
-	} else if (is.character(i)) {
-                i <- match(i, row.names(x))
-        }
-        if (any(is.na(i))) stop("NAs not permitted in row index")
-		#SpatialLines(x@lines[i], CRS(proj4string(x)))
-		x@lines = x@lines[i]
+	} else if (is.character(i))
+		i <- match(i, row.names(x))
+	if (any(is.na(i))) 
+		stop("NAs not permitted in row index")
+	#SpatialLines(x@lines[i], CRS(proj4string(x)))
+	x@lines = x@lines[i]
+	if (length(x@lines) > 0)
 		x@bbox = .bboxSls(x@lines)
-		x
-	}
-)
+	x
+})
 
 setMethod("coordnames", signature(x = "SpatialLines"),
 	function(x) coordnames(x@lines[[1]])

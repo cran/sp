@@ -48,6 +48,26 @@ checked that all IDs are unique. If \code{rbind}-ing \code{SpatialLines} without
 unique IDs, it is possible to set the argument \code{makeUniqueIDs = TRUE}, although
 it is preferred to change these explicitly with \code{\link{spChFIDs}}.
 }
+
+\section{plot method arguments}{
+The plot method for \dQuote{SpatialLines} objects takes the following arguments:
+\describe{
+\item{x}{object of class SpatialLines}
+\item{xlim}{default NULL; the x limits (x1, x2) of the plot}
+\item{ylim}{default NULL; the y limits of the plot}
+\item{col}{default 1; default plotting color}
+\item{lwd}{default 1; line width}
+\item{lty}{default 1; line type}
+\item{add}{default FALSE; add to existing plot}
+\item{axes}{default FALSE; a logical value indicating whether both axes should be drawn }
+\item{lend}{default 0; line end style}
+\item{ljoin}{default 0; line join style}
+\item{lmitre}{default 10; line mitre limit}
+\item{...}{passed through}
+\item{setParUsrBB}{set the \code{par} \dQuote{usr} bounding box, see note in \link{Spatial-class}}
+}
+}
+
 \author{ Roger Bivand, Edzer Pebesma }
 
 \seealso{

@@ -54,6 +54,7 @@
 }
 
 panel.bubble = function(x, y, subscripts, sp.layout, ...) {
-	sp.panel.layout(sp.layout, panel.number())
+	# sp.panel.layout(sp.layout, panel.number())
+	sppanel(sp.layout, panel.number())
 	panel.xyplot(x, y, ...)
 }

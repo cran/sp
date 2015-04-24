@@ -1,5 +1,5 @@
 "SpatialPoints" = function(coords, proj4string = CRS(as.character(NA)),
-        bbox=NULL) {
+        bbox = NULL) {
 	coords = coordinates(coords) # checks numeric mode
 	colNames = dimnames(coords)[[2]]
 	if (is.null(colNames))
@@ -13,43 +13,27 @@
 }
 
 .bboxCoords = function(coords) {
+	stopifnot(nrow(coords) > 0)
 	bbox = t(apply(coords, 2, range))
 	dimnames(bbox)[[2]] = c("min", "max")
 	as.matrix(bbox)
 }
 
-.checkNumericCoerce2double = function(obj) {
-	if (any(!unlist(lapply(obj, is.numeric))))
-		stop("cannot retrieve coordinates from non-numeric elements")
-	fin_check <- sapply(obj, function(x) all(is.finite(x)))
-	if (!all(fin_check))
-		stop("non-finite coordinates")
-	na_check <- sapply(obj, function(x) all(!is.na(x)))
-	if (!all(na_check))
-		stop("NA in coordinates")
-	lapply(obj, as.double)
-}
-
-setMethod("coordinates", "list", function(obj)
-		do.call(cbind, .checkNumericCoerce2double(as.data.frame(obj))))
-setMethod("coordinates", "data.frame", function(obj)
-		do.call(cbind, .checkNumericCoerce2double(obj)))
 setMethod("coordinates", "matrix", 
 	function(obj) {
 		if (!is.numeric(obj))
 			stop("cannot derive coordinates from non-numeric matrix")
+		storage.mode(obj) <- "double"
 		if (any(is.na(obj)))
 			stop("NA values in coordinates")
 		if (any(!is.finite(obj)))
 			stop("non-finite coordinates")
-		dn = dimnames(obj)
-		dd = dim(obj)
-		storage.mode(obj) <- "double"
-		dim(obj) = dd
-		dimnames(obj) = dn
 		obj
 	}
 )
+setMethod("coordinates", "data.frame", function(obj)coordinates(as.matrix(obj)))
+
+setMethod("coordinates", "list", function(obj) coordinates(as.data.frame(obj)))
 
 asWKTSpatialPoints = function(x, digits = getOption("digits")) {
 	data.frame(geometry = paste("POINT(",unlist(lapply(data.frame(
@@ -115,7 +99,7 @@ setMethod("[", "SpatialPoints", function(x, i, j, ..., drop = TRUE) {
 	if (any(is.na(i)))
 		stop("NAs not permitted in row index")
 	x@coords = x@coords[i, , drop = FALSE]
-	if (drop)
+	if (drop && nrow(x@coords))
 		x@bbox = .bboxCoords(x@coords)
 	x
 })

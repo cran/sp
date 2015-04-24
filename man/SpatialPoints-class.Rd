@@ -63,6 +63,26 @@ Class \code{"Spatial"}, directly.
     \item{show}{\code{signature(object = "SpatialPoints")}: prints coordinates }
     \item{rbind}{\code{signature(object = "SpatialPoints")}: rbind-like method }  }
 }
+
+\section{plot method arguments}{
+The plot method for \dQuote{SpatialPoints} objects takes the following arguments:
+\describe{
+\item{x}{object of class SpatialPoints}
+\item{pch}{default 3; either an integer specifying a symbol or a single character to be used as the default in plotting points}
+\item{axes}{default FALSE; a logical value indicating whether both axes should be drawn }
+\item{add}{default FALSE; add to existing plot}
+\item{xlim}{default NULL; the x limits (x1, x2) of the plot}
+\item{ylim}{default NULL; the y limits of the plot}
+\item{...}{passed through}
+\item{setParUsrBB}{default FALSE; set the \code{par} \dQuote{usr} bounding box, see note in \link{Spatial-class}}
+\item{cex}{default 1; numerical value giving the amount by which plotting text and symbols should be magnified relative to the default}
+\item{col}{default 1; default plotting color}
+\item{lwd}{default 1; line width}
+\item{bg}{default 1; colour to be used for the background of the device region}
+}
+}
+
+
 \author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{

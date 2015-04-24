@@ -8,6 +8,8 @@
 #endif
 /* remember to touch local_stubs.c */
 
+#define SP_VERSION "1.1-0"
+
 #include <S.h>
 
 #ifdef USING_R
@@ -87,23 +89,25 @@ SEXP tList(SEXP nl, SEXP m);
 #define DIM     2               /* Dimension of points */
 typedef double  tPointd[DIM];   /* type double point */
 
-double  SP_PREFIX(Area2)( tPointd a, tPointd b, tPointd c );
-void    SP_PREFIX(FindCG)( int n, tPointd *P, tPointd CG, double *Areasum2 );
-void    SP_PREFIX(Centroid3)( tPointd p1, tPointd p2, tPointd p3, tPointd c );
-void SP_PREFIX(spRFindCG_c)( SEXP n, SEXP coords, double *xc, double *yc, 
-		double *area );
+double  SP_PREFIX(Area2)(const tPointd a, const tPointd b, const tPointd c);
+void    SP_PREFIX(FindCG)(int n, tPointd *P, tPointd CG, double *Areasum2);
+void    SP_PREFIX(Centroid3)(const tPointd p1, const tPointd p2, 
+	const tPointd p3, tPointd c);
+void SP_PREFIX(spRFindCG_c)(const SEXP n, const SEXP coords, 
+	double *xc, double *yc, double *area );
 void SP_PREFIX(comm2comment)(char *buf, int bufsiz, int *comm, int nps);
 
-SEXP SP_PREFIX(Polygon_c)(SEXP coords, SEXP n, SEXP hole);
-SEXP SP_PREFIX(Polygons_c)(SEXP pls, SEXP ID);
-SEXP SP_PREFIX(SpatialPolygons_c)(SEXP pls, SEXP pO, SEXP p4s);
-SEXP SP_PREFIX(bboxCalcR_c)(SEXP pls);
-SEXP SP_PREFIX(Polygon_validate_c)(SEXP obj);
-SEXP SP_PREFIX(Polygons_validate_c)(SEXP obj);
-SEXP SP_PREFIX(SpatialPolygons_validate_c)(SEXP obj);
-SEXP SP_PREFIX(SpatialPolygons_getIDs_c)(SEXP obj);
-SEXP SP_PREFIX(SpatialPolygons_plotOrder_c)(SEXP pls);
-SEXP SP_PREFIX(comment2comm)(SEXP obj);
+SEXP SP_PREFIX(Polygon_c)(const SEXP coords, const SEXP n, const SEXP hole);
+SEXP SP_PREFIX(Polygons_c)(const SEXP pls, const SEXP ID);
+SEXP SP_PREFIX(SpatialPolygons_c)(const SEXP pls, const SEXP pO, const SEXP p4s);
+SEXP SP_PREFIX(bboxCalcR_c)(const SEXP pls);
+SEXP SP_PREFIX(Polygon_validate_c)(const SEXP obj);
+SEXP SP_PREFIX(Polygons_validate_c)(const SEXP obj);
+SEXP SP_PREFIX(SpatialPolygons_validate_c)(const SEXP obj);
+SEXP SP_PREFIX(SpatialPolygons_getIDs_c)(const SEXP obj);
+SEXP SP_PREFIX(SpatialPolygons_plotOrder_c)(const SEXP pls);
+SEXP SP_PREFIX(comment2comm)(const SEXP obj);
+SEXP SP_PREFIX(sp_linkingTo_version)();
 #endif
 /* remember to touch local_stubs.c */
 

@@ -27,6 +27,7 @@
 \alias{over,SpatialGrid,SpatialPixels-method}
 \alias{over,SpatialGrid,SpatialPixelsDataFrame-method}
 \alias{over,SpatialGrid,SpatialPointsDataFrame-method}
+\alias{over,Spatial,Spatial-method}
 \alias{overDF_for_rgeos}
 
 \title{ consistent spatial overlay for points, grids and polygons }
@@ -112,10 +113,11 @@ These methods assume that pixels and grid cells are never
 overlapping; for objects of class \code{SpatialPixels} this is
 not guaranteed.
 
-over methods that involve \code{SpatialLines} objects, or pairs of
-\code{SpatialPolygons} are implemented in, package rgeos.}
+\code{over} methods that involve \code{SpatialLines} objects, or
+pairs of \code{SpatialPolygons} require package \code{rgeos},
+and use \link[rgeos]{gIntersects}.}
 
-\seealso{\link{overlay}, \link{point.in.polygon}}
+\seealso{\link{point.in.polygon}, package \link[rgeos]{gIntersects}}
 \examples{
 r1 = cbind(c(180114, 180553, 181127, 181477, 181294, 181007, 180409, 
 180162, 180114), c(332349, 332057, 332342, 333250, 333558, 333676, 
@@ -135,12 +137,13 @@ sr2=Polygons(list(Polygon(r2)),"r2")
 sr3=Polygons(list(Polygon(r3)),"r3")
 sr4=Polygons(list(Polygon(r4)),"r4")
 sr=SpatialPolygons(list(sr1,sr2,sr3,sr4))
-srdf=SpatialPolygonsDataFrame(sr, data.frame(cbind(1:4,5:2), row.names=c("r1","r2","r3","r4")))
+srdf=SpatialPolygonsDataFrame(sr, data.frame(cbind(1:4,5:2), 
+	row.names=c("r1","r2","r3","r4")))
 
 data(meuse)
 coordinates(meuse) = ~x+y
 
-plot(meuse)
+# plot(meuse)
 polygon(r1)
 polygon(r2)
 polygon(r3)

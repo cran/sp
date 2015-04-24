@@ -1,7 +1,7 @@
 
-R version 3.0.1 (2013-05-16) -- "Good Sport"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 3.1.3 (2015-03-09) -- "Smooth Sidewalk"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -80,7 +80,10 @@ Error in x[c(1:3, NA), ] : NAs not permitted in row index
 > y = data.frame(a = 1:5, b = 5:1)
 > try(SpatialPointsDataFrame(x, y)) # will complain:
 Error in SpatialPointsDataFrame(x, y) : 
-  nr of unique coords ID's (rownames) not equal to nr of data records
+  row.names of data and dimnames of coords do not match
+In addition: Warning message:
+In SpatialPointsDataFrame(x, y) :
+  forming a SpatialPointsDataFrame based on maching IDs, not on record order. Use match.ID = FALSE to match on record order
 > SpatialPointsDataFrame(x, y, match.ID = FALSE) # won't complain
   coordinates a b
 1      (3, 3) 1 5
@@ -200,14 +203,15 @@ Error in points2grid(points, tolerance, round) :
 x          5.721109 0.0005312853        84
 y         50.955770 0.0003318105       112
 > 
-> try(CRS("+proj=latlon"))
-Error in CRS("+proj=latlon") : 
-  northings must follow eastings: +proj=latlon
-> try(CRS("+proj=lonlat"))
-CRS arguments: +proj=longlat 
+> try(CRS("+proj=latlon +ellps=WGS84"))
+Error in CRS("+proj=latlon +ellps=WGS84") : 
+  northings must follow eastings: +proj=latlon +ellps=WGS84
+> try(CRS("+proj=lonlat +ellps=WGS84"))
+CRS arguments: +proj=longlat +ellps=WGS84 
 Warning message:
-In CRS("+proj=lonlat") : 'lonlat' changed to 'longlat': +proj=longlat
+In CRS("+proj=lonlat +ellps=WGS84") :
+  'lonlat' changed to 'longlat': +proj=longlat +ellps=WGS84
 > 
 > proc.time()
    user  system elapsed 
-  0.876   0.036   0.906 
+  0.543   0.023   0.560 

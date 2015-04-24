@@ -1,7 +1,7 @@
 require(tools)
 packages_to_check <- function(dep, which = c("Depends", "Imports", "LinkingTo", "Suggests"), recursive = FALSE){
 
-download.file("http://cran.R-project.org/web/packages/packages.rds", "packages.rds", mode="wb")
+download.file("http://cran.uni-muenster.de/web/packages/packages.rds", "packages.rds", mode="wb")
     x <- readRDS("packages.rds")
     x <- x[!duplicated(x[,1]),]
     packages <- x[,1]
@@ -12,14 +12,12 @@ download.file("http://cran.R-project.org/web/packages/packages.rds", "packages.r
 }
 
 #RCheck = function(x, URL = "http://ftp5.gwdg.de/pub/misc/cran/src/contrib/") {
-RCheck = function(x, URL = "http://cran.r-project.org/src/contrib/") {
+RCheck = function(x, URL = "http://cran.uni-muenster.de/src/contrib/") {
 	if (!file.exists(x))
 		download.file(paste(URL, x, sep=""), x)
 	cmd = paste("R CMD check --as-cran ", x, " > ", x, ".log", sep = "")
-	print(cmd)
-	ret = system(cmd)
-	print(ret)
-	ret
+	cat(paste0(cmd, "\n"))
+	system(cmd)
 }
 
 result <-  packages_to_check("sp")
@@ -27,7 +25,7 @@ result = result[-grep("surveill", result)]
 result
 sel = TRUE
 library(parallel)
-ncores_to_use = 2
+ncores_to_use = 4
 cl <- makeCluster(getOption("cl.cores", ncores_to_use))
 clusterExport(cl, c("RCheck", "sel", "result"))
 out = parLapply(cl, result[sel], function(x) RCheck(x))

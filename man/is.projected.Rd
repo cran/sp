@@ -16,7 +16,7 @@
 \title{ Sets or retrieves projection attributes on classes extending
 SpatialData }
 \description{ Sets or retrieves projection attributes on classes extending
-SpatialData; set or retrieve option value for error or warning on exceedance of geographical coordinate range, set or retrieve option value for exceedance tolerance of geographical coordinate range. Note that only \dQuote{+proj=longlat} is accepted for geographical coordinates, which must be ordered (eastings, northings).}
+SpatialData; set or retrieve option value for error or warning on exceedance of geographical coordinate range, set or retrieve option value for exceedance tolerance of geographical coordinate range. Note that only \dQuote{+proj=longlat +ellps=WGS84} is accepted for geographical coordinates, which must be ordered (eastings, northings); the \dQuote{+ellps=} definition must be given (or expanded internally from a given \dQuote{+datum=} value) for recent versions of the PROJ.4 library, and should be set to an appropriate value.}
 \usage{
 is.projected(obj)
 proj4string(obj)
@@ -33,9 +33,8 @@ set_ReplCRS_warn(value)
   \item{value}{For \code{proj4string} CRS object, containing a valid proj4 string; attempts to assign an object containing \dQuote{longlat} to data extending beyond longitude [-180, 360] or lattitude [-90, 90] will be stopped. For \code{set_ll_warn} a single logical value, if FALSE (default) error on range exceedance, if TRUE, warning. For \code{set_ll_TOL} the value of the power of \code{.Machine$double.eps} (default 0.25) to use as tolerance in testing range exceedance. \code{set_ReplCRS_warn} may be used to turn off warnings issued when changing object CRS with the \code{proj4string} replacement method (by setting \code{value=FALSE}).}
 }
 
-\value{ \code{is.projected} returns a logical; \code{proj4string}
-returns a character vector of length 1; \code{spatial.dimension}
-returns the number of spatial dimensions (2 or 3).  }
+\value{ \code{is.projected} returns a logical that may be \code{NA}; 
+\code{proj4string} returns a character vector of length 1.} 
 
 \details{ proj4 strings are operative through CRAN package rgdal. For strings defined as \dQuote{longlat}, the minimum longitude should be -180, the maximum longitude 360, the minimum latitude -90, and the maximum latitude 90. Note that the \code{proj4string} replacement method does not project spatial data - for this use \code{spTransform} methods in the rgdal package.}
 

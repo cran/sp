@@ -42,8 +42,8 @@ if (!isGeneric("is.projected"))
 	setGeneric("is.projected", function(obj)
 		standardGeneric("is.projected"))
 if (!isGeneric("overlay"))
-	setGeneric("overlay", function(x, y, ...)
-		standardGeneric("overlay"))
+  	setGeneric("overlay", function(x, y, ...)
+  		standardGeneric("overlay"))
 if (!isGeneric("over"))
 	setGeneric("over", function(x, y, returnList = FALSE, fn = NULL, ...)
 		standardGeneric("over"))
@@ -62,6 +62,9 @@ if (!isGeneric("proj4string"))
 if (!isGeneric("proj4string<-"))
 	setGeneric("proj4string<-", function(obj, value)
 		standardGeneric("proj4string<-"))
+if (!isGeneric("sppanel"))
+	setGeneric("sppanel", function(obj, ...)
+		standardGeneric("sppanel"))
 if (!isGeneric("spplot"))
 	setGeneric("spplot", function(obj, ...)
 		standardGeneric("spplot"))
@@ -86,10 +89,17 @@ if (!isGeneric("split"))
 if (!isGeneric("spTransform"))
 	setGeneric("spTransform", function(x, CRSobj, ...)
 		standardGeneric("spTransform"))
-setMethod("spTransform", signature("ANY", "CRS"), 
-	function(x, CRSobj, ...) stop("load package rgdal for spTransform methods")
+setMethod("spTransform", signature("Spatial", "CRS"), 
+	function(x, CRSobj, ...) {
+    	if (!requireNamespace("rgdal", quietly = TRUE))
+			stop("package rgdal is required for spTransform methods")
+		spTransform(x, CRSobj, ...) # calls the rgdal methods
+	}
 )
-setMethod("spTransform", signature("ANY", "ANY"), 
+setMethod("spTransform", signature("Spatial", "character"), 
+	function(x, CRSobj, ...) spTransform(x, CRS(CRSobj), ...)
+)
+setMethod("spTransform", signature("Spatial", "ANY"), 
 	function(x, CRSobj, ...) stop("second argument needs to be of class CRS")
 )
 
@@ -136,9 +146,10 @@ summary.Spatial = function(object, ...) {
 	if (is(object, "SpatialGrid") || is(object, "SpatialPixels"))
 		obj[["grid"]] = gridparameters(object)
 	if ("data" %in% slotNames(object))
-	    if (ncol(object@data) > 1)
-                obj[["data"]] = summary(object@data)
-            else obj[["data"]] = summary(object@data[[1]])
+		if (ncol(object@data) > 1)
+			obj[["data"]] = summary(object@data)
+		else if (ncol(object@data) == 1)
+			obj[["data"]] = summary(object@data[[1]])
     class(obj) = "summary.Spatial"
     obj
 }
@@ -280,11 +291,16 @@ setMethod("$", "Spatial",
 
 setReplaceMethod("$", "Spatial", 
 	function(x, name, value) { 
-		if (!("data" %in% slotNames(x)))
-			stop("no $<- method for object without attributes")
 		if (name %in% coordnames(x))
 			stop(paste(name, 
 				"is a coordinate name, please choose another name"))
+		if (!("data" %in% slotNames(x))) {
+			df = list(value); names(df) = name
+			return(addAttrToGeom(x, data.frame(df), match.ID = FALSE))
+			# stop("no $<- method for object without attributes")
+		}
+		if (is.list(value))
+			warning("assigning list or data.frame to attribute vector")
 		x@data[[name]] = value 
 		x 
 	}
@@ -293,7 +309,7 @@ setReplaceMethod("$", "Spatial",
 setMethod("geometry", "Spatial",
 	function(obj) { 
 		if ("data" %in% slotNames(obj))
-			stop(paste("geometry method missing for class",class(obj)))
+			stop(paste("geometry method missing for class", class(obj)))
 		obj 
 	}
 )
@@ -301,7 +317,7 @@ setMethod("geometry", "Spatial",
 setReplaceMethod("[", c("Spatial", "ANY", "ANY", "ANY"),
 	function(x, i, j, value) {
 		if (!("data" %in% slotNames(x)))
-			stop("no [[ method for object without attributes")
+			stop("no [ method for object without attributes")
 		if (is.character(i) && any(!is.na(match(i, dimnames(coordinates(x))[[2]]))))
 			stop(paste(i, "is already present as a coordinate name!"))
 		x@data[i,j] <- value

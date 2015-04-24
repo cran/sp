@@ -183,7 +183,8 @@ setMethod("[", "SpatialPixelsDataFrame", function(x, i, j, ... , drop = FALSE) {
 	if (any(is.na(i))) 
 		stop("NAs not permitted in row index")
 	x@coords = x@coords[i, , drop = FALSE]
-	x@bbox = .bboxCoords(x@coords)
+	if (nrow(x@coords))
+		x@bbox = .bboxCoords(x@coords)
 	x@data = x@data[i, j, ..., drop = FALSE]
 	if (drop)
 		gridded(x) = TRUE
@@ -254,6 +255,11 @@ subs.SpatialGridDataFrame <- function(x, i, j, ... , drop = FALSE) {
 	idx = as.vector(m) # t(m)?
 	if (any(is.na(idx)))
 		stop("NAs not permitted in index")
+	if (length(idx) == 0) {
+		x@data = x@data[,k,drop=FALSE]
+		x@data[] = NA
+		return(x)
+	} 
 	pts = SpatialPoints(coordinates(x)[idx,,drop=FALSE], CRS(proj4string(x)))
 	if (length(idx) == 1)
 		SpatialPointsDataFrame(pts, x@data[idx, k, drop = FALSE])
@@ -289,12 +295,14 @@ cbind.SpatialGridDataFrame = function(...) {
 print.SpatialPixelsDataFrame = function(x, ...) {
 	cat("Object of class SpatialPixelsDataFrame\n")
 	print(as(x, "SpatialPixels"))
-	cat("\n")
-	cat("Data summary:\n")
-        if (ncol(x@data) > 1)
-                sobj = summary(x@data)
-            else sobj = summary(x@data[[1]])
-	print(sobj)
+	if (length(x) > 0) {
+		cat("\n")
+		cat("Data summary:\n")
+        	if (ncol(x@data) > 1)
+                	sobj = summary(x@data)
+            	else sobj = summary(x@data[[1]])
+		print(sobj)
+	}
 	invisible(x)
 }
 setMethod("show", "SpatialPixelsDataFrame", 
@@ -303,12 +311,14 @@ setMethod("show", "SpatialPixelsDataFrame",
 print.SpatialGridDataFrame = function(x, ...) {
 	cat("Object of class SpatialGridDataFrame\n")
 	print(as(x, "SpatialGrid"))
-	cat("\n")
-	cat("Data summary:\n")
-        if (ncol(x@data) > 1)
-                sobj = summary(x@data)
-            else sobj = summary(x@data[[1]])
-	print(sobj)
+	if (length(x) > 0) {
+		cat("\n")
+		cat("Data summary:\n")
+        	if (ncol(x@data) > 1)
+                	sobj = summary(x@data)
+            	else sobj = summary(x@data[[1]])
+		print(sobj)
+	}
 	invisible(x)
 }
 setMethod("show", "SpatialGridDataFrame", 

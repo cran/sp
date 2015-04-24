@@ -1,7 +1,6 @@
 
-R version 2.15.0 (2012-03-30)
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -283,6 +282,342 @@ Data attributes:
  Max.   :7.517   Max.   :7.517  
                                 
 > 
+> # test behaviour on zero-length objects:
+> demo(meuse, ask = FALSE, echo = FALSE)
+> p = as(meuse, "SpatialPoints")
+> 
+> p[0]
+SpatialPoints:
+     x y
+Coordinate Reference System (CRS) arguments: +init=epsg:28992
++proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889
++k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs 
+> dim(p[0])
+NULL
+> 
+> meuse[0,]
+ [1] coordinates cadmium     copper      lead        zinc        elev       
+ [7] dist        om          ffreq       soil        lime        landuse    
+[13] dist.m     
+<0 rows> (or 0-length row.names)
+> dim(meuse[1:3,0])
+[1] 3 0
+> dim(subset(meuse, zinc < 100, 0))
+[1] 0 0
+> dim(subset(meuse, , 0))
+[1] 155   0
+> dim(subset(meuse, F, 0))
+[1] 0 0
+> 
+> dim(meuse.grid[0,])
+[1] 0 5
+> fullgrid(meuse.grid) = TRUE
+> dim(meuse.grid[0,])
+[1] 8112    5
+> summary(meuse.grid[0,])
+Object of class SpatialGridDataFrame
+Coordinates:
+     min    max
+x 178440 181560
+y 329600 333760
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+Grid attributes:
+  cellcentre.offset cellsize cells.dim
+x            178460       40        78
+y            329620       40       104
+Data attributes:
+  part.a         part.b          dist           soil          ffreq        
+ Mode:logical   Mode:logical   Mode:logical   Mode:logical   Mode:logical  
+ NA's:8112      NA's:8112      NA's:8112      NA's:8112      NA's:8112     
+> dim(meuse.grid[,0])
+[1] 8112    5
+> summary(meuse.grid[,0])
+Object of class SpatialGridDataFrame
+Coordinates:
+     min    max
+x 178440 181560
+y 329600 333760
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+Grid attributes:
+  cellcentre.offset cellsize cells.dim
+x            178460       40        78
+y            329620       40       104
+Data attributes:
+  part.a         part.b          dist           soil          ffreq        
+ Mode:logical   Mode:logical   Mode:logical   Mode:logical   Mode:logical  
+ NA's:8112      NA's:8112      NA's:8112      NA's:8112      NA's:8112     
+> dim(meuse.grid[0,,0])
+[1] 8112    0
+> summary(meuse.grid[0,,0])
+Object of class SpatialGridDataFrame
+Coordinates:
+     min    max
+x 178440 181560
+y 329600 333760
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+Grid attributes:
+  cellcentre.offset cellsize cells.dim
+x            178460       40        78
+y            329620       40       104
+> 
+> # SpatialPolygons:
+> L = as(meuse.riv, "SpatialPolygons")
+> length(L[1])
+[1] 1
+> length(L[0])
+[1] 0
+> summary(L[0])
+Object of class SpatialPolygons
+Coordinates:
+       min      max
+x 178304.0 182331.5
+y 325698.5 337684.8
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+> 
+> # SpatialPolygonsDataFrame:
+> L$something = "bla"
+> class(L)
+[1] "SpatialPolygonsDataFrame"
+attr(,"package")
+[1] "sp"
+> length(L[1])
+[1] 1
+> summary(L[1])
+Object of class SpatialPolygonsDataFrame
+Coordinates:
+       min      max
+x 178304.0 182331.5
+y 325698.5 337684.8
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+Data attributes:
+bla 
+  1 
+> length(L[0])
+[1] 1
+> summary(L[0])
+Object of class SpatialPolygonsDataFrame
+Coordinates:
+       min      max
+x 178304.0 182331.5
+y 325698.5 337684.8
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+> 
+> # SpatialLines
+> L = as(meuse.riv, "SpatialLines")
+> length(L[1])
+[1] 1
+> length(L[0])
+[1] 0
+> summary(L[0])
+Object of class SpatialLines
+Coordinates:
+       min      max
+x 178304.0 182331.5
+y 325698.5 337684.8
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+> 
+> # SpatialLinesDataFrame
+> L$something = "bla"
+> class(L)
+[1] "SpatialLinesDataFrame"
+attr(,"package")
+[1] "sp"
+> length(L[1])
+[1] 1
+> summary(L[1])
+Object of class SpatialLinesDataFrame
+Coordinates:
+       min      max
+x 178304.0 182331.5
+y 325698.5 337684.8
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+Data attributes:
+bla 
+  1 
+> length(L[0])
+[1] 1
+> summary(L[0])
+Object of class SpatialLinesDataFrame
+Coordinates:
+       min      max
+x 178304.0 182331.5
+y 325698.5 337684.8
+Is projected: TRUE 
+proj4string :
+[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++ellps=bessel
++towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++units=m +no_defs]
+> 
+> m = meuse
+> all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[1:3,], m[0,], m[5:7,]))
+[1] TRUE
+> all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[0,], m[1:3,], m[0,], m[5:7,]))
+[1] TRUE
+> all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[1:3,], m[0,], m[5:7,], m[0,]))
+[1] TRUE
+> 
+> # match.ID settings for SpatialPointsDataFrame():
+> set.seed(1331)
+> pts = cbind(1:5, 1:5)
+> dimnames(pts)[[1]] = letters[1:5]
+> df = data.frame(a = 1:5)
+> row.names(df) = letters[5:1]
+> 
+> library(sp)
+> options(warn=1) # show warnings where they occur
+> SpatialPointsDataFrame(pts, df) # warn
+Warning in SpatialPointsDataFrame(pts, df) :
+  forming a SpatialPointsDataFrame based on maching IDs, not on record order. Use match.ID = FALSE to match on record order
+  coordinates a
+a      (1, 1) 5
+b      (2, 2) 4
+c      (3, 3) 3
+d      (4, 4) 2
+e      (5, 5) 1
+> SpatialPointsDataFrame(pts, df, match.ID = TRUE) # don't warn
+  coordinates a
+a      (1, 1) 5
+b      (2, 2) 4
+c      (3, 3) 3
+d      (4, 4) 2
+e      (5, 5) 1
+> SpatialPointsDataFrame(pts, df, match.ID = FALSE) # don't warn
+  coordinates a
+e      (1, 1) 1
+d      (2, 2) 2
+c      (3, 3) 3
+b      (4, 4) 4
+a      (5, 5) 5
+> df$m = letters[5:1]
+> SpatialPointsDataFrame(pts, df, match.ID = "m") # don't warn
+  coordinates a m
+a      (1, 1) 5 a
+b      (2, 2) 4 b
+c      (3, 3) 3 c
+d      (4, 4) 2 d
+e      (5, 5) 1 e
+> 
+> dimnames(pts)[[1]] = letters[5:1]
+> pts
+  [,1] [,2]
+e    1    1
+d    2    2
+c    3    3
+b    4    4
+a    5    5
+> SpatialPointsDataFrame(pts, df) # don't warn: match doesn't reorder
+  coordinates a m
+e      (1, 1) 1 e
+d      (2, 2) 2 d
+c      (3, 3) 3 c
+b      (4, 4) 4 b
+a      (5, 5) 5 a
+> 
+> # duplicated row name:
+> dimnames(pts)[[1]] = letters[c(1:4,1)]
+> pts
+  [,1] [,2]
+a    1    1
+b    2    2
+c    3    3
+d    4    4
+a    5    5
+> xx = try(x <- SpatialPointsDataFrame(pts, df))
+Warning in SpatialPointsDataFrame(pts, df) :
+  forming a SpatialPointsDataFrame based on maching IDs, not on record order. Use match.ID = FALSE to match on record order
+Error in SpatialPointsDataFrame(pts, df) : 
+  row.names of data and dimnames of coords do not match
+> class(xx)
+[1] "try-error"
+> xx
+[1] "Error in SpatialPointsDataFrame(pts, df) : \n  row.names of data and dimnames of coords do not match\n"
+attr(,"class")
+[1] "try-error"
+attr(,"condition")
+<simpleError in SpatialPointsDataFrame(pts, df): row.names of data and dimnames of coords do not match>
+> SpatialPointsDataFrame(pts, df, match.ID = FALSE)
+  coordinates a m
+e      (1, 1) 1 e
+d      (2, 2) 2 d
+c      (3, 3) 3 c
+b      (4, 4) 4 b
+a      (5, 5) 5 a
+> try(x <- SpatialPointsDataFrame(pts, df, match.ID = TRUE)) # fail
+Error in SpatialPointsDataFrame(pts, df, match.ID = TRUE) : 
+  row.names of data and dimnames of coords do not match
+> 
+> dimnames(pts)[[1]] = letters[5:1]
+> row.names(df) = letters[6:2] # non-matching row.names
+> SpatialPointsDataFrame(pts, df) # do not match.ID
+  coordinates a m
+f      (1, 1) 1 e
+e      (2, 2) 2 d
+d      (3, 3) 3 c
+c      (4, 4) 4 b
+b      (5, 5) 5 a
+> SpatialPointsDataFrame(pts, df, match.ID = FALSE)
+  coordinates a m
+f      (1, 1) 1 e
+e      (2, 2) 2 d
+d      (3, 3) 3 c
+c      (4, 4) 4 b
+b      (5, 5) 5 a
+> try(x <- SpatialPointsDataFrame(pts, df, match.ID = TRUE)) # fail
+Error in SpatialPointsDataFrame(pts, df, match.ID = TRUE) : 
+  row.names of data and coords do not match
+> 
 > proc.time()
    user  system elapsed 
-  0.664   0.024   0.671 
+  0.910   0.077   0.973 
