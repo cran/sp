@@ -145,11 +145,8 @@ summary.Spatial = function(object, ...) {
         obj[["npoints"]] = nrow(object@coords)
 	if (is(object, "SpatialGrid") || is(object, "SpatialPixels"))
 		obj[["grid"]] = gridparameters(object)
-	if ("data" %in% slotNames(object))
-		if (ncol(object@data) > 1)
-			obj[["data"]] = summary(object@data)
-		else if (ncol(object@data) == 1)
-			obj[["data"]] = summary(object@data[[1]])
+	if ("data" %in% slotNames(object) && ncol(object@data) > 0)
+		obj[["data"]] = summary(object@data)
     class(obj) = "summary.Spatial"
     obj
 }
@@ -299,8 +296,8 @@ setReplaceMethod("$", "Spatial",
 			return(addAttrToGeom(x, data.frame(df), match.ID = FALSE))
 			# stop("no $<- method for object without attributes")
 		}
-		if (is.list(value))
-			warning("assigning list or data.frame to attribute vector")
+		#if (is.list(value))
+		#	warning("assigning list or data.frame to attribute vector")
 		x@data[[name]] = value 
 		x 
 	}
@@ -324,3 +321,14 @@ setReplaceMethod("[", c("Spatial", "ANY", "ANY", "ANY"),
 		x
 	}
 )
+
+# Don MacQueen provided head & tail:
+head.Spatial <- function(x, n=6L, ...) {
+    ix <- sign(n)*seq(abs(n))
+    x[ ix , , drop=FALSE]
+}
+
+tail.Spatial <- function(x, n=6L, ...) {
+    ix <- sign(n)*rev(seq(nrow(x), by=-1L, len=abs(n)))
+    x[ ix , , drop=FALSE]
+}

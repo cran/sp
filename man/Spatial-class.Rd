@@ -4,6 +4,8 @@
 \alias{Spatial}
 \alias{print.summary.Spatial}
 \alias{subset.Spatial}
+\alias{head.Spatial}
+\alias{tail.Spatial}
 \alias{summary,Spatial-method}
 \alias{plot,Spatial,missing-method}
 \alias{getParUsrBB}

@@ -76,7 +76,7 @@ SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat, SEXP mcmp) {
 }
 
 SEXP sp_duplicates(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat, SEXP mcmp) {
-	unsigned int i, j, k, ncol, nrow, ll, next, cmp;
+	unsigned int i, j, ncol, nrow, ll, next, cmp;
 	double **x, zerodist2;
 	SEXP ret = NULL;
 

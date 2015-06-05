@@ -298,10 +298,8 @@ print.SpatialPixelsDataFrame = function(x, ...) {
 	if (length(x) > 0) {
 		cat("\n")
 		cat("Data summary:\n")
-        	if (ncol(x@data) > 1)
-                	sobj = summary(x@data)
-            	else sobj = summary(x@data[[1]])
-		print(sobj)
+		if (ncol(x@data) > 0)
+			print(summary(x@data))
 	}
 	invisible(x)
 }

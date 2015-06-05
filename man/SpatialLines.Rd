@@ -15,8 +15,8 @@ SpatialLines(LinesList, proj4string = CRS(as.character(NA)))
 SpatialLinesDataFrame(sl, data, match.ID = TRUE)
 as.SpatialLines.SLDF(SLDF)
 getSpatialLinesMidPoints(SL)
-LineLength(cc, longlat=FALSE, sum=TRUE)
-LinesLength(Ls, longlat=FALSE)
+LineLength(cc, longlat = FALSE, sum = TRUE)
+LinesLength(Ls, longlat = FALSE)
 SpatialLinesLengths(SL, longlat)
 }
 \arguments{
@@ -34,7 +34,8 @@ in \code{data} with Lines IDs to match}
 \item{Ls}{Object of class \code{Lines}}
 \item{cc}{Object of class \code{Line}, or two-column matrix with points}
 \item{longlat}{if FALSE, Euclidean distance, if TRUE Great Circle distance in kilometers}
-\item{sum}{default return scalar length of sum of segments in Line, if FALSE, return vector of segment lengths}
+\item{sum}{logical; if \code{TRUE} return scalar length of sum of 
+segments in Line, if \code{FALSE} return vector with segment lengths}
 }
 \value{
 \code{SpatialLines} returns object of class \code{SpatialLines};

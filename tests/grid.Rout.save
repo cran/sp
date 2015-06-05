@@ -1,6 +1,6 @@
 
-R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
-Copyright (C) 2014 The R Foundation for Statistical Computing
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -149,8 +149,14 @@ Grid attributes:
 xc                 1      1.0         3
 yc                 0      1.5         3
 Data attributes:
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   1.00    2.75    4.50    4.75    6.50    9.00       1 
+       z       
+ Min.   :1.00  
+ 1st Qu.:2.75  
+ Median :4.50  
+ Mean   :4.75  
+ 3rd Qu.:6.50  
+ Max.   :9.00  
+ NA's   :1     
 > image(df["z"])
 > as.image.SpatialGridDataFrame(df)
 $x
@@ -269,4 +275,4 @@ Coordinate Reference System (CRS) arguments: NA
 > 
 > proc.time()
    user  system elapsed 
-  0.765   0.040   0.789 
+  0.685   0.268   0.635 

@@ -1,6 +1,6 @@
 Package: sp
-Version: 1.1-0
-Date: 2015-04-09
+Version: 1.1-1
+Date: 2015-06-05
 Title: Classes and Methods for Spatial Data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 				email = "edzer.pebesma@uni-muenster.de"),
@@ -11,6 +11,7 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 			person("Robert", "Hijmans", role = "ctb"),
 			person("Michael", "Sumner", role = "ctb"),
 			person("Don", "MacQueen", role = "ctb"),
+			person("Jim", "Lemon", role = "ctb"),
 			person("Josh", "O'Brien", role = "ctb"))
 Depends: R (>= 3.0.0)
 Imports: methods, graphics, utils, lattice, grid
@@ -41,7 +42,7 @@ Collate: bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         compassRose.R surfaceArea.R spOptions.R subset.R disaggregate.R
         sp_spat1.R merge.R aggregate.R
 NeedsCompilation: yes
-Packaged: 2015-04-24 09:00:21 UTC; edzer
+Packaged: 2015-06-05 10:03:38 UTC; edzer
 Author: Edzer Pebesma [aut, cre],
   Roger Bivand [aut],
   Barry Rowlingson [ctb],
@@ -49,7 +50,8 @@ Author: Edzer Pebesma [aut, cre],
   Robert Hijmans [ctb],
   Michael Sumner [ctb],
   Don MacQueen [ctb],
+  Jim Lemon [ctb],
   Josh O'Brien [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2015-04-24 13:41:14
+Date/Publication: 2015-06-05 14:58:32

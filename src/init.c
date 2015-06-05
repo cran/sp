@@ -13,6 +13,7 @@ static const R_CMethodDef CEntries[]  = {
     {"spRFindCG", (DL_FUNC) &spRFindCG, 6},
     {"sp_gcdist", (DL_FUNC) &sp_gcdist, 5},
     {"sp_dists", (DL_FUNC) &sp_dists, 7},
+    {"sp_dists_NN", (DL_FUNC) &sp_dists_NN, 7},
     {"sp_lengths", (DL_FUNC) &sp_lengths, 5},
 /* RSB 091203 */
     {"spRFindCG_c", (DL_FUNC) &spRFindCG_c, 5},

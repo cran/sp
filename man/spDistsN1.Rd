@@ -8,15 +8,23 @@
 }
 \usage{
 spDistsN1(pts, pt, longlat = FALSE)
-spDists(x, y = x, longlat = FALSE)
+spDists(x, y = x, longlat = FALSE, segments = FALSE, diagonal = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{pts}{A matrix of 2D points, first column x/longitude, second column y/latitude, or a SpatialPoints or SpatialPointsDataFrame object}
   \item{pt}{A single 2D point, first value x/longitude, second value y/latitude, or a SpatialPoints or SpatialPointsDataFrame object with one point only}
-  \item{x}{A matrix of n-D points with row denoting points, first column x/longitude, second column y/latitude, or a Spatial object that has a coordinates method}
-  \item{y}{A matrix of n-D points with row denoting points, first column x/longitude, second column y/latitude, or a Spatial object that has a coordinates method}
-  \item{longlat}{if FALSE, Euclidean distance, if TRUE Great Circle distance}
+  \item{x}{A matrix of n-D points with row denoting points, first column x/longitude, second column y/latitude, or a Spatial object that has a \link{coordinates} method}
+  \item{y}{A matrix of n-D points with row denoting points, first column x/longitude, second column y/latitude, or a Spatial object that has a \link{coordinates} method}
+  \item{longlat}{logical;
+  if FALSE, Euclidean distance,
+  if TRUE Great Circle (WGS84 ellipsoid) distance; 
+  if \code{x} is a Spatial object, longlat should not be specified but will be derived 
+  from \link{is.projected}\code{(x)} }
+  \item{segments}{logical; if \code{TRUE}, \code{y} must be missing; the vector of distances
+  between consecutive points in \code{x} is returned. }
+  \item{diagonal}{logical; if \code{TRUE}, \code{y} must be given and have the same number of
+  points as \code{x}; the vector with distances between points with identical index is returned. }
 }
 
 \value{
@@ -45,5 +53,43 @@ data(meuse)
 coordinates(meuse) <- c("x", "y")
 res <- spDistsN1(meuse, meuse[1,])
 summary(res)
+
+p1 = SpatialPoints(cbind(1:3, 1:3))
+spDists(p1)
+spDists(p1, p1)
+spDists(p1, p1, diagonal = TRUE)
+try(spDists(p1, p1, segments = TRUE))
+spDists(p1, segments = TRUE)
+p2 = SpatialPoints(cbind(5:2, 2:5))
+spDists(p1, p2)
+try(spDists(p1, p2, diagonal = TRUE)) # fails
+try(spDists(p1, p2, segments = TRUE)) # fails
+
+# longlat points:
+proj4string(p1) = "+proj=longlat +ellps=WGS84"
+proj4string(p2) = "+proj=longlat +ellps=WGS84"
+is.projected(p1)
+is.projected(p2)
+spDists(p1)
+spDists(p1, p1)
+spDists(p1, p1, diagonal = TRUE)
+spDists(p1, p2)
+try(spDists(p1, p2, diagonal = TRUE)) # fails
+spDists(p1, p2[1:length(p1),], diagonal = TRUE)
+spDists(p1, segments = TRUE)
+spDists(p1[0],p2[0],diagonal=TRUE)
+spDists(p1[0])
+
+p1 = SpatialPoints(cbind(1:3, 1:3, 1:3))
+spDists(p1)
+spDists(p1, p1)
+try(spDists(p1, p1, diagonal = TRUE))
+try(spDists(p1, p1, segments = TRUE))
+try(spDists(p1, segments = TRUE))
+p2 = SpatialPoints(cbind(5:2, 2:5, 3:6))
+spDists(p1, p2)
+try(spDists(p1, p2, diagonal = TRUE)) # fails
+try(spDists(p1, p2, segments = TRUE)) # fails
+
 }
 \keyword{spatial}

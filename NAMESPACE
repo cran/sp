@@ -93,6 +93,7 @@ export(
 	degreeLabelsNS,
 	longlat.scales,
 	bbexpand,
+        compassRose,
 
 	as.image.SpatialGridDataFrame,
 	image2Grid,
@@ -237,7 +238,7 @@ exportMethods(
 	is.projected,
 	merge,
 	over,
-	overlay, 
+	overlay,
 	plot,
 	polygons, 
 	"polygons<-",
@@ -288,6 +289,8 @@ S3method(dim, SpatialLinesDataFrame)
 S3method(dim, SpatialPolygonsDataFrame)
 S3method(dim, SpatialPixelsDataFrame)
 S3method(dim, SpatialGridDataFrame)
+
+S3method(head, Spatial)
 
 S3method(image, SpatialPixelsDataFrame)
 S3method(image, SpatialPixels)
@@ -358,6 +361,9 @@ S3method(print, summary.GridTopology)
 S3method(stack, SpatialPointsDataFrame)
 S3method(stack, SpatialPixelsDataFrame)
 S3method(stack, SpatialGridDataFrame)
+
 S3method(subset, Spatial)
+
+S3method(tail, Spatial)
 
 S3method(text, SpatialPointsDataFrame)

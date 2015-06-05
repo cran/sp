@@ -10,7 +10,9 @@
 	main = ifelse(is.numeric(zcol), names(data)[zcol], zcol),
     identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, panel = panel.bubble,
-	sp.layout = NULL) 
+	sp.layout = NULL, 
+	xlim = bbexpand(bbox(obj)[1,], 0.04), 
+	ylim = bbexpand(bbox(obj)[2,], 0.04))
 {
 	obj = as(obj, "SpatialPointsDataFrame")
 	data = as.data.frame(obj)
@@ -41,6 +43,7 @@
     cex = as.vector(maxsize * az/max(az,q))
     q.cex = as.vector(maxsize * q/max(az,q))
 
+	scales = longlat.scales(obj, scales, xlim, ylim)
     if (identify) {
 		plot(x, y, asp = 1, cex = cex, main = main, ...)
 		return(identify(x, y, labels))

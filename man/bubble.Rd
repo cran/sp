@@ -12,7 +12,9 @@ bubble(obj, zcol = 1, ..., fill = TRUE, maxsize = 3, do.sqrt = TRUE, pch,
 	col = c("#d01c8b", "#4dac26"), key.entries = quantile(data[,zcol]), main, 
 	identify = FALSE, labels = row.names(data.frame(obj)), key.space = "right",
 	scales = list(draw = FALSE), xlab = NULL, ylab = NULL, panel = panel.bubble,
-	sp.layout = NULL) 
+	sp.layout = NULL, 
+	xlim = bbexpand(bbox(obj)[1,], 0.04), 
+	ylim = bbexpand(bbox(obj)[2,], 0.04))
 }
 \arguments{
 \item{obj}{ object of, or extending, class SpatialPointsDataFrame 
@@ -46,6 +48,8 @@ identification is required. }
 \item{ylab}{y-axis label}
 \item{panel}{panel function used}
 \item{sp.layout}{possible layout items; see \link{spplot}}
+\item{xlim}{x axis limit}
+\item{ylim}{y axis limit}
 }
 \value{
 returns (or plots) the bubble plot; if \code{identify} is TRUE, returns

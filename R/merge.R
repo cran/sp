@@ -8,6 +8,18 @@ if (!isGeneric("merge")) {
         standardGeneric("merge"))
 }
 
+
+setMethod('merge', signature(x='Spatial', y='ANY'), 
+  function(x, y, ...) {
+	y <- try(as.data.frame(y))
+	if (class(y) != 'data.frame') {
+		stop('y cannot be coerced to a data.frame')
+	}
+	merge(x, y)
+}
+)
+
+
 setMethod('merge', signature(x='Spatial', y='data.frame'), 
   function(x, y, by=intersect(names(x), names(y)), by.x=by, 
 		by.y=by, all.x=TRUE, suffixes = c(".x",".y"), 

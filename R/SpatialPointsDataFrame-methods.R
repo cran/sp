@@ -115,9 +115,9 @@ as.data.frame.SpatialPointsDataFrame = function(x, ...)  {
 			ret[[idx.new[i]]] = x@data[,i]
 		names(ret)[idx.new] = names(x@data)
 		ret = ret[unlist(lapply(ret, function(x) !is.null(x)))]
-		data.frame(ret)
+		data.frame(ret, ...)
 	} else
-		data.frame(x@data, x@coords)
+		data.frame(x@data, x@coords, ...)
 }
 
 setAs("SpatialPointsDataFrame", "data.frame", function(from)

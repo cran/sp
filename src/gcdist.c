@@ -12,24 +12,38 @@
 #endif
 
 void sp_dists(double *u, double *v, double *uout, double *vout, 
-		int *n, double *dists, int *lonlat)
-{
+		int *n, double *dists, int *lonlat) {
 	int N = *n, j;
 	double gc[1];
 		
 	if (lonlat[0] == 0) {
-		for (j=0; j<N; j++) 
-			dists[j] = hypot((u[j]-uout[0]), (v[j]-vout[0]));
+		for (j = 0; j < N; j++) 
+			dists[j] = hypot(u[j] - uout[0], v[j] - vout[0]);
 	} else {
-		for (j=0; j<N; j++) {
+		for (j = 0; j < N; j++) {
 			sp_gcdist(u+j, uout, v+j, vout, gc);
 			dists[j] = gc[0];
 		}
 	}
 }
 
-void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat)
-{
+void sp_dists_NN(double *u1, double *v1, double *u2, double *v2, 
+		int *n, double *dists, int *lonlat) {
+	int N = *n, j;
+	double gc[1];
+		
+	if (lonlat[0] == 0)
+		for (j = 0; j < N; j++) 
+			dists[j] = hypot(u1[j] - u2[j], v1[j] - v2[j]);
+	else {
+		for (j = 0; j < N; j++) {
+			sp_gcdist(u1+j, u2+j, v1+j, v2+j, gc);
+			dists[j] = gc[0];
+		}
+	}
+}
+
+void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat) {
 	int N = *n, j;
 	double gc[1];
         if (N < 2) error("N less than 2");
@@ -46,8 +60,7 @@ void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat)
 
 }
 
-/* was: http://home.att.net/~srschmitt/script_greatcircle.html */
-/* now at: http://mysite.verizon.net/res148h4j/javascript/script_greatcircle.html */
+/* http://en.wikipedia.org/wiki/World_Geodetic_System#A_new_World_Geodetic_System:_WGS_84 */
 
 void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2, 
 		double *dist) {

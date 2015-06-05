@@ -1,3 +1,83 @@
+2015-06-05 09:55  edzer
+
+	* inst/ChangeLog: tidy
+
+2015-06-05 09:55  edzer
+
+	* DESCRIPTION, NAMESPACE, R/spdists.R, inst/include/sp.h, src/sp.h,
+	  src/sp.h.in: add some options to spDists.
+
+2015-06-02 20:46  edzer
+
+	* NAMESPACE, R/Spatial-methods.R, R/SpatialGridDataFrame-methods.R,
+	  R/bubble.R, man/bubble.Rd: add proper degree scales to bubble if
+	  data are longlat
+
+2015-05-28 19:15  edzer
+
+	* NAMESPACE, R/Spatial-methods.R, man/Spatial-class.Rd: add head
+	  and tail methods, donated by Don MacQueen
+
+2015-05-23 16:10  edzer
+
+	* R/spplot.R: clean up sppanel method for lists, argument first now
+	  has no default.
+
+2015-05-23 14:33  edzer
+
+	* R/merge.R, R/spdists.R, man/merge.Rd, man/spDistsN1.Rd: new
+	  method for sp::merge, supplied by Robert Hijmans;
+	  tidying spDists, when ncol(x) > 2
+
+2015-05-21 07:33  edzer
+
+	* R/SpatialPointsDataFrame-methods.R: in as.data.frame methods,
+	  pass ... on to data.frame()
+
+2015-05-19 18:50  edzer
+
+	* R/spdists.R, man/spDistsN1.Rd, src/gcdist.c, src/init.c,
+	  src/sp.h: added two options to spDists, to compute distance
+	  between consecutive
+	  points (as LineLength does), and to compute pairwise distances
+	  (diagonal).
+
+2015-05-19 07:10  edzer
+
+	* man/SpatialLines.Rd: tidy
+
+2015-05-18 13:35  edzer
+
+	* R/spplot.R: fix sp.layout bug, reported by Tim Appelhans on
+	  r-sig-geo
+
+2015-05-13 11:47  edzer
+
+	* R/spdists.R, man/spDistsN1.Rd: improved docs for spDists,
+	  mentioning that longlat is infered from x if x is Spatial
+
+2015-05-10 21:20  edzer
+
+	* R/Spatial-methods.R: remove warning on assigning lists to
+	  data.frame columns, requested
+	  by Sebastian Meyer.
+
+2015-05-04 08:59  rsbivand
+
+	* DESCRIPTION, NAMESPACE: expose compassRose
+
+2015-05-01 19:58  edzer
+
+	* src/zerodist.c: remove unused variable
+
+2015-04-26 19:09  edzer
+
+	* ChangeLog, DESCRIPTION: bump version
+
+2015-04-24 09:00  edzer
+
+	* inst/ChangeLog: tidy
+
 2015-04-24 08:59  edzer
 
 	* ChangeLog, R/aggregate.R: aggregate: add drop_lower_td = TRUE to

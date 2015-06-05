@@ -8,7 +8,7 @@
 #endif
 /* remember to touch local_stubs.c */
 
-#define SP_VERSION "1.1-0"
+#define SP_VERSION "1.1-1"
 
 #include <S.h>
 
@@ -78,6 +78,8 @@ void sp_gcdist(double *lon1, double *lon2, double *lat1, double *lat2,
 		double *dist);
 void sp_dists(double *u, double *v, double *uout, double *vout, 
 		int *n, double *dists, int *lonlat);
+void sp_dists_NN(double *u1, double *v1, double *u2, double *v2,
+        int *n, double *dists, int *lonlat);
 void sp_lengths(double *u, double *v, int *n, double *lengths, int *lonlat);
 SEXP sp_zerodist(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat, SEXP mcmp);
 SEXP sp_duplicates(SEXP pp, SEXP pncol, SEXP zero, SEXP lonlat, SEXP mcmp);

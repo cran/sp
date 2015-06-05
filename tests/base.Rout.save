@@ -1,7 +1,7 @@
 
-R version 2.6.0 (2007-10-03)
-Copyright (C) 2007 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -427,8 +427,13 @@ Is projected: NA
 proj4string : [NA]
 Number of points: 10
 Data attributes:
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  183.0   272.0   346.5   489.2   581.5  1141.0 
+      zinc       
+ Min.   : 183.0  
+ 1st Qu.: 272.0  
+ Median : 346.5  
+ Mean   : 489.2  
+ 3rd Qu.: 581.5  
+ Max.   :1141.0  
 > print(summary(x["zinc"])) # compare bbox
 Object of class SpatialPointsDataFrame
 Coordinates:
@@ -439,11 +444,19 @@ Is projected: NA
 proj4string : [NA]
 Number of points: 20
 Data attributes:
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  183.0   278.0   455.0   569.7   806.8  1141.0 
+      zinc       
+ Min.   : 183.0  
+ 1st Qu.: 278.0  
+ Median : 455.0  
+ Mean   : 569.7  
+ 3rd Qu.: 806.8  
+ Max.   :1141.0  
 > 
 > data(meuse.grid)
 > coordinates(meuse.grid) = ~x+y
 > gridded(meuse.grid) = TRUE
 > plot(meuse.grid)
 > 
+> proc.time()
+   user  system elapsed 
+  0.524   0.342   0.561 

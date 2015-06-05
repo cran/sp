@@ -47,7 +47,8 @@ setMethod("sppanel", "SpatialPolygons",
 })
 
 # backward compatibility:
-sp.polygons = function(obj,col=1,fill="transparent",...) sppanel(obj,col=col,fill=fill,...)
+sp.polygons = function(obj, col = 1, fill = "transparent",...) 
+	sppanel(obj, col = col, fill = fill, ...)
 
 setMethod("sppanel", "SpatialLines", 
   function (obj, col = 1, ...) {
@@ -64,7 +65,7 @@ setMethod("sppanel", "Line",
   function (obj, col = 1, ...) panel.lines(coordinates(obj), col = col, ...))
 
 # backward compatibility:
-sp.lines = function(obj, col = 1,...) sppanel(obj,col=col,...)
+sp.lines = function(obj, col = 1,...) sppanel(obj, col = col,...)
 
 setMethod("sppanel", "SpatialPoints",
 	function(obj, pch = 3, ...)
@@ -133,36 +134,36 @@ sp.panel.layout = function(lst, p.number, ...) { # now obsolete...
 
 setMethod("sppanel", "NULL", function(obj,...) { })
 
-setMethod("sppanel", "list", 
-	function(obj, p.number, first = FALSE, ...) {
-		if (length(obj) == 1 & is.null(obj[[1]]))
-			return()
-		if (!is.null(obj$which) && is.na(match(p.number, obj$which)))
-			return()
-		else 
-			obj$which = NULL
-		if (is.list(obj[[1]])) # list-of-lists, recurse:
-			lapply(obj, sppanel, p.number = p.number, first = first, ...)
-		# condition 1: `which' was set, and corresponds to panel number:
-		else if (is.null(obj$which) || !is.na(match(p.number, obj$which))) {
-			opaque = function(x) (is(x, "SpatialPolygons") 
-				|| is(x, "SpatialGrid") || is(x, "SpatialPixels"))
-			if (is.character(obj[[1]]) || is.function(obj[[1]])) {
-				if (is.null(obj$first))
-					obj$first = opaque(obj[[2]]) # default: grids/polygons behind, rest front
-				if (obj$first == first)
-					do.call(obj[[1]], obj[-1], ...)
-			} else {
-				sp = sapply(obj, is, "Spatial")
-				stopifnot(any(sp))
-				lapply(obj[sp], function(x) { 
-					if (identical(obj$first, first) || opaque(x) == first)
-						do.call(sppanel, append(x, obj[!sp]), ...)
-				})
-			}
+sppanelList = function(obj, p.number, first, ...) {
+	missingFirst = missing(first)
+	if (length(obj) == 1 & is.null(obj[[1]]))
+		return()
+	if (!is.null(obj$which) && is.na(match(p.number, obj$which)))
+		return() # false panel
+	else 
+		obj$which = NULL # continue: either all panels, or right panel
+	if (is.list(obj[[1]])) # list-of-lists, recurse:
+		return(lapply(obj, sppanel, p.number = p.number, first = first, ...))
+	opaque = function(x) (is(x, "SpatialPolygons") || is(x, "SpatialGrid") || is(x, "SpatialPixels"))
+	if (is.character(obj[[1]]) || is.function(obj[[1]])) {
+		if (is.null(obj$first))
+			obj$first = opaque(obj[[2]]) # default: grids/polygons behind, rest front
+		if (missingFirst) # meaning: do plot it
+			first = obj$first
+		if (obj$first == first) {
+			obj$first = NULL
+			do.call(obj[[1]], obj[-1], ...)
 		}
+	} else {
+		sp = sapply(obj, is, "Spatial")
+		stopifnot(any(sp))
+		lapply(obj[sp], function(x) { 
+			if (missingFirst || identical(obj$first, first) || opaque(x) == first)
+				do.call(sppanel, append(x, obj[!sp]), ...)
+		})
 	}
-)
+}
+setMethod("sppanel", "list", sppanelList)
 
 getFormulaLevelplot = function(sdf, zcol) {
 	if (length(zcol) > 1)
@@ -365,7 +366,7 @@ create.z = function(df, zcol) {
 panel.gridplot = function(x, y, z, subscripts, ..., sp.layout) {
 	sppanel(list(sp.layout), panel.number(), first = TRUE)
 	panel.levelplot(x, y, z, subscripts, ...)
-	sppanel(list(sp.layout), panel.number())
+	sppanel(list(sp.layout), panel.number(), first = FALSE)
 }
 
 panel.polygonsplot =
@@ -442,7 +443,7 @@ function (x, y, z, subscripts, at = pretty(z), shrink, labels = NULL,
    			}
 		}
 	}
-	sppanel(list(sp.layout), panel.number())
+	sppanel(list(sp.layout), panel.number(), first = FALSE)
 }
 
 panel.pointsplot = function(sp.layout, x, y, subscripts, groups, col, cex,
@@ -450,7 +451,7 @@ panel.pointsplot = function(sp.layout, x, y, subscripts, groups, col, cex,
 	sppanel(list(sp.layout), panel.number(), first = TRUE)
 	lpoints(x, y, fill = groups[subscripts], col = col[subscripts], 
 		cex = cex[subscripts], pch = pch[subscripts], ...)
-	sppanel(list(sp.layout), panel.number())
+	sppanel(list(sp.layout), panel.number(), first = FALSE)
 }
 
 SpatialPolygons2Grob = function(obj, fill) {
