@@ -1,3 +1,180 @@
+2015-09-02 08:35  edzer
+
+	* demo/depend.R: update
+
+2015-09-01 13:00  edzer
+
+	* tests/pass1.Rout.save: update test output
+
+2015-09-01 12:53  edzer
+
+	* R/Class-SpatialPoints.R, inst/NEWS.Rd: tidy; extend warning to
+	  indicate deprecation of duplicate rownames in SpatialPoints
+
+2015-09-01 10:53  edzer
+
+	* ChangeLog, R/Spatial-methods.R, demo/00Index, demo/mp.R,
+	  inst/NEWS.Rd, man/SpatialMultiPointsDataFrame-class.Rd: add mp
+	  demo and NEWS.Rd; modify warning for non-mercator data if bgMap
+	  is set
+
+2015-09-01 07:20  edzer
+
+	* inst/ChangeLog: tidy
+
+2015-09-01 06:35  edzer
+
+	* demo/depend.R: tidy
+
+2015-08-31 20:05  edzer
+
+	* tests/over2.R, tests/over2.Rout.save, vignettes/over.Rnw: tidy
+
+2015-08-31 17:12  edzer
+
+	* vignettes/over.Rnw: correct vignette
+
+2015-08-31 16:52  edzer
+
+	* R/over.R, tests/over2.R, tests/over2.Rout.save: clean up tests;
+	  tidy code; sync with rgeos
+
+2015-08-22 13:31  edzer
+
+	* build-prep.sh: cp -p
+
+2015-08-22 13:29  edzer
+
+	* DESCRIPTION, inst/include/sp.h, man/over.Rd, src/sp.h,
+	  vignettes/over.Rnw: update docs and vignette for over(); version
+	  bump.
+
+2015-08-21 22:15  edzer
+
+	* R/over.R, tests/over2.Rout.save: improve over priority
+
+2015-08-21 15:10  edzer
+
+	* tests/over2.R, tests/over2.Rout.save: add secondary over tests
+
+2015-08-21 15:09  edzer
+
+	* R/over.R, tests/fail1.Rout.save, tests/over.Rout.save,
+	  tests/pass1.Rout.save: clean up code, update tests
+
+2015-08-20 09:24  edzer
+
+	* DESCRIPTION, R/Class-SpatialPoints.R,
+	  R/SpatialMultiPoints-methods.R,
+	  R/SpatialMultiPointsDataFrame-methods.R, R/over.R,
+	  tests/mp.Rout.save: more updates for SpatialMultiPoints
+
+2015-08-18 16:44  edzer
+
+	* NAMESPACE, R/Spatial-methods.R, R/SpatialMultiPoints-methods.R,
+	  R/aggregate.R, R/over.R: remove overlay() method;
+
+2015-08-13 21:15  edzer
+
+	* R/over.R: attempt to defer over to rgeos
+
+2015-08-13 20:19  edzer
+
+	* R/SpatialMultiPoints-methods.R, tests/mp.Rout.save: add rownames
+	  with group to coords matrix
+
+2015-08-13 08:19  edzer
+
+	* NAMESPACE, R/SpatialMultiPoints-methods.R, R/aggregate.R,
+	  R/spplot.R, man/SpatialMultiPoints-class.Rd,
+	  man/SpatialMultiPointsDataFrame-class.Rd, man/spplot.Rd,
+	  tests/mp.Rout.save: methods for SpatialMultiPoints*
+
+2015-08-12 21:45  edzer
+
+	* R/SpatialMultiPoints-methods.R,
+	  R/SpatialMultiPointsDataFrame-methods.R: add coerce to
+	  SpatialPoints*
+
+2015-08-11 20:40  edzer
+
+	* DESCRIPTION, NAMESPACE, R/Class-SpatialMultiPoints.R,
+	  R/Class-SpatialMultiPointsDataFrame.R,
+	  R/SpatialMultiPoints-methods.R,
+	  R/SpatialMultiPointsDataFrame-methods.R,
+	  man/SpatialMultiPoints-class.Rd, man/SpatialMultiPoints.Rd,
+	  man/SpatialMultiPointsDataFrame-class.Rd, man/addattr.Rd,
+	  man/coordinates-methods.Rd, man/coordnames-methods.Rd,
+	  man/geometry-methods.Rd, tests/mp.Rout.save: add support for
+	  SpatialMultiPoint and SpatialMultiPointDataFrame
+
+2015-07-23 11:16  edzer
+
+	* R/Spatial-methods.R, man/00sp.Rd, man/CRS-class.Rd: update urls,
+	  update warning in case of mercator bg maps
+
+2015-07-20 14:18  edzer
+
+	* DESCRIPTION, demo/webmap.R, man/spplot.Rd: tidy
+
+2015-07-20 13:32  edzer
+
+	* NAMESPACE, R/spplot.R, demo/webmap.R: move panel functions to sp
+
+2015-07-20 11:01  edzer
+
+	* demo/webmap.R: tidy
+
+2015-07-20 10:50  edzer
+
+	* R/SpatialPolygons-displayMethods.R: bgMap argument default value
+
+2015-07-20 10:30  edzer
+
+	* R/Spatial-methods.R, demo/00Index, demo/webmap.R: add webmap
+	  examples: OpenStreetMap or google maps from ggmap or RgoogleMaps
+	  as background to plot or spplot
+
+2015-07-13 19:11  edzer
+
+	* man/SpatialPoints-class.Rd, tests/pass1.Rout.save: tidy; CRS
+	  effects
+
+2015-07-13 18:20  edzer
+
+	* demo/meuse.R: change full CRS def into CRS("+init=epsg:28992")
+
+2015-07-07 10:09  edzer
+
+	* NAMESPACE: make check pass on r-devel
+
+2015-07-02 11:03  edzer
+
+	* DESCRIPTION, NAMESPACE, inst/include/sp.h, src/sp.h: add imports
+	  from base
+
+2015-06-30 05:53  rsbivand
+
+	* NAMESPACE, R/recenter.R, man/nowrapSpatialLines.Rd: move nowrap*
+	  to maptools
+
+2015-06-28 12:14  rsbivand
+
+	* NAMESPACE: CRAN _R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_=true
+	  NAMESPACE tidy
+
+2015-06-14 21:04  edzer
+
+	* ChangeLog, DESCRIPTION, R/aggregate.R, man/aggregate.Rd,
+	  tests/base.Rout.save, tests/grid.Rout.save,
+	  tests/pass1.Rout.save: default for by argument in aggregate(),
+	  aggregating all;
+	  tidy tests; bump version number
+
+2015-06-05 10:03  edzer
+
+	* inst/ChangeLog: tidy
+
 2015-06-05 09:55  edzer
 
 	* inst/ChangeLog: tidy

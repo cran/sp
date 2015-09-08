@@ -3,6 +3,7 @@
 \alias{addAttrToGeom}
 \alias{addAttrToGeom-methods}
 \alias{addAttrToGeom,SpatialPoints,data.frame-method}
+\alias{addAttrToGeom,SpatialMultiPoints,data.frame-method}
 \alias{addAttrToGeom,SpatialGrid,data.frame-method}
 \alias{addAttrToGeom,SpatialPixels,data.frame-method}
 \alias{addAttrToGeom,SpatialPolygons,data.frame-method}

@@ -47,9 +47,9 @@ x \%over\% y
 }
 \value{ 
 If \code{y} is only geometry an object of length \code{length(x)}.
-If \code{returnList} is FALSE, a vector with the (first) index
+If \code{returnList} is \code{FALSE}, a vector with the (first) index
 of \code{y} for each geometry (point, grid cell centre, polygon
-or lines) in \code{x}.  if \code{returnList} is TRUE, a list of
+or lines) matching \code{x}.  if \code{returnList} is TRUE, a list of
 length \code{length(x)}, with list element \code{i} the vector of
 all indices of the geometries in \code{y} that correspond to the
 $i$-th geometry in \code{x}.
@@ -57,9 +57,21 @@ $i$-th geometry in \code{x}.
 If \code{y} has attribute data, attribute data are
 returned. \code{returnList} is FALSE, a \code{data.frame} with
 number of rows equal to \code{length(x)} is returned, if it is
-TRUE a list with \code{length(x)} elements is returned, with a
-list element the \code{data.frame} elements of all geometries in
-\code{y} that correspond to that element of \code{x}.
+TRUE a list with \code{length(x)} elements is returned, with a list
+element the \code{data.frame} elements of all geometries in \code{y}
+that correspond to that element of \code{x}.
+
+In case the \code{rgeos} \code{over} methods are used,
+matching is done by \link[rgeos]{gRelate}, which uses DE-9IM
+(\url{https://en.wikipedia.org/wiki/DE-9IM}). From the string
+returned, characters 1, 2, 4 and 5 are used, indicating the dimension
+of the overlap of the inner and boundary of each \code{x} geometry
+with the inner and boundary of each \code{y} geometry.  The order
+in which matched \code{y} geometries are returned is determined by
+the dimension of the overlap (2: area overlap, 1: line in common,
+0: point in common), and then by the position in the string (1,
+2, 4, 5, meaning points in polygons are prefered over points on
+polygon boundaries). 
 }
 
 \section{Methods}{
@@ -117,7 +129,9 @@ not guaranteed.
 pairs of \code{SpatialPolygons} require package \code{rgeos},
 and use \link[rgeos]{gIntersects}.}
 
-\seealso{\link{point.in.polygon}, package \link[rgeos]{gIntersects}}
+\seealso{
+\code{vignette("over")} for examples and figures;
+\link{point.in.polygon}, package \link[rgeos]{gIntersects}}
 \examples{
 r1 = cbind(c(180114, 180553, 181127, 181477, 181294, 181007, 180409, 
 180162, 180114), c(332349, 332057, 332342, 333250, 333558, 333676, 

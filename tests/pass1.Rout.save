@@ -1,5 +1,5 @@
 
-R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -290,9 +290,9 @@ Data attributes:
 SpatialPoints:
      x y
 Coordinate Reference System (CRS) arguments: +init=epsg:28992
-+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889
-+k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
++lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs 
 > dim(p[0])
 NULL
@@ -324,10 +324,9 @@ x 178440 181560
 y 329600 333760
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 Grid attributes:
   cellcentre.offset cellsize cells.dim
@@ -347,10 +346,9 @@ x 178440 181560
 y 329600 333760
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 Grid attributes:
   cellcentre.offset cellsize cells.dim
@@ -370,10 +368,9 @@ x 178440 181560
 y 329600 333760
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 Grid attributes:
   cellcentre.offset cellsize cells.dim
@@ -394,10 +391,9 @@ x 178304.0 182331.5
 y 325698.5 337684.8
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 > 
 > # SpatialPolygonsDataFrame:
@@ -416,10 +412,9 @@ x 178304.0 182331.5
 y 325698.5 337684.8
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 Data attributes:
  something
@@ -434,10 +429,9 @@ x 178304.0 182331.5
 y 325698.5 337684.8
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 > 
 > # SpatialLines
@@ -454,10 +448,9 @@ x 178304.0 182331.5
 y 325698.5 337684.8
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 > 
 > # SpatialLinesDataFrame
@@ -476,10 +469,9 @@ x 178304.0 182331.5
 y 325698.5 337684.8
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 Data attributes:
  something
@@ -494,10 +486,9 @@ x 178304.0 182331.5
 y 325698.5 337684.8
 Is projected: TRUE 
 proj4string :
-[+init=epsg:28992 +proj=sterea +lat_0=52.15616055555555
+[+init=epsg:28992 +ellps=WGS84 +proj=sterea +lat_0=52.15616055555555
 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000
-+ellps=bessel
-+towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725
++towgs84=565.4171,50.3319,465.5524,-0.398957388243134,0.343987817378283,-1.87740163998045,4.0725
 +units=m +no_defs]
 > 
 > m = meuse
@@ -588,6 +579,8 @@ attr(,"class")
 attr(,"condition")
 <simpleError in SpatialPointsDataFrame(pts, df): row.names of data and dimnames of coords do not match>
 > SpatialPointsDataFrame(pts, df, match.ID = FALSE)
+Warning in validityMethod(object) :
+  duplicate rownames are interpreted by rgeos as MultiPoints; use SpatialMultiPoints to define these; in future sp versions this warning will become an error
   coordinates a m
 e      (1, 1) 1 e
 d      (2, 2) 2 d
@@ -620,4 +613,4 @@ Error in SpatialPointsDataFrame(pts, df, match.ID = TRUE) :
 > 
 > proc.time()
    user  system elapsed 
-  0.842   0.350   0.867 
+  0.983   0.228   1.000 

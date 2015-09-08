@@ -207,9 +207,33 @@ setMethod("over", signature("Spatial", "Spatial"),  # catch remaining:
 	function(x, y, returnList = FALSE, fn = NULL, ...) {
     	if (!requireNamespace("rgeos", quietly = TRUE))
 			stop("package rgeos is required for additional over methods")
+		if (is(x, "SpatialMultiPoints") || is(y, "SpatialMultiPoints"))
+			return(overMultiPoints(x, y, returnList = returnList, fn = fn, ...))
 		over(x, y, returnList = returnList, fn = fn, ...) # rgeos methods
 	}
 )
+
+overMultiPoints = function(x, y, returnList, fn, ...) {
+	if (is(x, "SpatialMultiPoints")) {
+		x = as(x, "SpatialPoints")
+		dimnames(x@coords)[[1]] = attr(x@coords, "groupIndex") # rgeos abuse
+	}
+	if (is(y, "SpatialMultiPoints")) {
+		if (is(y, "SpatialMultiPointsDataFrame")) {
+			yy = as(y, "SpatialPointsDataFrame")
+			yy@data = y@data  # strong sp abuse - yy no longer validates!
+			y = yy
+		} else
+			y = as(y, "SpatialPoints")
+		dimnames(y@coords)[[1]] = attr(y@coords, "groupIndex") # rgeos abuse
+	}
+   	if (!requireNamespace("rgeos", quietly = TRUE))
+		stop("package rgeos is required for additional over methods")
+	if ("data" %in% slotNames(y))
+		rgeos::overGeomGeomDF(x, y, returnList = returnList, fn = fn, ...)
+	else
+		rgeos::overGeomGeom(x, y, returnList = returnList, fn = fn, ...)
+}
 
 .index2list = function(x, returnList) {
 	if (returnList) {

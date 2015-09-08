@@ -259,7 +259,7 @@ x: Grid          &  s:x   &   r:x    &     s:x     &     s:x   & s:x \\ \hline
 and \code{y} arguments.  s: provided by \pkg{sp}; r: provided by
 \pkg{rgeos}. s:x or s:y indicates that the x or y argument is converted to grid
 cell center points; r:x or r:y indicate grids or pixels are converted to
-polygons. }
+polygons equal to the grid cell. }
 \label{tab}
 \end{table}
 
@@ -305,6 +305,119 @@ by the line }
 \label{fig:grid}
 \end{figure}
 
+\section{Ordering and constraining of \code{rgeos}-based intersects}
+
+Consider the following ``identical'' $3 \times 3$ grid, represented as 
+\code{SpatialGrid}, \code{SpatialPolygons} and \code{SpatialPixels}:
+<<fig=TRUE>>=
+g = SpatialGrid(GridTopology(c(0,0), c(1,1), c(3,3)))
+p = as(g, "SpatialPolygons")
+px = as(g, "SpatialPixels")
+plot(g)
+text(coordinates(g), labels = 1:9)
+@
+
+We can match these geometries with themselves by
+<<>>=
+over(g,g)
+over(p,p)
+over(p,g)
+over(g,p)
+@
+and see that most give a 1:1 match, except for polygons-polygons \code{(p,p)}.
+
+When we ask for the full set of matches, we see
+<<>>=
+over(px[5], g, returnList = TRUE)
+over(p[c(1,5)], p, returnList = TRUE)
+@
+and note that the implementation lets grids/pixels not match
+(intersect) with neighbour grid cells, but that polygons do. 
+
+There are two issues we'd like to improve here: the order in
+which matching features (here: polygons) are returned, and the
+possibility to limit this by the dimension of the intersection
+(point/line/area). Both will be explained now.
+
+\subsection{Ordering of matches}
+
+By default, polygon-polygon features are matched by
+\code{rgeos::gIntersects}, which just returns {\em any} match in
+{\em any} order (feature order, it seems). Although it is slower,
+we  can however improve on this by switching to \code{rgeos::gRelate}, and see
+<<>>=
+over(px[5], g, returnList = TRUE, minDimension = 0)
+over(p[c(1,5)], p, returnList = TRUE, minDimension = 0)
+@
+When \code{minDimension = 0} is specified, the matching geometries
+are being returned based on a nested ordering. First, ordering
+is done by dimensionality of the intersection, as returned
+by the \code{rgeos} function \code{gRelate} (which uses the
+\href{https://en.wikipedia.org/wiki/DE-9IM}{DE-9IM} model).
+This means that features that have an area overlapping (dim=2)
+are listed before features that have a line in common (dim=1),
+and that line in common features are listed before features that
+only have a point in common (dim=0).
+
+Remaining ties, indicating cases when there are multiple different
+intersections of the same dimension, are ordered such that matched
+feature {\em interiors} are given higher priority than matched
+feature boundaries.
+
+Note that the ordering also determines which feature is matched
+when \code{returnList=FALSE}, as in this case the first element of
+the ordered set is taken:
+<<>>=
+over(p, p, minDimension = 0)
+@
+
+Consider the following example where a point is {\em on} \code{x1} and {\em in} \code{x2}: 
+<<fig=TRUE>>=
+x2 = x1 = cbind(c(0,1,1,0,0), c(0,0,1,1,0))
+x1[,1] = x1[,1]+0.5
+x1[,2] = x1[,2]+0.25
+sp = SpatialPolygons(list(
+ Polygons(list(Polygon(x1)), "x1"),
+ Polygons(list(Polygon(x2)), "x2")))
+pt = SpatialPoints(cbind(0.5,0.5)) # on border of x1
+row.names(pt) = "pt1"
+plot(sp, axes = TRUE)
+text(c(0.05, 0.55, 0.55), c(0.9, 1.15, 0.5), c("x1","x2", "pt"))
+plot(pt, add=TRUE, col='red', pch=16)
+@
+
+When matching the point \code{pt} with the two polygons, the
+sp method (default) gives no preference of the second polygon
+that (fully) contains the point; the rgeos method however does:
+<<>>=
+over(pt,sp)
+over(pt,sp,minDimension=0)
+over(pt,sp,returnList=TRUE)
+rgeos::overGeomGeom(pt,sp)
+rgeos::overGeomGeom(pt,sp,returnList=TRUE)
+rgeos::overGeomGeom(pt,sp,returnList=TRUE,minDimension=0)
+@
+
+% #    x1     x2 
+% #	"F0FF" "0FFF" 
+% # it would be nice to have these sorted "2, 1" instead of "1, 2", but
+% # that doesn't work now.
+
+\subsection{Constraining dimensionality of intersection}
+
+In some cases for feature selection it may be desired to constrain
+matching to features that have an area overlap, or that have an
+area overlap {\em or} line in common. This can be done using the
+parameter \code{minDimension}:
+
+<<>>=
+over(p[5], p, returnList=TRUE, minDimension=0)
+over(p[5], p, returnList=TRUE, minDimension=1)
+over(p[5], p, returnList=TRUE, minDimension=2)
+rgeos::overGeomGeom(pt, pt, minDimension=2) # empty
+rgeos::overGeomGeom(pt, pt, minDimension=1) # empty
+rgeos::overGeomGeom(pt, pt, minDimension=0)
+@
 
 \section{Aggregation}
 In the following example, the values of a fine grid with 40 m x 40

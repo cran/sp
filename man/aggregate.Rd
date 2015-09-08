@@ -6,12 +6,13 @@
 \title{ aggregation of spatial objects }
 \description{ spatial aggregation of thematic information in spatial objects}
 \usage{
-\method{aggregate}{Spatial}(x, by, FUN = mean, \dots, dissolve = TRUE, areaWeighted = FALSE)
+\method{aggregate}{Spatial}(x, by = list(ID = rep(1, length(x))),
+	FUN = mean, \dots, dissolve = TRUE, areaWeighted = FALSE)
 }
 \arguments{
 \item{x}{object deriving from \link{Spatial}, with attributes }
-\item{by}{ aggregation predicate; if \code{by} is a \link{Spatial} object,
-the geometry over which attributes in \code{x} are aggregated; if \code{by}
+\item{by}{aggregation predicate; if \code{by} is a \link{Spatial} object,
+the geometry by which attributes in \code{x} are aggregated; if \code{by}
 is a list, aggregation by attribute(s), see \link{aggregate.data.frame}}
 \item{FUN}{aggregation function }
 \item{...}{arguments passed on to function \code{FUN}}
@@ -32,6 +33,7 @@ attributes are \code{factor}s, the area dominant factor level (area
 mode) is returned. This will compute the \link[rgeos]{gIntersection}
 of \code{x} and \code{by}; see examples below.
 
+If \code{by} is missing, aggregates over all features.
 }
 
 \author{Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de}}

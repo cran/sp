@@ -11,6 +11,9 @@ setClass("SpatialPoints",
 			return("SpatialPoints: too few coordinate columns")
 		if (!is.double(object@coords[,1]))
 			return("coordinates should be double")
+		rowNames = dimnames(object@coords)[[1]]
+		if (!is.null(rowNames) && anyDuplicated(rowNames))
+			warning("duplicate rownames are interpreted by rgeos as MultiPoints; use SpatialMultiPoints to define these; in future sp versions this warning will become an error")
 		return(TRUE)
 	}
 )

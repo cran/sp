@@ -3,6 +3,7 @@
 \alias{coordnames}
 \alias{coordnames-methods}
 \alias{coordnames,SpatialPoints-method}
+\alias{coordnames,SpatialMultiPoints-method}
 \alias{coordnames,SpatialLines-method}
 \alias{coordnames,Lines-method}
 \alias{coordnames,Line-method}
@@ -11,6 +12,7 @@
 \alias{coordnames,Polygon-method}
 \alias{coordnames<-}
 \alias{coordnames<-,SpatialPoints,character-method}
+\alias{coordnames<-,SpatialMultiPoints,character-method}
 \alias{coordnames<-,SpatialLines,character-method}
 \alias{coordnames<-,Lines,character-method}
 \alias{coordnames<-,Line,character-method}

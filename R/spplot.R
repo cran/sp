@@ -349,6 +349,9 @@ spplot.points = function(obj, zcol = names(obj), ..., names.attr,
 }
 setMethod("spplot", signature("SpatialPointsDataFrame"), spplot.points)
 
+setMethod("spplot", signature("SpatialMultiPointsDataFrame"), 
+	function(obj, ...) spplot.points(as(obj, "SpatialPointsDataFrame"), ...))
+
 create.z = function(df, zcol) {
 	if (is.logical(df[[zcol[1]]])) {
 		z = stack(df[zcol])[[1]]
@@ -799,4 +802,16 @@ function (lst, z, ..., cuts = ifelse(identical(FALSE, colorkey), 5, 100),
         	lst$auto.key <- dots$auto.key
 	}
     return(lst)
+}
+
+panel.RgoogleMaps <- function(map) {
+	bb = bb2merc(map, "RgoogleMaps")
+	grid.raster(map$myTile, mean(bb[1,]), mean(bb[2,]), diff(bb[1,]), diff(bb[2,]), 
+		default.units = "native", interpolate = FALSE)
+}
+
+panel.ggmap <- function(map) {
+	bb = bb2merc(map, "ggmap")
+	grid.raster(map, mean(bb[1,]), mean(bb[2,]), diff(bb[1,]), diff(bb[2,]), 
+		default.units = "native", interpolate = FALSE)
 }

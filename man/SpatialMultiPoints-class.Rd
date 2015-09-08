@@ -1,41 +1,35 @@
-\name{SpatialPoints-class}
+\name{SpatialMultiPoints-class}
 \docType{class}
-\alias{SpatialPoints-class}
-\alias{[,SpatialPoints-method}
-\alias{coerce,SpatialPoints,matrix-method}
-\alias{coerce,SpatialPoints,data.frame-method} % here???
-\alias{coerce,SpatialPoints,SpatialPixels-method} % here???
-\alias{coerce,SpatialPoints,Line-method}
-\alias{coerce,SpatialPoints,Lines-method}
-\alias{coerce,SpatialPoints,SpatialLines-method}
-\alias{coerce,SpatialPointsDataFrame,SpatialPixelsDataFrame-method} % here???
+\alias{SpatialMultiPoints-class}
+\alias{[,SpatialMultiPoints-method}
+\alias{coerce,SpatialMultiPoints,matrix-method}
+\alias{coerce,SpatialMultiPoints,data.frame-method}
+\alias{coerce,SpatialMultiPoints,SpatialPoints-method}
 %\alias{coerce,SpatialPoints,data.frame-method}
 %\alias{coerce,data.frame,SpatialPoints-method}
 %\alias{coerce,matrix,SpatialPoints-method}
 % \alias{coordinates,SpatialPoints-method}
-\alias{show,SpatialPoints-method}
+\alias{show,SpatialMultiPoints-method}
 %\alias{SpatialPoints}
-\alias{as.data.frame.SpatialPoints}
-\alias{plot,SpatialPoints,missing-method}
-\alias{summary,SpatialPoints-method}
-\alias{print.SpatialPoints} 
-\alias{summary.SpatialPoints}
-\alias{rbind.SpatialPoints}
-\alias{$,SpatialPoints-method}
-\alias{$<-,SpatialPoints,character-method}
-\alias{row.names.SpatialPoints}
-\alias{coerce,ppp,SpatialPoints-method}
+\alias{as.data.frame.SpatialMultiPoints}
+\alias{plot,SpatialMultiPoints,missing-method}
+\alias{summary,SpatialMultiPoints-method}
+\alias{print.SpatialMultiPoints} 
+\alias{summary.SpatialMultiPoints}
+\alias{rbind.SpatialMultiPoints}
+\alias{$,SpatialMultiPoints-method}
+\alias{$<-,SpatialMultiPoints,character-method}
+\alias{row.names.SpatialMultiPoints}
 
-
-\title{Class "SpatialPoints" }
-\description{  Class for (irregularly spaced) points }
+\title{Class "SpatialMultiPoints" }
+\description{  Class for (irregularly spaced) MultiPoints }
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{SpatialPoints(x)}.
 }
 \section{Slots}{
   \describe{
-    \item{\code{coords}:}{Object of class \code{"matrix"}, containing the
-	coordinates (each row is a point) }
+    \item{\code{coords}:}{Object of class \code{"list"}, containing the
+	coordinates of point sets (each list element is a matrix) }
     \item{\code{bbox}:}{Object of class \code{"matrix"}, with bounding box }
     \item{\code{proj4string}:}{Object of class \code{"CRS"}, projection string }
   }
@@ -45,18 +39,11 @@ Class \code{"Spatial"}, directly.
 }
 \section{Methods}{
   \describe{
-    \item{[}{\code{signature(x = "SpatialPoints")}: subsets the points; only
-	rows (points) can be subsetted }
+    \item{[}{\code{signature(x = "SpatialMultiPoints")}: subsets point sets} 
     \item{coerce}{\code{signature(from = "SpatialPoints", to = "data.frame")}: 
-	retrieves the data part}
-    \item{coerce}{\code{signature(from = "SpatialPoints", to = "SpatialPixels")}: equivalent to assigning gridded TRUE for a copy of the object}
-    \item{coerce}{\code{signature(from = "SpatialPointsDataFrame", to = "SpatialPixelsDataFrame")}: equivalent to assigning gridded TRUE for a copy of the object}
-    \item{coerce}{\code{signature(from = "data.frame", to = "SpatialPoints")}: sets
-	coordinates, which may be in a data frame }
-    \item{coerce}{\code{signature(from = "matrix", to = "SpatialPoints")}: set
-	coordinates, which may be in a matrix }
-    \item{coordinates}{\code{signature(obj = "SpatialPoints")}: retrieves
-	the coordinates, as matrix }
+	coerce to data.frame}
+    \item{coordinates}{\code{signature(obj = "SpatialMultiPoints")}: retrieves
+	all the coordinates, as one single matrix }
     \item{plot}{\code{signature(x = "SpatialPoints", y = "missing")}: plot points}
     \item{summary}{\code{signature(object = "SpatialPoints")}: summarize object}
     \item{points}{\code{signature(x = "SpatialPoints")}: add point symbols to plot}
@@ -86,15 +73,19 @@ The plot method for \dQuote{SpatialPoints} objects takes the following arguments
 \author{ Edzer Pebesma, \email{edzer.pebesma@uni-muenster.de} }
 
 \seealso{
-  \code{\link{SpatialPointsDataFrame-class}}
+  \code{\link{SpatialMultiPointsDataFrame-class}}
+  \code{\link{SpatialPoints-class}}
 }
 \examples{
-x = c(1,2,3,4,5)
-y = c(3,2,5,1,4)
-S <- SpatialPoints(cbind(x,y))
-S <- SpatialPoints(list(x,y))
-S <- SpatialPoints(data.frame(x,y))
-S
-plot(S)
+cl1 = cbind(rnorm(3, 10), rnorm(3, 10))
+cl2 = cbind(rnorm(5, 10), rnorm(5,  0))
+cl3 = cbind(rnorm(7,  0), rnorm(7, 10))
+
+mp = SpatialMultiPoints(list(cl1, cl2, cl3))
+plot(mp, col = 2, cex = 1, pch = 1:3)
+mp
+mp[1:2]
+
+print(mp, asWKT=TRUE, digits=3)
 }
 \keyword{classes}

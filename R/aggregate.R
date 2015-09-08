@@ -71,23 +71,29 @@ aggregate.data.frame.SP <- function (x, by, FUN, ..., dissolve = TRUE) {
     row.names(y) <- NULL
 
 	# original would now return y; I added:
-	if (dissolve && class(geom) != "SpatialPointsDataFrame") { # dissolve/merge:
-		if (!requireNamespace("rgeos", quietly = TRUE))
-			stop("rgeos required")
-		if (is(geom, "SpatialLines"))
-			geom = rgeos::gLineMerge(geom, grp)
+	if (dissolve) { # dissolve/merge:
+		if (!gridded(geom) && is(geom, "SpatialPoints"))
+			geom = split(geom, factor(grp)) # creates SpatialMultiPoints
 		else {
-			if (gridded(geom))
-				geom = as(geom, "SpatialPolygons")
-			geom = rgeos::gUnaryUnion(geom, grp)
+			if (!requireNamespace("rgeos", quietly = TRUE))
+				stop("rgeos required")
+			if (is(geom, "SpatialLines"))
+				geom = rgeos::gLineMerge(geom, grp)
+			else {
+				if (gridded(geom))
+					geom = as(geom, "SpatialPolygons")
+				geom = rgeos::gUnaryUnion(geom, grp)
+			}
 		}
 	} else
-		y = y[as.integer(factor(grp)),]
+		y = y[as.integer(factor(grp)),,drop=FALSE] # repeat
+	if (identical(y$ID, rep(1, nrow(y))))
+		y$ID = NULL # remove ID field
 	addAttrToGeom(geom, y, match.ID = FALSE)
 }
 
-aggregate.Spatial = function(x, by, FUN = mean, ..., dissolve = TRUE, 
-		areaWeighted = FALSE) {
+aggregate.Spatial = function(x, by = list(ID = rep(1, length(x))), FUN = mean, ..., 
+		dissolve = TRUE, areaWeighted = FALSE) {
     FUN <- match.fun(FUN)
 	if (is(by, "Spatial")) { # maybe better do S4 method dispatch?
 		by0 = by

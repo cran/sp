@@ -15,6 +15,7 @@
 \alias{spplot,SpatialPolygonsDataFrame-method}
 \alias{spplot,SpatialLinesDataFrame-method}
 \alias{spplot,SpatialPointsDataFrame-method}
+\alias{spplot,SpatialMultiPointsDataFrame-method}
 \alias{sppanel}
 \alias{sppanel,Line-method}
 \alias{sppanel,Lines-method}
@@ -26,6 +27,8 @@
 \alias{sppanel,SpatialPolygons-method}
 \alias{sppanel,character-method}
 \alias{sppanel,list-method}
+\alias{panel.RgoogleMaps}
+\alias{panel.ggmap}
 \alias{sppanel-methods}
 \alias{set_col_regions}
 \alias{get_col_regions}

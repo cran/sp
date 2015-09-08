@@ -4,6 +4,7 @@
 \alias{geometry-methods}
 \alias{geometry,Spatial-method}
 \alias{geometry,SpatialPointsDataFrame-method}
+\alias{geometry,SpatialMultiPointsDataFrame-method}
 \alias{geometry,SpatialGridDataFrame-method}
 \alias{geometry,SpatialPixelsDataFrame-method}
 \alias{geometry,SpatialLinesDataFrame-method}
@@ -21,6 +22,7 @@ with Xxx Lines, Points, Polygons, Grid, or Pixels.
 \describe{
 \item{obj = "Spatial"}{ }
 \item{obj = "SpatialPointsDataFrame"}{ }
+\item{obj = "SpatialMultiPointsDataFrame"}{ }
 \item{obj = "SpatialPolygonsDataFrame"}{ }
 \item{obj = "SpatialPixelsDataFrame"}{ }
 \item{obj = "SpatialGridDataFrame"}{ }

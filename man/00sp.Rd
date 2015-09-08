@@ -89,7 +89,7 @@ spatial information with attribute data.
 }
 
 \section{References}{
-PROJ.4: \url{http://trac.osgeo.org/proj/}
+PROJ.4: \url{https://github.com/OSGeo/proj.4}
 
 GDAL and OGR: \url{http://www.gdal.org/}.
 }

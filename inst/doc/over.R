@@ -160,7 +160,84 @@ lines(sl)
 
 
 ###################################################
-### code chunk number 19: over.Rnw:312-318
+### code chunk number 19: over.Rnw:312-317
+###################################################
+g = SpatialGrid(GridTopology(c(0,0), c(1,1), c(3,3)))
+p = as(g, "SpatialPolygons")
+px = as(g, "SpatialPixels")
+plot(g)
+text(coordinates(g), labels = 1:9)
+
+
+###################################################
+### code chunk number 20: over.Rnw:321-325
+###################################################
+over(g,g)
+over(p,p)
+over(p,g)
+over(g,p)
+
+
+###################################################
+### code chunk number 21: over.Rnw:330-332
+###################################################
+over(px[5], g, returnList = TRUE)
+over(p[c(1,5)], p, returnList = TRUE)
+
+
+###################################################
+### code chunk number 22: over.Rnw:348-350
+###################################################
+over(px[5], g, returnList = TRUE, minDimension = 0)
+over(p[c(1,5)], p, returnList = TRUE, minDimension = 0)
+
+
+###################################################
+### code chunk number 23: over.Rnw:370-371
+###################################################
+over(p, p, minDimension = 0)
+
+
+###################################################
+### code chunk number 24: over.Rnw:375-386
+###################################################
+x2 = x1 = cbind(c(0,1,1,0,0), c(0,0,1,1,0))
+x1[,1] = x1[,1]+0.5
+x1[,2] = x1[,2]+0.25
+sp = SpatialPolygons(list(
+ Polygons(list(Polygon(x1)), "x1"),
+ Polygons(list(Polygon(x2)), "x2")))
+pt = SpatialPoints(cbind(0.5,0.5)) # on border of x1
+row.names(pt) = "pt1"
+plot(sp, axes = TRUE)
+text(c(0.05, 0.55, 0.55), c(0.9, 1.15, 0.5), c("x1","x2", "pt"))
+plot(pt, add=TRUE, col='red', pch=16)
+
+
+###################################################
+### code chunk number 25: over.Rnw:392-398
+###################################################
+over(pt,sp)
+over(pt,sp,minDimension=0)
+over(pt,sp,returnList=TRUE)
+rgeos::overGeomGeom(pt,sp)
+rgeos::overGeomGeom(pt,sp,returnList=TRUE)
+rgeos::overGeomGeom(pt,sp,returnList=TRUE,minDimension=0)
+
+
+###################################################
+### code chunk number 26: over.Rnw:413-419
+###################################################
+over(p[5], p, returnList=TRUE, minDimension=0)
+over(p[5], p, returnList=TRUE, minDimension=1)
+over(p[5], p, returnList=TRUE, minDimension=2)
+rgeos::overGeomGeom(pt, pt, minDimension=2) # empty
+rgeos::overGeomGeom(pt, pt, minDimension=1) # empty
+rgeos::overGeomGeom(pt, pt, minDimension=0)
+
+
+###################################################
+### code chunk number 27: over.Rnw:425-431
 ###################################################
 data(meuse.grid)
 gridded(meuse.grid) = ~x+y
@@ -171,14 +248,14 @@ agg = aggregate(meuse.grid[3], SG)
 
 
 ###################################################
-### code chunk number 20: over.Rnw:328-330
+### code chunk number 28: over.Rnw:441-443
 ###################################################
 image(agg)
 points(meuse.grid, pch = 3, cex=.2, col = "#80808080")
 
 
 ###################################################
-### code chunk number 21: over.Rnw:339-342
+### code chunk number 29: over.Rnw:452-455
 ###################################################
 sl.agg = aggregate(meuse.grid[,1:3], sl)
 class(sl.agg)
