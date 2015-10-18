@@ -5,6 +5,7 @@
 \alias{[,SpatialLinesDataFrame-method}
 \alias{rbind.SpatialLinesDataFrame}
 \alias{coerce,SpatialLinesDataFrame,SpatialPointsDataFrame-method}
+\alias{coerce,SpatialLinesDataFrame,SpatialMultiPointsDataFrame-method}
 \alias{dim.SpatialLinesDataFrame}
 \alias{row.names.SpatialLinesDataFrame}
 

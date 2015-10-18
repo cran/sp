@@ -1,20 +1,20 @@
 ### R code from vignette source 'intro_sp.Rnw'
 
 ###################################################
-### code chunk number 1: intro_sp.Rnw:72-73
+### code chunk number 1: intro_sp.Rnw:76-77
 ###################################################
 library(sp)
 
 
 ###################################################
-### code chunk number 2: intro_sp.Rnw:76-78
+### code chunk number 2: intro_sp.Rnw:80-82
 ###################################################
 set.seed(13331)
 # library(lattice)
 
 
 ###################################################
-### code chunk number 3: intro_sp.Rnw:179-183
+### code chunk number 3: intro_sp.Rnw:188-192
 ###################################################
 xc = round(runif(10), 2)
 yc = round(runif(10), 2)
@@ -23,7 +23,7 @@ xy
 
 
 ###################################################
-### code chunk number 4: intro_sp.Rnw:188-191
+### code chunk number 4: intro_sp.Rnw:197-200
 ###################################################
 xy.sp = SpatialPoints(xy)
 xy.sp
@@ -31,13 +31,13 @@ plot(xy.sp, pch = 2)
 
 
 ###################################################
-### code chunk number 5: intro_sp.Rnw:197-198
+### code chunk number 5: intro_sp.Rnw:206-207
 ###################################################
 plot(xy.sp, pch = 2)
 
 
 ###################################################
-### code chunk number 6: intro_sp.Rnw:206-209
+### code chunk number 6: intro_sp.Rnw:215-218
 ###################################################
 xy.cc = coordinates(xy.sp)
 class(xy.cc)
@@ -45,7 +45,7 @@ dim(xy.cc)
 
 
 ###################################################
-### code chunk number 7: intro_sp.Rnw:213-220
+### code chunk number 7: intro_sp.Rnw:222-229
 ###################################################
 bbox(xy.sp)
 dimensions(xy.sp)
@@ -57,7 +57,7 @@ summary(xy.sp)
 
 
 ###################################################
-### code chunk number 8: intro_sp.Rnw:228-242
+### code chunk number 8: intro_sp.Rnw:237-251
 ###################################################
 df = data.frame(z1 = round(5 + rnorm(10), 2), z2 = 20:29)
 df
@@ -76,7 +76,7 @@ dim(xy.cc)
 
 
 ###################################################
-### code chunk number 9: intro_sp.Rnw:253-256
+### code chunk number 9: intro_sp.Rnw:262-265
 ###################################################
 df1 = data.frame(xy, df)
 coordinates(df1) = c("xc", "yc")
@@ -84,7 +84,7 @@ df1
 
 
 ###################################################
-### code chunk number 10: intro_sp.Rnw:259-263
+### code chunk number 10: intro_sp.Rnw:268-272
 ###################################################
 df2 = data.frame(xy, df)
 coordinates(df2) = ~xc+yc
@@ -93,13 +93,13 @@ as.data.frame(df2)[1:2,]
 
 
 ###################################################
-### code chunk number 11: intro_sp.Rnw:271-272
+### code chunk number 11: intro_sp.Rnw:280-281
 ###################################################
 coordinates(df2)[1:2,]
 
 
 ###################################################
-### code chunk number 12: intro_sp.Rnw:276-280
+### code chunk number 12: intro_sp.Rnw:285-289
 ###################################################
 df2[["z2"]]
 df2[["z2"]][10] = 20
@@ -108,21 +108,21 @@ summary(df2)
 
 
 ###################################################
-### code chunk number 13: intro_sp.Rnw:284-286 (eval = FALSE)
+### code chunk number 13: intro_sp.Rnw:293-295 (eval = FALSE)
 ###################################################
 ## bubble(df2, "z1", key.space = "bottom")
 ## spplot(df2, "z1", key.space = "bottom")
 
 
 ###################################################
-### code chunk number 14: intro_sp.Rnw:292-294
+### code chunk number 14: intro_sp.Rnw:301-303
 ###################################################
 print(bubble(df2, "z1", key.space = "bottom"), split = c(1,1,2,1), more=TRUE)
 print(spplot(df2, "z1", key.space = "bottom"), split =  c(2,1,2,1), more=FALSE)
 
 
 ###################################################
-### code chunk number 15: intro_sp.Rnw:313-316
+### code chunk number 15: intro_sp.Rnw:322-325
 ###################################################
 gt = GridTopology(cellcentre.offset = c(1,1,2), cellsize=c(1,1,1), cells.dim = c(3,4,6))
 grd = SpatialGrid(gt)
@@ -130,13 +130,13 @@ summary(grd)
 
 
 ###################################################
-### code chunk number 16: intro_sp.Rnw:320-321
+### code chunk number 16: intro_sp.Rnw:329-330
 ###################################################
 gridparameters(grd)
 
 
 ###################################################
-### code chunk number 17: intro_sp.Rnw:327-332
+### code chunk number 17: intro_sp.Rnw:336-341
 ###################################################
 pts = expand.grid(x = 1:3, y = 1:4, z=2:7)
 grd.pts = SpatialPixels(SpatialPoints(pts))
@@ -146,7 +146,7 @@ summary(grd)
 
 
 ###################################################
-### code chunk number 18: intro_sp.Rnw:344-351
+### code chunk number 18: intro_sp.Rnw:353-360
 ###################################################
 attr = expand.grid(xc = 1:3, yc = 1:3)
 grd.attr = data.frame(attr, z1 = 1:9, z2 = 9:1)
@@ -158,7 +158,7 @@ summary(grd.attr)
 
 
 ###################################################
-### code chunk number 19: intro_sp.Rnw:360-367
+### code chunk number 19: intro_sp.Rnw:372-379
 ###################################################
 fullgrid(grd)
 fullgrid(grd.pts)
@@ -170,7 +170,7 @@ fullgrid(grd.attr)
 
 
 ###################################################
-### code chunk number 20: intro_sp.Rnw:401-405
+### code chunk number 20: intro_sp.Rnw:413-417
 ###################################################
 fullgrid(grd.attr) = FALSE
 grd.attr[1:5, "z1"]
@@ -179,7 +179,7 @@ grd.attr[1:2,-2, c("z2","z1")]
 
 
 ###################################################
-### code chunk number 21: intro_sp.Rnw:416-427
+### code chunk number 21: intro_sp.Rnw:428-439
 ###################################################
 l1 = cbind(c(1,2,3),c(3,2,2))
 l1a = cbind(l1[,1]+.05,l1[,2]+.05)
@@ -195,7 +195,7 @@ plot(Sl, col = c("red", "blue"))
 
 
 ###################################################
-### code chunk number 22: intro_sp.Rnw:435-438
+### code chunk number 22: intro_sp.Rnw:447-450
 ###################################################
 df = data.frame(z = c(1,2), row.names=sapply(slot(Sl, "lines"), function(x) slot(x, "ID")))
 Sldf = SpatialLinesDataFrame(Sl, data = df)
@@ -203,7 +203,7 @@ summary(Sldf)
 
 
 ###################################################
-### code chunk number 23: intro_sp.Rnw:450-461
+### code chunk number 23: intro_sp.Rnw:462-473
 ###################################################
 Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
 Sr2 = Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))
@@ -219,7 +219,7 @@ plot(SpP, col = 1:3, pbg="white")
 
 
 ###################################################
-### code chunk number 24: intro_sp.Rnw:468-472
+### code chunk number 24: intro_sp.Rnw:480-484
 ###################################################
 attr = data.frame(a=1:3, b=3:1, row.names=c("s3/4", "s2", "s1"))
 SrDf = SpatialPolygonsDataFrame(SpP, attr)
@@ -228,13 +228,13 @@ spplot(SrDf)
 
 
 ###################################################
-### code chunk number 25: intro_sp.Rnw:475-476
+### code chunk number 25: intro_sp.Rnw:487-488
 ###################################################
 print(spplot(SrDf))
 
 
 ###################################################
-### code chunk number 26: intro_sp.Rnw:480-482
+### code chunk number 26: intro_sp.Rnw:492-494
 ###################################################
 SrDf = attr
 polygons(SrDf) = SpP

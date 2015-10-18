@@ -116,6 +116,7 @@ sample.Spatial = function(x, n, type, bb = bbox(x), offset = runif(nrow(bb)),
 	sel = xy[,1] >= bb[1,1] & xy[,1] <= bb[1,2] & 
 			xy[,2] >= bb[2,1] & xy[,2] <= bb[2,2]
 	xy = xy[sel,, drop = FALSE]
+	rownames(xy) = NULL
 	SpatialPoints(xy, CRS(proj4string(x)))
 }
 
@@ -275,7 +276,8 @@ sample.Polygons = function(x, n, type = "random", bb = bbox(x),
 		}
 	    }
 	    crds <- do.call(rbind, lapply(ptsres, function(x) 
-	        if (!is.null(x)) coordinates(x)))
+	        if (!is.null(x)) {rownames(x) <- NULL; coordinates(x)}))
+# RSB 151013 oddity - duplicate rownames
 	    if (is.null(crds)) res <- NULL
 	    else {
 	        pts <- SpatialPoints(crds, proj4string=proj4string)

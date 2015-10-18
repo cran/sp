@@ -52,9 +52,9 @@ overDF_for_rgeos = .overDF # to be exported, for rgeos, and spacetime
 # when changing this function, we also might want to change
 # overGeomGeomDF in rgeos,
 # ... and overDFGenericST in spacetime.
-overDFGeneric = function(x, y, returnList = FALSE, fn = NULL, ...) {
+overDFGeneric = function(x, y, returnList = FALSE, fn = NULL, ..., minDimension = -1) {
 	stopifnot(identicalCRS(x, y))
-	r = over(x, geometry(y), returnList = TRUE)
+	r = over(x, geometry(y), returnList = TRUE, minDimension = minDimension)
 	ret = .overDF(r, y@data, length(x), returnList, fn, ...)
 	if (returnList)
 		names(ret) = row.names(x)

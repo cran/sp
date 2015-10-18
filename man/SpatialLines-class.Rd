@@ -9,6 +9,8 @@
 \alias{coerce,SpatialLines,SpatialPoints-method}
 \alias{coerce,SpatialLines,SpatialPointsDataFrame-method}
 \alias{coerce,Lines,SpatialPoints-method}
+\alias{coerce,Lines,SpatialMultiPoints-method}
+\alias{coerce,SpatialLines,SpatialMultiPoints-method}
 \alias{row.names.SpatialLines}
 
 \title{a class for spatial lines }

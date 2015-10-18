@@ -1,3 +1,94 @@
+2015-10-17 15:51  edzer
+
+	* inst/NEWS.Rd: tidy
+
+2015-10-13 14:48  edzer
+
+	* R/spsample.R: don't generate rownames on SpatialPoints in
+	  spsample.Spatial
+
+2015-10-13 13:36  rsbivand
+
+	* R/spsample.R: duplicate rownames warning in spsample
+
+2015-10-06 01:57  edzer
+
+	* R/merge.R: update from Robert Hijmans
+
+2015-10-05 15:46  edzer
+
+	* demo/depend.R: update depend script to use R tools
+
+2015-09-29 11:59  rsbivand
+
+	* DESCRIPTION, R/CRS-methods.R, man/CRS-class.Rd: adding argument
+	  to CRS to avoid checking
+
+2015-09-20 20:06  edzer
+
+	* man/SpatialLines-class.Rd, man/SpatialLinesDataFrame-class.Rd:
+	  update docs
+
+2015-09-20 14:57  edzer
+
+	* R/SpatialLines-methods.R, R/SpatialLinesDataFrame-methods.R: add
+	  conversion from SpatialLines to SpatialMultiPoints and from
+	  SpatialLinesDataFrame to SpatialMultiPointsDataFrame
+
+2015-09-20 14:23  edzer
+
+	* tests/agg.Rout.save: add test output
+
+2015-09-20 12:18  edzer
+
+	* tests/agg.R: add aggregate test
+
+2015-09-20 12:18  edzer
+
+	* R/SpatialLines-methods.R, demo/mp.R, inst/NEWS.Rd,
+	  inst/include/sp.h, src/sp.h, vignettes/intro_sp.Rnw,
+	  vignettes/over.Rnw: Lines -> SpatialPoints now drops (duplicate)
+	  row.names
+	  update tests, demo, intro vignette, over vignette
+
+2015-09-10 14:28  edzer
+
+	* inst/NEWS.Rd: update for 1.2-1
+
+2015-09-10 14:26  edzer
+
+	* inst/NEWS.Rd: typo
+
+2015-09-10 14:07  edzer
+
+	* DESCRIPTION: increase version dependency on rgeos
+
+2015-09-10 06:17  edzer
+
+	* DESCRIPTION, R/SpatialMultiPoints-methods.R,
+	  R/SpatialMultiPointsDataFrame-methods.R, R/over.R,
+	  man/aggregate.Rd, vignettes/over.Rnw: version bump; correct
+	  printing of SpatialMultiPoint* objects with
+	  zero features; aggregate() now passes minDimension on to rgeos;
+	  aggregate() explanation extended in vignette.
+
+2015-09-07 15:23  edzer
+
+	* tests/pass1.Rout.save: align with rgdal 1.0-7 and the patched
+	  PROJ.4
+
+2015-09-05 10:31  rsbivand
+
+	* man/CRS-class.Rd: note on proj_def.dat in help file
+
+2015-09-02 18:34  edzer
+
+	* ChangeLog, tests/fail1.Rout.save: tidy
+
+2015-09-02 18:25  edzer
+
+	* inst/ChangeLog: tidy
+
 2015-09-02 08:35  edzer
 
 	* demo/depend.R: update

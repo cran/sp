@@ -9,12 +9,14 @@ plot(mp, col = 2, cex = 1, pch = 1:3)
 mp
 mp[1:2]
 as(mp, "SpatialPoints")
+mp[0,]
 
 print(mp, asWKT=TRUE, digits=3)
 
 mpdf = SpatialMultiPointsDataFrame(list(cl1, cl2, cl3), data.frame(a = 1:3))
 mpdf
 print(mpdf, asWKT=TRUE, digits=3)
+mpdf[0,]
 
 plot(mpdf, col = mpdf$a, cex = 1:3)
 as(mpdf, "data.frame")

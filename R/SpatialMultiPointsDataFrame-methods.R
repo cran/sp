@@ -50,7 +50,7 @@ print.SpatialMultiPointsDataFrame = function(x, ..., digits = getOption("digits"
 	else { # old style
 		cc = substring(paste(as.data.frame(
 			t(signif(coordinates(x), digits)))),2,999)
-		ix = rep(1:length(x@coords), sapply(x@coords, nrow))
+		ix = rep(seq_along(x@coords), sapply(x@coords, nrow))
 		df = data.frame("coordinates" = cc, x@data[ix, , drop=FALSE])
 	}
 	print(df, ..., digits = digits)

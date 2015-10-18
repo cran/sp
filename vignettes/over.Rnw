@@ -404,6 +404,7 @@ rgeos::overGeomGeom(pt,sp,returnList=TRUE,minDimension=0)
 % # that doesn't work now.
 
 \subsection{Constraining dimensionality of intersection}
+\label{dim}
 
 In some cases for feature selection it may be desired to constrain
 matching to features that have an area overlap, or that have an
@@ -448,7 +449,7 @@ x 400 m grid}
 \end{figure}
 
 An example of the aggregated values of \code{meuse.grid} along
-(or under) the line shown in Figure \ref{fig:line} are
+(or under) the line shown in Figure \ref{fig:lines} are
 <<>>=
 sl.agg = aggregate(meuse.grid[,1:3], sl)
 class(sl.agg)
@@ -457,6 +458,70 @@ as.data.frame(sl.agg)
 Function \code{aggregate} returns a spatial object of the same
 class of \code{sl} (\code{SpatialLines}), and \code{as.data.frame}
 shows the attribute table as a \code{data.frame}.
+
+\subsection{Constraining the dimension of intersection}
+Building on the simple example of section \ref{dim}, 
+we can see what happens if we aggregate polygons {\em without}
+specifying {\em how} polygons intersect\footnote{sp versions
+1.2-1, rgeos versions 0.3-13}, the result of which is shown
+in Figure \ref{fig:agg}.
+
+<<>>=
+g = SpatialGrid(GridTopology(c(5,5), c(10,10), c(3,3)))
+p = as(g, "SpatialPolygons")
+p$z = c(1,0,1,0,1,0,1,0,1)
+cc = coordinates(g)
+p$ag1 = aggregate(p, p, mean)[[1]]
+p$ag1a = aggregate(p, p, mean, minDimension = 0)[[1]]
+p$ag2 = aggregate(p, p, mean, minDimension = 1)[[1]]
+p$ag3 = aggregate(p, p, mean, minDimension = 2)[[1]]
+p$ag4 = aggregate(p, p, mean, areaWeighted=TRUE)[[1]]
+@
+
+\begin{figure}[ht]
+<<echo=FALSE,fig=TRUE>>=
+pts = cbind(c(9,21,21,9,9),c(9,9,21,21,9))
+sq = SpatialPolygons(list(Polygons(list(Polygon(pts)), "ID")))
+rnd2 = function(x) round(x, 2)
+l = list(
+	list("sp.text", cc, rnd2(p$z), which = 1),
+	list("sp.text", cc, rnd2(p$ag1), which = 2),
+	list("sp.text", cc, rnd2(p$ag1a), which = 3),
+	list("sp.text", cc, rnd2(p$ag2), which = 4),
+	list("sp.text", cc, rnd2(p$ag3), which = 5),
+	list("sp.text", cc, rnd2(p$ag4), which = 6),
+	list(sq, col = 'green', which = 6, first = FALSE, lwd = 2)
+)
+spplot(p, names.attr = c("source", "default aggregate", "minDimension=0", 
+	"minDimension=1", "minDimension=2", "areaWeighted=TRUE"), layout = c(3,2), 
+	as.table=TRUE, col.regions=bpy.colors(151)[50:151], cuts=100, 
+	sp.layout = l, scales = list(draw = TRUE))
+@
+\caption{Effect of aggregating checker board {\tt SpatialPolygons} by themselves, for
+different values of {\tt minDimension} and {\tt areaWeighted}; the green square example
+is given in the text.}
+\label{fig:agg}
+\end{figure}
+
+The option \code{areaWeighted=TRUE} aggregates area-weighted,
+giving zero weight to polygons that only have a point or line in
+common with the target polygon; \code{minDimension} is passed to
+\code{over} to constrain the intersecting polygons used.
+
+The following example furher illustrates the difference between selection
+using {\tt minDimension}, and area weighting for aggregating the 0-1 checker
+board of figure \ref{fig:agg} by the green square polygon ({\tt sq}) 
+shown in the last panel of that figure:
+<<>>=
+round(c(
+  aggDefault = aggregate(p, sq, mean)[[1]],
+  aggMinDim0 = aggregate(p, sq, mean, minDimension = 0)[[1]],
+  aggMinDim1 = aggregate(p, sq, mean, minDimension = 1)[[1]],
+  aggMinDim2 = aggregate(p, sq, mean, minDimension = 2)[[1]],
+  areaWeighted = aggregate(p, sq, mean, areaWeighted=TRUE)[[1]]), 3)
+@
+
+
 
 \section*{References}
 \begin{itemize}

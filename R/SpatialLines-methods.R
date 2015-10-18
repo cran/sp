@@ -20,8 +20,8 @@ Lines <- function(slinelist, ID) {
 SpatialLines <- function(LinesList, proj4string=CRS(as.character(NA))) {
 	if (any(sapply(LinesList, function(x) !is(x, "Lines"))))
 		stop("lines list not exclusively filled with Lines objects")
-	Sp <- new("Spatial", bbox = .bboxSls(LinesList), proj4string=proj4string)
-	res <- new("SpatialLines", Sp, lines=LinesList)
+	res <- new("SpatialLines", bbox = .bboxSls(LinesList), proj4string=proj4string, 
+		lines=LinesList)
 	res
 }
 
@@ -136,7 +136,7 @@ plotSpatialLines <- function(SL, xlim = NULL, ylim = NULL,
 setMethod("plot", signature(x = "SpatialLines", y = "missing"),
 	function(x, y, ...) plotSpatialLines(x, ...))
 
-setMethod("coordinates", "Line", function(obj) obj@coords)
+setMethod("coordinates", "Line", function(obj) { cc = obj@coords; row.names(cc) <- NULL; cc })
 setMethod("coordinates", "Lines", function(obj) lapply(obj@Lines, coordinates))
 setMethod("coordinates", "SpatialLines", function(obj) lapply(obj@lines, coordinates))
 
@@ -244,6 +244,16 @@ setAs("SpatialLines", "SpatialPoints", function(from) {
 						as(x, "SpatialPoints")))),
 			CRS(proj4string(from))
 		)
+	}
+)
+setAs("Lines", "SpatialMultiPoints", function(from) {
+		SpatialMultiPoints(coordinates(from))
+	}
+)
+setAs("SpatialLines", "SpatialMultiPoints", function(from) {
+		l = lapply(from@lines, function(x) do.call(rbind, coordinates(x)))
+		names(l) = sapply(from@lines, function(x) x@ID)
+		SpatialMultiPoints(l, CRS(proj4string(from)))
 	}
 )
 SpatialLines2SpatialPointsDataFrame = function(from) {

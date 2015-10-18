@@ -226,7 +226,7 @@ rgeos::overGeomGeom(pt,sp,returnList=TRUE,minDimension=0)
 
 
 ###################################################
-### code chunk number 26: over.Rnw:413-419
+### code chunk number 26: over.Rnw:414-420
 ###################################################
 over(p[5], p, returnList=TRUE, minDimension=0)
 over(p[5], p, returnList=TRUE, minDimension=1)
@@ -237,7 +237,7 @@ rgeos::overGeomGeom(pt, pt, minDimension=0)
 
 
 ###################################################
-### code chunk number 27: over.Rnw:425-431
+### code chunk number 27: over.Rnw:426-432
 ###################################################
 data(meuse.grid)
 gridded(meuse.grid) = ~x+y
@@ -248,17 +248,63 @@ agg = aggregate(meuse.grid[3], SG)
 
 
 ###################################################
-### code chunk number 28: over.Rnw:441-443
+### code chunk number 28: over.Rnw:442-444
 ###################################################
 image(agg)
 points(meuse.grid, pch = 3, cex=.2, col = "#80808080")
 
 
 ###################################################
-### code chunk number 29: over.Rnw:452-455
+### code chunk number 29: over.Rnw:453-456
 ###################################################
 sl.agg = aggregate(meuse.grid[,1:3], sl)
 class(sl.agg)
 as.data.frame(sl.agg)
+
+
+###################################################
+### code chunk number 30: over.Rnw:469-478
+###################################################
+g = SpatialGrid(GridTopology(c(5,5), c(10,10), c(3,3)))
+p = as(g, "SpatialPolygons")
+p$z = c(1,0,1,0,1,0,1,0,1)
+cc = coordinates(g)
+p$ag1 = aggregate(p, p, mean)[[1]]
+p$ag1a = aggregate(p, p, mean, minDimension = 0)[[1]]
+p$ag2 = aggregate(p, p, mean, minDimension = 1)[[1]]
+p$ag3 = aggregate(p, p, mean, minDimension = 2)[[1]]
+p$ag4 = aggregate(p, p, mean, areaWeighted=TRUE)[[1]]
+
+
+###################################################
+### code chunk number 31: over.Rnw:482-498
+###################################################
+pts = cbind(c(9,21,21,9,9),c(9,9,21,21,9))
+sq = SpatialPolygons(list(Polygons(list(Polygon(pts)), "ID")))
+rnd2 = function(x) round(x, 2)
+l = list(
+	list("sp.text", cc, rnd2(p$z), which = 1),
+	list("sp.text", cc, rnd2(p$ag1), which = 2),
+	list("sp.text", cc, rnd2(p$ag1a), which = 3),
+	list("sp.text", cc, rnd2(p$ag2), which = 4),
+	list("sp.text", cc, rnd2(p$ag3), which = 5),
+	list("sp.text", cc, rnd2(p$ag4), which = 6),
+	list(sq, col = 'green', which = 6, first = FALSE, lwd = 2)
+)
+spplot(p, names.attr = c("source", "default aggregate", "minDimension=0", 
+	"minDimension=1", "minDimension=2", "areaWeighted=TRUE"), layout = c(3,2), 
+	as.table=TRUE, col.regions=bpy.colors(151)[50:151], cuts=100, 
+	sp.layout = l, scales = list(draw = TRUE))
+
+
+###################################################
+### code chunk number 32: over.Rnw:515-521
+###################################################
+round(c(
+  aggDefault = aggregate(p, sq, mean)[[1]],
+  aggMinDim0 = aggregate(p, sq, mean, minDimension = 0)[[1]],
+  aggMinDim1 = aggregate(p, sq, mean, minDimension = 1)[[1]],
+  aggMinDim2 = aggregate(p, sq, mean, minDimension = 2)[[1]],
+  areaWeighted = aggregate(p, sq, mean, areaWeighted=TRUE)[[1]]), 3)
 
 

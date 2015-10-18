@@ -1,6 +1,6 @@
 # Author: Robert J. Hijmans
-# Date : November 2011
-# Version 1.0
+# Date : November 2011 / October 2015
+# Version 2
 # Licence GPL v3
 
 if (!isGeneric("merge")) {
@@ -28,47 +28,38 @@ setMethod('merge', signature(x='Spatial', y='data.frame'),
 	if (!('data' %in% slotNames(x)))
 		stop('x has no attributes')
 
-# email, RJH, 12/24/13, replace:
-#	i <- apply(y[, by.y, drop=FALSE], 1, paste) %in% 
-#			apply(x@data[, by.x, drop=FALSE], 1, paste)
-# by the following block:
-
-## Spatial* objects cannot have NULL geometries
-## so we first get the records in y that match to a record in x. 
-	i <- apply(y[, by.y, drop=FALSE], 1, 
-		function(x) paste(x, collapse='_')) %in% 
-		apply(x@data[, by.x, drop=FALSE], 1, 
-			function(x) paste(x, collapse='_'))
-
-	if (all(!i)) {
-		warning("none of the records in y can be matched to x")
-		return(x)
-	} else if (sum(!i) > 0) {
-		warning(paste(sum(!i), "records in y cannot be matched to x"))
-	}
-	y <- y[i, ,drop=FALSE]
-	
-## check for duplicates in by.y	
-	if (isTRUE(any(table(y[, by.y]) > 1))) {
-		if (!duplicateGeoms) { 
-			dy <- nrow(y)
-			y <- unique(y)
-			if (isTRUE(any(table(y[, by.y]) > 1))) {
-				stop("'y' has multiple records for one or more 'by.y' key(s)")
-			} else {
-				warning(paste(dy - nrow(y), 'duplicate records in y were removed'))
-			}
-		}
-	}
-	
-	
+		
 	x$DoNotUse_temp_sequential_ID_963 <- 1:nrow(x)
 	d <- merge(x@data, y, by=by, by.x=by.x, by.y=by.y, suffixes=suffixes, 
 		incomparables=incomparables, all.x=all.x, all.y=FALSE)
+
+    if (!all.x) {
+		# Spatial* objects cannot have NULL geometries
+		if (nrow(d) == 0) {
+			warning('no matching records')
+			return(NULL)
+		}
+	}
+
+	# sort the merged table
 	d <- d[order(d$DoNotUse_temp_sequential_ID_963), ]
+	
+	# Normally we want one-to-one joins with spatial data
+	if (!duplicateGeoms) {
+		if (any(table(d$DoNotUse_temp_sequential_ID_963) > 1)) {
+			stop('non-unique matches detected')
+		}
+	} 
+	
+	# duplicate (duplicateGeoms = TRUE) or remove (all.x=FALSE) records if needed
 	x <- x[d$DoNotUse_temp_sequential_ID_963, ]
+		
 	d$DoNotUse_temp_sequential_ID_963 <- NULL
 	x@data <- d
 	x
-} 
+}
 )
+
+
+		
+		

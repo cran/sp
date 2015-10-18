@@ -15,10 +15,11 @@
 the geometry by which attributes in \code{x} are aggregated; if \code{by}
 is a list, aggregation by attribute(s), see \link{aggregate.data.frame}}
 \item{FUN}{aggregation function }
-\item{...}{arguments passed on to function \code{FUN}}
+\item{...}{arguments passed on to function \code{FUN}, unless \code{minDimension}
+is specified, which is passed on to function \link{over}}
 \item{dissolve}{logical; should, when aggregating based on attributes, the
 resulting geometries be dissolved? Note that if \code{x} has class
-\code{SpatialPointsDataFrame}, this is not possible}
+\code{SpatialPointsDataFrame}, this returns an object of class \code{SpatialMultiPointsDataFrame}}
 \item{areaWeighted}{logical; should the aggregation of \code{x} be weighted by the
 areas it intersects with each feature of \code{by}? See value.}
 }

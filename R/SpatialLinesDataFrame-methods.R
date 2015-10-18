@@ -28,6 +28,10 @@ setMethod("addAttrToGeom", signature(x = "SpatialLines", y = "data.frame"),
 		SpatialLinesDataFrame(x, y, match.ID = match.ID, ...)
 )
 
+setAs("SpatialLinesDataFrame", "SpatialMultiPointsDataFrame", 
+	function(from)
+		SpatialMultiPointsDataFrame(as(geometry(from), "SpatialMultiPoints"), from@data)
+)
 setAs("SpatialLinesDataFrame", "data.frame", function(from)
     as.data.frame.SpatialLinesDataFrame(from))
 
