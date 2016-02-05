@@ -12,8 +12,17 @@ rbind.SpatialPoints <- function(...) {
 	dots = list(...)
 	names(dots) <- NULL
 	stopifnot(identicalCRS(dots))
-	SpatialPoints(do.call(rbind, lapply(dots, coordinates)),
+	dropRowNames = is.null(dimnames(dots[[1]]@coords)[[1]]) # or check each of them?
+	coordinates.strip = function(x) {
+		x = coordinates(x)
+		row.names(x) = NULL
+		x
+	}
+	ret = SpatialPoints(do.call(rbind, lapply(dots, coordinates.strip)),
 		CRS(proj4string(dots[[1]])))
+	if (!dropRowNames)
+		row.names(ret) = make.unique(do.call(c, lapply(dots, row.names)))
+	ret
 }
 
 rbind.SpatialPointsDataFrame <- function(...) {
@@ -23,6 +32,25 @@ rbind.SpatialPointsDataFrame <- function(...) {
 	df = do.call(rbind, lapply(dots, function(x) x@data))
 	SpatialPointsDataFrame(sp, df, coords.nrs = dots[[1]]@coords.nrs)
 }
+
+
+# contributed by Kent Johnson, r-sig-geo, Dec 5, 2015:
+rbind.SpatialMultiPoints <- function(...) { 
+	dots = list(...)
+	names(dots) <- NULL
+	stopifnot(identicalCRS(dots))
+	SpatialMultiPoints(do.call(c, lapply(dots, slot, name="coords")),
+	CRS(proj4string(dots[[1]])))
+}
+
+rbind.SpatialMultiPointsDataFrame <- function(...) {
+	dots = list(...)
+	names(dots) <- NULL
+	sp = do.call(rbind, lapply(dots, function(x) as(x, "SpatialMultiPoints")))
+	df = do.call(rbind, lapply(dots, function(x) x@data))
+	SpatialMultiPointsDataFrame(sp, df)
+}
+
 
 rbind.SpatialPixels = function(...) {
 	dots = list(...)
@@ -78,4 +106,13 @@ rbind.SpatialLinesDataFrame <- function(...) {
 	ll = do.call(rbind, lapply(dots, function(x) as(x, "SpatialLines")))
 	df = do.call(rbind, lapply(dots, function(x) x@data))
 	SpatialLinesDataFrame(ll, df)
+}
+
+cbind.Spatial <- function(...) {
+	dots = list(...)
+	names(dots) <- NULL
+	stopifnot(identicalCRS(dots[ which(sapply(dots, function(x) is(x, "Spatial"))) ]))
+	dfs = lapply(dots, function(x) if(is(x, "Spatial")) x@data else x)
+	d = do.call(cbind, dfs)
+	addAttrToGeom(geometry(dots[[1]]), data.frame(d), FALSE)
 }

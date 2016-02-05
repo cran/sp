@@ -5,7 +5,7 @@
 		coords = coordinates(coords) 
 		# make sure data.frame becomes double matrix; NA checks
 	mtch = NULL
-	cc.ID = dimnames(coords)[[1]]
+	cc.ID = row.names(coords) # row.names works for both matrix AND SpatialPoints
 	if (missing(match.ID)) { # sort it out:
 		if (is.null(cc.ID))
 			match.ID = FALSE # nothing to match to!
@@ -134,13 +134,24 @@ points.SpatialPointsDataFrame = function(x, y = NULL, ...)
 	points(as(x, "SpatialPoints"), ...)
 
 text.SpatialPointsDataFrame = function(x, ...) {
-    lst = list(x = coordinates(x), ...)
+	lst = list(...)
+	if (!is.null(x$srt)) {
+		if (length(unique(x$srt)) == 1)
+			lst$srt = x$srt[1]
+		else { # print each label individually:
+			lapply(seq_len(length(x)), function(i) text(x[i,], ...))
+			return(invisible())
+		}
+	}
+    lst$x = coordinates(x)
     if (!is.null(x$pos) && is.null(lst$pos))
         lst$pos = x$pos
     if (!is.null(x$offset) && is.null(lst$offset))
         lst$offset = x$offset
     if (!is.null(x$labels) && is.null(lst$labels))
-        lst$labels = parse(text = x$lab)
+        lst$labels = parse(text = x$labels)
+    if (!is.null(x$adjx) && !is.null(x$adjy))
+        lst$adj = c(x$adjx, x$adjy)
     do.call(text, lst)
 }
 

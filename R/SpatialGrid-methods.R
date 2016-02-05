@@ -270,6 +270,7 @@ as.SpatialPolygons.SpatialPixels <- function(obj) {
 		x <- c(xi-cS2x, xi-cS2x, xi+cS2x, xi+cS2x, xi-cS2x)
 		y <- c(yi-cS2y, yi+cS2y, yi+cS2y, yi-cS2y, yi-cS2y)
 		Srl[[i]] <- Polygons(list(Polygon(coords=cbind(x, y))), ID=IDs[i])
+                comment(Srl[[i]]) <- "0"
 	}
 	res <- SpatialPolygons(Srl, proj4string=CRS(proj4string(obj)))
 	res

@@ -28,7 +28,7 @@ ReplProj4string = function(obj, value) {
         if (!is.na(is.projected(obj)) && !is.na(p4str)) {
             p4s <- proj4string(obj)
             if (p4s != p4str) {
-                mess <- paste("A new CRS was assigned to an object with an existing CRS:\n", p4s, "\nwithout reprojecting.\nFor reprojection, use function spTransform in package rgdal", sep="")
+                mess <- paste("A new CRS was assigned to an object with an existing CRS:\n", p4s, "\nwithout reprojecting.\nFor reprojection, use function spTransform", sep="")
                 if (get_ReplCRS_warn()) warning(mess)
             }
         }

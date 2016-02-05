@@ -208,8 +208,9 @@ setMethod("over", signature("Spatial", "Spatial"),  # catch remaining:
     	if (!requireNamespace("rgeos", quietly = TRUE))
 			stop("package rgeos is required for additional over methods")
 		if (is(x, "SpatialMultiPoints") || is(y, "SpatialMultiPoints"))
-			return(overMultiPoints(x, y, returnList = returnList, fn = fn, ...))
-		over(x, y, returnList = returnList, fn = fn, ...) # rgeos methods
+			overMultiPoints(x, y, returnList = returnList, fn = fn, ...)
+		else
+			over(x, y, returnList = returnList, fn = fn, ...) # rgeos methods
 	}
 )
 

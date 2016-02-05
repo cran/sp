@@ -1,6 +1,6 @@
 \name{sp-deprecated}
-\alias{overlay}
-\alias{overlay-methods}
+%\alias{overlay}
+%\alias{overlay-methods}
 %\alias{overlay,SpatialPointsDataFrame,SpatialPolygons-method}
 %\alias{overlay,SpatialPoints,SpatialPolygons-method}
 %\alias{overlay,SpatialPoints,SpatialPolygonsDataFrame-method}

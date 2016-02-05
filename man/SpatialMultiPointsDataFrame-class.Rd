@@ -12,7 +12,7 @@
 \alias{dim.SpatialMultiPointsDataFrame}
 \alias{print.SpatialMultiPointsDataFrame}
 %\alias{as.SpatialMultiPoints.SpatialMultiPointsDataFrame}
-%\alias{rbind.SpatialMultiPointsDataFrame}
+\alias{rbind.SpatialMultiPointsDataFrame}
 \alias{row.names.SpatialMultiPointsDataFrame}
 
 \title{Class "SpatialMultiPointsDataFrame" }

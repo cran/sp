@@ -79,7 +79,8 @@ setMethod("[", c("SpatialLinesDataFrame", "ANY", "ANY"), function(x, i, j, ... ,
 	x@lines = x@lines[i]
 	x@data = x@data[i, j, ..., drop = FALSE]
 # RSB 081003
-	x@bbox = .bboxSls(x@lines)
+	if (length(x@lines) > 0) # EJP, 151218
+		x@bbox = .bboxSls(x@lines)
 	x
 })
 

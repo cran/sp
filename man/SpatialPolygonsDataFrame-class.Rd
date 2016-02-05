@@ -5,6 +5,7 @@
 \alias{as.data.frame.SpatialPolygonsDataFrame}
 \alias{coerce,SpatialPolygonsDataFrame,data.frame-method}
 \alias{coerce,SpatialPolygonsDataFrame,SpatialLinesDataFrame-method}
+\alias{coerce,SpatialPolygonsDataFrame,SpatialPolygons-method}
 \alias{rbind.SpatialPolygonsDataFrame}
 \alias{dim.SpatialPolygonsDataFrame}
 \alias{row.names.SpatialPolygonsDataFrame}
@@ -57,20 +58,6 @@ Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
 SpP = SpatialPolygons(list(Srs1,Srs2,Srs3), 1:3)
 plot(SpP, col = 1:3, pbg="white")
 
-%data(ncshp)
-%nc1 <- as.SpatialPolygons.Shapes(nc.shp$Shapes, as.character(nc.shp$att.data$FIPS))
-%df <- nc.shp$att.data
-%rownames(df) <- as.character(nc.shp$att.data$FIPS)
-%identical(rownames(df), sapply(slot(nc1, "polygons"), function(i) slot(i, "ID")))
-%ncSpPDF <- SpatialPolygonsDataFrame(nc1, df)
-%names(as(ncSpPDF, "data.frame"))
-%identical(rownames(as(ncSpPDF, "data.frame")), sapply(slot(ncSpPDF, "polygons"), function(i) slot(i, "ID")))
-%rrt <- as(ncSpPDF, "data.frame")$SID74/as(ncSpPDF, "data.frame")$BIR74
-%brks <- quantile(rrt, seq(0,1,1/7))
-%cols <- grey((length(brks):2)/length(brks))
-%dens <- (2:length(brks))*3
-%plot(ncSpPDF, col=cols[findInterval(rrt, brks, all.inside=TRUE)])
-%plot(ncSpPDF, density=dens[findInterval(rrt, brks, all.inside=TRUE)])
 grd <- GridTopology(c(1,1), c(1,1), c(10,10))
 polys <- as(grd, "SpatialPolygons")
 centroids <- coordinates(polys)

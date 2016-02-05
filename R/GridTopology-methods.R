@@ -163,6 +163,7 @@ as.SpatialPolygons.GridTopology <- function(grd, proj4string=CRS(as.character(NA
 		Srl[[i]] <- Polygons(list(Polygon(coords=cbind(x, y)
 #, proj4string=proj4string
 )), ID=IDs[i])
+                comment(Srl[[i]]) <- "0"
 	}
 	res <- SpatialPolygons(Srl, proj4string=proj4string)
 	res
