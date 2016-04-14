@@ -144,27 +144,14 @@ setReplaceMethod("coordnames",
 	signature(x = "SpatialPolygons", value = "character"),
 	function(x, value) {
 		dimnames(x@bbox)[[1]] = value
-		for (i in seq(along = x@polygons))
-			coordnames(x@polygons[[i]]) = value
+		#for (i in seq(along = x@polygons))
+		#	coordnames(x@polygons[[i]]) = value
+		x@polygons = lapply(x@polygons,
+			function(y) Polygons(lapply(y@Polygons,
+				function(z) { dimnames(z@coords)[[2]] = value; z }), y@ID))
 		x
 	}
 )
-setReplaceMethod("coordnames", 
-	signature(x = "Polygons", value = "character"),
-	function(x, value) {
-		for (i in seq(along = x@Polygons))
-			coordnames(x@Polygons[[i]]) = value
-		x
-	}
-)
-setReplaceMethod("coordnames", 
-	signature(x = "Polygon", value = "character"),
-	function(x, value) {
-		dimnames(x@coords)[[2]] = value
-		x
-	}
-)
-
 setMethod("coordinates", "SpatialPolygons", 
 	function(obj) {
 		ret = t(sapply(slot(obj, "polygons"), function(i) slot(i, "labpt")))
