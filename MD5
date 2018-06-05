@@ -1,4 +1,4 @@
-d2fce6e507d0efd60a7fb4cf85c93085 *DESCRIPTION
+d9cbab49688caa61a2cf5f7f711f99b2 *DESCRIPTION
 aedc22cbc99fb22f0c1e8e482e998d7c *NAMESPACE
 fce2762141312bab8313ec0d75e23c06 *R/AAA.R
 ced5d3f8b6ec52e422b325550d7f2074 *R/CRS-methods.R
@@ -27,8 +27,8 @@ b820304f4ee95c02fb09858f11c62ffb *R/SpatialMultiPoints-methods.R
 1ad03dc89320c760b5dbd3c6a46856d5 *R/SpatialPointsDataFrame-methods.R
 0af94ec34bd5e063722f825284048662 *R/SpatialPolygons-displayMethods.R
 0d9a5bd10833af81e4532b1dd6be6f50 *R/SpatialPolygons-internals.R
-06d0a0df3bbb47e5d1dfcb7f08f4c1a2 *R/SpatialPolygons-methods.R
-8aacb14fe85cb4bfca66f6cd0dc400b2 *R/SpatialPolygonsDataFrame-methods.R
+b48946217b71889145c66e0c4544a536 *R/SpatialPolygons-methods.R
+efca6a13f6e6158909dd7366f3099fb3 *R/SpatialPolygonsDataFrame-methods.R
 78694b519c982f31c77a9afd1c9f0adf *R/aggregate.R
 bde15617ef63b08ac721f7f9d869f614 *R/asciigrid.R
 409e1e7fbf65fe54299489cbef589015 *R/bpy.colors.R
@@ -40,7 +40,7 @@ bde15617ef63b08ac721f7f9d869f614 *R/asciigrid.R
 80028a8aeb01f6d8e930d5a928f776a9 *R/flipSGDF.R
 65578bd14f0d356a7858a4a7f3c5a243 *R/gridded.R
 7cf0b72e1b4c162e638794affbf2aa8f *R/gridlines.R
-d7a97f416719de492f125fcbb043cc1d *R/image.R
+fefde96a25c6f8dcc3168ab036c7a176 *R/image.R
 d5ccdeeeabffc927e3120fadac6128bd *R/loadmeuse.R
 227082b122be9fea35ecdf94ea6fb01d *R/mapasp.R
 d96ebb6ecfed6914a635f7e9a48a0984 *R/merge.R
@@ -59,7 +59,7 @@ a3562db0502c05e1f2610e572b65e703 *R/sp_spat1.R
 bddb25ec8f35a126373d42751aed191b *R/subset.R
 1bf89e559504db11dd0379dbc071083f *R/surfaceArea.R
 14a49acb33c4c77157bd320c62616c66 *R/zerodist.R
-20e8561cd03f8c6e2ca96f6891b9522a *build/vignette.rds
+29bdc7d282fa29bedb3551b649fc8a04 *build/vignette.rds
 72487cc74a945f4fc4b24fffd0131844 *data/Rlogo.rda
 02d4e4ae1918accd9cdadeaf1809a0a9 *data/meuse.area.rda
 74625a0d7da3999356f25f54a1a0b44e *data/meuse.grid.rda
@@ -78,18 +78,18 @@ cd0b2eacb8bff453398f8cac02f83215 *demo/webmap.R
 d19545d6ff515de5e32e412a55ad370e *inst/NEWS.Rd
 6ea05e88d7f4afaf0e6da1220c8884fb *inst/doc/csdacm.R
 40c9c96c12943eab808dce21393af046 *inst/doc/csdacm.Rnw
-4a15b9f2c576a50d4cd817f5977d2ff5 *inst/doc/csdacm.pdf
+dfe1aedd7396961e1e2ea1ed51e743e0 *inst/doc/csdacm.pdf
 a42170b8c0644c7b73857a291eafb881 *inst/doc/intro_sp.R
 d55d2b03e6c3b28eafe79bf447970cc6 *inst/doc/intro_sp.Rnw
-68dce05f3bf0353fc10d20275df750e5 *inst/doc/intro_sp.pdf
+77c02c17dda7caa17098567d31c14416 *inst/doc/intro_sp.pdf
 bd5e93d7e70556d83eaeb0401c97f2d1 *inst/doc/over.R
 6457da7ce638431f7839af4375fb8acd *inst/doc/over.Rnw
-0438d47c079bf680f2c5040b5c00ed5f *inst/doc/over.pdf
+a33ee15c5bdca6d6c5c7bba5d5f74e69 *inst/doc/over.pdf
 1d14390f7c198db1b4f3fa00ae91cf14 *inst/external/seamap105_mod.csv
 ef247b6c335e75e48f81da7ef7554fa6 *inst/external/simple.ag
 15c2101eb916ea116f400d560f73dd7c *inst/external/test.ag
-c70aa48dd17621c88b8949a0cd4e1c9b *inst/include/sp.h
-38ac4247a0277e755f335c5c5dce2c28 *inst/include/sp_xports.c
+143d8b43834c7f60e7662006dcfc002a *inst/include/sp.h
+85f179076e41701782a685ad110de22b *inst/include/sp_xports.c
 5dc0305fbc727b6354e05a0a07c23e8e *man/00sp.Rd
 5d8c1c190553b97fa7d6f8ffe650e5f5 *man/CRS-class.Rd
 5c196729fe648dbf5d5ee3aeeeb2569c *man/DMS-class.Rd
@@ -140,7 +140,7 @@ fd50e71d1b89b6697d733ff7ec0160df *man/flip.Rd
 9af0d87856831048b94546f0dd8b0cba *man/gridded-methods.Rd
 e69b17e91071d5ca729ec06c2226e9f1 *man/gridindex2nb.Rd
 303740f4f3a16154c27975e4374e834f *man/gridlines.Rd
-55c7a0af77f53790ffcf7a6cc4b94cf9 *man/image.Rd
+3c971a97dbc0b24389423b283abe796f *man/image.Rd
 ed61d11542e27c16a7465fb227e2a435 *man/is.projected.Rd
 d21143983ecd66ecb4bd0751d99579f5 *man/loadmeuse.Rd
 907a8e354d75f5d080476783f9c54166 *man/mapasp.Rd
@@ -150,7 +150,7 @@ f17ead2fc674b4334dbdfe667d35f247 *man/meuse.grid.Rd
 67f42a0f50ed052b8cf481dc7f5c19ed *man/meuse.grid_ll.Rd
 9dd51fb645ba381af6f3cf44e8223220 *man/meuse.riv.Rd
 a674391acb71289968457adc99472c89 *man/over.Rd
-939d833407430d338b4560a74de9c171 *man/panel.Rd
+d3e7a61b6dc438cc9d6e7b220bc2dad8 *man/panel.Rd
 711ce4aa4329db10a14e35b417483bbc *man/point.in.polygon.Rd
 28647044030f08a19d5d40982f1cb797 *man/polygons-methods.Rd
 ba9488d7aef328e7c40d1ca0f9168f0c *man/polygons.Rd
@@ -160,7 +160,7 @@ fb2d7d3cc0396cb00f9032516394da91 *man/select.spatial.Rd
 586721930ea6d6ac5743f9774a5cd81e *man/spChFIDs-methods.Rd
 7d5e4ae4b1f21f9e2e32f6346b71a79e *man/spDistsN1.Rd
 ebae2801ac24d2162ed6d78b0b2f3c4e *man/spTransform.Rd
-1660ee48f428b238efc50e1eb00af533 *man/spplot.Rd
+2e7b6037ce68304c37e1703d7b28f6d7 *man/spplot.Rd
 da23cb2de494ded9ab5b7f0c4d93ba9f *man/spsample.Rd
 b0a89e8c8f714d9c3be05773e23f4f5d *man/stack.Rd
 2d10c7a98bbe0333f1f97e671a67d9ec *man/surfaceArea.Rd
@@ -170,8 +170,8 @@ b1efa15042518ac8f870d15e2fe27d06 *src/Rcentroid.c
 45c922d69dabf0504570ef94da147bd4 *src/init.c
 2a79f2e9cd38e6603c529ed704eab7b9 *src/pip.c
 7b048d7af80064b653b049fce283d2a4 *src/pip2.c
-c70aa48dd17621c88b8949a0cd4e1c9b *src/sp.h
-38ac4247a0277e755f335c5c5dce2c28 *src/sp_xports.c
+143d8b43834c7f60e7662006dcfc002a *src/sp.h
+85f179076e41701782a685ad110de22b *src/sp_xports.c
 69af476fca6ecdc9d23bd31caa086283 *src/surfaceArea.c
 8f31429f883966a9061bfe95d943edd5 *src/zerodist.c
 036b835d76faf02e1f53048d2c4b4adf *tests/agg.R
