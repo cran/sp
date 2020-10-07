@@ -58,7 +58,7 @@ on its coordinates, and takes care of attributes \code{pos}, \code{labels},
   of Roger Bivand.
 }
 
-\seealso{ \link[rgdal]{spTransform}; llgridlines in \code{rgdal} (recent versions) for plotting long-lat grid over projected data }
+\seealso{ \link[rgdal:spTransform-methods]{spTransform}; llgridlines in \code{rgdal} (recent versions) for plotting long-lat grid over projected data }
 \examples{
 data(meuse)
 coordinates(meuse) = ~x+y
@@ -69,6 +69,7 @@ title("default gridlines within Meuse bounding box")
 
 proj4string(meuse) <- CRS("+init=epsg:28992")
 crs.longlat <- CRS("+init=epsg:4326")
+if (require(rgdal, quietly=TRUE)) {
 meuse_ll <- spTransform(meuse, crs.longlat)
 grd <- gridlines(meuse_ll)
 grd_x <- spTransform(grd, CRS("+init=epsg:28992"))
@@ -116,6 +117,7 @@ l = labels(gl, crs.longlat, side = 4)
 l$srt = 0 # otherwise they end up upside-down
 text(l)
 title("grid line labels on polar projection, epsg 3031")
+}
 \dontrun{
 if (require(maps)) demo(polar) # adds the map of the antarctic
 }

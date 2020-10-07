@@ -23,7 +23,7 @@ setMethod("rebuild_CRS", signature(obj = "CRS"),
 
 
 "CRS" <- function(projargs=NA_character_, doCheckCRSArgs=TRUE,
-    SRS_string=NULL) {
+    SRS_string=NULL, get_source_if_boundcrs=TRUE) {
 # cautious change BDR 150424
 # trap NULL too 200225
     if (is.null(projargs))
@@ -32,11 +32,25 @@ setMethod("rebuild_CRS", signature(obj = "CRS"),
 # condition added 140301
     stopifnot(is.logical(doCheckCRSArgs))
     stopifnot(length(doCheckCRSArgs) == 1L)
+    stopifnot(is.logical(get_source_if_boundcrs))
+    stopifnot(length(get_source_if_boundcrs) == 1L)
     stopifnot(is.character(projargs))
     if (!is.na(projargs)) {
-        if (length(grep("^[ ]*\\+", projargs)) == 0)
-            stop(paste("PROJ4 argument-value pairs must begin with +:", 
-	        projargs))
+        if (length(grep("^[ ]*\\+", projargs)) == 0) {
+            if (is.null(SRS_string)) {
+                if (doCheckCRSArgs && 
+                    requireNamespace("rgdal", quietly = TRUE)) {
+                    if (packageVersion("rgdal") >= "1.5.1" && 
+                        rgdal::new_proj_and_gdal()) {
+                        SRS_string <- projargs
+                        projargs <- NA_character_
+                    }
+                }
+            } else {
+                stop(paste("PROJ4 argument-value pairs must begin with +:", 
+	            projargs))
+            }
+        }
     }
     if (!is.na(projargs)) {
         if (length(grep("latlon", projargs)) != 0)
@@ -62,7 +76,7 @@ setMethod("rebuild_CRS", signature(obj = "CRS"),
 #      (sessionInfo()$otherPkgs$rgdal$Version > "0.4-2")) {
 # sessionInfo()/read.dcf() problem in loop 080307
     comm <- NULL
-    if (!is.na(uprojargs) || !is.null(SRS_string)) {
+    if (!is.na(uprojargs) || (!is.null(SRS_string) && nzchar(SRS_string))) {
         if (doCheckCRSArgs && requireNamespace("rgdal", quietly = TRUE)) {
             if (packageVersion("rgdal") < "1.5.1") {
                 res <- rgdal::checkCRSArgs(uprojargs)
@@ -70,8 +84,14 @@ setMethod("rebuild_CRS", signature(obj = "CRS"),
                 uprojargs <- res[[2]]
             } else if (packageVersion("rgdal") >= "1.5.1") {
                 if (rgdal::new_proj_and_gdal()) {
-                    res <- rgdal::checkCRSArgs_ng(uprojargs=uprojargs,
-                        SRS_string=SRS_string)
+                    if (packageVersion("rgdal") >= "1.5.17") {
+                        res <- rgdal::checkCRSArgs_ng(uprojargs=uprojargs,
+                            SRS_string=SRS_string,
+                            get_source_if_boundcrs=get_source_if_boundcrs)
+                    } else {
+                        res <- rgdal::checkCRSArgs_ng(uprojargs=uprojargs,
+                            SRS_string=SRS_string)
+                    }
                     if (!res[[1]]) stop(res[[2]])
                     uprojargs <- res[[2]]
                     comm <- res[[3]]
@@ -94,8 +114,22 @@ if (!isGeneric("wkt"))
 setMethod("wkt", signature(obj = "CRS"),
 	function(obj) {
                 comm <- comment(obj)
-                if (is.null(comm))
-                    warning("CRS object has no comment")
+                if (is.null(comm)) {
+                  if (get("rgdal_show_exportToProj4_warnings",
+                    envir=.spOptions)) {
+                    if (!get("thin_PROJ6_warnings", envir=.spOptions)) {
+                      warning("CRS object has no comment")
+                    } else {
+                      if (get("PROJ6_warnings_count",
+                        envir=.spOptions) == 0L) {
+                        warning("CRS object has no comment\n repeated warnings suppressed")
+                      }
+                      assign("PROJ6_warnings_count",
+                        get("PROJ6_warnings_count",
+                        envir=.spOptions) + 1L, envir=.spOptions)
+                   }
+                 }
+                }
 		comm
         }
 )
@@ -153,5 +187,5 @@ identicalCRS1 = function(x, y) {
 }
 
 is.na.CRS = function(x) {
-	is.na(x@projargs)
+	is.na(x@projargs) && is.null(comment(slot(x, "proj4string")))
 }

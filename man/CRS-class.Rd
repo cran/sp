@@ -32,13 +32,14 @@ Objects can be created by calls of the form \code{CRS("projargs")}, where "proja
   }
 }
 \usage{
-CRS(projargs, doCheckCRSArgs=TRUE, SRS_string=NULL)
+CRS(projargs, doCheckCRSArgs=TRUE, SRS_string=NULL, get_source_if_boundcrs=TRUE)
 identicalCRS(x,y)
 }
 \arguments{
-\item{projargs}{A character string of projection arguments; the arguments must be entered exactly as in the PROJ.4 documentation; if the projection is unknown, use \code{as.character(NA)}, it may be missing or an empty string of zero length and will then set to the missing value.}
+\item{projargs}{A character string of projection arguments; the arguments must be entered exactly as in the PROJ.4 documentation; if the projection is unknown, use \code{as.character(NA)}, it may be missing or an empty string of zero length and will then set to the missing value. With \pkg{rgdal} built with PROJ >= 6 and GDAL >= 3, the \code{+init=} key may only be used with value \code{epsg:<code>}. From \pkg{sp} version 1.4-4, the string associated with the SRS_string argument may be entered as-is and will be set as SRS_string if the projargs argument does not begin with a \code{+} (suggested by Mikko Vihtakari).}
 \item{doCheckCRSArgs}{default TRUE, must be set to FALSE by package developers including \code{CRS} in an S4 class definition to avoid uncontrollable loading of the \pkg{rgdal} namespace}
-\item{SRS_string}{default NULL, only used when \pkg{rgdal} is built with PROJ >= 6 and GDAL >= 3; a valid WKT string or SRS definition such as \code{"EPSG:4326"}}
+\item{SRS_string}{default NULL, only used when \pkg{rgdal} is built with PROJ >= 6 and GDAL >= 3; a valid WKT string or SRS definition such as \code{"EPSG:4326"} or \code{"ESRI:102761"}}
+\item{get_source_if_boundcrs}{(from \pkg{rgdal} 1.5-17, default TRUE) The presence of the \code{+towgs84=} key in a Proj4 string \code{projargs=} argument value may promote the output WKT2 CRS to BOUNDCRS for PROJ >= 6 and GDAL >= 3, which is a coordinate operation from the input datum to WGS84. This is often unfortunate, so a PROJ function is called through \pkg{rgdal} to retrieve the underlying source definition.}
 \item{x}{object having a \link{proj4string} method,
 or if \code{y} is missing, list with objects that have a \code{proj4string} method}
 \item{y}{object of class \link{Spatial}, or having a \link{proj4string} method}
@@ -50,11 +51,11 @@ whether \code{x} and \code{y} have identical CRS, or if \code{y}
 is missing whether all objects in list \code{x}
 have identical CRS.
 }
-\references{\url{https://github.com/OSGeo/proj.4}}
+\references{\url{https://github.com/OSGeo/PROJ}}
 \author{Roger Bivand \email{Roger.Bivand@nhh.no}}
 
 \note{
-Lists of projections may be seen by using the programs installed with the PROJ.4 library, in particular proj and cs2cs; with the latter, -lp lists projections, -le ellipsoids, -lu units, and -ld datum(s) known to the installed software (available in \pkg{rgdal} using \code{projInfo}). These are added to in successive releases, so tracking the website or compiling and installing the most recent revisions will give the greatest choice. Finding the very important datum transformation parameters to be given with the +towgs84 tag is a further challenge, and is essential when the datums used in data to be used together differ. Tracing projection arguments is easier now than before the mass ownership of GPS receivers raised the issue of matching coordinates from different argument sets (GPS output and paper map, for example). See \code{\link[rgdal]{GridsDatums}}, \code{\link[rgdal]{make_EPSG}} and \code{\link[rgdal]{showEPSG}} for help in finding CRS definitions.
+Lists of projections may be seen by using the programs installed with the PROJ.4 library, in particular proj and cs2cs; with the latter, -lp lists projections, -le ellipsoids, -lu units, and -ld datum(s) known to the installed software (available in \pkg{rgdal} using \code{projInfo}). These are added to in successive releases, so tracking the website or compiling and installing the most recent revisions will give the greatest choice. Finding the very important datum transformation parameters to be given with the +towgs84 tag is a further challenge, and is essential when the datums used in data to be used together differ. Tracing projection arguments is easier now than before the mass ownership of GPS receivers raised the issue of matching coordinates from different argument sets (GPS output and paper map, for example). See \code{\link[rgdal]{GridsDatums}}, \code{\link[rgdal]{make_EPSG}} and \code{\link[rgdal:showWKT]{showEPSG}} for help in finding CRS definitions.
 
 The 4.9.1 release of the PROJ library omitted a small file of defaults, leading to reports of \dQuote{major axis or radius = 0 or not given} errors. From 0.9-3, rgdal checks for the presence of this file (proj_def.dat), and if not found, and under similar conditions to those used by PROJ.4, adds \dQuote{+ellps=WGS84} to the input string being checked by \code{checkCRSArgs} The \dQuote{+no_defs} tag ignores the file of defaults, and the default work-around implemented to get around this problem; strings including \dQuote{init} and \dQuote{datum} tags also trigger the avoidance of the work-around. Now messages are issued when a candidate CRS is checked; they may be suppressed using \code{suppressMessages}.
 
@@ -68,21 +69,44 @@ CRS()
 CRS("")
 CRS(as.character(NA))
 CRS("+proj=longlat +datum=WGS84")
-if (require(rgdal)) {
+run <- FALSE
+run <- require(rgdal) 
+if (run) {
   print(CRSargs(CRS("+proj=longlat +datum=NAD27")))
+}
+if (run) {
   print(CRSargs(CRS("+init=epsg:4267")))
+}
+if (run) {
   print(CRSargs(CRS("+init=epsg:26978")))
+}
+if (run) {
   print(CRSargs(CRS(paste("+proj=sterea +lat_0=52.15616055555555",
  "+lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000 +ellps=bessel",
  " +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +units=m"))))
+}
+if (run) {
   print(CRSargs(CRS("+init=epsg:28992")))
 }
-# see http://trac.osgeo.org/gdal/ticket/1987
+if (run) {
+  o <- try(CRS(SRS_string="ESRI:102760"))
+  if (!inherits(o, "try-error")) print(CRSargs(o))
+}
+if (run) {
+  o <- try(CRS("EPSG:4326"))
+  if (!inherits(o, "try-error")) print(CRSargs(o))
+}
+if (run) {
+  o <- try(CRS("ESRI:102760"))
+  if (!inherits(o, "try-error")) print(CRSargs(o))
+}
+if (run) {
 o <- new("Spatial")
 proj4string(o) <- CRS("+init=epsg:27700")
-if (!is.null(comment(slot(o, "proj4string")))) {
-  cat(strsplit(wkt(o), "\\n")[[1]], sep="\n")
-  cat(strsplit(wkt(slot(o, "proj4string")), "\\n")[[1]], sep="\n")
+}
+if (run && !is.null(comment(slot(o, "proj4string")))) {
+  cat(wkt(o), sep="\n")
+  cat(wkt(slot(o, "proj4string")), sep="\n")
 }
 }
 \keyword{classes}

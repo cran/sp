@@ -1,8 +1,22 @@
 setMethod("proj4string", signature(obj = "Spatial"),
 	function(obj) {
-                if (!is.null(comment(slot(obj, "proj4string"))))
-                    warning("CRS object has comment, which is lost in output")
-		res <- as.character(obj@proj4string@projargs)
+                if (!is.null(comment(slot(obj, "proj4string")))) {
+                  if (get("rgdal_show_exportToProj4_warnings",
+                    envir=.spOptions)) {
+                    if (!get("thin_PROJ6_warnings", envir=.spOptions)) {
+                      warning("CRS object has comment, which is lost in output")
+                    } else {
+                      if (get("PROJ6_warnings_count",
+                        envir=.spOptions) == 0L) {
+                        warning("CRS object has comment, which is lost in output\n repeated warnings suppressed")
+                      }
+                      assign("PROJ6_warnings_count",
+                        get("PROJ6_warnings_count",
+                        envir=.spOptions) + 1L, envir=.spOptions)
+                   }
+                 }
+		}
+                res <- as.character(obj@proj4string@projargs)
                 res
         }
 )
@@ -10,8 +24,22 @@ setMethod("proj4string", signature(obj = "Spatial"),
 setMethod("wkt", signature(obj = "Spatial"),
 	function(obj) {
                 comm <- comment(slot(obj, "proj4string"))
-                if (is.null(comm))
-                    warning("CRS object has no comment")
+                if (is.null(comm)) {
+                  if (get("rgdal_show_exportToProj4_warnings",
+                    envir=.spOptions)) {
+                    if (!get("thin_PROJ6_warnings", envir=.spOptions)) {
+                      warning("CRS object has no comment")
+                    } else {
+                      if (get("PROJ6_warnings_count",
+                        envir=.spOptions) == 0L) {
+                        warning("CRS object has no comment\n repeated warnings suppressed")
+                      }
+                      assign("PROJ6_warnings_count",
+                        get("PROJ6_warnings_count",
+                        envir=.spOptions) + 1L, envir=.spOptions)
+                   }
+                 }
+                }
 		comm
         }
 )
@@ -82,16 +110,37 @@ is.projectedSpatial <- function(obj) {
 setMethod("is.projected", signature(obj = "Spatial"), is.projectedSpatial)
 
 is.projectedCRS <- function(obj) {
+# bug spotted by Finn Lindgren 200817
+        wkt2 <- comment(obj)
+        if (!is.null(wkt2)) {
+            if (requireNamespace("rgdal", quietly = TRUE)) {
+                if (packageVersion("rgdal") >= "1.5.17" && 
+                    rgdal::new_proj_and_gdal()) {
+                    res <- rgdal::OSRIsProjected(obj)
+                } else {
+                    res <- substring(wkt2, 1, 3) != "GEO"
+                }
+            } else {
+                res <- substring(wkt2, 1, 3) != "GEO"
+            }
+            return(res)
+        }
 	p4str <- slot(obj, "projargs")
-	if (is.na(p4str) || !nzchar(p4str)) 
+	if (is.na(p4str) || !nzchar(p4str)) {
 		return(as.logical(NA))
-	else {
-		res <- grep("longlat", p4str, fixed = TRUE)
-		if (length(res) == 0)
-			return(TRUE)
-		else
-			return(FALSE)
-	}
+	} else {
+            if (requireNamespace("rgdal", quietly = TRUE)) {
+                if (packageVersion("rgdal") >= "1.5.17" && 
+                    rgdal::new_proj_and_gdal()) {
+                    res <- rgdal::OSRIsProjected(obj)
+                } else {
+		    res <- length(grep("longlat", p4str, fixed = TRUE)) == 0L
+                }
+            } else {
+		res <- length(grep("longlat", p4str, fixed = TRUE)) == 0L
+	    }
+            return(res)
+        }
 }
 
 
