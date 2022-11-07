@@ -1549,15 +1549,15 @@ suppressed anyway.</p>
 ## plan transition to sf/stars/terra functions using GDAL and PROJ
 ## at your earliest convenience.
 ## 
-## rgdal: version: 1.5-31, (SVN revision 1171)
+## rgdal: version: 1.5-32, (SVN revision 1176)
 ## Geospatial Data Abstraction Library extensions to R successfully loaded
-## Loaded GDAL runtime: GDAL 3.4.0, released 2021/11/04
+## Loaded GDAL runtime: GDAL 3.4.3, released 2022/04/22
 ## Path to GDAL shared files: /usr/share/gdal
 ## GDAL binary built with GEOS: TRUE 
-## Loaded PROJ runtime: Rel. 8.2.0, November 1st, 2021, [PJ_VERSION: 820]
+## Loaded PROJ runtime: Rel. 8.2.1, January 1st, 2022, [PJ_VERSION: 821]
 ## Path to PROJ shared files: /home/edzer/.local/share/proj:/usr/share/proj
 ## PROJ CDN enabled: FALSE
-## Linking to sp version:1.4-7
+## Linking to sp version:1.5-0
 ## To mute warnings of possible GDAL/OSR exportToProj4() degradation,
 ## use options(&quot;rgdal_show_exportToProj4_warnings&quot;=&quot;none&quot;) before loading sp or rgdal.</code></pre>
 <p>a package startup message is displayed if PROJ &gt;= 6 and GDAL &gt;=
@@ -1596,7 +1596,7 @@ relevant test file.</p>
 <code>rgdal::rgdal_extSoftVersion()</code>:</p>
 <pre class="r"><code>rgdal::rgdal_extSoftVersion()</code></pre>
 <pre><code>##           GDAL GDAL_with_GEOS           PROJ             sp           EPSG 
-##        &quot;3.4.0&quot;         &quot;TRUE&quot;        &quot;8.2.0&quot;        &quot;1.4-7&quot;      &quot;v10.038&quot;</code></pre>
+##        &quot;3.4.3&quot;         &quot;TRUE&quot;        &quot;8.2.1&quot;        &quot;1.5-0&quot;      &quot;v10.041&quot;</code></pre>
 <p>and its shorter version, testing only PROJ &gt;= 6 (and GDAL &gt;=
 3):</p>
 <pre class="r"><code>rgdal::new_proj_and_gdal()</code></pre>

@@ -708,18 +708,19 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 70: csdacm.Rnw:963-969
+### code chunk number 70: csdacm.Rnw:963-970
 ###################################################
-library(gstat)
 data(meuse)
 coordinates(meuse) <- ~x+y
-v <- vgm(.5, "Sph", 800, .05)
-sim <- krige(log(zinc)~1, meuse, meuse.grid, v, nsim=100, nmax=30)
-sim@data <- exp(sim@data)
+if (require(gstat, quietly = TRUE)) {
+ v <- vgm(.5, "Sph", 800, .05)
+ sim <- krige(log(zinc)~1, meuse, meuse.grid, v, nsim=100, nmax=30)
+ sim@data <- exp(sim@data)
+}
 
 
 ###################################################
-### code chunk number 71: csdacm.Rnw:977-981
+### code chunk number 71: csdacm.Rnw:978-982
 ###################################################
 quantile.Spatial <- function(x, ..., byLayer = FALSE) {
 	stopifnot("data" %in% slotNames(x))
@@ -728,32 +729,36 @@ quantile.Spatial <- function(x, ..., byLayer = FALSE) {
 
 
 ###################################################
-### code chunk number 72: csdacm.Rnw:987-989
+### code chunk number 72: csdacm.Rnw:988-992
 ###################################################
+if (require(gstat, quietly = TRUE)) {
 sim$lower <- quantile.Spatial(sim[1:100], probs = 0.025)
 sim$upper <- quantile.Spatial(sim[1:100], probs = 0.975)
+}
 
 
 ###################################################
-### code chunk number 73: csdacm.Rnw:996-997
+### code chunk number 73: csdacm.Rnw:999-1002
 ###################################################
+if (require(gstat, quietly = TRUE)) {
 medians <- quantile.Spatial(sim[1:100], probs = 0.5, byLayer = TRUE)
+}
 
 
 ###################################################
-### code chunk number 74: csdacm.Rnw:999-1000 (eval = FALSE)
+### code chunk number 74: csdacm.Rnw:1004-1005 (eval = FALSE)
 ###################################################
 ## hist(medians)
 
 
 ###################################################
-### code chunk number 75: csdacm.Rnw:1014-1015
+### code chunk number 75: csdacm.Rnw:1019-1020
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 76: csdacm.Rnw:1017-1022
+### code chunk number 76: csdacm.Rnw:1022-1027
 ###################################################
 fractionBelow <- function(x, q, byLayer = FALSE) {
 	stopifnot(is(x, "Spatial") || !("data" %in% slotNames(x)))
@@ -763,27 +768,29 @@ fractionBelow <- function(x, q, byLayer = FALSE) {
 
 
 ###################################################
-### code chunk number 77: csdacm.Rnw:1024-1025
+### code chunk number 77: csdacm.Rnw:1029-1030
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 78: csdacm.Rnw:1027-1030
+### code chunk number 78: csdacm.Rnw:1032-1037
 ###################################################
+if (require(gstat, quietly = TRUE)) {
 over500 <- 1 - fractionBelow(sim[1:100], 200, byLayer = TRUE)
 summary(over500)
 quantile(over500, c(0.025, 0.975))
+}
 
 
 ###################################################
-### code chunk number 79: csdacm.Rnw:1046-1047
+### code chunk number 79: csdacm.Rnw:1053-1054
 ###################################################
 run <- require(rgdal, quietly=TRUE)
 
 
 ###################################################
-### code chunk number 80: csdacm.Rnw:1051-1054
+### code chunk number 80: csdacm.Rnw:1058-1061
 ###################################################
 if (run) {
   fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
@@ -791,7 +798,7 @@ if (run) {
 
 
 ###################################################
-### code chunk number 81: csdacm.Rnw:1056-1059 (eval = FALSE)
+### code chunk number 81: csdacm.Rnw:1063-1066 (eval = FALSE)
 ###################################################
 ## x <- readGDAL(fn, output.dim = c(120, 132))
 ## x$band1[x$band1 <= 0] <- NA
@@ -799,30 +806,26 @@ if (run) {
 
 
 ###################################################
-### code chunk number 82: csdacm.Rnw:1070-1082
+### code chunk number 82: csdacm.Rnw:1077-1085
 ###################################################
 if (run) {
 library(rgdal)
 x <- GDAL.open(fn)
 class(x)
-}
-if (run) {
 x.subs <- x[1:100, 1:100, 1]
 class(x.subs)
-}
-if (run) {
 gridparameters(x.subs)
 }
 
 
 ###################################################
-### code chunk number 83: csdacm.Rnw:1100-1101
+### code chunk number 83: csdacm.Rnw:1103-1104
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 84: csdacm.Rnw:1103-1110
+### code chunk number 84: csdacm.Rnw:1106-1113
 ###################################################
 if (run) {
 setClass("SpatialGDAL",
@@ -834,13 +837,13 @@ setClass("SpatialGDALWrite", "SpatialGDAL")
 
 
 ###################################################
-### code chunk number 85: csdacm.Rnw:1112-1113
+### code chunk number 85: csdacm.Rnw:1115-1116
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 86: csdacm.Rnw:1124-1140 (eval = FALSE)
+### code chunk number 86: csdacm.Rnw:1127-1143 (eval = FALSE)
 ###################################################
 ## x <- open.SpatialGDAL(fn)
 ## nrows <- GDALinfo(fn)["rows"]
@@ -861,7 +864,7 @@ options("width"=70)
 
 
 ###################################################
-### code chunk number 87: csdacm.Rnw:1147-1154 (eval = FALSE)
+### code chunk number 87: csdacm.Rnw:1150-1157 (eval = FALSE)
 ###################################################
 ## setMethod("[", "SpatialGDAL",
 ##     function(x, i, j, ... , drop = FALSE)
@@ -873,7 +876,7 @@ options("width"=70)
 
 
 ###################################################
-### code chunk number 88: csdacm.Rnw:1180-1181
+### code chunk number 88: csdacm.Rnw:1183-1184
 ###################################################
 options("width"=owidth)
 

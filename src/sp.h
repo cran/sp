@@ -8,7 +8,7 @@
 #endif
 /* remember to touch local_stubs.c */
 
-#define SP_VERSION "1.5-0"
+#define SP_VERSION "1.5-1"
 
 #include <R.h>
 /* RSB 091203 */
@@ -92,7 +92,7 @@ SEXP SP_PREFIX(SpatialPolygons_validate_c)(const SEXP obj);
 SEXP SP_PREFIX(SpatialPolygons_getIDs_c)(const SEXP obj);
 SEXP SP_PREFIX(SpatialPolygons_plotOrder_c)(const SEXP pls);
 SEXP SP_PREFIX(comment2comm)(const SEXP obj);
-SEXP SP_PREFIX(sp_linkingTo_version)();
+SEXP SP_PREFIX(sp_linkingTo_version)(void);
 #endif
 /* remember to touch local_stubs.c */
 
