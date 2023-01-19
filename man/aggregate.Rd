@@ -19,9 +19,9 @@ is a list, aggregation by attribute(s), see \link{aggregate.data.frame}}
 is specified, which is passed on to function \link{over}}
 \item{dissolve}{logical; should, when aggregating based on attributes, the
 resulting geometries be dissolved? Note that if \code{x} has class
-\code{SpatialPointsDataFrame}, this returns an object of class \code{SpatialMultiPointsDataFrame}}
+\code{SpatialPointsDataFrame}, this returns an object of class \code{SpatialMultiPointsDataFrame}; deprecated}
 \item{areaWeighted}{logical; should the aggregation of \code{x} be weighted by the
-areas it intersects with each feature of \code{by}? See value.}
+areas it intersects with each feature of \code{by}? See value; deprecated.}
 }
 \value{ 
 The aggregation of attribute values of \code{x} either over the
@@ -31,12 +31,17 @@ or by attribute values, using aggregation function \code{FUN}.
 If \code{areaWeighted} is \code{TRUE}, \code{FUN} is ignored and the
 area weighted mean is computed for numerical variables, or if all
 attributes are \code{factor}s, the area dominant factor level (area
-mode) is returned. This will compute the \link[rgeos:topo-bin-gIntersection]{gIntersection}
-of \code{x} and \code{by}; see examples below.
+mode) is returned.  This computes the intersection of \code{x}
+and \code{by}; see examples below.  As this uses code from package
+rgeos, it is deprecated as package rgeos will retire.
 
 If \code{by} is missing, aggregates over all features.
 }
 \details{
+For as far as these functions use package rgeos, (lines, polygons,
+dissolve = TRUE), they are deprecated as rgeos will retire; try
+using sf::aggregate instead.
+
 \code{FUN} should be a function that takes as first argument a
 vector, and that returns a single number. The canonical examples
 are \link{mean} and \link{sum}. Counting features is obtained when
@@ -83,8 +88,8 @@ if (require(gstat) && require(rgeos)) {
 	spplot(x[1],col.regions=bpy.colors())
 	i = cut(x$var1.pred, seq(4, 7.5, by=.5), 
 		include.lowest = TRUE)
-	xa = aggregate(x["var1.pred"], list(i=i), mean)
-	spplot(xa[1],col.regions=bpy.colors(8))
+	# xa = aggregate(x["var1.pred"], list(i=i), mean)
+	# spplot(xa[1],col.regions=bpy.colors(8))
 }
 
 if (require(rgeos)) {
@@ -111,12 +116,12 @@ if (require(rgeos)) {
   text(coordinates(i), ids.i, cex = .8, col = 'blue')
 
   # compute & plot area-weighted average; will warn for the factor
-  ret = aggregate(p1, p2, areaWeighted = TRUE)
-  spplot(ret)
+  #ret = aggregate(p1, p2, areaWeighted = TRUE)
+  #spplot(ret)
 
   # all-factor attributes: compute area-dominant factor level:
-  ret = aggregate(p1["x"], p2, areaWeighted = TRUE) 
-  spplot(ret)
+  #ret = aggregate(p1["x"], p2, areaWeighted = TRUE) 
+  #spplot(ret)
 }
 }
 \keyword{methods}

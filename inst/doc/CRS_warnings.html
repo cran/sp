@@ -1373,8 +1373,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -1382,16 +1382,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -1545,19 +1538,20 @@ suppressed anyway.</p>
 <p>On attaching <strong>rgdal</strong>:</p>
 <pre class="r"><code>library(rgdal)</code></pre>
 <pre><code>## Loading required package: sp</code></pre>
-<pre><code>## Please note that rgdal will be retired by the end of 2023,
+<pre><code>## Please note that rgdal will be retired during 2023,
 ## plan transition to sf/stars/terra functions using GDAL and PROJ
 ## at your earliest convenience.
-## 
-## rgdal: version: 1.5-32, (SVN revision 1176)
+## See https://r-spatial.org/r/2022/04/12/evolution.html and https://github.com/r-spatial/evolution
+## rgdal: version: 1.6-3, (SVN revision 1187)
 ## Geospatial Data Abstraction Library extensions to R successfully loaded
-## Loaded GDAL runtime: GDAL 3.4.3, released 2022/04/22
+## Loaded GDAL runtime: GDAL 3.6.2, released 2023/01/02
 ## Path to GDAL shared files: /usr/share/gdal
+##  GDAL does not use iconv for recoding strings.
 ## GDAL binary built with GEOS: TRUE 
-## Loaded PROJ runtime: Rel. 8.2.1, January 1st, 2022, [PJ_VERSION: 821]
+## Loaded PROJ runtime: Rel. 9.1.1, December 1st, 2022, [PJ_VERSION: 911]
 ## Path to PROJ shared files: /home/edzer/.local/share/proj:/usr/share/proj
 ## PROJ CDN enabled: FALSE
-## Linking to sp version:1.5-0
+## Linking to sp version:1.5-1
 ## To mute warnings of possible GDAL/OSR exportToProj4() degradation,
 ## use options(&quot;rgdal_show_exportToProj4_warnings&quot;=&quot;none&quot;) before loading sp or rgdal.</code></pre>
 <p>a package startup message is displayed if PROJ &gt;= 6 and GDAL &gt;=
@@ -1596,7 +1590,7 @@ relevant test file.</p>
 <code>rgdal::rgdal_extSoftVersion()</code>:</p>
 <pre class="r"><code>rgdal::rgdal_extSoftVersion()</code></pre>
 <pre><code>##           GDAL GDAL_with_GEOS           PROJ             sp           EPSG 
-##        &quot;3.4.3&quot;         &quot;TRUE&quot;        &quot;8.2.1&quot;        &quot;1.5-0&quot;      &quot;v10.041&quot;</code></pre>
+##        &quot;3.6.2&quot;         &quot;TRUE&quot;        &quot;9.1.1&quot;        &quot;1.5-1&quot;      &quot;v10.076&quot;</code></pre>
 <p>and its shorter version, testing only PROJ &gt;= 6 (and GDAL &gt;=
 3):</p>
 <pre class="r"><code>rgdal::new_proj_and_gdal()</code></pre>
