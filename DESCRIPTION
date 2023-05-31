@@ -1,5 +1,5 @@
 Package: sp
-Version: 1.6-0
+Version: 1.6-1
 Title: Classes and Methods for Spatial Data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 				email = "edzer.pebesma@uni-muenster.de"),
@@ -17,7 +17,7 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 Depends: R (>= 3.0.0), methods
 Imports: utils, stats, graphics, grDevices, lattice, grid
 Suggests: RColorBrewer, rgdal (>= 1.2-3), rgeos (>= 0.3-13), gstat,
-        maptools, deldir, knitr, rmarkdown, sf
+        maptools, deldir, knitr, rmarkdown, sf, terra, raster
 Description: Classes and methods for spatial
   data; the classes document where the spatial location information
   resides, for 2D or 3D data. Utility functions are provided, e.g. for
@@ -45,10 +45,10 @@ Collate: bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         asciigrid.R spplot.R over.R spsample.R recenter.R dms.R
         gridlines.R spdists.R rbind.R flipSGDF.R chfids.R loadmeuse.R
         compassRose.R surfaceArea.R spOptions.R subset.R disaggregate.R
-        sp_spat1.R merge.R aggregate.R
+        sp_spat1.R merge.R aggregate.R elide.R
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2023-01-19 21:40:20 UTC; edzer
+Packaged: 2023-05-26 13:36:48 UTC; edzer
 Author: Edzer Pebesma [aut, cre],
   Roger Bivand [aut],
   Barry Rowlingson [ctb],
@@ -62,4 +62,4 @@ Author: Edzer Pebesma [aut, cre],
   Joseph O'Rourke [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2023-01-19 23:30:02 UTC
+Date/Publication: 2023-05-31 08:00:02 UTC

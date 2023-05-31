@@ -1,4 +1,4 @@
-# Copyright (c) 2003-21 by Barry Rowlingson and Roger Bivand
+# Copyright (c) 2003-23 by Barry Rowlingson and Roger Bivand
 
 if (!is.R()) {
   strsplit <- function(a,b) {
@@ -37,7 +37,10 @@ setMethod("rebuild_CRS", signature(obj = "CRS"),
     stopifnot(is.character(projargs))
 #    CRS_CACHE <- get("CRS_CACHE", envir=.sp_CRS_cache)
     input_projargs <- projargs
-    if (!is.na(input_projargs) && use_cache) {
+    if (is.na(projargs)) { # fast track for trivial CRS()
+        if (is.null(SRS_string))
+            return(new("CRS", projargs = NA_character_))
+    } else if (use_cache) {
         res <- .sp_CRS_cache[[input_projargs]]
         if (!is.null(res)) {
             return(res)
@@ -46,6 +49,8 @@ setMethod("rebuild_CRS", signature(obj = "CRS"),
     if (get("evolution_status", envir=.spOptions) > 0L) doCheckCRSArgs <- FALSE
     if (get("evolution_status", envir=.spOptions) == 2L) {
         if (requireNamespace("sf", quietly = TRUE)) {
+            if ((length(grep("^[ ]*\\+", projargs)) > 0L) &&
+                !is.null(SRS_string)) projargs <- NA_character_
             if ((is.na(projargs) && !is.null(SRS_string))) {
                 res <- sf::st_crs(SRS_string)
                 res <- as(res, "CRS")
@@ -247,7 +252,7 @@ identicalCRS1 = function(x, y) {
   args_y <- strsplit(y@projargs, " +")[[1]]
   setequal(args_x, args_y)
 }
-
+#https://github.com/inlabru-org/inlabru/issues/178
 is.na.CRS = function(x) {
-	is.na(x@projargs) && is.null(comment(slot(x, "proj4string")))
+	is.na(x@projargs) && is.null(comment(x))
 }

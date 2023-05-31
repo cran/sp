@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Roger Bivand" />
+<meta name="author" content="Roger Bivand, Edzer Pebesma" />
 
 
-<title>Testing packages using CRS objects</title>
+<title>sp evolution status: examples of migration from retiring packages</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1508,60 +1508,201 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Testing packages using CRS objects</h1>
-<h4 class="author">Roger Bivand</h4>
+<h1 class="title toc-ignore">sp evolution status: examples of migration from retiring packages</h1>
+<h4 class="author">Roger Bivand, Edzer Pebesma</h4>
 
 </div>
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>As has been explained in <a href="https://CRAN.R-project.org/package=rgdal/vignettes/CRS_projections_transformations.html" class="uri">https://CRAN.R-project.org/package=rgdal/vignettes/CRS_projections_transformations.html</a>, coordinate reference systems are represented differently when PROJ &lt; 6 and PROJ &gt;= 6.</p>
-<p>To alert interactive users to the possibility that their workflows might be degraded unless they take the representational changes into account, the <strong>sp</strong> <code>proj4string()</code> method issues warnings if a <code>&quot;CRS&quot;</code> object does not have an accompanying <code>WKT2 2019</code> representation (stored in a <code>comment</code> attached to the <code>&quot;CRS&quot;</code> object). This is because <code>proj4string()</code> only returns the PROJ 4 representation, not the accompanying <code>WKT2 2019</code> representation if any, so may constitute a loss of information. See also <a href="https://stat.ethz.ch/pipermail/r-sig-geo/2020-May/028125.html" class="uri">https://stat.ethz.ch/pipermail/r-sig-geo/2020-May/028125.html</a> for further discussion.</p>
-<p>In general, it is good practice to replace all use in packages of <code>proj4string()</code> with <code>slot(, &quot;proj4string&quot;)</code> and its assignment form by the assignment form of <code>slot()</code>; when <code>sp::proj4string()</code> is not called, many of the warnings are suppressed anyway.</p>
-<p>On attaching <strong>rgdal</strong>:</p>
-<pre><code>## The legacy packages maptools, rgdal, and rgeos, underpinning this package
-## will retire shortly. Please refer to R-spatial evolution reports on
-## https://r-spatial.org/r/2023/05/15/evolution4.html for details.
-## This package is now running under evolution status 0</code></pre>
-<pre class="r"><code>library(rgdal)</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
-<pre><code>## Please note that rgdal will be retired during 2023,
-## plan transition to sf/stars/terra functions using GDAL and PROJ
-## at your earliest convenience.
-## See https://r-spatial.org/r/2022/04/12/evolution.html and https://github.com/r-spatial/evolution
-## rgdal: version: 1.6-6, (SVN revision 1201)
-## Geospatial Data Abstraction Library extensions to R successfully loaded
-## Loaded GDAL runtime: GDAL 3.6.2, released 2023/01/02
-## Path to GDAL shared files: /usr/share/gdal
-##  GDAL does not use iconv for recoding strings.
-## GDAL binary built with GEOS: TRUE 
-## Loaded PROJ runtime: Rel. 9.1.1, December 1st, 2022, [PJ_VERSION: 911]
-## Path to PROJ shared files: /home/edzer/.local/share/proj:/usr/share/proj
-## PROJ CDN enabled: FALSE
-## Linking to sp version:1.6-0
-## To mute warnings of possible GDAL/OSR exportToProj4() degradation,
-## use options(&quot;rgdal_show_exportToProj4_warnings&quot;=&quot;none&quot;) before loading sp or rgdal.</code></pre>
-<p>a package startup message is displayed if PROJ &gt;= 6 and GDAL &gt;= 3, including the important information that:</p>
-<blockquote>
-<p>To mute warnings of possible GDAL/OSR exportToProj4() degradation, use options(“rgdal_show_exportToProj4_warnings”=“none”) before loading rgdal.</p>
-</blockquote>
-<p>In <strong>sp</strong> 1.4 and <strong>rgdal</strong> 1.5, the default option value is <code>&quot;all&quot;</code>, in <strong>sp</strong> &gt;= 1.5 and <strong>rgdal</strong> &gt;= 1.6, the default will be flipped to <code>&quot;none&quot;</code>.</p>
+<p>TOC</p>
+<p>[DOWNLOADHERE]</p>
+<p><strong>Summary</strong>:</p>
+<p>This is the fourth report on the R-spatial evolution project and is addressed to maintainers of packages and workflows using <code>sp</code> classes, methods and functions. The project involves the retirement (archiving) of <code>rgdal</code>, <code>rgeos</code> and <code>maptools</code> during 2023. The <a href="https://r-spatial.org/r/2022/04/12/evolution.html">first report</a> set out the main goals of the project. The <a href="https://r-spatial.org/r/2022/12/14/evolution2.html">second report</a> covered progress so far, steps already taken, and those remaining to be accomplished. The <a href="https://r-spatial.org/r/2023/04/10/evolution3.html">third</a> gave detailed guidance for maintainers of packages using the retiring packages.</p>
+<p>From June 2023, the internal evolution status setting of <code>sp</code> will be changed from “business as usual” to “use <code>sf</code> instead of <code>rgdal</code> and <code>rgeos</code>”. Packages depending on <code>sp</code> may need to add <code>sf</code> to their weak dependencies, and to monitor any changes in output.</p>
+<p>The final step will occur during October 2023, in five months, <code>rgdal</code>, <code>rgeos</code> and <code>maptools</code> will be archived on CRAN, and packages with strong dependencies on the retiring packages must be either upgraded to use <code>sf</code>, <code>terra</code> or other alternatives or work-arounds by or before that time. Making all required changes in the period from now to the June <code>sp</code> change will mean just one round of adaptations rather than two rounds.</p>
+<p><a href="https://github.com/r-spatial/evolution/blob/main/pkgapi_230502.csv">This spreadsheet</a> lists methods and functions in retiring packages and <code>sp</code> found by <code>pkgapi</code>. They are listed by function name as used by packages, and the analogous list by package may be found of functions is <a href="https://github.com/r-spatial/evolution/blob/main/pkgapi_by_pkg_230502.csv">here</a>.</p>
+<div id="sp-evolution-status" class="section level1">
+<h1><code>sp</code> evolution status</h1>
+<p>Repeating from the second and third blogs:</p>
+<p>As mentioned in our first report, <code>sp</code> on CRAN has been provided with conditional code that prevents <code>sp</code> calling most code in <code>rgdal</code> or <code>rgeos</code>. This can be enabled <em>before</em> loading <code>sp</code> by setting e.g.:</p>
+<pre><code>options(&quot;sp_evolution_status&quot;=2)
+library(sp)</code></pre>
+<p>for checking packages under status</p>
+<ul>
+<li><code>0</code>: business as usual,</li>
+<li><code>1</code>: stop if <code>rgdal</code> or <code>rgeos</code> are absent, or</li>
+<li><code>2</code>: use <code>sf</code> instead of <code>rgdal</code> (currently no use of <code>rgeos</code> is considered)</li>
+</ul>
+<p>or alternatively can be set as an environment variable read when <code>sp</code> is loaded, e.g. when running checks from the command line by</p>
+<pre><code>_SP_EVOLUTION_STATUS_=2 R CMD check</code></pre>
+<p>This construction should permit maintainers to detect potential problems in code. <code>devtools::check()</code> provides the <code>env_vars=</code> argument, which may be used for the same purpose.</p>
+<p>From <code>sp 1.6.0</code> published on CRAN 2023-01-19, these status settings may also be changed when <code>sp</code> is loaded, using <code>sp::get_evolution_status()</code> returning the current value, and <code>sp::set_evolution_status(value)</code>, where value can take the integer values <code>0L</code>, <code>1L</code> and <code>2L</code>.</p>
+<div id="use-of-sp-affected-functions-and-methods" class="section level2">
+<h2>Use of <code>sp</code> affected functions and methods</h2>
+<p>Under evolution status <code>2</code>, which will become the default in June 2023, no use is made of <code>rgdal</code> in <code>sp::CRS</code>, <code>sp::is.projected</code>, and <code>sp::spTransform</code>, rather using <code>sf</code> to access <code>PROJ</code> through <code>GDAL</code>. A warning is given if <code>sf</code> is not available. This is similar to behaviour under legacy <code>sp</code> and evolution status <code>0</code> with regard to the use of <code>rgdal</code> to access <code>PROJ</code>.</p>
+<p><code>sp::CRS</code> is used by the following packages (<code>pkgapi</code> May 2, 2023):</p>
+<pre><code>adehabitatHR adehabitatHS adehabitatLT adehabitatMA AFM AGPRIS angstroms
+animaltracker anipaths antaresViz aqp AquaBEHER atakrig ausplotsR 
+
+bamlss bfsMaps biogeo bioRad biosurvey birdring birdscanR bivariatemaps 
+bRacatus briskaR 
+
+canadianmaps changeRangeR chronosphere cleangeo cmsafops cmsafvis 
+ConR CoordinateCleaner cruts ctmm 
+
+dartR DEPONS2R dggridR dismo dispeRse DRHotNet dtwSat dynamAedes dynamicSDM
+
+ecospat elevatr EMbC epitweetr 
+
+fasterize FIESTAutils FLightR FRK 
+
+GapAnalysis gDefrag gdistance GeNetIt GeoAdjust GeodesiCL geodiv geofacet 
+geogrid geojsonio geomerge geoviz gfcanalysis ggOceanMaps gmGeostats 
+googletraffic GPSeqClus grainscape graticule gwer gwfa 
+
+hero Hmsc hydroTSM 
+
+iccTraj inlabru INLAspacetime intamap intSDM IsoriX itcSegment 
+
+kehra 
+
+lakemorpho leaflet letsR lgcp loa 
+
+macroBiome mapedit MapGAM mapmisc mapview MEDITS meteo meteoForecast 
+meteoland micromapST MinBAR momentuHMM morphomap move 
+
+nodiv 
+
+oceanic OpenStreetMap OSMscale 
+
+phyloregion places plotKML prevR PWFSLSmoke
+
+QRAGadget quadmesh quickmapr quickPlot 
+
+RAC raster rasterVis rbgm rcanvec rCAT RCGLS RchivalTag rcrimeanalysis 
+ReadDIM red RgoogleMaps riverdist rleafmap rosm rpostgis RSIP rtop RWmisc 
+
+sdm sdStaf SeerMapper seg shadow SimSurvey soilassessment SongEvo spacetime
+SpaDES.tools SpatialEpi spatialfusion SpatialGraph spatsoc spatsurv spbabel 
+spdep sperich spex spgwr stppSim stxplore SUNGEO SurfaceTortoise SWTools 
+
+tiler track2KBA TrajDataMining trajectories trip 
+
+uavRmp 
+
+vec2dtransf 
+
+waver WEGE wildlifeDI wkb wux 
+
+zoon</code></pre>
+<p><code>sp::is.projected</code> is used by:</p>
+<pre><code>GapAnalysis GeNetIt intkrige ptools riverdist surveillance track2KBA trip</code></pre>
+<p>and <code>sp::spTransform</code> by:</p>
+<pre><code>AGPRIS antaresViz 
+
+biosurvey bivariatemaps 
+
+canadianmaps chronosphere CoordinateCleaner ctmm 
+
+elevatr epitweetr 
+
+fastmaRching FLightR 
+
+GeoAdjust GeodesiCL geoviz ggOceanMaps 
+
+icosa inlabru INLAspacetime 
+
+loa 
+
+macroBiome mapedit mapview micromapST MinBAR momentuHMM mregions 
+
+quickmapr 
+
+raster rcanvec rcrimeanalysis reproducible RgoogleMaps riverdist rosm rpostgis
+
+SeerMapper shadow SUNGEO 
+
+track2KBA 
+
+uavRmp</code></pre>
+<p>Reverse dependency checks of May 4, 2023 showed only 2 packages failing <code>CMD check</code> under <code>_SP_EVOLUTION_STATUS_=2</code>, and their difficulties are mentioned below (github issues have been raised offering maintainers mitigations). The salient reasons are given below so that others facing similar apparent intractible problems in workflows can perhaps benefit. Since other packages passed <code>CMD check</code>, there are no strong reasons not to flip <code>sp</code>’s evolution status in June 2023 from <code>rgdal</code> to <code>sf</code>.</p>
 </div>
-<div id="testing" class="section level2">
-<h2>Testing</h2>
-<p>Both CRAN checks and use of checks by end users may trigger spurious errors, if the versions of PROJ and GDAL differ from those on the development platform. Since the <code>WKT2 2019</code> representation is only generated on systems with PROJ &gt;= 6 (and GDAL &gt;= 3), warnings should not be expected when the same code is run on platforms with older versions of PROJ and GDAL. There are many such platforms, including RHEL and CentOS systems, as well as Ubuntu 18 and others. Think of a large lab with a cluster runnning such a system version, and that those installing software may wish to run <code>R CMD check</code> or just your test suite to confirm that things are as they should be. They will be dismayed to find that tests fail, but will not be able to find out whether this matters for them.</p>
-<p>Consequently, it is best either not to check warnings that perform differently when run under different versions of upstream external software (PROJ and GDAL), or to condition on the software versions with different expectations depending on the version.</p>
-<p>To mute warnings in all settings, add the option above early in any relevant test file.</p>
-<p>Fine-grained control may be obtained using <code>rgdal::rgdal_extSoftVersion()</code>:</p>
-<pre class="r"><code>rgdal::rgdal_extSoftVersion()</code></pre>
-<pre><code>##           GDAL GDAL_with_GEOS           PROJ             sp 
-##        &quot;3.6.2&quot;         &quot;TRUE&quot;        &quot;9.1.1&quot;        &quot;1.6-0&quot;</code></pre>
-<p>and its shorter version, testing only PROJ &gt;= 6 (and GDAL &gt;= 3):</p>
-<pre class="r"><code>rgdal::new_proj_and_gdal()</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<p>Using this test, a warning might be expected if recent PROJ and GDAL are used, and before the warning default is flipped in <strong>sp</strong> &gt; 1.4 and <strong>rgdal</strong> &gt; 1.5.</p>
-<p>In <strong>sf</strong>, use <code>sf::sf_extSoftVersion()</code> to determine versions if necessary.</p>
+<div id="possible-difficulties" class="section level2">
+<h2>Possible difficulties</h2>
+<p>One possible source of difference is that the strings (WKT2_2019, Proj4) returned from <code>rgdal</code> came straight from <code>PROJ</code>, but <code>sf</code> accesses <code>PROJ</code> through <code>GDAL</code>.</p>
+<p>Another source of difference is that <code>rgdal</code> used <code>sp</code> S4 classes with inheritance, but <code>sf</code> uses S3 classes which do not (seem to) treat inheritance in the same way. So workflows using <code>sp</code> and classes, so coercion to <code>sp</code> classes before <code>sp::spTransform</code> is required, and reconstruction of the classes extending <code>sp</code> classes after return is probably required.</p>
+<p>A further potential cause of confusion is that round-tripping by coercion to <code>sf</code> perhaps applying an operation, and returning to <code>sp</code> may break rarely used <code>sp</code> methods, such as:</p>
+<pre class="r"><code>library(sp)
+getMethod(&quot;$&quot;, &quot;SpatialPoints&quot;)</code></pre>
+<pre><code>Method Definition:
+
+function (x, name) 
+{
+    if (name %in% coordnames(x)) 
+        return(x@coords[, name])
+    if (!(&quot;data&quot; %in% slotNames(x))) 
+        stop(&quot;no $ method for object without attributes&quot;)
+    x@data[[name]]
+}
+&lt;bytecode: 0x556110e157b0&gt;
+&lt;environment: namespace:sp&gt;
+
+Signatures:
+        x              
+target  &quot;SpatialPoints&quot;
+defined &quot;SpatialPoints&quot;</code></pre>
+<p>which accesses columns by name no longer in the <code>data.frame</code> in the data slot through the column names of the matrix of points:</p>
+<pre class="r"><code>data(meuse)
+names(meuse)</code></pre>
+<pre><code> [1] &quot;x&quot;       &quot;y&quot;       &quot;cadmium&quot; &quot;copper&quot;  &quot;lead&quot;    &quot;zinc&quot;    &quot;elev&quot;   
+ [8] &quot;dist&quot;    &quot;om&quot;      &quot;ffreq&quot;   &quot;soil&quot;    &quot;lime&quot;    &quot;landuse&quot; &quot;dist.m&quot; </code></pre>
+<pre class="r"><code>coordinates(meuse) &lt;- ~ x + y
+names(meuse)</code></pre>
+<pre><code> [1] &quot;cadmium&quot; &quot;copper&quot;  &quot;lead&quot;    &quot;zinc&quot;    &quot;elev&quot;    &quot;dist&quot;    &quot;om&quot;     
+ [8] &quot;ffreq&quot;   &quot;soil&quot;    &quot;lime&quot;    &quot;landuse&quot; &quot;dist.m&quot; </code></pre>
+<pre class="r"><code>colnames(slot(meuse, &quot;coords&quot;))</code></pre>
+<pre><code>[1] &quot;x&quot; &quot;y&quot;</code></pre>
+<pre class="r"><code>str(meuse$x)</code></pre>
+<pre><code> Named num [1:155] 181072 181025 181165 181298 181307 ...
+ - attr(*, &quot;names&quot;)= chr [1:155] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...</code></pre>
+<p>So far so good, but round-tripping changes the column names of the matrix of points:</p>
+<pre class="r"><code>meuse_rt &lt;- as(sf::st_as_sf(meuse), &quot;Spatial&quot;)
+names(meuse_rt)</code></pre>
+<pre><code> [1] &quot;cadmium&quot; &quot;copper&quot;  &quot;lead&quot;    &quot;zinc&quot;    &quot;elev&quot;    &quot;dist&quot;    &quot;om&quot;     
+ [8] &quot;ffreq&quot;   &quot;soil&quot;    &quot;lime&quot;    &quot;landuse&quot; &quot;dist.m&quot; </code></pre>
+<pre class="r"><code>colnames(slot(meuse_rt, &quot;coords&quot;))</code></pre>
+<pre><code>[1] &quot;coords.x1&quot; &quot;coords.x2&quot;</code></pre>
+<p>Consequently, code using this legacy short cut may be a source of difficulty.</p>
+</div>
+<div id="why-not-terra" class="section level2">
+<h2>Why not <code>terra</code>?</h2>
+<p>The reason for choosing to replace <code>rgdal</code> by <code>sf</code> for these three methods has been the absence of an independent object for coordinate reference systems matching <code>&quot;CRS&quot;</code> in <code>sp</code> and <code>&quot;crs&quot;</code> in <code>sf</code>.</p>
+<p>It would be possible to create an empty <code>&quot;SpatVector&quot;</code> object and assign a coordinate reference system, coerce to <code>sp</code>, and extract the <code>&quot;CRS&quot;</code> object:</p>
+<pre class="r"><code>v &lt;- terra::vect(matrix(c(0, 0), nrow=1), crs=&quot;OGC:CRS84&quot;)</code></pre>
+<pre class="r"><code>library(raster)
+slot(as(v, &quot;Spatial&quot;), &quot;proj4string&quot;)</code></pre>
+<pre><code>Coordinate Reference System:
+Deprecated Proj.4 representation: +proj=longlat +datum=WGS84 +no_defs 
+WKT2 2019 representation:
+GEOGCRS[&quot;unknown&quot;,
+    DATUM[&quot;World Geodetic System 1984&quot;,
+        ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+            LENGTHUNIT[&quot;metre&quot;,1]],
+        ID[&quot;EPSG&quot;,6326]],
+    PRIMEM[&quot;Greenwich&quot;,0,
+        ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+        ID[&quot;EPSG&quot;,8901]],
+    CS[ellipsoidal,2],
+        AXIS[&quot;longitude&quot;,east,
+            ORDER[1],
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433,
+                ID[&quot;EPSG&quot;,9122]]],
+        AXIS[&quot;latitude&quot;,north,
+            ORDER[2],
+            ANGLEUNIT[&quot;degree&quot;,0.0174532925199433,
+                ID[&quot;EPSG&quot;,9122]]]] </code></pre>
+<p>but this seems somewhat forced. If there is substantial demand for an alternative mechanism using <code>terra</code> and <code>raster</code> in place of <code>sf</code>, then a well-tested pull request would be considered. It is understandable that Windows or macOS users who otherwise would not need to install <code>sf</code>, and who are already using <code>terra</code> might prefer to stay with <code>terra</code> inside <code>sp</code>, but input to the evolution project would be needed to take any action. It may rather be simpler for users with such workflows to migrate to <code>terra</code> instead of sustaining a mixed <code>sp</code>, <code>raster</code> vector combination when <code>terra</code> can probably cover all needs.</p>
+</div>
 </div>
 
 
