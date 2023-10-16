@@ -1626,14 +1626,8 @@ uavRmp</code></pre>
 <p>One possible source of difference is that the strings (WKT2_2019, Proj4) returned from <code>rgdal</code> came straight from <code>PROJ</code>, but <code>sf</code> accesses <code>PROJ</code> through <code>GDAL</code>.</p>
 <p>Another source of difference is that <code>rgdal</code> used <code>sp</code> S4 classes with inheritance, but <code>sf</code> uses S3 classes which do not (seem to) treat inheritance in the same way. So workflows using <code>sp</code> and classes, so coercion to <code>sp</code> classes before <code>sp::spTransform</code> is required, and reconstruction of the classes extending <code>sp</code> classes after return is probably required.</p>
 <p>A further potential cause of confusion is that round-tripping by coercion to <code>sf</code> perhaps applying an operation, and returning to <code>sp</code> may break rarely used <code>sp</code> methods, such as:</p>
-<pre class="r"><code>library(sp)</code></pre>
-<pre><code>The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
-which was just loaded, were retired in October 2023.
-Please refer to R-spatial evolution reports for details, especially
-https://r-spatial.org/r/2023/05/15/evolution4.html.
-It may be desirable to make the sf package available;
-package maintainers should consider adding sf to Suggests:.</code></pre>
-<pre class="r"><code>getMethod(&quot;$&quot;, &quot;SpatialPoints&quot;)</code></pre>
+<pre class="r"><code>library(sp)
+getMethod(&quot;$&quot;, &quot;SpatialPoints&quot;)</code></pre>
 <pre><code>Method Definition:
 
 function (x, name) 
@@ -1644,7 +1638,7 @@ function (x, name)
         stop(&quot;no $ method for object without attributes&quot;)
     x@data[[name]]
 }
-&lt;bytecode: 0x559d61ca1748&gt;
+&lt;bytecode: 0x558a3c567da8&gt;
 &lt;environment: namespace:sp&gt;
 
 Signatures:

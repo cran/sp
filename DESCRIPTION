@@ -1,5 +1,5 @@
 Package: sp
-Version: 2.1-0
+Version: 2.1-1
 Title: Classes and Methods for Spatial Data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 				email = "edzer.pebesma@uni-muenster.de"),
@@ -13,7 +13,8 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 			person("Jim", "Lemon", role = "ctb"),
                         person("Finn", "Lindgren", role = "ctb"),
 			person("Josh", "O'Brien", role = "ctb"),
-			person("Joseph", "O'Rourke", role = "ctb"))
+			person("Joseph", "O'Rourke", role = "ctb"),
+                        person("Patrick", "Hausmann", role = "ctb"))
 Depends: R (>= 3.5.0), methods
 Imports: utils, stats, graphics, grDevices, lattice, grid
 Suggests: RColorBrewer, gstat, deldir, knitr, rmarkdown, sf, terra,
@@ -47,10 +48,10 @@ Collate: bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         asciigrid.R spplot.R over.R spsample.R recenter.R dms.R
         gridlines.R spdists.R rbind.R flipSGDF.R chfids.R loadmeuse.R
         compassRose.R surfaceArea.R spOptions.R subset.R disaggregate.R
-        sp_spat1.R merge.R aggregate.R elide.R
+        sp_spat1.R merge.R aggregate.R elide.R sp2Mondrian.R
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2023-10-01 18:58:41 UTC; edzer
+Packaged: 2023-10-16 12:10:59 UTC; edzer
 Author: Edzer Pebesma [aut, cre],
   Roger Bivand [aut],
   Barry Rowlingson [ctb],
@@ -61,7 +62,8 @@ Author: Edzer Pebesma [aut, cre],
   Jim Lemon [ctb],
   Finn Lindgren [ctb],
   Josh O'Brien [ctb],
-  Joseph O'Rourke [ctb]
+  Joseph O'Rourke [ctb],
+  Patrick Hausmann [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2023-10-02 06:50:02 UTC
+Date/Publication: 2023-10-16 19:30:05 UTC
