@@ -667,7 +667,7 @@ spplot.stgdf <- function(obj, zcol = 1, ..., format = NULL) {
 	if (is.null(format)) format <- "%Y-%m-%d %H:%M:%S"
 	cc <- coordinates(obj)
 	df <- unstack(data.frame(obj[[zcol]], cc[,3]))
-	ns <- as.character(coordinatevalues(getGridTopology(obj))[[3]] + ISOdate(1970,1,1,0,0,0), format = format)
+	ns <- format(coordinatevalues(getGridTopology(obj))[[3]] + ISOdate(1970,1,1,0,0,0), format = format)
 	cc2d <- cc[cc[,3] == min(cc[,3]), 1:2]
 	obj <- SpatialPixelsDataFrame(cc2d, df)
 	spplot(obj, names.attr = ns,...)
@@ -676,14 +676,15 @@ setMethod("spplot", "SpatialTimeGridDataFrame", spplot.stgdf)
 
 
 ###################################################
-### code chunk number 67: csdacm.Rnw:912-918
+### code chunk number 67: csdacm.Rnw:912-919
 ###################################################
 .iwidth <- 6
 .iheight <- 4
 .PngNo <- .PngNo + 1; file <- paste("Fig-bitmap-", .PngNo, ".pdf", sep="")
 pdf(file=file, width = .iwidth, height = .iheight, pointsize = .ipointsize)
 opar <- par(mar=c(3,3,1,1)+0.1)
-print(spplot(x, format = "%H:%M:%S", as.table=TRUE))
+#print(spplot(x, format = "%H:%M:%S", as.table=TRUE))
+print(spplot(x, as.table=TRUE))
 dev.null <- dev.off()
 cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 .iwidth <- 5
@@ -692,7 +693,7 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 68: csdacm.Rnw:927-932 (eval = FALSE)
+### code chunk number 68: csdacm.Rnw:928-933 (eval = FALSE)
 ###################################################
 ## library(lattice)
 ## trellis.par.set(canonical.theme(color = FALSE))
@@ -702,13 +703,13 @@ cat("\\includegraphics[width=0.95\\textwidth]{", file, "}\n\n", sep="")
 
 
 ###################################################
-### code chunk number 69: csdacm.Rnw:938-939 (eval = FALSE)
+### code chunk number 69: csdacm.Rnw:939-940 (eval = FALSE)
 ###################################################
 ## ?as.character.POSIXt
 
 
 ###################################################
-### code chunk number 70: csdacm.Rnw:963-970
+### code chunk number 70: csdacm.Rnw:964-971
 ###################################################
 data(meuse)
 coordinates(meuse) <- ~x+y
@@ -720,7 +721,7 @@ if (require(gstat, quietly = TRUE)) {
 
 
 ###################################################
-### code chunk number 71: csdacm.Rnw:978-982
+### code chunk number 71: csdacm.Rnw:979-983
 ###################################################
 quantile.Spatial <- function(x, ..., byLayer = FALSE) {
 	stopifnot("data" %in% slotNames(x))
@@ -729,7 +730,7 @@ quantile.Spatial <- function(x, ..., byLayer = FALSE) {
 
 
 ###################################################
-### code chunk number 72: csdacm.Rnw:988-992
+### code chunk number 72: csdacm.Rnw:989-993
 ###################################################
 if (require(gstat, quietly = TRUE)) {
 sim$lower <- quantile.Spatial(sim[1:100], probs = 0.025)
@@ -738,7 +739,7 @@ sim$upper <- quantile.Spatial(sim[1:100], probs = 0.975)
 
 
 ###################################################
-### code chunk number 73: csdacm.Rnw:999-1002
+### code chunk number 73: csdacm.Rnw:1000-1003
 ###################################################
 if (require(gstat, quietly = TRUE)) {
 medians <- quantile.Spatial(sim[1:100], probs = 0.5, byLayer = TRUE)
@@ -746,19 +747,19 @@ medians <- quantile.Spatial(sim[1:100], probs = 0.5, byLayer = TRUE)
 
 
 ###################################################
-### code chunk number 74: csdacm.Rnw:1004-1005 (eval = FALSE)
+### code chunk number 74: csdacm.Rnw:1005-1006 (eval = FALSE)
 ###################################################
 ## hist(medians)
 
 
 ###################################################
-### code chunk number 75: csdacm.Rnw:1019-1020
+### code chunk number 75: csdacm.Rnw:1020-1021
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 76: csdacm.Rnw:1022-1027
+### code chunk number 76: csdacm.Rnw:1023-1028
 ###################################################
 fractionBelow <- function(x, q, byLayer = FALSE) {
 	stopifnot(is(x, "Spatial") || !("data" %in% slotNames(x)))
@@ -768,13 +769,13 @@ fractionBelow <- function(x, q, byLayer = FALSE) {
 
 
 ###################################################
-### code chunk number 77: csdacm.Rnw:1029-1030
+### code chunk number 77: csdacm.Rnw:1030-1031
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 78: csdacm.Rnw:1032-1037
+### code chunk number 78: csdacm.Rnw:1033-1038
 ###################################################
 if (require(gstat, quietly = TRUE)) {
 over500 <- 1 - fractionBelow(sim[1:100], 200, byLayer = TRUE)
@@ -784,7 +785,7 @@ quantile(over500, c(0.025, 0.975))
 
 
 ###################################################
-### code chunk number 79: csdacm.Rnw:1054-1055
+### code chunk number 79: csdacm.Rnw:1055-1056
 ###################################################
 options("width"=owidth)
 

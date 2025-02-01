@@ -1,5 +1,5 @@
 Package: sp
-Version: 2.1-4
+Version: 2.2-0
 Title: Classes and Methods for Spatial Data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 				email = "edzer.pebesma@uni-muenster.de"),
@@ -17,8 +17,8 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
                         person("Patrick", "Hausmann", role = "ctb"))
 Depends: R (>= 3.5.0), methods
 Imports: utils, stats, graphics, grDevices, lattice, grid
-Suggests: RColorBrewer, gstat, deldir, knitr, rmarkdown, sf, terra,
-        raster
+Suggests: RColorBrewer, gstat, deldir, knitr, maps, mapview, rmarkdown,
+        sf, terra, raster
 Description: Classes and methods for spatial
   data; the classes document where the spatial location information
   resides, for 2D or 3D data. Utility functions are provided, e.g. for
@@ -51,7 +51,7 @@ Collate: bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         sp_spat1.R merge.R aggregate.R elide.R sp2Mondrian.R
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2024-04-30 10:25:06 UTC; edzer
+Packaged: 2025-01-30 11:06:55 UTC; edzer
 Author: Edzer Pebesma [aut, cre],
   Roger Bivand [aut],
   Barry Rowlingson [ctb],
@@ -66,4 +66,4 @@ Author: Edzer Pebesma [aut, cre],
   Patrick Hausmann [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2024-04-30 14:20:03 UTC
+Date/Publication: 2025-02-01 09:40:02 UTC
