@@ -1,5 +1,5 @@
 Package: sp
-Version: 2.2-0
+Version: 2.2-1
 Title: Classes and Methods for Spatial Data
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
 				email = "edzer.pebesma@uni-muenster.de"),
@@ -14,7 +14,8 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"),
                         person("Finn", "Lindgren", role = "ctb"),
 			person("Josh", "O'Brien", role = "ctb"),
 			person("Joseph", "O'Rourke", role = "ctb"),
-                        person("Patrick", "Hausmann", role = "ctb"))
+            person("Patrick", "Hausmann", role = "ctb"),
+            person("Sebastian", "Meyer", role = "ctb"))
 Depends: R (>= 3.5.0), methods
 Imports: utils, stats, graphics, grDevices, lattice, grid
 Suggests: RColorBrewer, gstat, deldir, knitr, maps, mapview, rmarkdown,
@@ -51,7 +52,7 @@ Collate: bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R
         sp_spat1.R merge.R aggregate.R elide.R sp2Mondrian.R
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2025-01-30 11:06:55 UTC; edzer
+Packaged: 2026-02-12 22:13:59 UTC; edzer
 Author: Edzer Pebesma [aut, cre],
   Roger Bivand [aut],
   Barry Rowlingson [ctb],
@@ -63,7 +64,8 @@ Author: Edzer Pebesma [aut, cre],
   Finn Lindgren [ctb],
   Josh O'Brien [ctb],
   Joseph O'Rourke [ctb],
-  Patrick Hausmann [ctb]
+  Patrick Hausmann [ctb],
+  Sebastian Meyer [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2025-02-01 09:40:02 UTC
+Date/Publication: 2026-02-13 10:30:02 UTC

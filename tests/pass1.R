@@ -1,4 +1,6 @@
 options("rgdal_show_exportToProj4_warnings"="none")
+source("utils/print.R")
+
 library(sp)
 data(meuse)
 x = meuse
@@ -57,13 +59,13 @@ Sl = SpatialLines(list(S1,S2))
 summary(as(polys, "SpatialLines"))
 summary(as(Sl, "SpatialPoints"))
 summary(as(Sl, "SpatialPointsDataFrame"))
-SlDf = SpatialLinesDataFrame(Sl, data.frame(xx = c("foo", "bar")), match.ID = FALSE)
+SlDf = SpatialLinesDataFrame(Sl, data.frame(xx = factor(c("foo", "bar"))), match.ID = FALSE)
 summary(as(SlDf, "SpatialPointsDataFrame"))
 
 meuse[["xxx"]] = log(meuse$zinc)
-summary(meuse)
+print(summary(meuse))
 meuse$xxy = log(meuse[["zinc"]])
-summary(meuse)
+print(summary(meuse))
 
 # test behaviour on zero-length objects:
 demo(meuse, ask = FALSE, echo = FALSE)
@@ -81,11 +83,11 @@ dim(subset(meuse, F, 0))
 dim(meuse.grid[0,])
 fullgrid(meuse.grid) = TRUE
 dim(meuse.grid[0,])
-summary(meuse.grid[0,])
+print(summary(meuse.grid[0,]))
 dim(meuse.grid[,0])
-summary(meuse.grid[,0])
+print(summary(meuse.grid[,0]))
 dim(meuse.grid[0,,0])
-summary(meuse.grid[0,,0])
+print(summary(meuse.grid[0,,0]))
 
 # SpatialPolygons:
 L = as(meuse.riv, "SpatialPolygons")
@@ -94,7 +96,7 @@ length(L[0])
 summary(L[0])
 
 # SpatialPolygonsDataFrame:
-L$something = "bla"
+L$something = factor("bla")
 class(L)
 length(L[1])
 summary(L[1])
@@ -108,7 +110,7 @@ length(L[0])
 summary(L[0])
 
 # SpatialLinesDataFrame
-L$something = "bla"
+L$something = factor("bla")
 class(L)
 length(L[1])
 summary(L[1])
