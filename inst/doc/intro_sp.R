@@ -238,5 +238,3 @@ print(spplot(SrDf))
 ###################################################
 SrDf = attr
 polygons(SrDf) = SpP
-
-

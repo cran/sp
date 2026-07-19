@@ -788,5 +788,3 @@ quantile(over500, c(0.025, 0.975))
 ### code chunk number 79: csdacm.Rnw:1055-1056
 ###################################################
 options("width"=owidth)
-
-
