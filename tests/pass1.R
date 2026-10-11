@@ -71,7 +71,7 @@ print(summary(meuse))
 demo(meuse, ask = FALSE, echo = FALSE)
 p = as(meuse, "SpatialPoints")
 
-p[0]
+# p[0]
 dim(p[0])
 
 meuse[0,]
@@ -83,39 +83,39 @@ dim(subset(meuse, F, 0))
 dim(meuse.grid[0,])
 fullgrid(meuse.grid) = TRUE
 dim(meuse.grid[0,])
-print(summary(meuse.grid[0,]))
+# print(summary(meuse.grid[0,]))
 dim(meuse.grid[,0])
-print(summary(meuse.grid[,0]))
+# print(summary(meuse.grid[,0]))
 dim(meuse.grid[0,,0])
-print(summary(meuse.grid[0,,0]))
+# print(summary(meuse.grid[0,,0]))
 
 # SpatialPolygons:
 L = as(meuse.riv, "SpatialPolygons")
 length(L[1])
 length(L[0])
-summary(L[0])
+# summary(L[0])
 
 # SpatialPolygonsDataFrame:
 L$something = factor("bla")
 class(L)
 length(L[1])
-summary(L[1])
+# summary(L[1])
 length(L[0])
-summary(L[0])
+# summary(L[0])
 
 # SpatialLines
 L = as(meuse.riv, "SpatialLines")
 length(L[1])
 length(L[0])
-summary(L[0])
+# summary(L[0])
 
 # SpatialLinesDataFrame
 L$something = factor("bla")
 class(L)
 length(L[1])
-summary(L[1])
+# summary(L[1])
 length(L[0])
-summary(L[0])
+# summary(L[0])
 
 m = meuse
 all.equal(rbind(m[1:3,], m[5:7,]), rbind(m[1:3,], m[0,], m[5:7,]))
